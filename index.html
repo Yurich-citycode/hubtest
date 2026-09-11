@@ -472,7 +472,6 @@ div[class*="keychain"] {
   <div class="hero-bg" id="heroBg" style="background:radial-gradient(120% 140% at 15% 10%, #12100f 0%, #0A0A0A 55%);"></div>
   <div class="hero-portrait">
   <img class="p-base" src="yurichhub.jpg">
-  <img class="p-glasses" id="pGlasses" src="yurichhub.png">
 </div>
   <div class="hero-scrim"></div>
   <div class="spotlight" id="spotlight"></div>
@@ -784,17 +783,12 @@ div[class*="keychain"] {
 
     var heroBg = document.getElementById('heroBg');
     var bgNums = document.querySelectorAll('.bg-num');
-    var pGlasses = document.getElementById('pGlasses');
 
     (function raf(){
       current += (target - current) * 0.095;
       content.style.transform = 'translate3d(0,' + (-current) + 'px,0)';
 
       if(heroBg){ heroBg.style.transform = 'translate3d(0,' + (current * 0.18) + 'px,0)'; }
-      if(pGlasses){
-        var g = Math.max(0, Math.min(current * 0.055, 30));
-        pGlasses.style.transform = 'translate3d(0,' + g + 'px,0)';
-      }
       bgNums.forEach(function(n){ n.style.transform = 'translate3d(0,' + (current * -0.06) + 'px,0)'; });
 
       requestAnimationFrame(raf);
