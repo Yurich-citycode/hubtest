@@ -10,17 +10,12 @@
 <style>
   :root{
     --bg:#0A0A0A;
-    --bg-2:#111111;
     --ink:#F3F1EA;
     --ink-dim:#8C8C8C;
     --lime:#D7FF3D;
-    --lime-dim:rgba(215,255,61,.5);
     --gold:#C8A24A;
     --pink:#E8377E;
     --bronze:#C98A4E;
-    --navy-glass:#2E3D52;
-    --metal-lo:#3A3D42;
-    --metal-hi:#D7DADD;
     --line:rgba(243,241,234,.14);
     --font-display:'Anton', sans-serif;
     --font-sans:'Archivo', sans-serif;
@@ -36,18 +31,6 @@
   html.page-ready{ opacity:1; }
   html.page-leaving{ opacity:0; pointer-events:none; }
 
-  .back-btn{
-    position:fixed; top:22px; left:22px; z-index:50;
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:var(--font-sans); font-size:11.5px; font-weight:700;
-    letter-spacing:.06em; text-transform:uppercase; text-decoration:none;
-    color:var(--ink); background:rgba(10,10,10,.55); backdrop-filter:blur(6px);
-    border:1px solid var(--line); padding:9px 16px 9px 12px; border-radius:40px;
-    transition:border-color .2s, color .2s, transform .2s;
-  }
-  .back-btn:hover{ border-color:var(--lime); color:var(--lime); transform:translateX(-3px); }
-  .back-btn svg{ width:14px; height:14px; flex:none; }
-  @media (max-width:760px){ .back-btn{ top:14px; left:14px; padding:8px 14px 8px 10px; font-size:10.5px; } }
   body{
     margin:0; background:var(--bg); color:var(--ink);
     font-family:var(--font-sans); -webkit-font-smoothing:antialiased;
@@ -125,41 +108,12 @@ div[class*="keychain"] {
   display: none !important;
 }
 
-/* 2. Сдвигаем иконки (Гермес и Небанк) вправо */
-.footer-left,
-.bottom-nav,
-#hermes, 
-#nebank {
-  margin-left: 60px !important;
-}
-
 /* 3. Скругляем и мягко вписываем скриншот Sevastopol AI */
 .roadmap-img,
-#sevastopol img,
-.sevastopol-container img {
-  border-radius: 20px !important;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(215, 255, 61, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-/* 5 и 6. Делаем стильный манифест внизу (эффект лесенки и подсветки) */
-.manifest-section p,
-div[class*="manifest"] p,
-div[class*="quote"] p {
-  transition: all 0.3s ease;
-}
-
-.manifest-section p:nth-child(even),
-div[class*="manifest"] p:nth-child(even) {
-  opacity: 0.35;
-  transform: translateX(20px);
-}
-
-.manifest-section p:hover,
-div[class*="manifest"] p:hover {
-  opacity: 1 !important;
-  color: #d7ff3d !important;
-  transform: scale(1.03) translateX(10px);
+#sevastopol img {
+  border-radius:20px !important;
+  box-shadow:0 20px 50px rgba(0,0,0,.9), 0 0 30px rgba(215,255,61,.15) !important;
+  border:1px solid rgba(255,255,255,.1) !important;
 }
 
   /* ================= NAV ================= */
@@ -188,7 +142,6 @@ div[class*="manifest"] p:hover {
     display:block; will-change:transform;
   }
   @media (max-width:900px){ .hero-portrait{ width:78vw; right:-10%; opacity:.55; } }
-  .hero-bg svg{ width:100%; height:100%; display:block; }
   .hero-scrim{
     position:absolute; inset:0; z-index:1;
     background:linear-gradient(100deg, rgba(10,10,10,.97) 0%, rgba(10,10,10,.88) 34%, rgba(10,10,10,.35) 64%, rgba(10,10,10,.08) 100%);
@@ -274,7 +227,6 @@ div[class*="manifest"] p:hover {
   .reveal.in-view{ opacity:1; transform:translateY(0); }
   .reveal-2{ transition-delay:.12s; }
 
-  .rline{ overflow:hidden; display:block; }
   .rword{ display:inline-block; overflow:hidden; vertical-align:top; }
   .rword-inner{ display:inline-block; transform:translateY(115%); transition:transform .7s cubic-bezier(.2,.8,.2,1); }
   .split.revealed .rword-inner{ transform:translateY(0); }
@@ -364,7 +316,6 @@ div[class*="manifest"] p:hover {
   width: 100%;
   height: auto;
 }
-.routecard svg { display: none; }
 
   /* ================= 02 CITY CODE ================= */
   .cc-section{ background:radial-gradient(ellipse 1000px 560px at 76% 30%, rgba(215,255,61,.09), transparent 62%); }
@@ -390,7 +341,6 @@ div[class*="manifest"] p:hover {
    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
    transition: transform .35s ease, filter .35s ease;
  }
- .kc-tint{ display: none !important; }
  .kc-photo-wrap:hover .kc-photo,
  .kc-photo-wrap.is-active .kc-photo{ 
    transform: scale(1.02);
@@ -508,12 +458,11 @@ div[class*="manifest"] p:hover {
   <div class="nav">
     <div class="brand">Yurich<span>Hub</span></div>
     <nav class="navlinks">
-      <nav class="navlinks">
   <a href="#sevastopol" class="magnetic">Sevastopol AI</a>
-<a href="#citycode" class="magnetic">City Code</a>
-<a href="#rwa" class="magnetic">Crimea RWA</a>
-<a href="course.html" class="magnetic">Курс</a>
-<a href="cfa.html" class="magnetic">ЦФА</a>
+  <a href="#citycode" class="magnetic">City Code</a>
+  <a href="#rwa" class="magnetic">Crimea RWA</a>
+  <a href="course.html" class="magnetic">Курс</a>
+  <a href="cfa.html" class="magnetic">ЦФА</a>
 </nav>
   </div>
 </header>
@@ -565,7 +514,7 @@ div[class*="manifest"] p:hover {
   <div class="corner-coord br">SEVASTOPOL · BLACK SEA<br>EST. 2026</div>
 </section>
 
-<div class="marquee"><div class="marquee-track" id="marquee1">
+<div class="marquee"><div class="marquee-track">
   <div class="item">
     <span class="m-lime">SEVASTOPOL AI</span><span class="sep">✦</span>
     <span class="m-pink">CITY CODE</span><span class="sep">✦</span>
@@ -655,8 +604,6 @@ div[class*="manifest"] p:hover {
     <img class="mark nebank" src="nebank.jpg" alt="Небанк">
     <small>Небанк App (Financial infra)</small>
   </a>
-</div>
-<div class="cta-row" style="margin-top:16px">
 </div>
 </section>
 
@@ -801,7 +748,7 @@ div[class*="manifest"] p:hover {
       ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
       requestAnimationFrame(loop);
     })();
-    document.querySelectorAll('a, button, .magnetic, .kc-photo-wrap').forEach(function(el){
+    document.querySelectorAll('a, button, .kc-photo-wrap').forEach(function(el){
       el.addEventListener('mouseenter', function(){
         var isPink = el.closest('.status-card') || el.closest('#citycode');
         ring.classList.add(isPink ? 'hover-pink' : 'hover');
@@ -836,7 +783,6 @@ div[class*="manifest"] p:hover {
     window.addEventListener('scroll', function(){ target = window.scrollY; });
 
     var heroBg = document.getElementById('heroBg');
-    var heroEl = document.querySelector('.hero');
     var bgNums = document.querySelectorAll('.bg-num');
     var pGlasses = document.getElementById('pGlasses');
 
