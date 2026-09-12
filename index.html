@@ -988,7 +988,9 @@
   }
 
   document.querySelectorAll('.kc-hot, .cc-chip').forEach(function(el){
-    el.addEventListener('click', function(e){ activateKey(el.getAttribute('data-key'), e); });
+    el.addEventListener('click', function(e){
+      activateKey(el.getAttribute('data-key'), el.classList.contains('kc-hot') ? e : null);
+    });
   });
   activateKey('code');
 
