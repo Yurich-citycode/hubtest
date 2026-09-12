@@ -242,6 +242,15 @@
     pointer-events:none; user-select:none;
   }
 
+  /* brand emblems above section eyebrows */
+  .emblem{
+    display:block; width:66px; height:66px; object-fit:contain; margin:0 0 18px;
+    filter:drop-shadow(0 10px 22px rgba(0,0,0,.55));
+    transition:transform .3s cubic-bezier(.2,.8,.2,1);
+  }
+  .emblem:hover{ transform:rotate(-6deg) scale(1.07); }
+  .emblem.tile{ width:62px; height:62px; }
+
   /* ================= 01 SEVASTOPOL AI ================= */
   .routecard{ position:relative; max-width:520px; margin-left:auto; }
   .routecard img{
@@ -276,21 +285,28 @@
   }
   .kc-tilt{ transition:transform .35s ease; transform-style:preserve-3d; }
 
+  /* Каждый хотспот накрывает всё фото, а кликабельная область вырезается
+     clip-path по реальному силуэту брелка (координаты — в % фото).
+     z-index повторяет физический порядок укладки брелков на снимке. */
   .kc-hotspots{ position:absolute; inset:0; z-index:3; }
   .kc-hot{
-    position:absolute; padding:0;
+    position:absolute; inset:0; width:100%; height:100%; padding:0;
     background:transparent; border:0; outline:0; box-shadow:none;
     -webkit-tap-highlight-color:transparent; cursor:pointer;
+    filter:drop-shadow(0 0 0 transparent);
+    transition:filter .2s ease;
   }
-  .kc-hot.is-active{ filter:drop-shadow(0 0 8px var(--hc,#D7FF3D)); animation:hotPulse 1.7s ease-in-out infinite; }
-  .kc-hot:focus-visible{ outline:none; filter:drop-shadow(0 0 7px #FFFFFF) drop-shadow(0 0 2px #FFFFFF); }
+  .kc-hot:hover{ filter:drop-shadow(0 0 7px var(--hc,#D7FF3D)); }
+  .kc-hot.is-active{ filter:drop-shadow(0 0 9px var(--hc,#D7FF3D)); animation:hotPulse 1.7s ease-in-out infinite; }
+  .kc-hot:focus-visible{ outline:none; filter:drop-shadow(0 0 6px #FFFFFF) drop-shadow(0 0 2px #FFFFFF); }
   @keyframes hotPulse{ 0%,100%{ opacity:1; } 50%{ opacity:.55; } }
-  .hs-hex{ clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-  .hs-oval{ border-radius:50%; }
-  .hs-blade{ clip-path:polygon(22% 0%, 100% 0%, 78% 100%, 0% 100%); }
-  .hs-angle{ clip-path:polygon(14% 0%, 100% 0%, 100% 68%, 50% 100%, 0% 68%); }
-  .hs-bar{ border-radius:10px; }
-  .hs-circle{ border-radius:50%; }
+
+  .hs-hex{ z-index:1; clip-path:polygon(36.5% 48.5%, 40.5% 54%, 33.5% 79%, 23.5% 85%, 15.3% 74.5%, 17.2% 60.5%, 19.5% 54.5%); }
+  .hs-oval{ z-index:5; clip-path:polygon(45.4% 75.4%, 46.6% 69.1%, 46.8% 63.3%, 46% 58.4%, 44.3% 54.9%, 41.8% 53.2%, 38.8% 53.4%, 35.6% 55.6%, 32.4% 59.4%, 29.7% 64.6%, 27.6% 70.6%, 26.4% 76.9%, 26.2% 82.7%, 27% 87.6%, 28.7% 91.1%, 31.2% 92.8%, 34.2% 92.6%, 37.4% 90.4%, 40.6% 86.6%, 43.3% 81.4%); }
+  .hs-blade{ z-index:6; clip-path:polygon(44% 52%, 50.8% 52%, 51.8% 57%, 50.6% 90%, 48.8% 96%, 47.2% 98.5%, 45.5% 96%, 43.8% 90%, 42.8% 57%); }
+  .hs-angle{ z-index:4; clip-path:polygon(52.5% 55%, 55% 51.5%, 59.5% 52%, 63% 55%, 64.8% 62%, 64% 76.5%, 57% 84%, 53.5% 81%, 51.5% 75.5%, 51% 62%); }
+  .hs-bar{ z-index:3; clip-path:polygon(60.2% 47.5%, 64.5% 43.8%, 79.2% 84.2%, 72.6% 91.8%, 66.8% 85.2%); }
+  .hs-circle{ z-index:2; clip-path:polygon(84.1% 61.5%, 83.5% 65.1%, 81.6% 68.3%, 78.8% 70.7%, 75.3% 71.9%, 71.7% 71.9%, 68.2% 70.7%, 65.4% 68.3%, 63.5% 65.1%, 62.9% 61.5%, 63.5% 57.9%, 65.4% 54.7%, 68.2% 52.3%, 71.7% 51.1%, 75.3% 51.1%, 78.8% 52.3%, 81.6% 54.7%, 83.5% 57.9%); }
 
   /* spark burst on click */
   .kc-spark{
@@ -423,6 +439,7 @@
     .grid-2{ grid-template-columns:1fr; gap:64px; }
     .cc-grid{ grid-template-columns:1fr; }
     section.chapter{ padding:84px 0; }
+    .routecard{ margin:0 auto; }
 
     .hero{ flex-direction:column; align-items:stretch; min-height:auto; }
     .hero-portrait{
@@ -468,6 +485,7 @@
     .marquee-track{ animation:none; transform:none; flex-wrap:wrap; justify-content:center; row-gap:10px; }
     .marquee-track .item:last-child{ display:none; }
     .cur-dot, .cur-ring{ display:none !important; }
+    .emblem, .partner img, .btn{ transition:none; }
   }
 </style>
 </head>
@@ -558,6 +576,7 @@
   <span class="bg-num" aria-hidden="true">01</span>
   <div class="wrap grid-2">
     <div>
+      <img class="emblem" src="sevastopol-ai.png" alt="Логотип Sevastopol AI" width="66" height="66">
       <div class="eyebrow" style="color:var(--gold)"><span class="num">01</span> Открытие</div>
       <h2 class="split">Город, который отвечает</h2>
       <p class="copy reveal">Sevastopol AI — не справочник и не алгоритм. Это живой голос города: он знает, где сегодня лучше закат, куда пойти вечером и какой маршрут стоит открыть заново.</p>
@@ -581,17 +600,18 @@
           <img class="kc-photo" src="keychain.png" alt="Связка ключей City Code: Code, Privileges, Partner Circle, Events, Insights, Member Circle">
         </div>
         <div class="kc-hotspots">
-          <button type="button" class="kc-hot hs-hex"    data-key="code"       title="Code"       style="left:21%;  top:46%; width:14%; height:32%; --hc:#d7ff3d;" aria-label="01 Code"></button>
-          <button type="button" class="kc-hot hs-oval"   data-key="privileges" title="Privileges" style="left:34%;  top:55%; width:10%; height:36%; --hc:#1f3b5c;" aria-label="02 Privileges"></button>
-          <button type="button" class="kc-hot hs-blade"  data-key="partner"    title="Partner Circle" style="left:46%;  top:52%; width:5%;  height:43%; --hc:#c3f000;" aria-label="03 Partner Circle"></button>
-          <button type="button" class="kc-hot hs-angle"  data-key="events"     title="Events"     style="left:55.5%;top:52%; width:5%;  height:29%; --hc:#9a9a9a;" aria-label="04 Events"></button>
-          <button type="button" class="kc-hot hs-bar"    data-key="insights"   title="Insights"   style="left:61%;  top:46%; width:15%; height:38%; --hc:#0070f3;" aria-label="05 Insights"></button>
-          <button type="button" class="kc-hot hs-circle" data-key="member"     title="Member Circle" style="left:70%; top:47%; width:9%;  height:21%; --hc:#d9480f;" aria-label="06 Member Circle"></button>
+          <button type="button" class="kc-hot hs-hex"    data-key="code"       title="Code"            aria-label="01 Code" style="--hc:#d7ff3d;"></button>
+          <button type="button" class="kc-hot hs-oval"   data-key="privileges" title="Privileges"     aria-label="02 Privileges" style="--hc:#7fb4e8;"></button>
+          <button type="button" class="kc-hot hs-blade"  data-key="partner"    title="Partner Circle" aria-label="03 Partner Circle" style="--hc:#c3f000;"></button>
+          <button type="button" class="kc-hot hs-angle"  data-key="events"     title="Events"         aria-label="04 Events" style="--hc:#9a9a9a;"></button>
+          <button type="button" class="kc-hot hs-bar"    data-key="insights"   title="Insights"       aria-label="05 Insights" style="--hc:#1f86ff;"></button>
+          <button type="button" class="kc-hot hs-circle" data-key="member"     title="Member Circle"   aria-label="06 Member Circle" style="--hc:#ff7a1f;"></button>
         </div>
       </div>
       <div class="kc-hint">Нажми на ключ →</div>
     </div>
     <div>
+      <img class="emblem tile" src="CityCode.png" alt="Логотип City Code" width="62" height="62">
       <div class="eyebrow" style="color:var(--lime)"><span class="num">02</span> Принадлежность</div>
       <h2 class="split">Ключ, который открывает город иначе</h2>
       <p class="copy reveal">City Code — закрытая система, а не скидочная карта. Каждый раздел — отдельный ключ на одной связке: правила, привилегии, партнёры, события, данные о балансе и само сообщество.</p>
