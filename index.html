@@ -341,12 +341,16 @@ div[class*="keychain"] {
    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
    transition: transform .35s ease, filter .35s ease;
  }
- .kc-photo-wrap:hover .kc-photo,
- .kc-photo-wrap.is-active .kc-photo{ 
-   transform: scale(1.02);
-   filter: drop-shadow(0 0 30px var(--active-color)) drop-shadow(0 20px 40px rgba(0,0,0,0.6)); 
- }
-  .kc-tilt{ transition:transform .35s ease; }
+ .kc-photo-wrap:hover .kc-tilt,
+.kc-photo-wrap.is-active .kc-tilt{
+  filter:drop-shadow(0 0 30px var(--active-color))
+         drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+}
+  .kc-tilt{
+  position:relative;
+  width:100%;
+  transition:transform .35s ease;
+}
   .cc-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
   .cc-chip{
     font-family:var(--font-sans); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
@@ -359,38 +363,29 @@ div[class*="keychain"] {
   .cc-chip.active{ color:#0A0A0A; background:var(--lime); border-color:var(--lime); }
 
   /* ---- keychain hotspots ---- */
-  .kc-hot {
-  fill: transparent;
-  stroke: none;
-  cursor: pointer;
-  pointer-events: all;
-  -webkit-tap-highlight-color: transparent;
+  .kc-hotspots{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:10;
+  pointer-events:none;
+}
+
+.kc-hot{
+  fill:transparent;
+  stroke:none;
+  pointer-events:all;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
 
 .kc-hot:focus,
 .kc-hot:active,
-.kc-hot.is-active {
-  outline: none;
-  stroke: none;
+.kc-hot.is-active{
+  outline:none;
+  stroke:none;
 }
-
-  .kc-hotspots {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  overflow: visible;
-}
-
-    .kc-hot:focus,
-  .kc-hot:active,
-  .kc-hot.is-active {
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-  }
 
   /* ---- spark burst on hover ---- */
   .kc-spark{
@@ -593,44 +588,50 @@ div[class*="keychain"] {
   <div class="wrap grid-2 cc-grid">
     <div class="keychain-stage">
       <div class="kc-photo-wrap">
-        <div class="kc-tilt">
-          <img class="kc-photo" src="keychain.png" alt="City Code">
-        </div>
-        <div class="kc-hotspots">
-          <svg
-  class="kc-hotspots"
-  viewBox="0 0 1536 1024"
-  preserveAspectRatio="none"
->
-  <path
-    class="kc-hot"
-    data-key="code"
-    style="--hc:#d7ff3d"
-    d="M288.5 578L524 439L596.5 477.5L600.5 522.5L547.5 544L434 798L362 874.5L246 798L288.5 578Z"
-  />
 
-  <path
-    class="kc-hot"
-    data-key="privileges"
-    style="--hc:#1f3b5c"
-    d="M801.5 553L818.5 531V524L853 514.5L941.5 560.5L989 689L978 818.5L884 858L798 793L780.5 755L801.5 553Z"
-  />
+  <div class="kc-tilt">
 
-  <path
-    class="kc-hot"
-    data-key="partner"
-    style="--hc:#c3f000"
-    d="M867 502.5V519L940 560L989 689.5L981.5 760L1084 939.5L1107.5 947L1227 876L1233 859.5L964 450L944 445.5L900.5 477L867 502.5Z"
-  />
+    <img class="kc-photo" src="keychain.png" alt="City Code">
 
-  <path
-    class="kc-hot"
-    data-key="events"
-    style="--hc:#333333"
-    d="M1029.5 509L1018.5 528L1156 738.5L1173 742.5H1191L1219.5 734.5L1238 724L1259.5 704.5L1277.5 677L1284 647V624L1277.5 584.5L1263 555L1238 522L1204 494.5L1168.5 479L1135 471H1109.5L1074 479L1045.5 494.5L1029.5 509Z"
-  />
-</svg>
-        </div>
+    <svg
+      class="kc-hotspots"
+      viewBox="0 0 1536 1024"
+      preserveAspectRatio="none"
+    >
+
+      <path
+        class="kc-hot"
+        data-key="code"
+        style="--hc:#d7ff3d"
+        d="M288.5 578L524 439L596.5 477.5L600.5 522.5L547.5 544L434 798L362 874.5L246 798L288.5 578Z"
+      />
+
+      <path
+        class="kc-hot"
+        data-key="privileges"
+        style="--hc:#1f3b5c"
+        d="M801.5 553L818.5 531V524L853 514.5L941.5 560.5L989 689L978 818.5L884 858L798 793L780.5 755L801.5 553Z"
+      />
+
+      <path
+        class="kc-hot"
+        data-key="partner"
+        style="--hc:#c3f000"
+        d="M867 502.5V519L940 560L989 689.5L981.5 760L1084 939.5L1107.5 947L1227 876L1233 859.5L964 450L944 445.5L900.5 477L867 502.5Z"
+      />
+
+      <path
+        class="kc-hot"
+        data-key="events"
+        style="--hc:#333333"
+        d="M1029.5 509L1018.5 528L1156 738.5L1173 742.5H1191L1219.5 734.5L1238 724L1259.5 704.5L1277.5 677L1284 647V624L1277.5 584.5L1263 555L1238 522L1204 494.5L1168.5 479L1135 471H1109.5L1074 479L1045.5 494.5L1029.5 509Z"
+      />
+
+    </svg>
+
+  </div>
+
+</div>
       </div>
       <div class="kc-hint">Нажми на ключ →</div>
     </div>
