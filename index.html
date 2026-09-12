@@ -772,7 +772,7 @@
         if(targetEl){
           e.preventDefault();
           scrollToElement(targetEl);
-          if(history.pushState) history.pushState(null, '', href);
+          try{ history.pushState(null, '', href); }catch(_){ location.hash = href; }
         }
       }
       return;
