@@ -427,6 +427,28 @@ div[class*="keychain"] {
     font-family:var(--font-display); text-transform:uppercase; font-size:clamp(24px,3.6vw,40px);
     line-height:1.25; max-width:20ch; margin:0 auto; color:var(--ink);
   }
+  .thesis-scatter{ position:relative; min-height:560px; margin-bottom:40px; }
+.tf{ position:absolute; font-family:var(--font-display); text-transform:uppercase; line-height:1.05; white-space:nowrap; }
+.tf-big{ font-size:clamp(30px,4.6vw,54px); }
+.tf-sm{ font-family:var(--font-sans); font-weight:700; text-transform:none; font-size:clamp(15px,1.7vw,20px); letter-spacing:.01em; white-space:normal; max-width:26ch; }
+.tf-lime{ color:var(--lime); }
+.tf-pink{ color:var(--pink); }
+.tf-white{ color:var(--ink); }
+
+.tf1{ top:0%;   left:1%;  transform:rotate(-3deg); }
+.tf2{ top:7%;   left:40%; transform:rotate(1.5deg); }
+.tf3{ top:19%;  left:9%;  transform:rotate(2deg); }
+.tf4{ top:28%;  left:47%; transform:rotate(-1deg); }
+.tf5{ top:39%;  left:3%;  transform:rotate(-2deg); }
+.tf6{ top:50%;  left:43%; transform:rotate(1deg); }
+.tf7{ top:61%;  left:15%; transform:rotate(3deg); }
+.tf8{ top:74%;  left:30%; transform:rotate(-1.2deg); }
+
+@media (max-width:760px){
+  .thesis-scatter{ min-height:auto; }
+  .tf{ position:static !important; display:block; transform:none !important; white-space:normal; margin:0 0 12px; }
+  .tf-big{ font-size:clamp(26px,7vw,38px); }
+}
   .thesis .signature{ margin-top:26px; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:var(--ink-dim); text-transform:uppercase; }
 
 .mark{
@@ -667,9 +689,19 @@ div[class*="keychain"] {
 </section>  
   
 <!-- ================= THESIS ================= -->
+<!-- ================= THESIS ================= -->
 <section class="thesis">
   <div class="wrap">
-    <p class="split">Открытие рождает участие. Участие рождает сообщество. Сообщество рождает экономику. Экономика становится владением.</p>
+    <div class="thesis-scatter">
+      <div class="tf tf1 tf-big tf-lime split">Открытие</div>
+      <div class="tf tf2 tf-sm tf-white split">рождает участие.</div>
+      <div class="tf tf3 tf-big tf-pink split">Участие</div>
+      <div class="tf tf4 tf-sm tf-white split">рождает сообщество.</div>
+      <div class="tf tf5 tf-big tf-lime split">Сообщество</div>
+      <div class="tf tf6 tf-sm tf-white split">рождает экономику.</div>
+      <div class="tf tf7 tf-big tf-pink split">Экономика</div>
+      <div class="tf tf8 tf-big tf-white split" style="font-size:clamp(24px,3.6vw,42px);">становится владением.</div>
+    </div>
     <div class="signature">YURICHHUB — SEVASTOPOL AI · CITY CODE · CRIMEA RWA</div>
   </div>
 </section>
