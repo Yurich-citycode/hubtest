@@ -4,75 +4,113 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>YuRich — RWA / ЦФА</title>
+<meta name="description" content="Сборка выпуска ЦФА под площадку: созвон, разбор актива, конструкция, посадка на ОИС. YuRich — не оператор и не биржа.">
+<meta name="theme-color" content="#f3eee4">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f3eee4'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='20' font-weight='bold' text-anchor='middle' fill='%23111'%3EY%3C/text%3E%3Crect x='22' y='8' width='5' height='5' fill='%23ff2b8a'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Unbounded:wght@700;800&display=swap" rel="stylesheet">
 <style>
-  :root{--cream:#f3eee4;--ink:#111;--muted:#5a5a5a;--pink:#ff2b8a;--cyan:#3aa0c8;}
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,sans-serif;}
-  html{ opacity:0; transition:opacity .38s ease; }
+  :root{
+    --cream:#f3eee4;
+    --ink:#111;
+    --muted:#5a5a5a;
+    --pink:#ff2b8a;
+    --cyan:#3aa0c8;
+  }
+  *{ box-sizing:border-box; }
+  html{ opacity:0; transition:opacity .38s ease; scroll-behavior:smooth; }
   html.page-ready{ opacity:1; }
   html.page-leaving{ opacity:0; pointer-events:none; }
-  body{font-size:18px;line-height:1.45;}
+
+  html,body{ margin:0; background:var(--cream); color:var(--ink); font-family:Inter, system-ui, sans-serif; }
+  body{ font-size:18px; line-height:1.45; }
+
+  ::selection{ background:var(--pink); color:#fff; }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--pink); outline-offset:3px; }
+
   .back-btn{
-    position:fixed; top:20px; left:20px; z-index:50;
+    position:fixed; left:20px; bottom:20px; z-index:50;
     display:inline-flex; align-items:center; gap:7px;
-    font-family:Inter,sans-serif; font-size:12px; font-weight:700;
+    font-family:Inter, sans-serif; font-size:12px; font-weight:700;
     letter-spacing:.02em; text-decoration:none;
-    color:var(--ink); background:rgba(255,255,255,.75); backdrop-filter:blur(6px);
-    border:1px solid rgba(17,17,17,.15); padding:9px 15px 9px 11px; border-radius:40px;
-    transition:border-color .2s, color .2s, transform .2s;
+    color:var(--ink); background:rgba(255,255,255,.85);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    border:1px solid rgba(17,17,17,.15); border-radius:40px;
+    padding:10px 16px 10px 12px;
+    box-shadow:0 6px 20px rgba(17,17,17,.12);
+    transition:border-color .2s, color .2s, transform .2s, box-shadow .2s;
   }
-  .back-btn:hover{ border-color:var(--pink); color:var(--pink); transform:translateX(-3px); }
-  @media print{ .back-btn{ display:none; } }
-  @media (max-width:720px){ .back-btn{ top:12px; left:12px; padding:7px 12px 7px 10px; font-size:11px; } }
-  .page{max-width:900px;margin:0 auto;padding:36px 40px 64px;}
-  header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:48px;}
-  .logo{font-weight:800;font-size:22px;letter-spacing:-.02em;}
-  .logo i{display:inline-block;width:7px;height:18px;background:var(--pink);margin-left:3px;vertical-align:-2px;}
-  .tag{color:var(--muted);font-size:14px;}
-  h1{font-family:Unbounded,Inter,sans-serif;font-size:42px;line-height:1.05;letter-spacing:-.03em;margin:0 0 8px;font-weight:800;}
-  .glitch{font-family:Unbounded,Inter,sans-serif;font-size:64px;line-height:.95;font-weight:800;letter-spacing:-.04em;position:relative;display:inline-block;margin:0 0 28px;}
-  .glitch span{position:relative;z-index:2;}
-  .glitch:before,.glitch:after{content:attr(data-text);position:absolute;left:0;top:0;z-index:1;}
-  .glitch:before{color:var(--cyan);transform:translate(3px,2px);}
-  .glitch:after{color:var(--pink);transform:translate(-3px,-2px);}
-  .star{color:var(--pink);}
-  .lead{color:var(--muted);font-size:18px;max-width:42em;margin:0 0 36px;}
-  hr{border:0;border-top:1px solid #111;margin:36px 0;}
-  h2{font-size:26px;margin:0 0 16px;letter-spacing:-.02em;}
-  .row{display:grid;grid-template-columns:140px 1fr;gap:12px 20px;margin:0 0 14px;}
-  .who{color:var(--pink);font-weight:800;}
-  ul{margin:0 0 8px;padding:0;list-style:none;}
-  ul li{position:relative;padding:0 0 10px 22px;}
-  ul li:before{content:"";position:absolute;left:0;top:.55em;width:9px;height:9px;background:var(--pink);}
-  ul.dark li:before{background:#111;}
-  .step{display:grid;grid-template-columns:56px 1fr;gap:8px 16px;margin:0 0 22px;}
-  .num{color:var(--pink);font-weight:800;font-size:20px;}
-  .step h3{margin:0 0 6px;font-size:20px;}
-  .step p{margin:0;color:var(--muted);}
-  .packs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin:8px 0 28px;}
-  .pack{border-top:2px solid #111;padding-top:12px;}
-  .pack small{display:block;color:var(--pink);font-weight:800;letter-spacing:.04em;margin-bottom:6px;}
-  .pack strong{display:block;font-size:26px;margin-bottom:8px;}
-  .pack p{margin:0;color:var(--muted);font-size:16px;}
-  .note{background:#111;color:#fff;padding:18px 20px;margin:8px 0 32px;}
-  .note b{display:block;margin-bottom:6px;}
-  .start{color:var(--muted);margin-bottom:28px;}
-  .foot{color:var(--muted);font-size:16px;display:flex;gap:10px;align-items:flex-start;}
-  .foot .star{font-size:22px;line-height:1;font-weight:800;}
-  footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:13px;margin-top:48px;}
+  .back-btn:hover{ border-color:var(--pink); color:var(--pink); transform:translateY(-2px); box-shadow:0 10px 26px rgba(255,43,138,.18); }
+  .back-btn:active{ transform:translateY(0); }
+
+  .page{ max-width:900px; margin:0 auto; padding:36px 40px 96px; }
+  header{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-bottom:48px; }
+  .logo{ font-weight:800; font-size:22px; letter-spacing:-.02em; text-decoration:none; color:inherit; }
+  .logo i{ display:inline-block; width:7px; height:18px; background:var(--pink); margin-left:3px; vertical-align:-2px; }
+  .tag{ color:var(--muted); font-size:14px; }
+
+  h1{ font-family:Unbounded, Inter, sans-serif; font-size:42px; line-height:1.05; letter-spacing:-.03em; margin:0 0 8px; font-weight:800; }
+  .glitch{
+    font-family:Unbounded, Inter, sans-serif; font-size:64px; line-height:.95; font-weight:800;
+    letter-spacing:-.04em; position:relative; display:inline-block; margin:0 0 28px;
+  }
+  .glitch span{ position:relative; z-index:2; }
+  .glitch::before, .glitch::after{ content:attr(data-text); position:absolute; left:0; top:0; z-index:1; }
+  .glitch::before{ color:var(--cyan); transform:translate(3px,2px); }
+  .glitch::after{ color:var(--pink); transform:translate(-3px,-2px); }
+  .star{ color:var(--pink); }
+
+  .lead{ color:var(--muted); font-size:18px; max-width:42em; margin:0 0 36px; }
+  hr{ border:0; border-top:1px solid #111; margin:36px 0; }
+  h2{ font-size:26px; margin:0 0 16px; letter-spacing:-.02em; }
+
+  .row{ display:grid; grid-template-columns:140px 1fr; gap:12px 20px; margin:0 0 14px; }
+  .who{ color:var(--pink); font-weight:800; }
+
+  ul{ margin:0 0 8px; padding:0; list-style:none; }
+  ul li{ position:relative; padding:0 0 10px 22px; }
+  ul li::before{ content:""; position:absolute; left:0; top:.55em; width:9px; height:9px; background:var(--pink); }
+  ul.dark li::before{ background:#111; }
+
+  .step{ display:grid; grid-template-columns:56px 1fr; gap:8px 16px; margin:0 0 22px; }
+  .num{ color:var(--pink); font-weight:800; font-size:20px; }
+  .step h3{ margin:0 0 6px; font-size:20px; }
+  .step p{ margin:0; color:var(--muted); }
+
+  .packs{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:28px; margin:8px 0 28px; }
+  .pack{ border-top:2px solid #111; padding-top:12px; }
+  .pack small{ display:block; color:var(--pink); font-weight:800; letter-spacing:.04em; margin-bottom:6px; }
+  .pack strong{ display:block; font-size:26px; margin-bottom:8px; }
+  .pack p{ margin:0; color:var(--muted); font-size:16px; }
+
+  .note{ background:#111; color:#fff; padding:18px 20px; margin:8px 0 32px; }
+  .note b{ display:block; margin-bottom:6px; }
+  .start{ color:var(--muted); margin-bottom:28px; }
+
+  .foot{ color:var(--muted); font-size:16px; display:flex; gap:10px; align-items:flex-start; }
+  .foot .star{ font-size:22px; line-height:1; font-weight:800; }
+
+  footer{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; color:var(--muted); font-size:13px; margin-top:48px; }
+  footer a{ color:inherit; text-decoration:none; border-bottom:1px solid rgba(17,17,17,.25); transition:color .2s, border-color .2s; }
+  footer a:hover{ color:var(--pink); border-color:var(--pink); }
+
   @media print{
-    body{print-color-adjust:exact;-webkit-print-color-adjust:exact;}
-    .page{padding:16mm;max-width:none;}
-    h1{font-size:34px;}
-    .glitch{font-size:52px;}
+    .back-btn{ display:none; }
+    body{ print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+    .page{ padding:16mm; max-width:none; }
+    h1{ font-size:34px; }
+    .glitch{ font-size:52px; }
   }
   @media (max-width:720px){
-    .page{padding:24px 20px 48px;}
-    h1{font-size:32px;}
-    .glitch{font-size:42px;}
-    .row,.step,.packs{grid-template-columns:1fr;}
+    .page{ padding:24px 20px 96px; }
+    h1{ font-size:32px; }
+    .glitch{ font-size:42px; }
+    .row, .step, .packs{ grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ opacity:1; transition:none; scroll-behavior:auto; }
   }
 </style>
 </head>
@@ -80,7 +118,7 @@
   <a href="index.html" class="back-btn">← YurichHub</a>
   <div class="page">
     <header>
-      <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">YuRich<i></i></a>
+      <a href="index.html" class="logo">YuRich<i></i></a>
       <div class="tag">RWA → ЦФА</div>
     </header>
 
@@ -163,36 +201,44 @@
 
     <footer>
       <div>YuRich · условия конкретной сделки — в договоре</div>
-      <div>@PavelYuRichRWA</div>
+      <a href="https://t.me/PavelYuRichRWA" target="_blank" rel="noopener">@PavelYuRichRWA</a>
     </footer>
   </div>
 
 <script>
-  (function(){
-    var TRANS_MS = 380;
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){ document.documentElement.classList.add('page-ready'); });
-    });
-    document.addEventListener('click', function(e){
-      var a = e.target.closest('a');
-      if(!a) return;
-      var href = a.getAttribute('href');
-      if(!href || href.charAt(0) === '#') return;
-      if(a.target === '_blank' || a.hasAttribute('download')) return;
-      if(/^https?:\/\//i.test(href) && a.origin !== window.location.origin) return;
-      e.preventDefault();
-      document.documentElement.classList.remove('page-ready');
-      document.documentElement.classList.add('page-leaving');
-      setTimeout(function(){ window.location.href = href; }, TRANS_MS);
-    });
-    window.addEventListener('pageshow', function(e){
-      if(e.persisted){
-        document.documentElement.classList.remove('page-leaving');
-        document.documentElement.classList.add('page-ready');
-      }
-    });
-  })();
-</script>
+(function(){
+  'use strict';
+  var TRANS_MS = 380;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ document.documentElement.classList.add('page-ready'); });
+  });
+
+  document.addEventListener('click', function(e){
+    if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    var a = e.target.closest('a');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(!href) return;
+    if(a.target === '_blank' || a.hasAttribute('download')) return;
+    if(/^(mailto:|tel:)/i.test(href)) return;
+    if(href.charAt(0) === '#') return;
+    if(/^https?:\/\//i.test(href) && a.origin !== window.location.origin) return;
+    if(reduced) return;
+    e.preventDefault();
+    document.documentElement.classList.remove('page-ready');
+    document.documentElement.classList.add('page-leaving');
+    setTimeout(function(){ window.location.href = href; }, TRANS_MS);
+  });
+
+  window.addEventListener('pageshow', function(e){
+    if(e.persisted){
+      document.documentElement.classList.remove('page-leaving');
+      document.documentElement.classList.add('page-ready');
+    }
+  });
+})();
+</script>
 </body>
 </html>

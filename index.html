@@ -4,10 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YurichHub — Sevastopol AI × City Code × Crimea RWA</title>
+<meta name="description" content="YurichHub — экосистема Севастополя: Sevastopol AI открывает город, City Code превращает открытие в закрытое сообщество, Crimea RWA — в реальное владение.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='20' font-weight='bold' text-anchor='middle' fill='%23D7FF3D'%3EY%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
 <style>
+  /* ================= TOKENS ================= */
   :root{
     --bg:#0A0A0A;
     --ink:#F3F1EA;
@@ -20,140 +24,89 @@
     --font-display:'Anton', sans-serif;
     --font-sans:'Archivo', sans-serif;
   }
-  *{box-sizing:border-box;}
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
   html{ scroll-behavior:auto; }
 
-  /* ================= PAGE TRANSITIONS ================= */
-  html{
-    opacity:0;
-    transition:opacity .38s ease;
-  }
+  /* ================= PAGE FADE ================= */
+  html{ opacity:0; transition:opacity .38s ease; }
   html.page-ready{ opacity:1; }
   html.page-leaving{ opacity:0; pointer-events:none; }
 
   body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:var(--font-sans); -webkit-font-smoothing:antialiased;
+    background:var(--bg); color:var(--ink);
+    font-family:var(--font-sans);
+    -webkit-font-smoothing:antialiased;
     position:relative;
+    overflow-x:hidden;
   }
   body::before{
-    content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.4; mix-blend-mode:overlay;
+    content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+    opacity:.4; mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
     background-size:180px 180px;
   }
-  #scroll-content{ position:fixed; top:0; left:0; width:100%; will-change:transform; }
-  #scroll-spacer{ width:100%; pointer-events:none; }
-  @media (pointer:coarse){
-    #scroll-content{ position:static; }
-    #scroll-spacer{ display:none; }
-  }
-  .wrap{ max-width:1240px; margin:0 auto; padding:0 56px; position:relative; z-index:1; }
-  @media (max-width:860px){ .wrap{ padding:0 22px; } }
-  a{ color:inherit; }
+
   ::selection{ background:var(--lime); color:#0A0A0A; }
-  section.chapter,
-.hero {
-  background-color: #0A0A0A;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  isolation: isolate;
-}
+  img{ max-width:100%; }
+  a{ color:inherit; }
 
-.hero {
-  background-image: none;
-  background-color: #0A0A0A;
-}
-
-#sevastopol {
-  /* Убираем фоновую картинку, если она мылится */
-  background-image: none !important;
-  /* Делаем стильный глубокий фон с мягким свечением */
-  background: radial-gradient(circle at 85% 40%, rgba(0, 180, 255, 0.08) 0%, rgba(10, 10, 10, 0.98) 70%) !important;
-}
-
-#citycode {
-  /* Убираем растянутую мутную картинку */
-  background-image: none !important;
-  /* Ставим глубокий тёмный градиент с аккуратной зеленоватой/лаймовой подстветкой */
-  background: radial-gradient(circle at 80% 50%, rgba(215, 255, 61, 0.08) 0%, rgba(10, 10, 10, 0.98) 70%) !important;
-}
-
-#rwa,
-#course,
-#cfa {
-  background-image: none;
-}
-
-@media (max-width: 760px) {
-  .hero,
-  #sevastopol,
-  #citycode,
-  #rwa,
-  #course,
-  #cfa {
-    background-position: center top;
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--lime); outline-offset:3px;
   }
-}
-/* --- НАШИ ПРАВКИ --- */
 
-/* 1. Убираем белый/серый прямоугольник вокруг брелка */
-.keychain-stage,
-div[class*="keychain"] {
-  background: transparent !important;
-  box-shadow: none !important;
-}
-.keychain-stage::before,
-.keychain-stage::after {
-  display: none !important;
-}
+  .wrap{ max-width:1240px; margin:0 auto; padding:0 56px; position:relative; z-index:1; }
 
-/* 3. Скругляем и мягко вписываем скриншот Sevastopol AI */
-.roadmap-img,
-#sevastopol img {
-  border-radius:20px !important;
-  box-shadow:0 20px 50px rgba(0,0,0,.9), 0 0 30px rgba(215,255,61,.15) !important;
-  border:1px solid rgba(255,255,255,.1) !important;
-}
+  /* fixed-content smooth scroll (fine pointers with motion enabled only) */
+  #scroll-spacer{ display:none; width:100%; pointer-events:none; }
+  @media (pointer:fine) and (prefers-reduced-motion:no-preference){
+    #scroll-content{ position:fixed; top:0; left:0; width:100%; will-change:transform; }
+    #scroll-spacer{ display:block; }
+  }
 
   /* ================= NAV ================= */
   header{ position:relative; z-index:5; padding:28px 0 0; }
-  .nav{ display:flex; align-items:center; justify-content:space-between; }
+  .nav{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
   .brand{ font-family:var(--font-display); font-size:19px; letter-spacing:.01em; text-transform:uppercase; }
   .brand span{ color:var(--lime); }
   .navlinks{ display:flex; gap:34px; font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
-  .navlinks a{ text-decoration:none; color:var(--ink); opacity:.7; padding-bottom:3px; border-bottom:1px solid transparent; transition:opacity .2s, border-color .2s, color .2s; }
+  .navlinks a{
+    text-decoration:none; color:var(--ink); opacity:.7;
+    padding-bottom:3px; border-bottom:1px solid transparent;
+    transition:opacity .2s, border-color .2s, color .2s;
+  }
   .navlinks a:hover{ opacity:1; border-color:var(--lime); color:var(--lime); }
-  @media (max-width:760px){
-  .nav{flex-wrap:wrap;gap:12px}
-  .navlinks{display:flex;flex-wrap:wrap;gap:12px 16px;width:100%}
-}
 
   /* ================= HERO ================= */
-  .hero{ position:relative; min-height:100svh; display:flex; align-items:center; overflow:hidden; } @media (max-width:900px){   .hero{min-height:auto;padding:20px 0 40px}   .hero-portrait{position:relative;top:auto;right:auto;transform:none;width:min(92vw,420px);margin:24px auto 0;opacity:.9} }
-  .hero-bg{ position:absolute; top:-8%; left:0; right:0; height:118%; z-index:0; will-change:transform; }
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:center;
+    overflow:hidden; background-color:var(--bg); isolation:isolate;
+  }
+  .hero-bg{
+    position:absolute; top:-8%; left:0; right:0; height:118%; z-index:0;
+    will-change:transform;
+    background:radial-gradient(120% 140% at 15% 10%, #12100f 0%, #0A0A0A 55%);
+  }
   .hero-portrait{
     position:absolute; right:0; top:50%; transform:translateY(-50%);
-    width:min(52vw,640px); aspect-ratio:1/1; z-index:0; overflow:visible;
+    width:min(52vw,640px); aspect-ratio:1/1; z-index:0;
   }
   .hero-portrait .p-base{ width:100%; height:100%; display:block; object-fit:cover; }
-  .hero-portrait .p-glasses{
-    position:absolute; left:48.1%; top:12.8%; width:51.9%; height:28.75%;
-    display:block; will-change:transform;
-  }
-  @media (max-width:900px){ .hero-portrait{ width:78vw; right:-10%; opacity:.55; } }
   .hero-scrim{
     position:absolute; inset:0; z-index:1;
     background:linear-gradient(100deg, rgba(10,10,10,.97) 0%, rgba(10,10,10,.88) 34%, rgba(10,10,10,.35) 64%, rgba(10,10,10,.08) 100%);
   }
   .hero-inner{ position:relative; z-index:2; padding:90px 0 110px; width:100%; }
-  .hero .kicker{
+
+  .kicker{
     font-size:12px; font-weight:700; letter-spacing:.16em; color:var(--ink-dim); text-transform:uppercase;
-    display:inline-flex; align-items:center; gap:10px; margin-bottom:26px; opacity:0; animation:riseRotate .8s ease .05s forwards;
+    display:inline-flex; align-items:center; gap:10px; margin-bottom:26px;
     border:1px solid var(--line); padding:6px 14px 6px 10px;
+    opacity:0; animation:riseRotate .8s ease .05s forwards;
   }
-  @keyframes riseRotate{ from{ opacity:0; transform:translateY(10px) rotate(-2deg); } to{ opacity:1; transform:translateY(0) rotate(-2deg); } }
   .kicker .sq{ width:8px; height:8px; background:var(--lime); flex:none; }
+  @keyframes riseRotate{ from{ opacity:0; transform:translateY(10px) rotate(-2deg); } to{ opacity:1; transform:translateY(0) rotate(-2deg); } }
 
   .poster{ margin:0 0 30px; }
   .poster .row{ display:block; overflow:hidden; }
@@ -171,84 +124,58 @@ div[class*="keychain"] {
   }
   .poster .word.glitchw::before{ color:var(--pink); transform:translate(5px,4px); opacity:.75; }
   .poster .word.glitchw::after{ color:var(--lime); transform:translate(-5px,-3px); opacity:.5; }
-
   @keyframes slideup{ to{ opacity:1; transform:translateY(0); } }
   @keyframes rise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
 
   .hero .sub{
-    font-size:16px; line-height:1.7; color:#C4C4C4; max-width:48ch; margin:0 0 38px; font-weight:400;
+    font-size:16px; line-height:1.7; color:#C4C4C4; max-width:48ch; margin:0 0 38px;
     opacity:0; animation:rise .8s ease .6s forwards;
   }
+  .chaos-tag{
+    display:inline-block; font-weight:700; margin:0 .08em;
+    transition:transform .2s ease;
+  }
+
   .cta-row{ display:flex; gap:14px; flex-wrap:wrap; opacity:0; animation:rise .8s ease .72s forwards; }
+
   .btn{
-    display:inline-flex; align-items:center; gap:10px; padding:15px 26px; font-size:13px; letter-spacing:.03em;
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 26px; font-size:13px; letter-spacing:.03em;
     text-decoration:none; border:2px solid var(--lime); color:#0A0A0A; background:var(--lime);
-    font-weight:800; text-transform:uppercase; transition:transform .15s ease;
+    font-weight:800; text-transform:uppercase; white-space:nowrap;
+    transition:transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease,
+               background-color .18s ease, border-color .18s ease, color .18s ease;
   }
   .btn:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--pink); }
+  .btn:active{ transform:translate(1px,1px); box-shadow:none; }
   .btn.ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
-  .btn.ghost:hover{ border-color:var(--ink); box-shadow:4px 4px 0 var(--lime); }
-  .magnetic{ transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .15s ease, border-color .15s ease; }
+  .btn.ghost:hover{ border-color:var(--ink); box-shadow:4px 4px 0 var(--lime); color:var(--ink); }
+
   .tilt-l{ display:inline-block; transform:rotate(-2.5deg); }
   .tilt-r{ display:inline-block; transform:rotate(1.8deg); }
 
   .corner-coord{ position:absolute; z-index:2; font-size:11px; color:var(--ink-dim); font-variant-numeric:tabular-nums; letter-spacing:.03em; }
   .corner-coord.bl{ left:56px; bottom:26px; }
   .corner-coord.br{ right:56px; bottom:26px; text-align:right; }
-  @media (max-width:860px){ .corner-coord.bl{ left:22px; } .corner-coord.br{ right:22px; } }
-  @media (max-width:600px){ .corner-coord.br{ display:none; } }
 
   .stamp{ position:absolute; z-index:3; top:120px; right:66px; width:104px; height:104px; animation:spin 22s linear infinite; }
   .stamp text{ font-family:var(--font-sans); font-weight:700; font-size:7.6px; letter-spacing:.08em; fill:var(--ink-dim); text-transform:uppercase; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
-  @media (max-width:760px){ .stamp{ display:none; } }
-
-  /* ---- custom magnetic cursor ---- */
-  @media (pointer:fine){
-    body{ cursor:none; }
-    a, button{ cursor:none; }
-  }
-  .cur-dot, .cur-ring{
-    position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
-    border-radius:50%; transform:translate(-50%,-50%);
-    will-change:transform;
-  }
-  .cur-dot{ width:6px; height:6px; background:var(--lime); }
-  .cur-ring{
-    width:34px; height:34px; border:1px solid rgba(215,255,61,.6);
-    transition:width .2s ease, height .2s ease, border-color .2s ease, background .2s ease;
-  }
-  .cur-ring.hover{ width:64px; height:64px; background:rgba(215,255,61,.08); border-color:var(--lime); }
-  .cur-ring.hover-pink{ width:64px; height:64px; background:rgba(232,55,126,.1); border-color:var(--pink); }
-  @media (pointer:coarse){ .cur-dot, .cur-ring{ display:none; } }
-
-  /* ---- scroll reveal ---- */
-  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
-  .reveal.in-view{ opacity:1; transform:translateY(0); }
-  .reveal-2{ transition-delay:.12s; }
-
-  .rword{ display:inline-block; overflow:hidden; vertical-align:top; }
-  .rword-inner{ display:inline-block; transform:translateY(115%); transition:transform .7s cubic-bezier(.2,.8,.2,1); }
-  .split.revealed .rword-inner{ transform:translateY(0); }
-
-  /* ---- section wipe curtain ---- */
-  .wipe{
-    position:absolute; inset:0; z-index:6; transform-origin:left center;
-    pointer-events:none; transition:transform 1s cubic-bezier(.65,0,.15,1);
-  }
-  .wipe.wiped{ transform:scaleX(0); }
 
   .spotlight{
     position:absolute; inset:0; z-index:1; pointer-events:none;
     background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%), rgba(215,255,61,.10), transparent 60%);
   }
 
-  /* ---- status widget (inline, part of hero flow) ---- */
+  /* status widget */
   .status-card{
-    display:inline-flex; flex-direction:column; gap:8px; margin-top:34px; width:auto; max-width:280px;
+    display:inline-flex; flex-direction:column; gap:8px; margin-top:34px;
+    max-width:280px; text-decoration:none;
     border:1px solid rgba(232,55,126,.5); background:rgba(232,55,126,.05);
     padding:14px 18px; opacity:0; animation:riseRotate2 .8s ease .86s forwards;
+    transition:border-color .2s ease, background-color .2s ease, transform .2s ease;
   }
+  .status-card:hover{ border-color:var(--pink); background:rgba(232,55,126,.1); }
   @keyframes riseRotate2{ from{ opacity:0; transform:translateY(10px) rotate(-1.4deg); } to{ opacity:1; transform:translateY(0) rotate(-1.4deg); } }
   .status-card .sc-label{ font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--pink); }
   .status-card .sc-title{ font-family:var(--font-display); font-size:16px; text-transform:uppercase; color:var(--ink); }
@@ -256,173 +183,173 @@ div[class*="keychain"] {
   .status-card .sc-dot{ width:6px; height:6px; border-radius:50%; background:var(--pink); box-shadow:0 0 8px var(--pink); animation:pulse 1.8s ease-in-out infinite; }
   @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
 
-  /* ---- marquee ---- */
-  .marquee{ overflow:hidden; border-top:2px solid var(--line); border-bottom:2px solid var(--line); padding:18px 0; position:relative; z-index:1; background:var(--bg); }
-  .marquee-track{ display:flex; width:max-content; gap:0; animation:marquee 26s linear infinite; }
-  .marquee-track .item{ display:flex; align-items:center; gap:44px; font-family:var(--font-display); text-transform:uppercase; font-size:22px; white-space:nowrap; margin-right:44px; }
-  .marquee-track .item span.m-lime{ color:var(--lime); }
-  .marquee-track .item span.m-pink{ color:var(--pink); }
-  .marquee-track .item span.sep{ color:var(--ink-dim); font-size:14px; }
+  /* ================= MARQUEE ================= */
+  .marquee{
+    overflow:hidden; border-top:2px solid var(--line); border-bottom:2px solid var(--line);
+    padding:18px 0; position:relative; z-index:1; background:var(--bg);
+  }
+  .marquee-track{ display:flex; width:max-content; animation:marquee 26s linear infinite; }
+  .marquee-track .item{
+    display:flex; align-items:center; flex:none; gap:44px;
+    font-family:var(--font-display); text-transform:uppercase; font-size:22px;
+    white-space:nowrap; margin-right:44px;
+  }
+  .marquee-track .item .m-lime{ color:var(--lime); }
+  .marquee-track .item .m-pink{ color:var(--pink); }
+  .marquee-track .item .sep{ color:var(--ink-dim); font-size:14px; }
   @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
-  /* ---- giant background numerals ---- */
-  .bg-num{
-    position:absolute; z-index:0; top:-.15em; right:-.03em; font-family:var(--font-display);
-    font-size:clamp(240px,32vw,460px); line-height:1; color:transparent;
-    -webkit-text-stroke:1px rgba(243,241,234,.07); pointer-events:none; user-select:none;
+  /* ================= CHAPTER SHELL ================= */
+  section.chapter{
+    position:relative; padding:120px 0; border-top:2px solid var(--line);
+    background-color:var(--bg); isolation:isolate;
   }
-  section.chapter > .wrap{ position:relative; z-index:1; }
-  @media (max-width:760px){ .bg-num{ display:none; } }
+  #sevastopol{
+    background:radial-gradient(circle at 85% 40%, rgba(0,180,255,.08) 0%, rgba(10,10,10,.98) 70%);
+  }
+  #citycode{
+    background:radial-gradient(circle at 80% 50%, rgba(215,255,61,.08) 0%, rgba(10,10,10,.98) 70%);
+  }
 
-  /* ---- giant footer wordmark ---- */
-  .wordwall{
-    overflow:hidden; border-top:2px solid var(--line); padding:40px 0 10px; position:relative;
-  }
-  .wordwall .big{
-    font-family:var(--font-display); text-transform:uppercase; white-space:nowrap;
-    font-size:clamp(90px,16vw,220px); line-height:1; color:transparent;
-    -webkit-text-stroke:1.5px rgba(215,255,61,.5); letter-spacing:0; margin:0; text-align:center;
-  }
-  @media (max-width:700px){ .wordwall .big{ -webkit-text-stroke:1px rgba(215,255,61,.5); } }
-
-  /* ================= SECTION SHELL ================= */
-  section.chapter{ position:relative; padding:120px 0; border-top:2px solid var(--line); }
   .chapter .eyebrow{
     display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:700; letter-spacing:.14em;
-    text-transform:uppercase; margin-bottom:20px; border:1px solid var(--line); padding:5px 12px 5px 8px;
-    transform:rotate(-1.6deg);
+    text-transform:uppercase; margin-bottom:20px; border:1px solid var(--line);
+    padding:5px 12px 5px 8px; transform:rotate(-1.6deg);
   }
   .chapter .eyebrow .num{ font-family:var(--font-display); font-size:15px; }
   .chapter h2{
-    font-family:var(--font-display); text-transform:uppercase; font-size:clamp(34px,4.6vw,54px);
-    line-height:1; margin:0 0 26px; max-width:12ch; color:var(--ink);
+    font-family:var(--font-display); text-transform:uppercase;
+    font-size:clamp(34px,4.6vw,54px); line-height:1; margin:0 0 26px; max-width:12ch;
   }
   .chapter .copy{ font-size:15.5px; line-height:1.75; color:#C4C4C4; max-width:44ch; }
   .chapter .copy + .copy{ margin-top:16px; }
 
   .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
-  @media (max-width:900px){ .grid-2{ grid-template-columns:1fr; gap:64px; } }
 
-  /* ---- 01 Sevastopol AI graphic ---- */
-  .routecard {
-  position: relative;
-  aspect-ratio: auto;
-  max-width: 520px;
-  margin-left: auto;
-  transform: none;
-}
-.routecard img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+  /* section wipe curtain */
+  .wipe{
+    position:absolute; inset:0; z-index:6; transform-origin:left center;
+    pointer-events:none; transform:scaleX(1);
+    transition:transform 1s cubic-bezier(.65,0,.15,1);
+  }
+  .wipe.wiped{ transform:scaleX(0); }
+
+  /* giant background numerals */
+  .bg-num{
+    position:absolute; z-index:0; top:-.15em; right:-.03em; font-family:var(--font-display);
+    font-size:clamp(240px,32vw,460px); line-height:1; color:transparent;
+    -webkit-text-stroke:1px rgba(243,241,234,.07);
+    pointer-events:none; user-select:none;
+  }
+
+  /* ================= 01 SEVASTOPOL AI ================= */
+  .routecard{ position:relative; max-width:520px; margin-left:auto; }
+  .routecard img{
+    display:block; width:100%; height:auto; border-radius:20px;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 20px 50px rgba(0,0,0,.9), 0 0 30px rgba(215,255,61,.15);
+  }
 
   /* ================= 02 CITY CODE ================= */
   .cc-section{ background:radial-gradient(ellipse 1000px 560px at 76% 30%, rgba(215,255,61,.09), transparent 62%); }
   .cc-grid{ grid-template-columns:1.45fr 1fr; gap:40px; }
-  @media (max-width:900px){ .cc-grid{ grid-template-columns:1fr; } }
 
-  .keychain-stage{ position:relative; display:flex; flex-direction:column; align-items:center; perspective:900px; transform:rotate(-1.4deg) translateY(-10px); overflow:visible; }
-  .keychain-stage::before{
-    content:''; position:absolute; inset:-10%; z-index:0; pointer-events:none;
-    background:radial-gradient(circle, rgba(215,255,61,.20), rgba(232,55,126,.14) 50%, transparent 74%);
-    filter:blur(34px); animation:auraPulse 5s ease-in-out infinite;
+  .keychain-stage{
+    position:relative; display:flex; flex-direction:column; align-items:center;
+    perspective:900px; transform:rotate(-1.4deg) translateY(-10px);
   }
-  @keyframes auraPulse{ 0%,100%{ opacity:.55; transform:scale(1); } 50%{ opacity:1; transform:scale(1.1); } }
   .kc-photo-wrap{
-   position:relative; z-index:1; width:100%; max-width:1100px; transform-origin:50% 8%;
-   animation:idle-sway 7s ease-in-out infinite;
-   --active-color: rgba(215, 255, 61, 0.4);
- }
- @media (max-width:900px){ .kc-photo-wrap{max-width:100%} }
- @keyframes idle-sway{ 0%,100%{ transform:rotate(-1.6deg);} 50%{ transform:rotate(1.6deg);} }
- .kc-photo{
-   display:block; width:100%; height:auto;
-   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
-   transition: transform .35s ease, filter .35s ease;
- }
- .kc-photo-wrap:hover .kc-photo,
- .kc-photo-wrap.is-active .kc-photo{ 
-   transform: scale(1.02);
-   filter: drop-shadow(0 0 30px var(--active-color)) drop-shadow(0 20px 40px rgba(0,0,0,0.6)); 
- }
-  .kc-tilt{ transition:transform .35s ease; }
-  .cc-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
-  .cc-chip{
-    font-family:var(--font-sans); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
-    color:var(--ink-dim); border:1px solid var(--line); padding:7px 12px; display:inline-block;
-    background:transparent; cursor:pointer; transition:color .2s ease, border-color .2s ease, background .2s ease;
+    position:relative; z-index:1; width:100%; max-width:1100px;
+    transform-origin:50% 8%; animation:idle-sway 7s ease-in-out infinite;
+    --active-color:rgba(215,255,61,.4);
   }
-  .cc-chip:nth-child(odd){ transform:rotate(-2deg); }
-  .cc-chip:nth-child(even){ transform:rotate(1.5deg); }
-  .cc-chip:hover{ color:var(--ink); border-color:var(--lime); }
-  .cc-chip.active{ color:#0A0A0A; background:var(--lime); border-color:var(--lime); }
-
-  /* ---- keychain hotspots ---- */
-  .kc-hot {
-    position: absolute;
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
+  @keyframes idle-sway{ 0%,100%{ transform:rotate(-1.6deg);} 50%{ transform:rotate(1.6deg);} }
+  .kc-photo{
+    display:block; width:100%; height:auto;
+    filter:drop-shadow(0 20px 40px rgba(0,0,0,.6));
+    transition:transform .35s ease, filter .35s ease;
   }
-
-    .kc-hot:focus,
-  .kc-hot:active,
-  .kc-hot.is-active {
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
+  .kc-photo-wrap:hover .kc-photo,
+  .kc-photo-wrap.is-active .kc-photo{
+    transform:scale(1.02);
+    filter:drop-shadow(0 0 30px var(--active-color)) drop-shadow(0 20px 40px rgba(0,0,0,.6));
   }
+  .kc-tilt{ transition:transform .35s ease; transform-style:preserve-3d; }
 
-  .hs-hex{ clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-  .hs-oval{ border-radius: 50%; }
-  .hs-blade{ clip-path: polygon(22% 0%, 100% 0%, 78% 100%, 0% 100%); }
-  .hs-angle{ clip-path: polygon(14% 0%, 100% 0%, 100% 68%, 50% 100%, 0% 68%); }
-  .hs-bar{ border-radius: 10px; }
-  .hs-circle{ border-radius: 50%; }
+  .kc-hotspots{ position:absolute; inset:0; z-index:3; }
+  .kc-hot{
+    position:absolute; padding:0;
+    background:transparent; border:0; outline:0; box-shadow:none;
+    -webkit-tap-highlight-color:transparent; cursor:pointer;
+  }
+  .kc-hot.is-active{ filter:drop-shadow(0 0 8px var(--hc,#D7FF3D)); animation:hotPulse 1.7s ease-in-out infinite; }
+  .kc-hot:focus-visible{ outline:none; filter:drop-shadow(0 0 7px #FFFFFF) drop-shadow(0 0 2px #FFFFFF); }
+  @keyframes hotPulse{ 0%,100%{ opacity:1; } 50%{ opacity:.55; } }
+  .hs-hex{ clip-path:polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+  .hs-oval{ border-radius:50%; }
+  .hs-blade{ clip-path:polygon(22% 0%, 100% 0%, 78% 100%, 0% 100%); }
+  .hs-angle{ clip-path:polygon(14% 0%, 100% 0%, 100% 68%, 50% 100%, 0% 68%); }
+  .hs-bar{ border-radius:10px; }
+  .hs-circle{ border-radius:50%; }
 
-  /* ---- spark burst on hover ---- */
-  /* ---- spark burst on hover ---- */
+  /* spark burst on click */
   .kc-spark{
-    position: absolute; 
-    z-index: 100; 
-    width: 6px; 
-    height: 6px; 
-    border-radius: 50%;
-    pointer-events: none; 
-    will-change: transform, opacity;
-    background: radial-gradient(circle, #ffffff 0%, var(--sc, #d7ff3d) 60%, transparent 100%);
-    box-shadow: 0 0 8px var(--sc, #d7ff3d);
-    animation: sparkFly .65s cubic-bezier(.2,.8,.2,1) forwards;
+    position:absolute; z-index:100; width:6px; height:6px; border-radius:50%;
+    pointer-events:none; will-change:transform, opacity;
+    background:radial-gradient(circle, #fff 0%, var(--sc,#D7FF3D) 60%, transparent 100%);
+    box-shadow:0 0 8px var(--sc,#D7FF3D);
+    animation:sparkFly .65s cubic-bezier(.2,.8,.2,1) forwards;
   }
   @keyframes sparkFly{
-    0%{ transform: translate(0, 0) scale(1); opacity: 1; }
-    100%{ transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+    0%{ transform:translate(0,0) scale(1); opacity:1; }
+    100%{ transform:translate(var(--dx),var(--dy)) scale(0); opacity:0; }
   }
   .kc-hint{
-    text-align:center; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-    color:var(--ink-dim); margin-top:14px; opacity:.8;
+    text-align:center; font-size:11px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-dim); margin-top:14px;
   }
 
-  /* ---- keychain detail panel ---- */
   .kc-panel{
     display:flex; gap:16px; align-items:flex-start; margin-top:24px; padding:18px 20px;
     border:1px solid var(--line); background:rgba(255,255,255,.02); max-width:440px;
   }
   .kc-panel-num{ font-family:var(--font-display); font-size:30px; color:var(--lime); line-height:1; flex:none; }
-  .kc-panel-title{ font-family:var(--font-display); font-size:18px; text-transform:uppercase; color:var(--ink); margin-bottom:6px; }
+  .kc-panel-title{ font-family:var(--font-display); font-size:18px; text-transform:uppercase; margin-bottom:6px; }
   .kc-panel-desc{ font-size:13px; line-height:1.6; color:#C4C4C4; }
   @keyframes panelPulse{ 0%{ border-color:var(--lime); } 100%{ border-color:var(--line); } }
 
-  /* ---- 03 Crimea RWA ---- */
+  .cc-list{ display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; }
+  .cc-chip{
+    font-family:var(--font-sans); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--ink-dim); border:1px solid var(--line); padding:7px 12px;
+    background:transparent; cursor:pointer;
+    transition:color .2s ease, border-color .2s ease, background-color .2s ease, transform .15s ease;
+  }
+  .cc-chip:nth-child(odd){ transform:rotate(-2deg); }
+  .cc-chip:nth-child(even){ transform:rotate(1.5deg); }
+  .cc-chip:hover{ color:var(--ink); border-color:var(--lime); }
+  .cc-chip:active{ transform:scale(.96) rotate(0deg); }
+  .cc-chip.active{ color:#0A0A0A; background:var(--lime); border-color:var(--lime); }
+
+  /* partners */
+  .partners{ display:flex; gap:36px; align-items:flex-start; flex-wrap:wrap; margin-top:48px; }
+  .partner{ display:flex; flex-direction:column; gap:10px; max-width:200px; text-decoration:none; }
+  .partner img{
+    width:110px; height:110px; object-fit:cover; object-position:center;
+    display:block; border:0; border-radius:50%; background:transparent;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .partner:hover img{ transform:translateY(-3px) scale(1.04); box-shadow:0 10px 26px rgba(0,0,0,.5); }
+  .partner img.hermes{ width:168px; height:168px; object-position:center 12%; }
+  .partner img.nebank{ width:168px; height:168px; object-position:center 72%; }
+  .partner small{ color:var(--ink-dim); font-size:11px; letter-spacing:.08em; text-transform:uppercase; line-height:1.4; }
+
+  /* ================= 03 CRIMEA RWA ================= */
   .rwa-section{ text-align:center; }
   .rwa-section .wrap{ display:flex; flex-direction:column; align-items:center; }
   .network{ width:220px; height:140px; margin:0 auto 40px; opacity:.9; }
-  .rwa-section h2, .rwa-section .copy{ margin-left:auto; margin-right:auto; text-align:center; }
+  .rwa-section h2, .rwa-section .copy{ margin-left:auto; margin-right:auto; }
+  .rwa-section .copy{ text-align:center; }
   .soon{
     margin-top:30px; font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
     color:var(--bronze); border:1px solid rgba(201,138,78,.45); padding:10px 18px; display:inline-block;
@@ -431,82 +358,147 @@ div[class*="keychain"] {
 
   /* ================= THESIS ================= */
   .thesis{ padding:120px 0; text-align:center; border-top:2px solid var(--line); }
-  .thesis p{
-    font-family:var(--font-display); text-transform:uppercase; font-size:clamp(24px,3.6vw,40px);
-    line-height:1.25; max-width:20ch; margin:0 auto; color:var(--ink);
+  .thesis-scatter{ position:relative; max-width:1000px; margin:0 auto 40px; min-height:560px; }
+  .tf{ position:absolute; font-family:var(--font-display); text-transform:uppercase; line-height:1.05; white-space:nowrap; margin:0; }
+  .tf-big{ font-size:clamp(30px,4.6vw,54px); }
+  .tf-sm{ font-family:var(--font-sans); font-weight:700; text-transform:none; font-size:clamp(15px,1.7vw,20px); letter-spacing:.01em; white-space:normal; max-width:26ch; }
+  .tf-lime{ color:var(--lime); }
+  .tf-pink{ color:var(--pink); }
+  .tf-white{ color:var(--ink); }
+  .tf1{ top:0%;   left:1%;  transform:rotate(-3deg); }
+  .tf2{ top:7%;   left:40%; transform:rotate(1.5deg); }
+  .tf3{ top:19%;  left:9%;  transform:rotate(2deg); }
+  .tf4{ top:28%;  left:47%; transform:rotate(-1deg); }
+  .tf5{ top:39%;  left:3%;  transform:rotate(-2deg); }
+  .tf6{ top:50%;  left:43%; transform:rotate(1deg); }
+  .tf7{ top:61%;  left:15%; transform:rotate(3deg); }
+  .tf8{ top:74%;  left:30%; transform:rotate(-1.2deg); font-size:clamp(24px,3.6vw,42px); }
+  .signature{ margin-top:26px; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:var(--ink-dim); text-transform:uppercase; }
+
+  /* ================= WORDWALL / FOOTER ================= */
+  .wordwall{ overflow:hidden; border-top:2px solid var(--line); padding:40px 0 10px; position:relative; }
+  .wordwall .big{
+    font-family:var(--font-display); text-transform:uppercase; white-space:nowrap;
+    font-size:clamp(90px,16vw,220px); line-height:1; color:transparent; text-align:center; margin:0;
+    -webkit-text-stroke:1.5px rgba(215,255,61,.5); letter-spacing:0;
   }
-  .thesis-scatter{ position:relative; min-height:560px; margin-bottom:40px; }
-.tf{ position:absolute; font-family:var(--font-display); text-transform:uppercase; line-height:1.05; white-space:nowrap; }
-.tf-big{ font-size:clamp(30px,4.6vw,54px); }
-.tf-sm{ font-family:var(--font-sans); font-weight:700; text-transform:none; font-size:clamp(15px,1.7vw,20px); letter-spacing:.01em; white-space:normal; max-width:26ch; }
-.tf-lime{ color:var(--lime); }
-.tf-pink{ color:var(--pink); }
-.tf-white{ color:var(--ink); }
 
-.tf1{ top:0%;   left:1%;  transform:rotate(-3deg); }
-.tf2{ top:7%;   left:40%; transform:rotate(1.5deg); }
-.tf3{ top:19%;  left:9%;  transform:rotate(2deg); }
-.tf4{ top:28%;  left:47%; transform:rotate(-1deg); }
-.tf5{ top:39%;  left:3%;  transform:rotate(-2deg); }
-.tf6{ top:50%;  left:43%; transform:rotate(1deg); }
-.tf7{ top:61%;  left:15%; transform:rotate(3deg); }
-.tf8{ top:74%;  left:30%; transform:rotate(-1.2deg); }
-
-@media (max-width:760px){
-  .thesis-scatter{ min-height:auto; }
-  .tf{ position:static !important; display:block; transform:none !important; white-space:normal; margin:0 0 12px; }
-  .tf-big{ font-size:clamp(26px,7vw,38px); }
-}
-  .thesis .signature{ margin-top:26px; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:var(--ink-dim); text-transform:uppercase; }
-
-.mark{
-  width:92px;height:92px;object-fit:cover;object-position:center;
-  display:block;border:none;background:transparent;border-radius:50%;
-}
-.mark.round{width:110px;height:110px}
-.mark.hermes{width:168px;height:168px;object-position:center 12%}
-.mark.nebank{width:168px;height:168px;object-position:center 72%}
-.partners{display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap;margin-top:28px}
-.partner{display:flex;flex-direction:column;gap:10px;max-width:180px;text-decoration:none}
-.partner small{color:#8C8C8C;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-  
-  /* ================= FOOTER ================= */
-  footer{ border-top:2px solid var(--line); padding:36px 0; }
+  footer{ border-top:2px solid var(--line); padding:36px 0; position:relative; z-index:1; background:var(--bg); }
   .foot-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
   .foot-meta{ font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--ink-dim); text-transform:uppercase; }
-  .foot-links{ display:flex; gap:22px; }
-  .foot-links a{ font-size:12.5px; font-weight:700; text-decoration:none; color:var(--ink); opacity:.8; text-transform:uppercase; letter-spacing:.03em; }
+  .foot-links{ display:flex; gap:22px; flex-wrap:wrap; }
+  .foot-links a{
+    font-size:12.5px; font-weight:700; text-decoration:none; color:var(--ink); opacity:.8;
+    text-transform:uppercase; letter-spacing:.03em; transition:opacity .2s, color .2s;
+  }
   .foot-links a:hover{ opacity:1; color:var(--lime); }
+
+  /* ================= CUSTOM CURSOR ================= */
+  .cur-dot, .cur-ring{
+    position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
+    border-radius:50%; transform:translate(-50%,-50%);
+    will-change:transform; display:none;
+  }
+  html.has-cursor .cur-dot, html.has-cursor .cur-ring{ display:block; }
+  html.has-cursor body, html.has-cursor a, html.has-cursor button{ cursor:none; }
+  .cur-dot{ width:6px; height:6px; background:var(--lime); }
+  .cur-ring{
+    width:34px; height:34px; border:1px solid rgba(215,255,61,.6);
+    transition:width .2s ease, height .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .cur-ring.hover{ width:64px; height:64px; background:rgba(215,255,61,.08); border-color:var(--lime); }
+  .cur-ring.hover-pink{ width:64px; height:64px; background:rgba(232,55,126,.1); border-color:var(--pink); }
+
+  /* ================= SCROLL REVEAL ================= */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .reveal-2{ transition-delay:.12s; }
+
+  .rword{ display:inline-block; overflow:hidden; vertical-align:top; }
+  .rword-inner{ display:inline-block; transform:translateY(115%); transition:transform .7s cubic-bezier(.2,.8,.2,1); }
+  .split.revealed .rword-inner{ transform:translateY(0); }
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width:900px){
+    .grid-2{ grid-template-columns:1fr; gap:64px; }
+    .cc-grid{ grid-template-columns:1fr; }
+    section.chapter{ padding:84px 0; }
+
+    .hero{ flex-direction:column; align-items:stretch; min-height:auto; }
+    .hero-portrait{
+      position:relative; top:auto; right:auto; left:auto; transform:none;
+      width:min(76vw,380px); margin:24px auto 0;
+    }
+    .hero-scrim{
+      background:linear-gradient(180deg, rgba(10,10,10,.72) 0%, rgba(10,10,10,.5) 45%, rgba(10,10,10,.92) 100%);
+    }
+    .hero-inner{ padding:34px 0 72px; }
+    .stamp{ display:none; }
+  }
+  @media (max-width:860px){
+    .wrap{ padding:0 22px; }
+    .corner-coord.bl{ left:22px; }
+    .corner-coord.br{ right:22px; }
+  }
+  @media (max-width:760px){
+    .nav{ flex-wrap:wrap; gap:12px; }
+    .navlinks{ flex-wrap:wrap; gap:12px 16px; width:100%; }
+    .bg-num{ display:none; }
+    .thesis-scatter{ min-height:auto; }
+    .tf{ position:static !important; display:block; transform:none !important; white-space:normal; margin:0 0 12px; }
+  }
+  @media (max-width:700px){
+    .wordwall .big{ -webkit-text-stroke:1px rgba(215,255,61,.5); }
+  }
+  @media (max-width:600px){
+    .corner-coord.br{ display:none; }
+    .btn{ padding:13px 20px; font-size:12px; }
+  }
+
+  /* ================= REDUCED MOTION ================= */
+  @media (prefers-reduced-motion:reduce){
+    html{ opacity:1; transition:none; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .rword-inner{ transform:none; transition:none; }
+    .wipe{ display:none; }
+    .stamp, .kc-photo-wrap, .status-card .sc-dot, .kc-hot.is-active{ animation:none; }
+    .kicker, .poster .word, .hero .sub, .cta-row, .status-card{
+      animation:none !important; opacity:1 !important; transform:none;
+    }
+    .marquee-track{ animation:none; transform:none; flex-wrap:wrap; justify-content:center; row-gap:10px; }
+    .marquee-track .item:last-child{ display:none; }
+    .cur-dot, .cur-ring{ display:none !important; }
+  }
 </style>
 </head>
 <body>
-<div class="cur-dot" id="curDot"></div>
-<div class="cur-ring" id="curRing"></div>
+<div class="cur-dot" id="curDot" aria-hidden="true"></div>
+<div class="cur-ring" id="curRing" aria-hidden="true"></div>
 
 <div id="scroll-content">
 <header class="wrap">
   <div class="nav">
     <div class="brand">Yurich<span>Hub</span></div>
-    <nav class="navlinks">
-  <a href="#sevastopol" class="magnetic">Sevastopol AI</a>
-  <a href="#citycode" class="magnetic">City Code</a>
-  <a href="#rwa" class="magnetic">Crimea RWA</a>
-  <a href="course.html" class="magnetic">Курс</a>
-  <a href="cfa.html" class="magnetic">ЦФА</a>
-</nav>
+    <nav class="navlinks" aria-label="Основная навигация">
+      <a href="#sevastopol" class="magnetic">Sevastopol AI</a>
+      <a href="#citycode" class="magnetic">City Code</a>
+      <a href="#rwa" class="magnetic">Crimea RWA</a>
+      <a href="course.html" class="magnetic">Курс</a>
+      <a href="cfa.html" class="magnetic">ЦФА</a>
+    </nav>
   </div>
 </header>
 
 <!-- ================= HERO ================= -->
-<section class="hero">
-  <div class="hero-bg" id="heroBg" style="background:radial-gradient(120% 140% at 15% 10%, #12100f 0%, #0A0A0A 55%);"></div>
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroBg"></div>
   <div class="hero-portrait">
-  <img class="p-base" src="yurichhub.jpg">
-</div>
+    <img class="p-base" src="yurichhub.jpg" alt="YuRich Hub — портрет">
+  </div>
   <div class="hero-scrim"></div>
   <div class="spotlight" id="spotlight"></div>
 
-  <svg class="stamp" viewBox="0 0 104 104">
+  <svg class="stamp" viewBox="0 0 104 104" aria-hidden="true">
     <circle cx="52" cy="52" r="50" fill="none" stroke="#D7FF3D" stroke-width="1.4"/>
     <circle cx="52" cy="52" r="40" fill="none" stroke="#8C8C8C" stroke-width="1"/>
     <path id="stampCircle" d="M 52 12 A 40 40 0 1 1 51.9 12" fill="none"/>
@@ -520,7 +512,7 @@ div[class*="keychain"] {
       <span class="row"><span class="word lime">Войти.</span></span>
       <span class="row"><span class="word glitchw" data-text="Владеть.">Владеть.</span></span>
     </h1>
-    <p class="sub chaos-copy">
+    <p class="sub">
       <span class="chaos-tag" style="color:var(--gold); transform:rotate(-1.5deg);">Sevastopol AI</span> открывает город.
       <span class="chaos-tag" style="color:var(--lime); transform:rotate(1deg);">City Code</span> превращает открытие в
       <span class="chaos-tag" style="color:var(--lime);">закрытое сообщество</span>.
@@ -532,40 +524,38 @@ div[class*="keychain"] {
       <span class="tilt-r"><a href="course.html" class="btn ghost magnetic">Курс RWA / ЦФА</a></span>
       <span class="tilt-r"><a href="cfa.html" class="btn ghost magnetic">Сборка выпуска</a></span>
     </div>
-    <a href="course.html" class="status-card magnetic" style="text-decoration:none">
-  <div class="sc-label">Параллельно строится</div>
-  <div class="sc-title">YuRich RWA — курс</div>
-  <div class="sc-row"><span class="sc-dot"></span>Книга-курс · Telegram · глоссарий</div>
-</a>
+    <a href="course.html" class="status-card magnetic">
+      <div class="sc-label">Параллельно строится</div>
+      <div class="sc-title">YuRich RWA — курс</div>
+      <div class="sc-row"><span class="sc-dot" aria-hidden="true"></span>Книга-курс · Telegram · глоссарий</div>
+    </a>
   </div>
 
   <div class="corner-coord bl">44.6167° N · 33.5258° E</div>
   <div class="corner-coord br">SEVASTOPOL · BLACK SEA<br>EST. 2026</div>
 </section>
 
-<div class="marquee"><div class="marquee-track">
-  <div class="item">
-    <span class="m-lime">SEVASTOPOL AI</span><span class="sep">✦</span>
-    <span class="m-pink">CITY CODE</span><span class="sep">✦</span>
-    <span class="m-lime">CRIMEA RWA</span><span class="sep">✦</span>
-    <span class="m-pink">YURICH RWA COURSE</span><span class="sep">✦</span>
-    <span class="m-lime">SEVASTOPOL AI</span><span class="sep">✦</span>
-    <span class="m-pink">CITY CODE</span><span class="sep">✦</span>
-    <span class="m-lime">CRIMEA RWA</span><span class="sep">✦</span>
-    <span class="m-pink">YURICH RWA COURSE</span><span class="sep">✦</span>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="item">
+      <span class="m-lime">SEVASTOPOL AI</span><span class="sep">✦</span>
+      <span class="m-pink">CITY CODE</span><span class="sep">✦</span>
+      <span class="m-lime">CRIMEA RWA</span><span class="sep">✦</span>
+      <span class="m-pink">YURICH RWA COURSE</span><span class="sep">✦</span>
+    </div>
+    <div class="item">
+      <span class="m-lime">SEVASTOPOL AI</span><span class="sep">✦</span>
+      <span class="m-pink">CITY CODE</span><span class="sep">✦</span>
+      <span class="m-lime">CRIMEA RWA</span><span class="sep">✦</span>
+      <span class="m-pink">YURICH RWA COURSE</span><span class="sep">✦</span>
+    </div>
   </div>
-  <div class="item">
-    <span class="m-lime">SEVASTOPOL AI</span><span class="sep">✦</span>
-    <span class="m-pink">CITY CODE</span><span class="sep">✦</span>
-    <span class="m-lime">CRIMEA RWA</span><span class="sep">✦</span>
-    <span class="m-pink">YURICH RWA COURSE</span><span class="sep">✦</span>
-  </div>
-</div></div>
+</div>
 
 <!-- ================= 01 SEVASTOPOL AI ================= -->
 <section class="chapter" id="sevastopol">
-  <div class="wipe" style="background:var(--gold)"></div>
-  <span class="bg-num">01</span>
+  <div class="wipe" style="background:var(--gold)" aria-hidden="true"></div>
+  <span class="bg-num" aria-hidden="true">01</span>
   <div class="wrap grid-2">
     <div>
       <div class="eyebrow" style="color:var(--gold)"><span class="num">01</span> Открытие</div>
@@ -574,29 +564,29 @@ div[class*="keychain"] {
       <p class="copy reveal reveal-2">Каждый, кто заходит однажды — остаётся исследовать город снова. Так рождается первый круг людей, из которого вырастает всё остальное.</p>
       <a href="https://t.me/Sevastopol_AI" target="_blank" rel="noopener" class="btn ghost magnetic" style="margin-top:22px;">Открыть Sevastopol AI</a>
     </div>
-    <div class="routecard">
-  <img src="ai-screen.jpg" alt="Sevastopol AI">
-</div>
+    <div class="routecard reveal">
+      <img src="ai-screen.jpg" alt="Родмап Sevastopol AI: локации, маршруты, события, сообщество">
+    </div>
   </div>
 </section>
 
 <!-- ================= 02 CITY CODE ================= -->
 <section class="chapter cc-section" id="citycode">
-  <div class="wipe" style="background:var(--lime)"></div>
-  <span class="bg-num" style="color:transparent; -webkit-text-stroke-color:rgba(215,255,61,.10);">02</span>
+  <div class="wipe" style="background:var(--lime)" aria-hidden="true"></div>
+  <span class="bg-num" style="-webkit-text-stroke-color:rgba(215,255,61,.10);" aria-hidden="true">02</span>
   <div class="wrap grid-2 cc-grid">
     <div class="keychain-stage">
       <div class="kc-photo-wrap">
         <div class="kc-tilt">
-          <img class="kc-photo" src="keychain.png" alt="City Code">
+          <img class="kc-photo" src="keychain.png" alt="Связка ключей City Code: Code, Privileges, Partner Circle, Events, Insights, Member Circle">
         </div>
         <div class="kc-hotspots">
-          <button class="kc-hot hs-hex"    data-key="code"       style="left: 21%; top: 46%; width: 14%; height: 32%; --hc: #d7ff3d;"></button>
-<button class="kc-hot hs-oval"   data-key="privileges"  style="left: 34%; top: 55%; width: 10%; height: 36%; --hc: #1f3b5c;"></button>
-<button class="kc-hot hs-blade"  data-key="partner"     style="left: 46%; top: 52%; width: 5%;  height: 43%; --hc: #c3f000;"></button>
-<button class="kc-hot hs-angle"  data-key="events"      style="left: 55.5%; top: 52%; width: 5%; height: 29%; --hc: #333333;"></button>
-<button class="kc-hot hs-bar"    data-key="insights"    style="left: 61%; top: 46%; width: 15%; height: 38%; --hc: #0070f3;"></button>
-<button class="kc-hot hs-circle" data-key="member"      style="left: 70%; top: 47%; width: 9%;  height: 21%; --hc: #d9480f;"></button>
+          <button type="button" class="kc-hot hs-hex"    data-key="code"       title="Code"       style="left:21%;  top:46%; width:14%; height:32%; --hc:#d7ff3d;" aria-label="01 Code"></button>
+          <button type="button" class="kc-hot hs-oval"   data-key="privileges" title="Privileges" style="left:34%;  top:55%; width:10%; height:36%; --hc:#1f3b5c;" aria-label="02 Privileges"></button>
+          <button type="button" class="kc-hot hs-blade"  data-key="partner"    title="Partner Circle" style="left:46%;  top:52%; width:5%;  height:43%; --hc:#c3f000;" aria-label="03 Partner Circle"></button>
+          <button type="button" class="kc-hot hs-angle"  data-key="events"     title="Events"     style="left:55.5%;top:52%; width:5%;  height:29%; --hc:#9a9a9a;" aria-label="04 Events"></button>
+          <button type="button" class="kc-hot hs-bar"    data-key="insights"   title="Insights"   style="left:61%;  top:46%; width:15%; height:38%; --hc:#0070f3;" aria-label="05 Insights"></button>
+          <button type="button" class="kc-hot hs-circle" data-key="member"     title="Member Circle" style="left:70%; top:47%; width:9%;  height:21%; --hc:#d9480f;" aria-label="06 Member Circle"></button>
         </div>
       </div>
       <div class="kc-hint">Нажми на ключ →</div>
@@ -606,7 +596,7 @@ div[class*="keychain"] {
       <h2 class="split">Ключ, который открывает город иначе</h2>
       <p class="copy reveal">City Code — закрытая система, а не скидочная карта. Каждый раздел — отдельный ключ на одной связке: правила, привилегии, партнёры, события, данные о балансе и само сообщество.</p>
 
-      <div class="kc-panel" id="kcPanel">
+      <div class="kc-panel reveal" id="kcPanel" aria-live="polite">
         <div class="kc-panel-num" id="kcNum">01</div>
         <div class="kc-panel-body">
           <div class="kc-panel-title" id="kcTitle">Code</div>
@@ -614,34 +604,36 @@ div[class*="keychain"] {
         </div>
       </div>
 
-      <div class="cc-list reveal">
-        <button class="cc-chip" data-key="code">Code</button>
-        <button class="cc-chip" data-key="privileges">Privileges</button>
-        <button class="cc-chip" data-key="partner">Partner Circle</button>
-        <button class="cc-chip" data-key="events">Events</button>
-        <button class="cc-chip" data-key="insights">Insights</button>
-        <button class="cc-chip" data-key="member">Member Circle</button>
+      <div class="cc-list reveal" role="group" aria-label="Разделы City Code">
+        <button type="button" class="cc-chip" data-key="code" aria-pressed="false">Code</button>
+        <button type="button" class="cc-chip" data-key="privileges" aria-pressed="false">Privileges</button>
+        <button type="button" class="cc-chip" data-key="partner" aria-pressed="false">Partner Circle</button>
+        <button type="button" class="cc-chip" data-key="events" aria-pressed="false">Events</button>
+        <button type="button" class="cc-chip" data-key="insights" aria-pressed="false">Insights</button>
+        <button type="button" class="cc-chip" data-key="member" aria-pressed="false">Member Circle</button>
       </div>
     </div>
   </div>
-  <div class="partners">
-  <a class="partner magnetic" href="https://t.me/thehermesex" target="_blank" rel="noopener">
-    <img class="mark hermes" src="hermes.jpg" alt="Hermes">
-    <small>Hermes Exchange (Financial infra)</small>
-  </a>
-  <a class="partner magnetic" href="https://t.me/NeBankRobot?start=YURICH" target="_blank" rel="noopener">
-    <img class="mark nebank" src="nebank.jpg" alt="Небанк">
-    <small>Небанк App (Financial infra)</small>
-  </a>
-</div>
+  <div class="wrap">
+    <div class="partners">
+      <a class="partner magnetic" href="https://t.me/thehermesex" target="_blank" rel="noopener">
+        <img class="hermes" src="hermes.jpg" alt="Hermes Exchange">
+        <small>Hermes Exchange (Financial infra)</small>
+      </a>
+      <a class="partner magnetic" href="https://t.me/NeBankRobot?start=YURICH" target="_blank" rel="noopener">
+        <img class="nebank" src="nebank.jpg" alt="Небанк App">
+        <small>Небанк App (Financial infra)</small>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- ================= 03 CRIMEA RWA ================= -->
 <section class="chapter rwa-section" id="rwa">
-  <div class="wipe" style="background:var(--bronze)"></div>
-  <span class="bg-num" style="right:auto; left:-.03em; color:transparent; -webkit-text-stroke-color:rgba(201,138,78,.12);">03</span>
+  <div class="wipe" style="background:var(--bronze)" aria-hidden="true"></div>
+  <span class="bg-num" style="right:auto; left:-.03em; -webkit-text-stroke-color:rgba(201,138,78,.12);" aria-hidden="true">03</span>
   <div class="wrap">
-    <svg class="network reveal" viewBox="0 0 220 140" fill="none">
+    <svg class="network reveal" viewBox="0 0 220 140" fill="none" aria-hidden="true">
       <g stroke="#C98A4E" stroke-width="1" stroke-opacity="0.55">
         <line x1="30" y1="110" x2="90" y2="60"/>
         <line x1="90" y1="60" x2="150" y2="90"/>
@@ -667,8 +659,8 @@ div[class*="keychain"] {
 
 <!-- ================= 04 COURSE ================= -->
 <section class="chapter" id="course">
-  <div class="wipe" style="background:var(--pink)"></div>
-  <span class="bg-num">04</span>
+  <div class="wipe" style="background:var(--pink)" aria-hidden="true"></div>
+  <span class="bg-num" aria-hidden="true">04</span>
   <div class="wrap">
     <div class="eyebrow"><span class="num">04</span> выход</div>
     <h2 class="split">Курс и язык рынка</h2>
@@ -683,8 +675,8 @@ div[class*="keychain"] {
 
 <!-- ================= 05 CFA ================= -->
 <section class="chapter" id="cfa">
-  <div class="wipe" style="background:#2E3D52"></div>
-  <span class="bg-num">05</span>
+  <div class="wipe" style="background:#2E3D52" aria-hidden="true"></div>
+  <span class="bg-num" aria-hidden="true">05</span>
   <div class="wrap">
     <div class="eyebrow"><span class="num">05</span> для бизнеса</div>
     <h2 class="split">Сборка выпуска ЦФА</h2>
@@ -694,27 +686,26 @@ div[class*="keychain"] {
       <a href="https://t.me/PavelYuRichRWA" target="_blank" rel="noopener" class="btn ghost magnetic">Написать</a>
     </div>
   </div>
-</section>  
-  
-<!-- ================= THESIS ================= -->
+</section>
+
 <!-- ================= THESIS ================= -->
 <section class="thesis">
   <div class="wrap">
     <div class="thesis-scatter">
-      <div class="tf tf1 tf-big tf-lime split">Открытие</div>
-      <div class="tf tf2 tf-sm tf-white split">рождает участие.</div>
-      <div class="tf tf3 tf-big tf-pink split">Участие</div>
-      <div class="tf tf4 tf-sm tf-white split">рождает сообщество.</div>
-      <div class="tf tf5 tf-big tf-lime split">Сообщество</div>
-      <div class="tf tf6 tf-sm tf-white split">рождает экономику.</div>
-      <div class="tf tf7 tf-big tf-pink split">Экономика</div>
-      <div class="tf tf8 tf-big tf-white split" style="font-size:clamp(24px,3.6vw,42px);">становится владением.</div>
+      <p class="tf tf1 tf-big tf-lime split">Открытие</p>
+      <p class="tf tf2 tf-sm tf-white split">рождает участие.</p>
+      <p class="tf tf3 tf-big tf-pink split">Участие</p>
+      <p class="tf tf4 tf-sm tf-white split">рождает сообщество.</p>
+      <p class="tf tf5 tf-big tf-lime split">Сообщество</p>
+      <p class="tf tf6 tf-sm tf-white split">рождает экономику.</p>
+      <p class="tf tf7 tf-big tf-pink split">Экономика</p>
+      <p class="tf tf8 tf-big tf-white split">становится владением.</p>
     </div>
     <div class="signature">YURICHHUB — SEVASTOPOL AI · CITY CODE · CRIMEA RWA</div>
   </div>
 </section>
 
-<div class="wordwall"><h3 class="big">YURICHHUB · YURICHHUB ·</h3></div>
+<div class="wordwall" aria-hidden="true"><p class="big">YURICHHUB · YURICHHUB ·</p></div>
 
 <footer>
   <div class="wrap foot-row">
@@ -727,39 +718,47 @@ div[class*="keychain"] {
   </div>
 </footer>
 </div><!-- /#scroll-content -->
-<div id="scroll-spacer"></div>
+<div id="scroll-spacer" aria-hidden="true"></div>
 
 <script>
 (function(){
-  /* ---------- page fade transitions ---------- */
-  var TRANS_MS = 420;
+  'use strict';
+
+  var isCoarse  = window.matchMedia('(pointer: coarse)').matches;
+  var reduced   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TRANS_MS  = 380;
+
+  /* ================= page fade transitions ================= */
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){ document.documentElement.classList.add('page-ready'); });
   });
 
+  function isModified(e){ return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0; }
+
   document.addEventListener('click', function(e){
+    if(isModified(e)) return;
     var a = e.target.closest('a');
     if(!a) return;
     var href = a.getAttribute('href');
     if(!href) return;
-    if(a.target === '_blank' || a.hasAttribute('download')) return; // внешние/новая вкладка — без фейда
-    if(/^https?:\/\//i.test(href) && a.origin !== window.location.origin) return; // внешние ссылки — без фейда
+    if(a.target === '_blank' || a.hasAttribute('download')) return;
+    if(/^(mailto:|tel:)/i.test(href)) return;
+    if(/^https?:\/\//i.test(href) && a.origin !== window.location.origin) return;
 
-    // якорь на этой же странице (#sevastopol и т.д.) — свой контент внутри position:fixed
-    // блока плавного скролла, родной scrollIntoView там не работает, скроллим вручную
-    if(href.charAt(0) === '#' && href.length > 1){
-      var targetEl = document.querySelector(href);
-      if(targetEl){
-        e.preventDefault();
-        var liveOffset = (typeof current === 'number') ? current : window.scrollY;
-        var destY = targetEl.getBoundingClientRect().top + liveOffset;
-        window.scrollTo({ top: destY, behavior:'auto' }); // дальше твой raf-луп сам доведёт плавно
-        history.pushState(null, '', href);
+    // same-page anchor
+    if(href.charAt(0) === '#'){
+      if(href.length > 1){
+        var targetEl = document.querySelector(href);
+        if(targetEl){
+          e.preventDefault();
+          scrollToElement(targetEl);
+          if(history.pushState) history.pushState(null, '', href);
+        }
       }
       return;
     }
-    if(href.charAt(0) === '#') return;
 
+    if(reduced){ return; } // let the browser navigate instantly
     e.preventDefault();
     document.documentElement.classList.remove('page-ready');
     document.documentElement.classList.add('page-leaving');
@@ -767,98 +766,137 @@ div[class*="keychain"] {
   });
 
   window.addEventListener('pageshow', function(e){
-    if(e.persisted){ // возврат кнопкой "назад" браузера из кэша
+    if(e.persisted){
       document.documentElement.classList.remove('page-leaving');
       document.documentElement.classList.add('page-ready');
     }
   });
 
-  var isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  /* ================= inertial smooth scroll ================= */
+  var content = document.getElementById('scroll-content');
+  var spacer  = document.getElementById('scroll-spacer');
+  var useSmooth = !isCoarse && !reduced && content && spacer;
+  var current = window.scrollY;
+  var target  = window.scrollY;
 
-  /* ---------- custom cursor ---------- */
-  var dot = document.getElementById('curDot');
+  function elementY(el){
+    return el.getBoundingClientRect().top + window.scrollY;
+  }
+  function scrollToElement(el){
+    var y = elementY(el);
+    if(useSmooth){
+      window.scrollTo(0, y); // move native scrollbar at once; the rAF loop eases the content
+      target = y;
+    } else {
+      window.scrollTo({ top:y, behavior:reduced ? 'auto' : 'smooth' });
+    }
+  }
+
+  if(useSmooth){
+    function setSpacer(){ spacer.style.height = content.getBoundingClientRect().height + 'px'; }
+    setSpacer();
+    if('ResizeObserver' in window){
+      new ResizeObserver(setSpacer).observe(content);
+    } else {
+      window.addEventListener('resize', setSpacer);
+      window.addEventListener('load', setSpacer);
+      if(document.fonts && document.fonts.ready) document.fonts.ready.then(setSpacer);
+    }
+    window.addEventListener('scroll', function(){ target = window.scrollY; }, { passive:true });
+
+    var heroBg  = document.getElementById('heroBg');
+    var bgNums  = document.querySelectorAll('.bg-num');
+
+    (function raf(){
+      current += (target - current) * 0.095;
+      if(Math.abs(target - current) < 0.08) current = target;
+      content.style.transform = 'translate3d(0,' + (-current) + 'px,0)';
+      if(heroBg) heroBg.style.transform = 'translate3d(0,' + (current * 0.18) + 'px,0)';
+      bgNums.forEach(function(n){ n.style.transform = 'translate3d(0,' + (current * -0.06) + 'px,0)'; });
+      requestAnimationFrame(raf);
+    })();
+
+    // deep-link anchor on first load (native anchor jump does not work inside fixed content)
+    if(location.hash && location.hash.length > 1){
+      var seekHash = function(){
+        var deep = document.querySelector(location.hash);
+        if(!deep) return;
+        var y = elementY(deep);
+        window.scrollTo(0, y);
+        current = target = y;
+      };
+      requestAnimationFrame(seekHash);
+      window.addEventListener('load', function(){ requestAnimationFrame(seekHash); });
+    }
+  }
+
+  /* ================= custom cursor ================= */
+  var dot  = document.getElementById('curDot');
   var ring = document.getElementById('curRing');
-  if(!isCoarse && dot && ring){
-    var mx=innerWidth/2, my=innerHeight/2, rx=mx, ry=my;
-    window.addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; });
+  if(!isCoarse && !reduced && dot && ring){
+    document.documentElement.classList.add('has-cursor');
+    var mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
+    window.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; }, { passive:true });
     (function loop(){
       dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
-      rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
       ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
       requestAnimationFrame(loop);
     })();
     document.querySelectorAll('a, button, .kc-photo-wrap').forEach(function(el){
       el.addEventListener('mouseenter', function(){
-        var isPink = el.closest('.status-card') || el.closest('#citycode');
-        ring.classList.add(isPink ? 'hover-pink' : 'hover');
+        var pink = el.closest('.status-card') || el.closest('#citycode');
+        ring.classList.add(pink ? 'hover-pink' : 'hover');
       });
-      el.addEventListener('mouseleave', function(){ ring.classList.remove('hover','hover-pink'); });
+      el.addEventListener('mouseleave', function(){ ring.classList.remove('hover', 'hover-pink'); });
     });
   }
 
-  /* ---------- magnetic pull ---------- */
-  if(!isCoarse){
+  /* ================= magnetic pull ================= */
+  if(!isCoarse && !reduced){
     document.querySelectorAll('.magnetic').forEach(function(el){
       el.addEventListener('mousemove', function(e){
         var r = el.getBoundingClientRect();
-        var dx = (e.clientX - (r.left + r.width/2)) * 0.35;
-        var dy = (e.clientY - (r.top + r.height/2)) * 0.35;
+        var dx = (e.clientX - (r.left + r.width / 2)) * 0.35;
+        var dy = (e.clientY - (r.top + r.height / 2)) * 0.35;
         el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
       });
       el.addEventListener('mouseleave', function(){ el.style.transform = ''; });
     });
   }
 
-  /* ---------- inertial smooth scroll ---------- */
-  var content = document.getElementById('scroll-content');
-  var spacer = document.getElementById('scroll-spacer');
-  var current = window.scrollY, target = window.scrollY;
-  if(!isCoarse && content && spacer){
-    function setSpacer(){ spacer.style.height = content.getBoundingClientRect().height + 'px'; }
-    setSpacer();
-    window.addEventListener('resize', setSpacer);
-    window.addEventListener('load', setSpacer);
-    setTimeout(setSpacer, 600);
-    window.addEventListener('scroll', function(){ target = window.scrollY; });
-
-    var heroBg = document.getElementById('heroBg');
-    var bgNums = document.querySelectorAll('.bg-num');
-
-    (function raf(){
-      current += (target - current) * 0.095;
-      content.style.transform = 'translate3d(0,' + (-current) + 'px,0)';
-
-      if(heroBg){ heroBg.style.transform = 'translate3d(0,' + (current * 0.18) + 'px,0)'; }
-      bgNums.forEach(function(n){ n.style.transform = 'translate3d(0,' + (current * -0.06) + 'px,0)'; });
-
-      requestAnimationFrame(raf);
-    })();
-  }
-
-  /* ---------- scroll reveal (fade-up) ---------- */
-  var revealItems = document.querySelectorAll('.reveal');
+  /* ================= scroll reveal ================= */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(en.isIntersecting){ en.target.classList.add('in-view'); io.unobserve(en.target); }
     });
-  }, { threshold:0.18 });
-  revealItems.forEach(function(el){ io.observe(el); });
+  }, { threshold:0.15 });
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-  /* ---------- word-split reveal for headings ---------- */
+  /* word-split reveal for headings */
   document.querySelectorAll('.split').forEach(function(el){
     var words = el.textContent.trim().split(/\s+/);
     el.innerHTML = words.map(function(w, i){
-      return '<span class="rword"><span class="rword-inner" style="transition-delay:' + (i*0.05) + 's">' + w + '</span></span>';
+      return '<span class="rword"><span class="rword-inner" style="transition-delay:' + (i * 0.05) + 's">' + w + '</span></span>';
     }).join(' ');
   });
   var splitIo = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(en.isIntersecting){ en.target.classList.add('revealed'); splitIo.unobserve(en.target); }
     });
-  }, { threshold:0.35 });
+  }, { threshold:0.3 });
   document.querySelectorAll('.split').forEach(function(el){ splitIo.observe(el); });
 
-  /* ---------- City Code interactive keychain ---------- */
+  /* section wipe curtains */
+  var wipeIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      en.target.classList.toggle('wiped', en.isIntersecting);
+    });
+  }, { threshold:0.12 });
+  document.querySelectorAll('section.chapter').forEach(function(el){ wipeIo.observe(el); });
+
+  /* ================= City Code keychain ================= */
   var kcData = {
     code:       { n:'01', title:'Code',           desc:'Свод правил системы: что можно, что нельзя, как устроен доступ и на каких условиях можно потерять членство.' },
     privileges: { n:'02', title:'Privileges',      desc:'Привилегии участников у партнёров — фиксированная скидка или бонус на реальные покупки в сети.' },
@@ -867,55 +905,65 @@ div[class*="keychain"] {
     insights:   { n:'05', title:'Insights',        desc:'Баланс спроса и пропускной способности партнёров — данные, которые держат систему живой.' },
     member:     { n:'06', title:'Member Circle',   desc:'Сообщество участников, которые формируют спрос и строят город вместе.' }
   };
-  var kcNum = document.getElementById('kcNum');
+  var kcNum   = document.getElementById('kcNum');
   var kcTitle = document.getElementById('kcTitle');
-  var kcDesc = document.getElementById('kcDesc');
+  var kcDesc  = document.getElementById('kcDesc');
   var kcPanel = document.getElementById('kcPanel');
   var photoWrap = document.querySelector('.kc-photo-wrap');
 
-  function spawnSparks(e, color, count){
+  function spawnSparks(x, y, color, count){
     if(!photoWrap) return;
     var rect = photoWrap.getBoundingClientRect();
-    var lx = e.clientX - rect.left;
-    var ly = e.clientY - rect.top;
-
-    for(var i=0; i<count; i++){
+    var lx = x - rect.left;
+    var ly = y - rect.top;
+    for(var i = 0; i < count; i++){
       var s = document.createElement('span');
       s.className = 'kc-spark';
       var angle = Math.random() * Math.PI * 2;
       var dist = 25 + Math.random() * 45;
       s.style.left = lx + 'px';
-      s.style.top = ly + 'px';
+      s.style.top  = ly + 'px';
       s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
       s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
       s.style.setProperty('--sc', color);
       photoWrap.appendChild(s);
-      (function(el){ setTimeout(function(){ el.remove(); }, 650); })(s);
+      (function(node){ setTimeout(function(){ node.remove(); }, 650); })(s);
     }
   }
 
   function activateKey(key, e){
     var d = kcData[key];
     if(!d) return;
-    if(kcNum) kcNum.textContent = d.n;
-    if(kcTitle) kcTitle.textContent = d.title;
-    if(kcDesc) kcDesc.textContent = d.desc;
+    kcNum.textContent   = d.n;
+    kcTitle.textContent = d.title;
+    kcDesc.textContent  = d.desc;
     if(kcPanel){
       kcPanel.style.animation = 'none';
       void kcPanel.offsetWidth;
-      kcPanel.style.animation = 'panelPulse .4s ease';
+      kcPanel.style.animation = reduced ? '' : 'panelPulse .4s ease';
     }
 
     document.querySelectorAll('.kc-hot, .cc-chip').forEach(function(el){
-      el.classList.toggle('active', el.getAttribute('data-key') === key);
+      var on = el.getAttribute('data-key') === key;
+      el.classList.toggle('active', on);
+      el.classList.toggle('is-active', on && el.classList.contains('kc-hot'));
+      if(el.classList.contains('cc-chip')) el.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
 
     var activeBtn = document.querySelector('.kc-hot[data-key="' + key + '"]');
     if(activeBtn && photoWrap){
-      var color = getComputedStyle(activeBtn).getPropertyValue('--hc').trim() || '#D7FF3D';
+      var color = (getComputedStyle(activeBtn).getPropertyValue('--hc') || '').trim() || '#D7FF3D';
       photoWrap.style.setProperty('--active-color', color);
       photoWrap.classList.add('is-active');
-      if(e) spawnSparks(e, color, 12);
+      if(e && !reduced){
+        var x = e.clientX, y = e.clientY;
+        if(e.detail === 0){ // keyboard activation — burst from the hotspot center
+          var br = activeBtn.getBoundingClientRect();
+          x = br.left + br.width / 2;
+          y = br.top + br.height / 2;
+        }
+        spawnSparks(x, y, color, 12);
+      }
     }
   }
 
@@ -924,43 +972,30 @@ div[class*="keychain"] {
   });
   activateKey('code');
 
-  var wipeIo = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      var w = en.target.querySelector('.wipe');
-      if(!w) return;
-      if(en.isIntersecting){ w.classList.add('wiped'); }
-      else{ w.classList.remove('wiped'); }
-    });
-  }, { threshold:0.12 });
-  document.querySelectorAll('section.chapter').forEach(function(el){ wipeIo.observe(el); });
-
-  /* ---------- cursor spotlight in hero ---------- */
-  var heroEl2 = document.querySelector('.hero');
-  var spot = document.getElementById('spotlight');
-  if(heroEl2 && spot){
-    heroEl2.addEventListener('mousemove', function(e){
-      var r = heroEl2.getBoundingClientRect();
-      var x = ((e.clientX - r.left) / r.width) * 100;
-      var y = ((e.clientY - r.top) / r.height) * 100;
-      spot.style.setProperty('--mx', x + '%');
-      spot.style.setProperty('--my', y + '%');
-    });
+  /* ================= hero spotlight ================= */
+  var heroEl = document.querySelector('.hero');
+  var spot   = document.getElementById('spotlight');
+  if(heroEl && spot && !isCoarse){
+    heroEl.addEventListener('mousemove', function(e){
+      var r = heroEl.getBoundingClientRect();
+      spot.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      spot.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    }, { passive:true });
   }
 
-  /* ---------- tilt on keychain photo ---------- */
+  /* ================= keychain 3D tilt ================= */
   var stage = document.querySelector('.keychain-stage');
   var photo = document.querySelector('.kc-tilt');
-  if(stage && photo){
+  if(stage && photo && !isCoarse && !reduced){
     stage.addEventListener('mousemove', function(e){
       var r = stage.getBoundingClientRect();
       var px = (e.clientX - r.left) / r.width - 0.5;
       var py = (e.clientY - r.top) / r.height - 0.5;
       photo.style.transform = 'scale(1.02) rotateX(' + (py * -10) + 'deg) rotateY(' + (px * 12) + 'deg)';
-    });
+    }, { passive:true });
     stage.addEventListener('mouseleave', function(){ photo.style.transform = ''; });
   }
 })();
 </script>
-
 </body>
 </html>
