@@ -360,14 +360,28 @@ div[class*="keychain"] {
 
   /* ---- keychain hotspots ---- */
   .kc-hot {
-    position: absolute;
-    background: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
+  fill: transparent;
+  stroke: none;
+  cursor: pointer;
+  pointer-events: all;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kc-hot:focus,
+.kc-hot:active,
+.kc-hot.is-active {
+  outline: none;
+  stroke: none;
+}
+
+  .kc-hotspots {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  overflow: visible;
+}
 
     .kc-hot:focus,
   .kc-hot:active,
@@ -378,14 +392,6 @@ div[class*="keychain"] {
     background: transparent !important;
   }
 
-  .hs-hex{ clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-  .hs-oval{ border-radius: 50%; }
-  .hs-blade{ clip-path: polygon(22% 0%, 100% 0%, 78% 100%, 0% 100%); }
-  .hs-angle{ clip-path: polygon(14% 0%, 100% 0%, 100% 68%, 50% 100%, 0% 68%); }
-  .hs-bar{ border-radius: 10px; }
-  .hs-circle{ border-radius: 50%; }
-
-  /* ---- spark burst on hover ---- */
   /* ---- spark burst on hover ---- */
   .kc-spark{
     position: absolute; 
@@ -591,12 +597,39 @@ div[class*="keychain"] {
           <img class="kc-photo" src="keychain.png" alt="City Code">
         </div>
         <div class="kc-hotspots">
-          <button class="kc-hot hs-hex"    data-key="code"       style="left: 21%; top: 46%; width: 14%; height: 32%; --hc: #d7ff3d;"></button>
-<button class="kc-hot hs-oval"   data-key="privileges"  style="left: 34%; top: 55%; width: 10%; height: 36%; --hc: #1f3b5c;"></button>
-<button class="kc-hot hs-blade"  data-key="partner"     style="left: 46%; top: 52%; width: 5%;  height: 43%; --hc: #c3f000;"></button>
-<button class="kc-hot hs-angle"  data-key="events"      style="left: 55.5%; top: 52%; width: 5%; height: 29%; --hc: #333333;"></button>
-<button class="kc-hot hs-bar"    data-key="insights"    style="left: 61%; top: 46%; width: 15%; height: 38%; --hc: #0070f3;"></button>
-<button class="kc-hot hs-circle" data-key="member"      style="left: 70%; top: 47%; width: 9%;  height: 21%; --hc: #d9480f;"></button>
+          <svg
+  class="kc-hotspots"
+  viewBox="0 0 1536 1024"
+  preserveAspectRatio="none"
+>
+  <path
+    class="kc-hot"
+    data-key="code"
+    style="--hc:#d7ff3d"
+    d="M288.5 578L524 439L596.5 477.5L600.5 522.5L547.5 544L434 798L362 874.5L246 798L288.5 578Z"
+  />
+
+  <path
+    class="kc-hot"
+    data-key="privileges"
+    style="--hc:#1f3b5c"
+    d="M801.5 553L818.5 531V524L853 514.5L941.5 560.5L989 689L978 818.5L884 858L798 793L780.5 755L801.5 553Z"
+  />
+
+  <path
+    class="kc-hot"
+    data-key="partner"
+    style="--hc:#c3f000"
+    d="M867 502.5V519L940 560L989 689.5L981.5 760L1084 939.5L1107.5 947L1227 876L1233 859.5L964 450L944 445.5L900.5 477L867 502.5Z"
+  />
+
+  <path
+    class="kc-hot"
+    data-key="events"
+    style="--hc:#333333"
+    d="M1029.5 509L1018.5 528L1156 738.5L1173 742.5H1191L1219.5 734.5L1238 724L1259.5 704.5L1277.5 677L1284 647V624L1277.5 584.5L1263 555L1238 522L1204 494.5L1168.5 479L1135 471H1109.5L1074 479L1045.5 494.5L1029.5 509Z"
+  />
+</svg>
         </div>
       </div>
       <div class="kc-hint">Нажми на ключ →</div>
