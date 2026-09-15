@@ -874,12 +874,6 @@
   var shareImg = document.getElementById('shareImg');
   var shareDownload = document.getElementById('shareDownload');
   var shareCopy = document.getElementById('shareCopy');
-  var comicCache = {};
-  Object.keys(SECTION_COMIC).forEach(function(k){
-    var im = new Image();
-    im.onload = function(){ comicCache[k] = im; };
-    im.src = SECTION_COMIC[k];
-  });
   var lastData = null;
 
   function measureLines(ctx, text, maxW){
