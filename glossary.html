@@ -1113,26 +1113,6 @@
     ctx.strokeStyle = 'rgba(24,20,15,.22)'; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(M, bottomStart - 22); ctx.lineTo(W - M, bottomStart - 22); ctx.stroke();
 
-    /* комикс-мини */
-    var cs = 200, cx = W - M - cs, cy = H - M - cs;
-    ctx.save();
-    ctx.beginPath(); ctx.rect(cx, cy, cs, cs); ctx.clip();
-    var im = comicCache[secNum];
-    if(im && im.complete && im.naturalWidth){
-      ctx.fillStyle = BLACK; ctx.fillRect(cx, cy, cs, cs);
-      var r = Math.min(cs / im.naturalWidth, cs / im.naturalHeight);
-      var dw = im.naturalWidth * r, dh = im.naturalHeight * r;
-      ctx.drawImage(im, cx + (cs-dw)/2, cy + (cs-dh)/2, dw, dh);
-    } else {
-      ctx.fillStyle = PINK; ctx.fillRect(cx, cy, cs, cs);
-      ctx.fillStyle = BLACK; ctx.font = '800 22px Archivo, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('comics' + secNum, cx + cs/2, cy + cs/2 + 8);
-      ctx.textAlign = 'left';
-    }
-    ctx.restore();
-    ctx.strokeStyle = BLACK; ctx.lineWidth = 6; ctx.strokeRect(cx, cy, cs, cs);
-
     /* подвал: ссылка + подпись */
     ctx.fillStyle = 'rgba(24,20,15,.55)';
     ctx.font = '700 21px Archivo, sans-serif';
@@ -1146,10 +1126,10 @@
     ctx.fillStyle = PINK; ctx.fillRect(M, bottomStart + 160, sw, 6);
 
     /* восковая печать — слот между текстом и комиксом, без перекрытия */
-    var sealR = 84;
-    var sealX = W - M - 200 - 24 - sealR;
-    var sealY = H - M - 100;
-    drawWaxSeal(ctx, sealX, sealY, sealR);
+    var sealR = 110;
+    var sealX = W - M - sealR;
+    var sealY = bottomStart + 118;
+    drawWaxSeal(ctx, sealX, sealY, sealR);;
     return cv;
   }
 
