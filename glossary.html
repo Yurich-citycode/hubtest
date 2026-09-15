@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YuRich RWA — Полный глоссарий</title>
+<meta name="description" content="Полный глоссарий RWA: 31 понятие — от «что такое RWA» до механики дробного владения недвижимостью. Справочник от YuRich RWA.">
+<meta name="theme-color" content="#F1E9D8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2318140F'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='20' font-weight='bold' text-anchor='middle' fill='%23F1E9D8'%3EY%3C/text%3E%3Crect x='22' y='7' width='5' height='5' fill='%23E8377E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  /* ================= Фирменная система (общая с course.html) =================
+     Палитра: cream / black / pink / yellow — без новых цветов.
+     Бумага: halftone-точки 3px — один и тот же паттерн на обеих страницах. */
+  :root{
+    --cream:#F1E9D8;
+    --cream-line:#DCD0B2;
+    --black:#18140F;
+    --pink:#E8377E;
+    --yellow:#FFD23F;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--cream); color:var(--black);
+    font-family:'Archivo', sans-serif; position:relative;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; pointer-events:none; opacity:.5; z-index:0;
+    background-image:radial-gradient(rgba(24,20,15,.07) 1px, transparent 1px);
+    background-size:3px 3px;
+  }
+  ::selection{ background:var(--pink); color:var(--cream); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--pink); outline-offset:3px; }
+  img{ max-width:100%; }
+  a, button{ touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
+
+  /* ================= progress bar ================= */
+  #readbar{
+    position:fixed; top:0; left:0; right:0; height:4px; z-index:90; background:transparent;
+  }
+  #readbar i{ display:block; height:100%; width:100%; background:var(--pink); transform-origin:left; transform:scaleX(0); }
+
+  /* ================= header ================= */
+  .top{ padding:30px 0 10px; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 40px; position:relative; z-index:1; }
+  .top-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:44px; }
+  .logo{ font-size:20px; font-weight:800; text-decoration:none; color:inherit; }
+  .logo span{ color:var(--pink); }
+  .backlink{
+    font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; text-decoration:none;
+    color:var(--black); border-bottom:1px solid var(--black); padding-bottom:2px; transition:color .2s, border-color .2s;
+  }
+  .backlink:hover{ color:var(--pink); border-color:var(--pink); }
+  .head-kicker{ font-size:12px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:var(--pink); margin:0 0 14px; }
+  h1.head{
+    font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
+    font-size:clamp(40px,6.5vw,76px); line-height:.95; letter-spacing:.005em; margin:0 0 18px; max-width:16ch;
+  }
+  .head-sub{ font-size:15px; line-height:1.65; max-width:62ch; margin:0; color:rgba(24,20,15,.78); }
+  .head-sub b{ font-weight:800; }
+
+  /* ================= layout: content + sticky index ================= */
+  .layout{ display:grid; grid-template-columns:minmax(0,760px) 230px; gap:70px; align-items:start; margin-top:54px; }
+  .content{ min-width:0; }
+
+  .sindex{ position:sticky; top:26px; }
+  .sindex .si-title{
+    font-size:10px; font-weight:800; letter-spacing:.22em; text-transform:uppercase;
+    color:rgba(24,20,15,.45); margin-bottom:14px;
+  }
+  .sindex a{
+    display:flex; align-items:baseline; gap:10px; text-decoration:none; color:rgba(24,20,15,.62);
+    font-size:13px; font-weight:600; padding:8px 0 8px 14px; position:relative;
+    border-left:2px solid var(--cream-line); transition:color .2s, border-color .2s, transform .2s;
+  }
+  .sindex a .si-num{ font-family:'Anton', sans-serif; font-size:12px; letter-spacing:.06em; color:rgba(24,20,15,.4); transition:color .2s; }
+  .sindex a::before{
+    content:''; position:absolute; left:-6px; top:50%; width:10px; height:10px; border-radius:50%;
+    background:var(--cream); border:2px solid var(--cream-line); transform:translateY(-50%);
+    transition:background .2s, border-color .2s;
+  }
+  .sindex a:hover{ color:var(--black); }
+  .sindex a.active{ color:var(--black); border-left-color:var(--pink); transform:translateX(4px); }
+  .sindex a.active .si-num{ color:var(--yellow); }
+  .sindex a.active::before{ background:var(--pink); border-color:var(--pink); }
+
+  /* mobile chip index */
+  .chipindex{ display:none; }
+
+  /* ================= section ================= */
+  section.sec{ scroll-margin-top:90px; margin-bottom:20px; }
+  .sec-head{ margin:74px 0 34px; }
+  section.sec:first-of-type .sec-head{ margin-top:0; }
+  .sec-kicker{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Anton', sans-serif; font-size:15px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--yellow); background:var(--black); padding:7px 14px;
+  }
+  .sec-name{
+    font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
+    font-size:clamp(26px,3.6vw,40px); line-height:1; margin:14px 0 0;
+  }
+
+  /* ================= term ================= */
+  .term{
+    border:3px solid var(--black); background:var(--cream);
+    box-shadow:9px 9px 0 var(--black);
+    padding:30px 30px 28px; margin-bottom:30px; scroll-margin-top:110px;
+  }
+  .term.flash{ animation:termFlash 1.6s ease; }
+  @keyframes termFlash{ 0%{ background:rgba(232,55,126,.16); } 100%{ background:var(--cream); } }
+  .t-kicker{
+    font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--pink); margin-bottom:10px;
+  }
+  .t-name{
+    font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
+    font-size:clamp(24px,3vw,34px); line-height:1; letter-spacing:.01em; margin:0 0 14px;
+  }
+  .t-drop{
+    font-size:17.5px; font-weight:800; line-height:1.4; color:var(--pink);
+    margin:0 0 14px; padding-left:14px; border-left:4px solid var(--pink);
+  }
+  .t-body{ font-size:15.5px; line-height:1.75; margin:0 0 20px; color:rgba(24,20,15,.86); }
+  .xlink{
+    color:var(--pink); font-weight:700; text-decoration:none;
+    border-bottom:1.5px dashed var(--pink); padding-bottom:1px;
+    transition:background .15s ease;
+  }
+  .xlink:hover{ background:rgba(232,55,126,.12); border-bottom-style:solid; }
+
+  .t-flow{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 20px; }
+  .t-flow span{
+    font-family:'Anton', sans-serif; font-size:13px; letter-spacing:.05em; text-transform:uppercase;
+    border:2px solid var(--black); padding:7px 12px; background:var(--yellow);
+  }
+  .t-flow em{ font-style:normal; align-self:center; font-weight:900; }
+
+  .t-main{
+    background:var(--black); color:var(--cream); padding:20px 22px 22px; border-radius:6px;
+    position:relative;
+  }
+  .t-main-head{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:10px; }
+  .t-main-head .mlabel{
+    font-family:'Anton', sans-serif; font-size:15px; letter-spacing:.14em; color:var(--yellow);
+  }
+  .share-btn{
+    font-family:'Archivo', sans-serif; font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--cream); background:transparent; border:1.5px solid rgba(241,233,216,.4); border-radius:100px;
+    padding:7px 14px; cursor:pointer; transition:background .2s, border-color .2s, color .2s, transform .15s;
+    white-space:nowrap;
+  }
+  .share-btn:hover{ background:var(--pink); border-color:var(--pink); color:var(--black); transform:translateY(-1px); }
+  .share-btn:active{ transform:translateY(0); }
+  .t-main p{ margin:0; font-size:15px; line-height:1.65; }
+
+  /* ================= comic plate ================= */
+  .comic-plate{ margin:10px 0 26px; text-align:center; }
+  .cp-kicker{
+    display:inline-block; font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--pink); margin-bottom:10px;
+  }
+  .cp-caption{
+    font-family:'Anton', sans-serif; font-size:clamp(20px,2.6vw,28px); text-transform:uppercase;
+    letter-spacing:.02em; margin:0 0 22px;
+  }
+  .cp-frame{
+    display:inline-block; max-width:640px; width:100%;
+    border:3px solid var(--black); box-shadow:10px 10px 0 var(--black); background:var(--black);
+  }
+  .cp-frame img{ display:block; width:100%; height:auto; }
+  .cp-frame.no-img{ display:grid; place-items:center; min-height:300px; background:repeating-linear-gradient(45deg, rgba(232,55,126,.14) 0 14px, rgba(24,20,15,.85) 14px 28px); }
+  .cp-frame.no-img::after{
+    content:attr(data-hint); font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--cream); background:var(--black); padding:10px 18px; border:1.5px dashed var(--cream);
+  }
+
+  /* ================= footer ================= */
+  .foot{ margin-top:90px; border-top:3px solid var(--black); padding-top:44px; }
+  .foot h3{
+    font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
+    font-size:clamp(26px,3.6vw,42px); line-height:1; margin:0 0 14px; max-width:20ch;
+  }
+  .foot .f-sub{ font-size:15px; line-height:1.65; color:rgba(24,20,15,.75); max-width:56ch; margin:0 0 26px; }
+  .f-btns{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px; }
+  .fbtn{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    font-size:13px; font-weight:800; letter-spacing:.03em; text-transform:uppercase;
+    padding:14px 24px; border:3px solid var(--black); box-shadow:7px 7px 0 var(--black);
+    background:var(--pink); color:var(--cream);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .fbtn.ghost{ background:var(--cream); color:var(--black); }
+  .fbtn:hover{ transform:translate(-2px,-2px); box-shadow:9px 9px 0 var(--black); }
+  .fbtn:active{ transform:translate(2px,2px); box-shadow:3px 3px 0 var(--black); }
+  .f-meta{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(24,20,15,.45); }
+
+  /* ================= share modal ================= */
+  .modal{
+    position:fixed; inset:0; z-index:100; display:none;
+    align-items:center; justify-content:center; padding:20px;
+    background:rgba(24,20,15,.72); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  }
+  .modal.open{ display:flex; }
+  .modal-box{
+    background:var(--cream); border:3px solid var(--black); box-shadow:12px 12px 0 var(--black);
+    max-width:520px; width:100%; max-height:92vh; overflow:auto; position:relative;
+  }
+  .modal-close{
+    position:absolute; top:10px; right:10px; z-index:2;
+    width:38px; height:38px; border-radius:50%; border:2px solid var(--black);
+    background:var(--yellow); font-size:17px; font-weight:900; cursor:pointer; line-height:1;
+    transition:transform .15s ease;
+  }
+  .modal-close:hover{ transform:rotate(90deg); }
+  .modal-img{ display:block; width:100%; height:auto; }
+  .modal-acts{ display:flex; gap:10px; padding:16px; flex-wrap:wrap; }
+  .mact{
+    flex:1; min-width:140px; text-align:center; text-decoration:none;
+    font-size:12px; font-weight:800; letter-spacing:.05em; text-transform:uppercase;
+    border:3px solid var(--black); box-shadow:5px 5px 0 var(--black);
+    background:var(--black); color:var(--cream); padding:13px 16px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  a.mact:hover, button.mact:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--black); }
+  .mact.alt{ background:var(--cream); color:var(--black); }
+  .mact:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--black); }
+  #toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(16px); z-index:120;
+    background:var(--black); color:var(--cream); font-size:13px; font-weight:700; letter-spacing:.02em;
+    padding:12px 20px; border-radius:100px; opacity:0; pointer-events:none; transition:opacity .3s ease, transform .3s ease;
+    max-width:88vw; text-align:center; }
+  #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  button.mact{ cursor:pointer; font-family:'Archivo', sans-serif; }
+
+  /* ================= responsive ================= */
+  @media (max-width:1080px){
+    .layout{ grid-template-columns:1fr; gap:0; }
+    .sindex{ display:none; }
+    .chipindex{
+      display:flex; gap:8px; overflow-x:auto; padding:12px 0 16px; margin-top:20px;
+      position:sticky; top:0; z-index:40; background:var(--cream);
+      scrollbar-width:none;
+    }
+    .chipindex::-webkit-scrollbar{ display:none; }
+    .chipindex a{
+      flex:none; text-decoration:none; font-size:12px; font-weight:700;
+      border:2px solid var(--black); padding:8px 14px; color:var(--black); background:var(--cream);
+      transition:background .2s, color .2s;
+    }
+    .chipindex a .si-num{ font-family:'Anton', sans-serif; margin-right:7px; color:var(--pink); }
+    .chipindex a.active{ background:var(--black); color:var(--cream); }
+    .chipindex a.active .si-num{ color:var(--yellow); }
+    .sec-head{ margin-top:54px; }
+  }
+  @media (max-width:720px){
+    .share-btn{ min-height:42px; padding:10px 18px; font-size:12px; }
+    .wrap{ padding:0 20px; }
+    .term{ padding:22px 18px 20px; box-shadow:6px 6px 0 var(--black); }
+    .t-drop{ font-size:16px; }
+    .cp-frame{ box-shadow:7px 7px 0 var(--black); }
+  }
+
+  /* ================= reduced motion ================= */
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .term{ animation:none !important; }
+    .xlink, .share-btn, .fbtn, .sindex a{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="readbar" aria-hidden="true"><i></i></div>
+
+<div class="wrap top">
+  <div class="top-row">
+    <a class="logo" href="index.html">Yurich<span>Hub</span></a>
+    <a class="backlink" href="index.html">← Назад в хаб</a>
+  </div>
+  <div class="head-kicker">Полный глоссарий</div>
+  <h1 class="head">Словарь, без которого рынок RWA не читается</h1>
+  <p class="head-sub"><b>31 понятие</b> — от «что такое RWA» до механики дробного владения недвижимостью. После каждого раздела — комикс, который закрепляет самую скользкую мысль раздела. Читай в любом порядке — термины связаны между собой.</p>
+</div>
+
+<div class="wrap">
+  <nav class="chipindex" id="chipIndex" aria-label="Разделы глоссария">
+    <a href="#sec-1" data-sec="1"><span class="si-num">01</span>Основы</a>
+    <a href="#sec-2" data-sec="2"><span class="si-num">02</span>Акции</a>
+    <a href="#sec-3" data-sec="3"><span class="si-num">03</span>Рынок</a>
+    <a href="#sec-4" data-sec="4"><span class="si-num">04</span>Трежерис</a>
+    <a href="#sec-5" data-sec="5"><span class="si-num">05</span>Доходность</a>
+    <a href="#sec-6" data-sec="6"><span class="si-num">06</span>Private credit</a>
+    <a href="#sec-7" data-sec="7"><span class="si-num">07</span>Недвижимость</a>
+  </nav>
+
+  <div class="layout">
+    <div class="content">
+
+      <!-- ================= 01 ОСНОВЫ ================= -->
+      <section class="sec" id="sec-1" data-sec="1">
+        <div class="sec-head">
+          <div class="sec-kicker">Раздел 01</div>
+          <h2 class="sec-name">Основы</h2>
+        </div>
+
+        <article class="term" id="term-01">
+          <div class="t-kicker">Термин 01</div>
+          <h3 class="t-name">RWA — реальный актив</h3>
+          <p class="t-drop">Актив живёт не в блокчейне. В блокчейне живёт право на него.</p>
+          <p class="t-body">RWA — это актив, у которого есть дом за пределами сети: облигация, кредитный портфель, склад, слиток золота. На него выпускают <a class="xlink" href="#term-02">токен</a>, и этот токен — не сам актив, а расписка, которая даёт право его потребовать. Расписка перемещается со скоростью интернета. Актив внизу — нет: здание не переезжает, когда токен на него меняет владельца, меняется только запись о том, кому теперь принадлежит право.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="1">Поделиться</button></div>
+            <p>Токенизация не трогает цену актива. Она трогает то, кто может его держать и как быстро это можно передать дальше.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-02">
+          <div class="t-kicker">Термин 02</div>
+          <h3 class="t-name">Токенизация</h3>
+          <p class="t-drop">Актив остаётся собой. Меняется труба, по которой он ходит.</p>
+          <p class="t-body">Токенизировать — значит взять существующий актив, например корпоративную облигацию или долю в фонде недвижимости, и выпустить на неё цифровое право требования. В самом активе ничего не перестраивается: у облигации тот же эмитент и тот же купон. Перестраивается способ, которым право переходит из рук в руки: расчёт занимает минуты вместо дней, торги идут не по расписанию биржи, а когда угодно, а дробить актив можно куда мельче исходного лота.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="2">Поделиться</button></div>
+            <p>RWA — всё ещё тот же актив, что был до токенизации. Меняется логистика владения, а не то, чем вы владеете.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-03">
+          <div class="t-kicker">Термин 03</div>
+          <h3 class="t-name">Ончейн</h3>
+          <p class="t-drop">Не актив переезжает в блокчейн. Переезжает запись о том, кто им владеет.</p>
+          <p class="t-body">«Ончейн» отвечает всего на один вопрос: где лежит реестр. Не во внутренней базе брокера, которую видно только по звонку, а в блокчейне, который вправе проверить кто угодно. Дом, стоящий за токеном, физически никуда не движется — двигается запись о праве требования на него. Отсюда разница на практике: расчёт занимает минуты, идёт круглые сутки, и его можно перепроверить независимо, не полагаясь на слово эмитента.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="3">Поделиться</button></div>
+            <p>Ончейн не улучшает сам актив. Он усложняет подделку записи о том, кому актив принадлежит.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-04">
+          <div class="t-kicker">Термин 04</div>
+          <h3 class="t-name">Кастоди</h3>
+          <p class="t-drop">Токен настолько надёжен, насколько надёжен тот, кто держит актив за ним.</p>
+          <p class="t-body">Рано или поздно у любого RWA-проекта возникает один и тот же вопрос: а кто физически держит то, на что я купил право? Токенизация создаёт расписку, блокчейн делает её удобной для учёта, а кастоди — отдельный слой поверх обоих: договорённость о том, кто хранит настоящую облигацию или слиток, и что произойдёт с активом, если платформа однажды закроется.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="4">Поделиться</button></div>
+            <p>Слабый кастодиан превращает токен из права собственности в судебный иск. Сначала узнайте, кто держит физический актив.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-05">
+          <div class="t-kicker">Термин 05</div>
+          <h3 class="t-name">Трансфер-агент</h3>
+          <p class="t-drop">Блокчейн решает, что сделка прошла быстро. Закон решает, прошла ли она вообще.</p>
+          <p class="t-body">Трансфер-агент — регистратор, о котором вспоминают только когда что-то идёт не так. <a class="xlink" href="#term-04">Кастодиан</a> подтверждает, что актив существует. Трансфер-агент решает другое: кому вообще разрешено держать токен, который на этот актив ссылается. Каждый перевод проходит проверку на комплаенс, статус инвестора и юрисдикцию — и только потом считается состоявшимся.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="5">Поделиться</button></div>
+            <p>Скорость перевода токена и его юридическая сила — разные вещи. Быстро не значит действительно.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-06">
+          <div class="t-kicker">Термин 06</div>
+          <h3 class="t-name">Total Value против TVL</h3>
+          <p class="t-drop">Эти две цифры путают в каждом втором отчёте — а разница на порядок.</p>
+          <p class="t-body">Total Value — сумма всех токенизированных активов, которые вообще существуют ончейн: в кошельке инвестора, в кастоди, где угодно. TVL — величина куда более узкая: сколько стоимости реально закинули в <a class="xlink" href="#term-08">смарт-контракты</a>, и она там что-то делает — <a class="xlink" href="#term-15">фондирует пул</a>, обеспечивает заём. Токенизированный трежери, который просто лежит на кошельке и никуда не работает, всё ещё Total Value. В TVL он не попадёт.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="6">Поделиться</button></div>
+            <p>Total Value — это то, что существует. TVL — то, что реально работает. Перепутать их — выдать спящий запас за живой спрос.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-07">
+          <div class="t-kicker">Термин 07</div>
+          <h3 class="t-name">Эмиссия и дистрибуция</h3>
+          <p class="t-drop">Выпустить токен и раздать его по живым рукам — разные задачи.</p>
+          <p class="t-body">Эмиссия — сам факт минта: эмитент создаёт токены, и предложение появляется в блокчейне в ту же секунду. Дистрибуция — совсем другой вопрос: у кого эти токены в итоге оказались. Можно выпустить весь раунд в первый день и увидеть, что девяносто процентов осело у самого эмитента и горстки ранних участников. Эмиссия прошла полностью. Дистрибуции почти не случилось.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="7">Поделиться</button></div>
+            <p>Объём эмиссии — факт минта. Реальный спрос виден только в дистрибуции — у кого токен оказался и почему.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-08">
+          <div class="t-kicker">Термин 08</div>
+          <h3 class="t-name">Смарт-контрактная обёртка</h3>
+          <p class="t-drop">Код не создаёт актив. Он решает, как право требования будет двигаться.</p>
+          <p class="t-body">Смарт-контрактная обёртка превращает юридическое право на актив в токен, который можно положить в кошелёк. Сам актив контракт не создаёт — это уже сделали юрист и <a class="xlink" href="#term-04">кастодиан</a>. Контракт кодирует правила игры: кто может держать токен, можно ли его заморозить, как проверяются переводы. Поэтому два токена на один и тот же актив способны вести себя в сети совершенно по-разному.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="8">Поделиться</button></div>
+            <p>Обёртка не делает право требования настоящим — это работа кастоди и права. Она решает, кто может его держать и у кого есть кнопка это остановить.</p>
+          </div>
+        </article>
+
+        <div class="comic-plate">
+          <div class="cp-kicker">Раздел 01 · в двух словах</div>
+          <p class="cp-caption">почему «рынок вырос до $30 млрд» — не вся правда</p>
+          <div class="cp-frame" data-hint="comics1.jpg — сюда вставить фото"><img src="comics1.jpg" alt="Комикс: Total Value против TVL" onerror="this.style.display='none';this.parentNode.classList.add('no-img')"></div>
+        </div>
+      </section>
+
+      <!-- ================= 02 АКЦИИ ================= -->
+      <section class="sec" id="sec-2" data-sec="2">
+        <div class="sec-head">
+          <div class="sec-kicker">Раздел 02</div>
+          <h2 class="sec-name">Токенизированные акции</h2>
+        </div>
+
+        <article class="term" id="term-09">
+          <div class="t-kicker">Термин 09</div>
+          <h3 class="t-name">Токенизированная акция</h3>
+          <p class="t-drop">Настоящая акция, упакованная так, чтобы двигаться в блокчейне.</p>
+          <p class="t-body">Токенизированная акция — доля настоящей компании, обёрнутая в токен, способный перемещаться ончейн. Сама бумага остаётся в традиционной системе — у кастодиана или трансфер-агента, по тем же правилам рынка ценных бумаг. Токен — право требования именно на эту акцию, а не ставка на то, куда пойдёт её цена.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="9">Поделиться</button></div>
+            <p>Токен здесь — обёртка над юридической собственностью, не отдельный класс актива. Сначала выясните, что именно вы держите, а не по какому тикеру это торгуется.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-10">
+          <div class="t-kicker">Термин 10</div>
+          <h3 class="t-name">Три типа токенизированной акции</h3>
+          <p class="t-drop">Native, кастодиальный и синтетический токен — три разных права, а не варианты одного.</p>
+          <p class="t-body">Native-токен делает держателя настоящим акционером напрямую в реестре компании. Кастодиальный токен устроен иначе: регулируемый <a class="xlink" href="#term-04">кастодиан</a> держит настоящую акцию, а токен — требование к нему, юридический собственник — кастодиан, а не вы. Синтетический токен не держит за собой ничего физического: он просто отслеживает цену через оракулы и контракты.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="10">Поделиться</button></div>
+            <p>Это не три варианта одного и того же. Только один тип реально делает вас акционером — и не всегда угадаешь какой по названию токена.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-11">
+          <div class="t-kicker">Термин 11</div>
+          <h3 class="t-name">Кто решает, кто может купить</h3>
+          <p class="t-drop">Одна и та же акция, разные своды правил, разный круг покупателей.</p>
+          <p class="t-body">Два токена на одну компанию могут продаваться по разным правилам в зависимости от режима выпуска. Частное размещение допускает только квалифицированных инвесторов и держит их токены под ограничением на передачу. Публичный розничный режим открывает доступ обычным людям, но режет сумму сбора и требует долгой проверки регулятором. Офшорный режим работает только для покупателей не из юрисдикции эмитента.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="11">Поделиться</button></div>
+            <p>Прежде чем спрашивать, что представляет токен, спросите, по какому режиму его выпустили. Это и определяет круг покупателей.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-12">
+          <div class="t-kicker">Термин 12</div>
+          <h3 class="t-name">Голос и корпоративные действия</h3>
+          <p class="t-drop">Право голосовать и участие в корпоративных решениях — задачи, которые легко перепутать.</p>
+          <p class="t-body">Токенизированная акция может нести право голоса, а может и не нести — это решает эмитент отдельно. Голосование значит, что держатель может высказаться по вопросам собрания акционеров. Корпоративные действия — совсем другой пласт: сплиты, поглощения, обратный выкуп. Каждое такое событие требует, чтобы эмитент уведомил держателей и обновил токен, и в блокчейне это не происходит автоматически.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="12">Поделиться</button></div>
+            <p>Пообещать провести голос «сквозь» токен легко на словах. Спросите заранее, как эмитент проведёт следующее реальное корпоративное событие.</p>
+          </div>
+        </article>
+
+        <div class="comic-plate">
+          <div class="cp-kicker">Раздел 02 · в двух словах</div>
+          <p class="cp-caption">три токена, три разных права — не путай</p>
+          <div class="cp-frame" data-hint="comics2.jpg — сюда вставить фото"><img src="comics2.jpg" alt="Комикс: три типа токенизированной акции" onerror="this.style.display='none';this.parentNode.classList.add('no-img')"></div>
+        </div>
+      </section>
+
+      <!-- ================= 03 РЫНОК ================= -->
+      <section class="sec" id="sec-3" data-sec="3">
+        <div class="sec-head">
+          <div class="sec-kicker">Раздел 03</div>
+          <h2 class="sec-name">Рыночная структура</h2>
+        </div>
+
+        <article class="term" id="term-13">
+          <div class="t-kicker">Термин 13</div>
+          <h3 class="t-name">Вторичная ликвидность</h3>
+          <p class="t-drop">Владеть токеном и суметь его продать — разные вещи.</p>
+          <p class="t-body">Вторичная ликвидность отвечает на вопрос, сможете ли вы выйти по адекватной цене, в нужном объёме и именно тогда, когда захотите вы. Выпустить токен легко, продать — куда сложнее. Круг покупателей часто узкий: <a class="xlink" href="#term-08">обёртка</a> допускает не всех, правила перевода отсекают кошельки не из белого списка, площадки размазаны по разным сетям.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="13">Поделиться</button></div>
+            <p>Ликвидность — не свойство токена. Это функция того, сколько людей вообще могут до него дотянуться и как быстро.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-14">
+          <div class="t-kicker">Термин 14</div>
+          <h3 class="t-name">Мгновенный расчёт против расчёта через день</h3>
+          <p class="t-drop">Скорость расчёта — не то же самое, что его окончательность.</p>
+          <p class="t-body">Расчёт — момент, когда сделка действительно закрыта: собственность и деньги перешли одновременно, и отыграть назад нельзя. Токенизированный актив способен закрыть сделку в ту же секунду, если и токен, и оплата едут одной транзакцией. Но если токен ушёл мгновенно, а оплата всё ещё идёт банковским переводом, риск расчёта не исчез — он просто переехал на ту сторону, на которую никто не смотрит.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="14">Поделиться</button></div>
+            <p>Мгновенный расчёт токена — утверждение только про одну ногу сделки. Спросите, чем закрывается денежная нога, прежде чем называть это мгновенным.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-15">
+          <div class="t-kicker">Термин 15</div>
+          <h3 class="t-name">Книга заявок против AMM</h3>
+          <p class="t-drop">Два способа найти цену — рассчитанные на разную частоту торгов.</p>
+          <p class="t-body">Книга заявок сводит покупателя и продавца напрямую по цене и объёму. Работает, когда в моменте на рынке достаточно людей. Автоматический маркетмейкер меняет прямой матчинг на формулу и заранее собранный пул токенов — торговать можно без второго живого участника сделки. RWA торгуются несколько раз в день, а не в секунду, и пул с таким активом оставляет того, кто его фондирует, один на один с <a class="xlink" href="#term-16">устаревшей ценой</a>.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="15">Поделиться</button></div>
+            <p>Оба механизма рассчитаны на рынок, который не замолкает. У RWA торговля останавливается регулярно, и это редко закладывают в цену.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-16">
+          <div class="t-kicker">Термин 16</div>
+          <h3 class="t-name">Проблема обнаружения цены</h3>
+          <p class="t-drop">Цена имеет смысл, только если по ней недавно реально торговали.</p>
+          <p class="t-body">Публичные акции ловят актуальную цену каждые несколько секунд. У большинства RWA такой роскоши нет: токенизированный трежери или нота частного кредита могут пройти сделку раз в день или раз в неделю — а последнюю сделку всё равно считают актуальной, даже если ей несколько дней. Оценки от независимых фидов закрывают эту дыру, но оценка — не то же самое, что цена, которую нашёл рынок.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="16">Поделиться</button></div>
+            <p>Цена что-то значит, только если по ней недавно реально торговали. Для большинства RWA это условие почти никогда не выполняется.</p>
+          </div>
+        </article>
+
+        <div class="comic-plate">
+          <div class="cp-kicker">Раздел 03 · в двух словах</div>
+          <p class="cp-caption">«продам когда захочу» — миф</p>
+          <div class="cp-frame" data-hint="comics3.jpg — сюда вставить фото"><img src="comics3.jpg" alt="Комикс: мираж ликвидности" onerror="this.style.display='none';this.parentNode.classList.add('no-img')"></div>
+        </div>
+      </section>
+
+      <!-- ================= 04 ТРЕЖЕРИС ================= -->
+      <section class="sec" id="sec-4" data-sec="4">
+        <div class="sec-head">
+          <div class="sec-kicker">Раздел 04</div>
+          <h2 class="sec-name">Трежерис</h2>
+        </div>
+
+        <article class="term" id="term-17">
+          <div class="t-kicker">Термин 17</div>
+          <h3 class="t-name">Что такое токенизированные трежерис</h3>
+          <p class="t-drop">Тот же гособлигационный вексель, только едет со скоростью кошелька.</p>
+          <p class="t-body">Это доли фонда, который держит короткие американские казначейские векселя, записанные токеном вместо строчки в брокерском отчёте. Сам вексель не меняется и идёт через ту же <a class="xlink" href="#term-20">кастодиальную цепочку</a>. Меняется только обёртка сверху: право собственности живёт в блокчейне и переходит в момент перевода токена, а не ждёт ночного обновления внутренней таблицы администратора.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="17">Поделиться</button></div>
+            <p>Токенизированные трежерис не придумали заново сам вексель. Они пересобрали трубу, по которой он движется.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-18">
+          <div class="t-kicker">Термин 18</div>
+          <h3 class="t-name">Кто это строит</h3>
+          <p class="t-drop">Классические управляющие и независимые эмитенты решают одну задачу с разных сторон.</p>
+          <p class="t-body">Крупные управляющие активами токенизируют фонды, которыми и так управляют десятилетиями. Независимые эмитенты пришли с другой стороны: сначала собрали фонд именно как ончейн-продукт, а кастоди и комплаенс наняли вокруг него уже потом. За обеими моделями стоит одна и та же инфраструктурная работа — определить, кто чем владеет и кому разрешено это держать.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="18">Поделиться</button></div>
+            <p>Поймите, держите вы токен собственного фонда управляющего — или чужую обёртку вокруг него.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-19">
+          <div class="t-kicker">Термин 19</div>
+          <h3 class="t-name">Механика доходности</h3>
+          <p class="t-drop">Как процент по векселю доезжает из фонда в кошелёк.</p>
+          <p class="t-body">Доходность начинается с реальных векселей на балансе: проценты капают каждый день, пока бумаги погашаются и перекладываются в новые. До держателя это доходит двумя способами — либо токен ежедневно доминчивается в кошелёк при фиксированной цене, либо количество токенов не меняется, а растёт сама их цена. В обоих случаях есть небольшая задержка между начислением и фактической выплатой.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="19">Поделиться</button></div>
+            <p>Токен только сообщает о доходности. Саму работу делают казначейские векселя под ним.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-20">
+          <div class="t-kicker">Термин 20</div>
+          <h3 class="t-name">Погашение и кастодиальная цепочка</h3>
+          <p class="t-drop">Вернуть деньги — значит размотать ту же цепочку в обратную сторону.</p>
+          <p class="t-body">Погашение начинается с заявки на платформе эмитента. Фонд продаёт векселя или снимает деньги с резервов, регистратор обновляет реестр держателей, кастодиан отпускает деньги на счёт фонда — и только после этого токен сжигают, а сумма уходит тому, кто запросил погашение. На каждом звене этой цепочки должно стоять отдельное учреждение.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="20">Поделиться</button></div>
+            <p>Сжигание токена — последний шаг процесса. Всё важное происходит до него, и именно там стоит искать риск.</p>
+          </div>
+        </article>
+
+        <div class="comic-plate">
+          <div class="cp-kicker">Раздел 04 · в двух словах</div>
+          <p class="cp-caption">доходность настоящая — просто не мгновенная</p>
+          <div class="cp-frame" data-hint="comics4.jpg — сюда вставить фото"><img src="comics4.jpg" alt="Комикс: доходность трежерис едет с задержкой" onerror="this.style.display='none';this.parentNode.classList.add('no-img')"></div>
+        </div>
+      </section>
+
+      <!-- ================= 05 ДОХОДНОСТЬ ================= -->
+      <section class="sec" id="sec-5" data-sec="5">
+        <div class="sec-head">
+          <div class="sec-kicker">Раздел 05</div>
+          <h2 class="sec-name">Доходность и возврат капитала</h2>
+        </div>
+
+        <article class="term" id="term-21">
+          <div class="t-kicker">Термин 21</div>
+          <h3 class="t-name">Заявленная и реализованная доходность</h3>
+          <p class="t-drop">Цифра на главной странице почти никогда не равна тому, что дойдёт до кошелька.</p>
+          <p class="t-body">Заявленная доходность — крупный процент на лендинге продукта. Реализованная — то, что дойдёт до держателя после комиссий, проскальзывания и разрыва между начислением и выплатой. Спред растёт, если часть денег фонд держит простым кэшем, если сверху сидит комиссия за управление, или если заголовочную цифру сняли с одного удачного периода, а не усреднили по времени.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="21">Поделиться</button></div>
+            <p>Заявленная доходность собирает клики. Реализованная — единственная, которая реально платит вам.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-22">
+          <div class="t-kicker">Термин 22</div>
+          <h3 class="t-name">Лок-апы и окна погашения</h3>
+          <p class="t-drop">У любой красивой доходности есть расписание, по которому вам вообще вернут деньги.</p>
+          <p class="t-body">Лок-ап — фиксированный срок, когда выйти нельзя вообще. Окно погашения — регулярный график, определяющий, когда заявку на выход реально исполнят. <a class="xlink" href="#term-17">Трежери-фонды</a> обычно закрывают заявку день в день. Частный кредит и недвижимость чаще живут на месячных или квартальных окнах с уведомлением заранее — заявка сегодня может закрыться только через недели.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="22">Поделиться</button></div>
+            <p>Сначала читайте условия погашения, а не заголовочный процент. Доходность считается только тогда, когда до денег реально можно дотянуться.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-23">
+          <div class="t-kicker">Термин 23</div>
+          <h3 class="t-name">Водопад выплат и транши</h3>
+          <p class="t-drop">Один и тот же залог может нести разный риск в зависимости от того, какой токен вы держите.</p>
+          <p class="t-body">Водопад — порядок, в котором распределяют деньги от пула активов. Сначала до старшего транша доходят проценты и тело долга, затем до промежуточного, и только остаток — младшему. Убытки движутся в обратном направлении: младший принимает удар первым. Так один портфель может поддерживать токен с доходностью в пять процентов и токен с доходностью в четырнадцать — против одного и того же залога.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="23">Поделиться</button></div>
+            <p>Один залог не значит один риск. Прежде чем сравнивать доходность, выясните, какой именно транш вы покупаете.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-24">
+          <div class="t-kicker">Термин 24</div>
+          <h3 class="t-name">Структура комиссий</h3>
+          <p class="t-drop">Комиссии съедают ровно ту доходность, которой вам продавали продукт.</p>
+          <p class="t-body">Плата за управление снимается с активов вне зависимости от того, заработал фонд или нет. Плата за результат отрезает часть прибыли выше согласованного порога. Комиссии на вход и выход сильнее всего бьют по короткому периоду владения. Ниже — кастоди, администрирование, аудит и сетевые издержки, которые не всегда легко найти в документах.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="24">Поделиться</button></div>
+            <p>Спрашивайте доходность после всех комиссий. Если эту цифру никто не готов назвать — это уже ответ сам по себе.</p>
+          </div>
+        </article>
+
+        <div class="comic-plate">
+          <div class="cp-kicker">Раздел 05 · в двух словах</div>
+          <p class="cp-caption">12% на баннере редко доезжают до кошелька целиком</p>
+          <div class="cp-frame" data-hint="comics5.jpg — сюда вставить фото"><img src="comics5.jpg" alt="Комикс: заявленная против реализованной доходности" onerror="this.style.display='none';this.parentNode.classList.add('no-img')"></div>
+        </div>
+      </section>
+
+      <!-- ================= 06 PRIVATE CREDIT ================= -->
+      <section class="sec" id="sec-6" data-sec="6">
+        <div class="sec-head">
+          <div class="sec-kicker">Раздел 06</div>
+          <h2 class="sec-name">Private credit</h2>
+        </div>
+
+        <article class="term" id="term-25">
+          <div class="t-kicker">Термин 25</div>
+          <h3 class="t-name">Что значит токенизировать частный кредит</h3>
+          <p class="t-drop">Кредит не меняется. Меняется только обёртка вокруг него.</p>
+          <p class="t-body">Частный кредит — кредитование за пределами публичного рынка облигаций: фонд или прямой кредитор выдаёт заём бизнесу и собирает проценты до погашения. Токенизировать — значит выпустить токен, представляющий право требования на этот заём или на пул таких займов. Токен несёт экономику сделки, но не переписывает её: график платежей и срок остаются теми же.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="25">Поделиться</button></div>
+            <p>Токенизация займа меняет способ, которым вы его держите. Она не меняет того, кто вам на самом деле должен.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-26">
+          <div class="t-kicker">Термин 26</div>
+          <h3 class="t-name">Кто это строит</h3>
+          <p class="t-drop">Не каждая платформа в этом секторе делает одну и ту же работу.</p>
+          <p class="t-body">Одни платформы сами проводят кредитный анализ и держат прямые отношения с заёмщиком. Другие построены как инфраструктура вокруг чужих займов: собирают их в пулы, нарезают на транши и ведут сервисное обслуживание, не выступая андеррайтером сами. У каждой роли свой ответ на вопрос, что происходит, если заёмщик перестаёт платить.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="26">Поделиться</button></div>
+            <p>Выясните, кто именно проводил кредитный анализ. Часто это не то же имя, что у платформы, продавшей вам токен.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-27">
+          <div class="t-kicker">Термин 27</div>
+          <h3 class="t-name">Структура доходности и андеррайтинг</h3>
+          <p class="t-drop">Ставка ровно настолько хороша, насколько хороша кредитная работа за ней.</p>
+          <p class="t-body">Доходность идёт из процентов, которые платят реальные заёмщики по реальным займам. До держателя токена доходит купон за вычетом обслуживания и платы за управление. Андеррайтинг — вся работа за этой цифрой: кто может занять, какой залог обеспечивает заём и какая подушка остаётся между стоимостью залога и суммой долга.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="27">Поделиться</button></div>
+            <p>Когда один пул рекламирует ставку заметно выше рынка, разрыв обычно равен риску, от которого другие кредиторы отказались.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-28">
+          <div class="t-kicker">Термин 28</div>
+          <h3 class="t-name">Условия погашения и реальная ликвидность</h3>
+          <p class="t-drop">Окно погашения реально ровно настолько, насколько за ним стоит живой кэш.</p>
+          <p class="t-body">Большинство токенов частного кредита обещают погашение по расписанию. Расписание описывает намерение, а не гарантию: займы внутри пула не гасятся по тому же календарю. Когда заявок на выход больше, чем входящих платежей, управляющий сначала расходует резервы, а затем включает ограничения, которые замедляют вывод средств.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="28">Поделиться</button></div>
+            <p>Окно погашения — это политика. Держится ли она под давлением — это уже трек-рекорд, а не обещание.</p>
+          </div>
+        </article>
+
+        <div class="comic-plate">
+          <div class="cp-kicker">Раздел 06 · в двух словах</div>
+          <p class="cp-caption">ставка выше рынка — это не подарок</p>
+          <div class="cp-frame" data-hint="comics6.jpg — сюда вставить фото"><img src="comics6.jpg" alt="Комикс: слишком хорошая доходность" onerror="this.style.display='none';this.parentNode.classList.add('no-img')"></div>
+        </div>
+      </section>
+
+      <!-- ================= 07 НЕДВИЖИМОСТЬ ================= -->
+      <section class="sec" id="sec-7" data-sec="7">
+        <div class="sec-head">
+          <div class="sec-kicker">Раздел 07</div>
+          <h2 class="sec-name">Недвижимость</h2>
+        </div>
+
+        <article class="term" id="term-29">
+          <div class="t-kicker">Термин 29</div>
+          <h3 class="t-name">Что значит токенизированная недвижимость</h3>
+          <p class="t-drop">Здание не переезжает. Переезжает запись о собственности.</p>
+          <p class="t-body">Недвижимость трудно делить и трудно быстро продать. Объект помещают в <a class="xlink" href="#term-30">юридическую структуру</a> — компанию или траст, которая держит документ о праве, — и выпускают токены, представляющие доли в этой структуре. Токен — требование к компании-владельцу, а не к самому зданию напрямую. Кто-то всё равно должен держать титул, управлять объектом и собирать аренду.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="29">Поделиться</button></div>
+            <p>Токенизация объекта меняет способ держать долю в нём. Она не меняет того, чем вы фактически владеете.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-30">
+          <div class="t-kicker">Термин 30</div>
+          <h3 class="t-name">Кто это строит</h3>
+          <p class="t-drop">Разные платформы прикручивают токен к разным вещам — и это не один продукт.</p>
+          <p class="t-body">Одни дробят отдельные жилые объекты: каждый дом в своей юридической структуре, токены — доля участия в ней, аренда уходит держателям стейблкоинами. Другие делают похожую модель дешевле, снижая порог входа до цены хорошего ужина. Третьи работают с самой сделкой: записывают переход титула ончейн целиком, без нарезки на доли. Четвёртые лицензируют протокол локальным операторам под нотариальное право в своей юрисдикции.</p>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="30">Поделиться</button></div>
+            <p>Доля в юрлице, запись о праве и лицензированный протокол — три разные вещи. Сначала выясните, что именно держит конкретный токен.</p>
+          </div>
+        </article>
+
+        <article class="term" id="term-31">
+          <div class="t-kicker">Термин 31</div>
+          <h3 class="t-name">Механика дробного владения</h3>
+          <p class="t-drop">Как дом становится юнитами, а юниты — токенами.</p>
+          <p class="t-body">Вы никогда не покупаете сам дом — вы покупаете <a class="xlink" href="#term-30">долю в компании</a>, которой он принадлежит. На платформах вроде Lofty под каждый объект создают отдельную структуру, обычно LLC в Вайоминге, — и это единственный актив внутри неё. Долю режут на токены: порог входа начинается от 50 долларов, а не от стоимости целого дома. Арендатор платит управляющей компании, та вычитает расходы и налоги, а остаток ежедневно уходит держателям токенов в стейблкоинах.</p>
+          <div class="t-flow" aria-hidden="true"><span>Дом</span><em>›</em><span>LLC (Wyoming)</span><em>›</em><span>Юниты</span><em>›</em><span>Токены</span></div>
+          <div class="t-main">
+            <div class="t-main-head"><span class="mlabel">ГЛАВНОЕ</span><button type="button" class="share-btn" data-term="31">Поделиться</button></div>
+            <p>Токен не чинит крышу и не платит налог сам по себе. Именно это, а не смарт-контракт, довело RealT, крупнейшую платформу токенизации недвижимости, до добровольной ликвидации в 2026 году. Читайте операционное соглашение, а не листинг.</p>
+          </div>
+        </article>
+
+        <div class="comic-plate">
+          <div class="cp-kicker">Раздел 07 · в двух словах</div>
+          <p class="cp-caption">токен не умеет чинить крышу</p>
+          <div class="cp-frame" data-hint="comics7.jpg — сюда вставить фото"><img src="comics7.jpg" alt="Комикс: токен не чинит крышу" onerror="this.style.display='none';this.parentNode.classList.add('no-img')"></div>
+        </div>
+      </section>
+
+      <!-- ================= FOOTER / ВОРОНКА ================= -->
+      <div class="foot">
+        <h3>Проверь, что запомнилось</h3>
+        <p class="f-sub">Глоссарий — это фундамент. Дальше — квиз «твой уровень RWA» и полный курс: шесть модулей от матчасти до карты рынка. Без трейдинга и сигналов — механика, регулирование, риски.</p>
+        <div class="f-btns">
+          <a class="fbtn" href="course.html">Квиз и курс →</a>
+          <a class="fbtn ghost" href="https://t.me/YuRichRWA" target="_blank" rel="noopener">Канал YuRichRWA</a>
+          <a class="fbtn ghost" href="index.html">Назад в хаб</a>
+        </div>
+        <div class="f-meta">YurichHub · Полный глоссарий · 31 понятие · Est. 2026</div>
+      </div>
+
+    </div>
+
+    <!-- sticky индекс (десктоп) -->
+    <nav class="sindex" id="sideIndex" aria-label="Разделы глоссария">
+      <div class="si-title">Разделы</div>
+      <a href="#sec-1" data-sec="1"><span class="si-num">01</span>Основы</a>
+      <a href="#sec-2" data-sec="2"><span class="si-num">02</span>Токенизированные акции</a>
+      <a href="#sec-3" data-sec="3"><span class="si-num">03</span>Рыночная структура</a>
+      <a href="#sec-4" data-sec="4"><span class="si-num">04</span>Трежерис</a>
+      <a href="#sec-5" data-sec="5"><span class="si-num">05</span>Доходность и возврат капитала</a>
+      <a href="#sec-6" data-sec="6"><span class="si-num">06</span>Private credit</a>
+      <a href="#sec-7" data-sec="7"><span class="si-num">07</span>Недвижимость</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ================= SHARE MODAL ================= -->
+<div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-label="Карточка термина">
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+    <img class="modal-img" id="shareImg" alt="Карточка термина">
+    <div class="modal-acts">
+      <button type="button" class="mact" id="shareNative" style="display:none">Поделиться фото</button>
+      <a class="mact" id="shareDownload" download>Скачать карточку</a>
+      <button type="button" class="mact alt" id="shareCopy">Скопировать текст</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ================= данные терминов (для карточки) ================= */
+  var TERMS = {
+    1:{sec:'01 · Основы', name:'RWA — реальный актив', drop:'Актив живёт не в блокчейне. В блокчейне живёт право на него.', body:'RWA — это актив, у которого есть дом за пределами сети: облигация, кредитный портфель, склад, слиток золота. На него выпускают токен, и этот токен — не сам актив, а расписка, которая даёт право его потребовать. Расписка перемещается со скоростью интернета. Актив внизу — нет: здание не переезжает, когда токен на него меняет владельца, меняется только запись о том, кому теперь принадлежит право.', main:'Токенизация не трогает цену актива. Она трогает то, кто может его держать и как быстро это можно передать дальше.'},
+    2:{sec:'01 · Основы', name:'Токенизация', drop:'Актив остаётся собой. Меняется труба, по которой он ходит.', body:'Токенизировать — значит взять существующий актив, например корпоративную облигацию или долю в фонде недвижимости, и выпустить на неё цифровое право требования. В самом активе ничего не перестраивается: у облигации тот же эмитент и тот же купон. Перестраивается способ, которым право переходит из рук в руки: расчёт занимает минуты вместо дней, торги идут не по расписанию биржи, а когда угодно, а дробить актив можно куда мельче исходного лота.', main:'RWA — всё ещё тот же актив, что был до токенизации. Меняется логистика владения, а не то, чем вы владеете.'},
+    3:{sec:'01 · Основы', name:'Ончейн', drop:'Не актив переезжает в блокчейн. Переезжает запись о том, кто им владеет.', body:'«Ончейн» отвечает всего на один вопрос: где лежит реестр. Не во внутренней базе брокера, которую видно только по звонку, а в блокчейне, который вправе проверить кто угодно. Дом, стоящий за токеном, физически никуда не движется — двигается запись о праве требования на него. Отсюда разница на практике: расчёт занимает минуты, идёт круглые сутки, и его можно перепроверить независимо, не полагаясь на слово эмитента.', main:'Ончейн не улучшает сам актив. Он усложняет подделку записи о том, кому актив принадлежит.'},
+    4:{sec:'01 · Основы', name:'Кастоди', drop:'Токен настолько надёжен, насколько надёжен тот, кто держит актив за ним.', body:'Рано или поздно у любого RWA-проекта возникает один и тот же вопрос: а кто физически держит то, на что я купил право? Токенизация создаёт расписку, блокчейн делает её удобной для учёта, а кастоди — отдельный слой поверх обоих: договорённость о том, кто хранит настоящую облигацию или слиток, и что произойдёт с активом, если платформа однажды закроется.', main:'Слабый кастодиан превращает токен из права собственности в судебный иск. Сначала узнайте, кто держит физический актив.'},
+    5:{sec:'01 · Основы', name:'Трансфер-агент', drop:'Блокчейн решает, что сделка прошла быстро. Закон решает, прошла ли она вообще.', body:'Трансфер-агент — регистратор, о котором вспоминают только когда что-то идёт не так. Кастодиан подтверждает, что актив существует. Трансфер-агент решает другое: кому вообще разрешено держать токен, который на этот актив ссылается. Каждый перевод проходит проверку на комплаенс, статус инвестора и юрисдикцию — и только потом считается состоявшимся.', main:'Скорость перевода токена и его юридическая сила — разные вещи. Быстро не значит действительно.'},
+    6:{sec:'01 · Основы', name:'Total Value против TVL', drop:'Эти две цифры путают в каждом втором отчёте — а разница на порядок.', body:'Total Value — сумма всех токенизированных активов, которые вообще существуют ончейн: в кошельке инвестора, в кастоди, где угодно. TVL — величина куда более узкая: сколько стоимости реально закинули в смарт-контракты, и она там что-то делает — фондирует пул, обеспечивает заём. Токенизированный трежери, который просто лежит на кошельке и никуда не работает, всё ещё Total Value. В TVL он не попадёт.', main:'Total Value — это то, что существует. TVL — то, что реально работает. Перепутать их — выдать спящий запас за живой спрос.'},
+    7:{sec:'01 · Основы', name:'Эмиссия и дистрибуция', drop:'Выпустить токен и раздать его по живым рукам — разные задачи.', body:'Эмиссия — сам факт минта: эмитент создаёт токены, и предложение появляется в блокчейне в ту же секунду. Дистрибуция — совсем другой вопрос: у кого эти токены в итоге оказались. Можно выпустить весь раунд в первый день и увидеть, что девяносто процентов осело у самого эмитента и горстки ранних участников. Эмиссия прошла полностью. Дистрибуции почти не случилось.', main:'Объём эмиссии — факт минта. Реальный спрос виден только в дистрибуции — у кого токен оказался и почему.'},
+    8:{sec:'01 · Основы', name:'Смарт-контрактная обёртка', drop:'Код не создаёт актив. Он решает, как право требования будет двигаться.', body:'Смарт-контрактная обёртка превращает юридическое право на актив в токен, который можно положить в кошелёк. Сам актив контракт не создаёт — это уже сделали юрист и кастодиан. Контракт кодирует правила игры: кто может держать токен, можно ли его заморозить, как проверяются переводы. Поэтому два токена на один и тот же актив способны вести себя в сети совершенно по-разному.', main:'Обёртка не делает право требования настоящим — это работа кастоди и права. Она решает, кто может его держать и у кого есть кнопка это остановить.'},
+    9:{sec:'02 · Токенизированные акции', name:'Токенизированная акция', drop:'Настоящая акция, упакованная так, чтобы двигаться в блокчейне.', body:'Токенизированная акция — доля настоящей компании, обёрнутая в токен, способный перемещаться ончейн. Сама бумага остаётся в традиционной системе — у кастодиана или трансфер-агента, по тем же правилам рынка ценных бумаг. Токен — право требования именно на эту акцию, а не ставка на то, куда пойдёт её цена.', main:'Токен здесь — обёртка над юридической собственностью, не отдельный класс актива. Сначала выясните, что именно вы держите, а не по какому тикеру это торгуется.'},
+    10:{sec:'02 · Токенизированные акции', name:'Три типа токенизированной акции', drop:'Native, кастодиальный и синтетический токен — три разных права, а не варианты одного.', body:'Native-токен делает держателя настоящим акционером напрямую в реестре компании. Кастодиальный токен устроен иначе: регулируемый кастодиан держит настоящую акцию, а токен — требование к нему, юридический собственник — кастодиан, а не вы. Синтетический токен не держит за собой ничего физического: он просто отслеживает цену через оракулы и контракты.', main:'Это не три варианта одного и того же. Только один тип реально делает вас акционером — и не всегда угадаешь какой по названию токена.'},
+    11:{sec:'02 · Токенизированные акции', name:'Кто решает, кто может купить', drop:'Одна и та же акция, разные своды правил, разный круг покупателей.', body:'Два токена на одну компанию могут продаваться по разным правилами в зависимости от режима выпуска. Частное размещение допускает только квалифицированных инвесторов и держит их токены под ограничением на передачу. Публичный розничный режим открывает доступ обычным людям, но режет сумму сбора и требует долгой проверки регулятором. Офшорный режим работает только для покупателей не из юрисдикции эмитента.', main:'Прежде чем спрашивать, что представляет токен, спросите, по какому режиму его выпустили. Это и определяет круг покупателей.'},
+    12:{sec:'02 · Токенизированные акции', name:'Голос и корпоративные действия', drop:'Право голосовать и участие в корпоративных решениях — задачи, которые легко перепутать.', body:'Токенизированная акция может нести право голоса, а может и не нести — это решает эмитент отдельно. Голосование значит, что держатель может высказаться по вопросам собрания акционеров. Корпоративные действия — совсем другой пласт: сплиты, поглощения, обратный выкуп. Каждое такое событие требует, чтобы эмитент уведомил держателей и обновил токен, и в блокчейне это не происходит автоматически.', main:'Пообещать провести голос «сквозь» токен легко на словах. Спросите заранее, как эмитент проведёт следующее реальное корпоративное событие.'},
+    13:{sec:'03 · Рыночная структура', name:'Вторичная ликвидность', drop:'Владеть токеном и суметь его продать — разные вещи.', body:'Вторичная ликвидность отвечает на вопрос, сможете ли вы выйти по адекватной цене, в нужном объёме и именно тогда, когда захотите вы. Выпустить токен легко, продать — куда сложнее. Круг покупателей часто узкий: обёртка допускает не всех, правила перевода отсекают кошельки не из белого списка, площадки размазаны по разным сетям.', main:'Ликвидность — не свойство токена. Это функция того, сколько людей вообще могут до него дотянуться и как быстро.'},
+    14:{sec:'03 · Рыночная структура', name:'Мгновенный расчёт против расчёта через день', drop:'Скорость расчёта — не то же самое, что его окончательность.', body:'Расчёт — момент, когда сделка действительно закрыта: собственность и деньги перешли одновременно, и отыграть назад нельзя. Токенизированный актив способен закрыть сделку в ту же секунду, если и токен, и оплата едут одной транзакцией. Но если токен ушёл мгновенно, а оплата всё ещё идёт банковским переводом, риск расчёта не исчез — он просто переехал на ту сторону, на которую никто не смотрит.', main:'Мгновенный расчёт токена — утверждение только про одну ногу сделки. Спросите, чем закрывается денежная нога, прежде чем называть это мгновенным.'},
+    15:{sec:'03 · Рыночная структура', name:'Книга заявок против AMM', drop:'Два способа найти цену — рассчитанные на разную частоту торгов.', body:'Книга заявок сводит покупателя и продавца напрямую по цене и объёму. Работает, когда в моменте на рынке достаточно людей. Автоматический маркетмейкер меняет прямой матчинг на формулу и заранее собранный пул токенов — торговать можно без второго живого участника сделки. RWA торгуются несколько раз в день, а не в секунду, и пул с таким активом оставляет того, кто его фондирует, один на один с устаревшей ценой.', main:'Оба механизма рассчитаны на рынок, который не замолкает. У RWA торговля останавливается регулярно, и это редко закладывают в цену.'},
+    16:{sec:'03 · Рыночная структура', name:'Проблема обнаружения цены', drop:'Цена имеет смысл, только если по ней недавно реально торговали.', body:'Публичные акции ловят актуальную цену каждые несколько секунд. У большинства RWA такой роскоши нет: токенизированный трежери или нота частного кредита могут пройти сделку раз в день или раз в неделю — а последнюю сделку всё равно считают актуальной, даже если ей несколько дней. Оценки от независимых фидов закрывают эту дыру, но оценка — не то же самое, что цена, которую нашёл рынок.', main:'Цена что-то значит, только если по ней недавно реально торговали. Для большинства RWA это условие почти никогда не выполняется.'},
+    17:{sec:'04 · Трежерис', name:'Что такое токенизированные трежерис', drop:'Тот же гособлигационный вексель, только едет со скоростью кошелька.', body:'Это доли фонда, который держит короткие американские казначейские векселя, записанные токеном вместо строчки в брокерском отчёте. Сам вексель не меняется и идёт через ту же кастодиальную цепочку. Меняется только обёртка сверху: право собственности живёт в блокчейне и переходит в момент перевода токена, а не ждёт ночного обновления внутренней таблицы администратора.', main:'Токенизированные трежерис не придумали заново сам вексель. Они пересобрали трубу, по которой он движется.'},
+    18:{sec:'04 · Трежерис', name:'Кто это строит', drop:'Классические управляющие и независимые эмитенты решают одну задачу с разных сторон.', body:'Крупные управляющие активами токенизируют фонды, которыми и так управляют десятилетиями. Независимые эмитенты пришли с другой стороны: сначала собрали фонд именно как ончейн-продукт, а кастоди и комплаенс наняли вокруг него уже потом. За обеими моделями стоит одна и та же инфраструктурная работа — определить, кто чем владеет и кому разрешено это держать.', main:'Поймите, держите вы токен собственного фонда управляющего — или чужую обёртку вокруг него.'},
+    19:{sec:'04 · Трежерис', name:'Механика доходности', drop:'Как процент по векселю доезжает из фонда в кошелёк.', body:'Доходность начинается с реальных векселей на балансе: проценты капают каждый день, пока бумаги погашаются и перекладываются в новые. До держателя это доходит двумя способами — либо токен ежедневно доминчивается в кошелёк при фиксированной цене, либо количество токенов не меняется, а растёт сама их цена. В обоих случаях есть небольшая задержка между начислением и фактической выплатой.', main:'Токен только сообщает о доходности. Саму работу делают казначейские векселя под ним.'},
+    20:{sec:'04 · Трежерис', name:'Погашение и кастодиальная цепочка', drop:'Вернуть деньги — значит размотать ту же цепочку в обратную сторону.', body:'Погашение начинается с заявки на платформе эмитента. Фонд продаёт векселя или снимает деньги с резервов, регистратор обновляет реестр держателей, кастодиан отпускает деньги на счёт фонда — и только после этого токен сжигают, а сумма уходит тому, кто запросил погашение. На каждом звене этой цепочки должно стоять отдельное учреждение.', main:'Сжигание токена — последний шаг процесса. Всё важное происходит до него, и именно там стоит искать риск.'},
+    21:{sec:'05 · Доходность и возврат капитала', name:'Заявленная и реализованная доходность', drop:'Цифра на главной странице почти никогда не равна тому, что дойдёт до кошелька.', body:'Заявленная доходность — крупный процент на лендинге продукта. Реализованная — то, что дойдёт до держателя после комиссий, проскальзывания и разрыва между начислением и выплатой. Спред растёт, если часть денег фонд держит простым кэшем, если сверху сидит комиссия за управление, или если заголовочную цифру сняли с одного удачного периода, а не усреднили по времени.', main:'Заявленная доходность собирает клики. Реализованная — единственная, которая реально платит вам.'},
+    22:{sec:'05 · Доходность и возврат капитала', name:'Лок-апы и окна погашения', drop:'У любой красивой доходности есть расписание, по которому вам вообще вернут деньги.', body:'Лок-ап — фиксированный срок, когда выйти нельзя вообще. Окно погашения — регулярный график, определяющий, когда заявку на выход реально исполнят. Трежери-фонды обычно закрывают заявку день в день. Частный кредит и недвижимость чаще живут на месячных или квартальных окнах с уведомлением заранее — заявка сегодня может закрыться только через недели.', main:'Сначала читайте условия погашения, а не заголовочный процент. Доходность считается только тогда, когда до денег реально можно дотянуться.'},
+    23:{sec:'05 · Доходность и возврат капитала', name:'Водопад выплат и транши', drop:'Один и тот же залог может нести разный риск в зависимости от того, какой токен вы держите.', body:'Водопад — порядок, в котором распределяют деньги от пула активов. Сначала до старшего транша доходят проценты и тело долга, затем до промежуточного, и только остаток — младшему. Убытки движутся в обратном направлении: младший принимает удар первым. Так один портфель может поддерживать токен с доходностью в пять процентов и токен с доходностью в четырнадцать — против одного и того же залога.', main:'Один залог не значит один риск. Прежде чем сравнивать доходность, выясните, какой именно транш вы покупаете.'},
+    24:{sec:'05 · Доходность и возврат капитала', name:'Структура комиссий', drop:'Комиссии съедают ровно ту доходность, которой вам продавали продукт.', body:'Плата за управление снимается с активов вне зависимости от того, заработал фонд или нет. Плата за результат отрезает часть прибыли выше согласованного порога. Комиссии на вход и выход сильнее всего бьют по короткому периоду владения. Ниже — кастоди, администрирование, аудит и сетевые издержки, которые не всегда легко найти в документах.', main:'Спрашивайте доходность после всех комиссий. Если эту цифру никто не готов назвать — это уже ответ сам по себе.'},
+    25:{sec:'06 · Private credit', name:'Что значит токенизировать частный кредит', drop:'Кредит не меняется. Меняется только обёртка вокруг него.', body:'Частный кредит — кредитование за пределами публичного рынка облигаций: фонд или прямой кредитор выдаёт заём бизнесу и собирает проценты до погашения. Токенизировать — значит выпустить токен, представляющий право требования на этот заём или на пул таких займов. Токен несёт экономику сделки, но не переписывает её: график платежей и срок остаются теми же.', main:'Токенизация займа меняет способ, которым вы его держите. Она не меняет того, кто вам на самом деле должен.'},
+    26:{sec:'06 · Private credit', name:'Кто это строит', drop:'Не каждая платформа в этом секторе делает одну и ту же работу.', body:'Одни платформы сами проводят кредитный анализ и держат прямые отношения с заёмщиком. Другие построены как инфраструктура вокруг чужих займов: собирают их в пулы, нарезают на транши и ведут сервисное обслуживание, не выступая андеррайтером сами. У каждой роли свой ответ на вопрос, что происходит, если заёмщик перестаёт платить.', main:'Выясните, кто именно проводил кредитный анализ. Часто это не то же имя, что у платформы, продавшей вам токен.'},
+    27:{sec:'06 · Private credit', name:'Структура доходности и андеррайтинг', drop:'Ставка ровно настолько хороша, насколько хороша кредитная работа за ней.', body:'Доходность идёт из процентов, которые платят реальные заёмщики по реальным займам. До держателя токена доходит купон за вычетом обслуживания и платы за управление. Андеррайтинг — вся работа за этой цифрой: кто может занять, какой залог обеспечивает заём и какая подушка остаётся между стоимостью залога и суммой долга.', main:'Когда один пул рекламирует ставку заметно выше рынка, разрыв обычно равен риску, от которого другие кредиторы отказались.'},
+    28:{sec:'06 · Private credit', name:'Условия погашения и реальная ликвидность', drop:'Окно погашения реально ровно настолько, насколько за ним стоит живой кэш.', body:'Большинство токенов частного кредита обещают погашение по расписанию. Расписание описывает намерение, а не гарантию: займы внутри пула не гасятся по тому же календарю. Когда заявок на выход больше, чем входящих платежей, управляющий сначала расходует резервы, а затем включает ограничения, которые замедляют вывод средств.', main:'Окно погашения — это политика. Держится ли она под давлением — это уже трек-рекорд, а не обещание.'},
+    29:{sec:'07 · Недвижимость', name:'Что значит токенизированная недвижимость', drop:'Здание не переезжает. Переезжает запись о собственности.', body:'Недвижимость трудно делить и трудно быстро продать. Объект помещают в юридическую структуру — компанию или траст, которая держит документ о праве, — и выпускают токены, представляющие доли в этой структуре. Токен — требование к компании-владельцу, а не к самому зданию напрямую. Кто-то всё равно должен держать титул, управлять объектом и собирать аренду.', main:'Токенизация объекта меняет способ держать долю в нём. Она не меняет того, чем вы фактически владеете.'},
+    30:{sec:'07 · Недвижимость', name:'Кто это строит', drop:'Разные платформы прикручивают токен к разным вещам — и это не один продукт.', body:'Одни дробят отдельные жилые объекты: каждый дом в своей юридической структуре, токены — доля участия в ней, аренда уходит держателям стейблкоинами. Другие делают похожую модель дешевле, снижая порог входа до цены хорошего ужина. Третьи работают с самой сделкой: записывают переход титула ончейн целиком, без нарезки на доли. Четвёртые лицензируют протокол локальным операторам под нотариальное право в своей юрисдикции.', main:'Доля в юрлице, запись о праве и лицензированный протокол — три разные вещи. Сначала выясните, что именно держит конкретный токен.'},
+    31:{sec:'07 · Недвижимость', name:'Механика дробного владения', drop:'Как дом становится юнитами, а юниты — токенами.', body:'Вы никогда не покупаете сам дом — вы покупаете долю в компании, которой он принадлежит. На платформах вроде Lofty под каждый объект создают отдельную структуру, обычно LLC в Вайоминге, — и это единственный актив внутри неё. Долю режут на токены: порог входа начинается от 50 долларов, а не от стоимости целого дома. Арендатор платит управляющей компании, та вычитает расходы и налоги, а остаток ежедневно уходит держателям токенов в стейблкоинах.', main:'Токен не чинит крышу и не платит налог сам по себе. Именно это, а не смарт-контракт, довело RealT, крупнейшую платформу токенизации недвижимости, до добровольной ликвидации в 2026 году. Читайте операционное соглашение, а не листинг.'}
+  };
+  var SECTION_COMIC = {1:'comics1.jpg',2:'comics2.jpg',3:'comics3.jpg',4:'comics4.jpg',5:'comics5.jpg',6:'comics6.jpg',7:'comics7.jpg'};
+  var TERM_SECTION = {};
+  document.querySelectorAll('section.sec .term').forEach(function(t){
+    var sec = t.closest('section.sec');
+    var id = t.id.replace('term-','');
+    if(id && sec) TERM_SECTION[id] = sec.getAttribute('data-sec');
+  });
+
+  var CREAM='#F1E9D8', BLACK='#18140F', PINK='#E8377E', YELLOW='#FFD23F';
+  var SITE = 'yurich-citycode.github.io/hubtest';
+
+  /* ================= progress + scroll-spy ================= */
+  var bar = document.querySelector('#readbar i');
+  var secs = Array.prototype.slice.call(document.querySelectorAll('section.sec'));
+  var sideLinks = Array.prototype.slice.call(document.querySelectorAll('#sideIndex a'));
+  var chipLinks = Array.prototype.slice.call(document.querySelectorAll('#chipIndex a'));
+  var spyTick = false;
+  function onScroll(){
+    if(spyTick) return;
+    spyTick = true;
+    requestAnimationFrame(function(){
+      spyTick = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if(bar) bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, window.scrollY / Math.max(1,max))) + ')';
+      var mark = window.innerHeight * 0.4;
+      var active = secs.length ? secs[0].getAttribute('data-sec') : null;
+      secs.forEach(function(s){
+        if(s.getBoundingClientRect().top <= mark) active = s.getAttribute('data-sec');
+      });
+      sideLinks.concat(chipLinks).forEach(function(a){
+        a.classList.toggle('active', a.getAttribute('data-sec') === active);
+      });
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  /* flash цели якорного перехода */
+  function flashTarget(){
+    var id = location.hash.replace('#','');
+    if(!id) return;
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.classList.remove('flash');
+    void el.offsetWidth;
+    el.classList.add('flash');
+    setTimeout(function(){ el.classList.remove('flash'); }, 1700);
+  }
+  window.addEventListener('hashchange', flashTarget);
+  window.addEventListener('load', function(){ setTimeout(flashTarget, 400); });
+
+  /* ================= share card (canvas) ================= */
+  var modal = document.getElementById('shareModal');
+  var shareImg = document.getElementById('shareImg');
+  var shareDownload = document.getElementById('shareDownload');
+  var shareCopy = document.getElementById('shareCopy');
+  var comicCache = {};
+  Object.keys(SECTION_COMIC).forEach(function(k){
+    var im = new Image();
+    im.onload = function(){ comicCache[k] = im; };
+    im.src = SECTION_COMIC[k];
+  });
+  var lastData = null;
+
+  function measureLines(ctx, text, maxW){
+    var words = text.split(' ');
+    var lines = [], line = '';
+    for(var i = 0; i < words.length; i++){
+      var test = line ? line + ' ' + words[i] : words[i];
+      if(ctx.measureText(test).width > maxW && line){
+        lines.push(line); line = words[i];
+      } else { line = test; }
+    }
+    if(line) lines.push(line);
+    return lines;
+  }
+
+  /* подбирает кегль, чтобы текст влез в maxLines строк и maxH пикселей */
+  function fitFont(ctx, text, x, y, maxW, maxLines, maxH, startSize, minSize, fontTpl, lh){
+    var size = startSize;
+    var lines, lineH;
+    while(size > minSize){
+      ctx.font = fontTpl.replace('%s', String(size));
+      lines = measureLines(ctx, text, maxW);
+      lineH = size * lh;
+      if(lines.length <= maxLines && lines.length * lineH <= maxH) break;
+      size -= 1;
+    }
+    ctx.font = fontTpl.replace('%s', String(size));
+    lines = measureLines(ctx, text, maxW);
+    lineH = size * lh;
+    var yAfter = y;
+    for(var i = 0; i < lines.length; i++){ ctx.fillText(lines[i], x, yAfter); yAfter += lineH; }
+    return { lines:lines.length, yAfter:yAfter };
+  }
+
+  /* ================= watermark: печать-кольцо + глитч-Y =================
+     Сдержанные знаки авторства в своих слотах — не перекрывают текст.
+     Цвета — только чёрный (полупрозрачный) и фирменный розовый. */
+  function drawArcText(ctx, text, cx, cy, r, fromDeg, toDeg, top, size, color, tracking){
+    var chars = text.split('');
+    ctx.font = '800 ' + size + 'px Archivo, sans-serif';
+    var widths = chars.map(function(ch){ return ctx.measureText(ch).width; });
+    var total = tracking * (chars.length - 1);
+    widths.forEach(function(w){ total += w; });
+    var span = (toDeg - fromDeg) * Math.PI / 180;
+    var scale = Math.min(1, (Math.abs(span) * r * 0.92) / total);
+    var pos = 0;
+    for(var i = 0; i < chars.length; i++){
+      var half = (widths[i] * scale) / 2;
+      var ang = (fromDeg + ((pos + half - (total * scale) / 2) / r) * (180 / Math.PI)) * Math.PI / 180;
+      var x = cx + r * Math.cos(ang);
+      var y = cy + r * Math.sin(ang);
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(top ? ang + Math.PI / 2 : ang - Math.PI / 2);
+      ctx.fillStyle = color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(chars[i], 0, 0);
+      ctx.restore();
+      pos += widths[i] * scale + tracking * scale;
+    }
+  }
+
+  function drawGlitchY(ctx, x, y, size, base, off){
+    ctx.save();
+    ctx.font = '400 ' + size + 'px Anton, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = off;
+    ctx.fillText('Y', x + 2.5, y + 2);
+    ctx.fillStyle = base;
+    ctx.fillText('Y', x, y);
+    ctx.restore();
+  }
+
+  /* ================= wax seal — авторская печать =================
+     Рисуется целиком на canvas: органический контур (неравный край,
+     как отбитый воск), градиент, вкатанное кольцо, краклеры, свет
+     с лево-верх, тень на бумагу, гравировка двойным офсетом.
+     Отпечаток одинаковый на каждой карточке — это и есть провенанс. */
+  function waxPath(ctx, cx, cy, r){
+    var N = 72;
+    ctx.beginPath();
+    for(var i = 0; i <= N; i++){
+      var a = i / N * Math.PI * 2;
+      var rr = r * (1 + 0.05 * Math.sin(3 * a + 1.7) + 0.035 * Math.sin(5 * a + 0.6) + 0.022 * Math.sin(8 * a + 2.3));
+      var x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a);
+      if(i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+  }
+
+  function waxSpeckle(ctx, cx, cy, r, n){
+    var s = 987654321;
+    function rnd(){ s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; }
+    for(var i = 0; i < n; i++){
+      var a = rnd() * 6.283, d = Math.sqrt(rnd()) * r * 0.86;
+      ctx.fillStyle = rnd() > 0.5 ? 'rgba(24,20,15,.05)' : 'rgba(255,255,255,.05)';
+      var sz = 1 + rnd() * 1.6;
+      ctx.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, sz, sz);
+    }
+  }
+
+  function drawWaxSeal(ctx, cx, cy, R){
+    ctx.save();
+    /* тень — печать «лежит» на бумаге */
+    ctx.save();
+    ctx.shadowColor = 'rgba(24,20,15,.32)';
+    ctx.shadowBlur = 16;
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 7;
+    waxPath(ctx, cx, cy, R);
+    ctx.fillStyle = '#B0235D';
+    ctx.fill();
+    ctx.restore();
+    /* база воска (тёмный край — «борт» отбивки) */
+    waxPath(ctx, cx, cy, R);
+    ctx.fillStyle = '#B0235D';
+    ctx.fill();
+    /* центр — светлее, блик с лево-верх */
+    waxPath(ctx, cx, cy, R * 0.9);
+    var g = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.3, R * 0.1, cx, cy, R * 0.92);
+    g.addColorStop(0, '#F06EA7');
+    g.addColorStop(0.55, '#E23A7F');
+    g.addColorStop(1, '#D22E6F');
+    ctx.fillStyle = g;
+    ctx.fill();
+    /* вкатанное кольцо */
+    waxPath(ctx, cx, cy, R * 0.78);
+    ctx.strokeStyle = 'rgba(120,10,50,.4)';
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    /* краклеры */
+    ctx.save();
+    waxPath(ctx, cx, cy, R * 0.9);
+    ctx.clip();
+    waxSpeckle(ctx, cx, cy, R * 0.9, 130);
+    ctx.restore();
+    /* свет */
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(255,255,255,.16)';
+    ctx.lineWidth = 9;
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.8, -2.6, -1.4); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,.1)';
+    ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.62, -2.5, -1.7); ctx.stroke();
+    /* гравировка: светлый офсет + тёмный */
+    var rText = R * 0.7;
+    drawArcText(ctx, 'BY YURICH', cx + 1.2, cy + 1.2, rText, -150, -30, true, 15, 'rgba(255,255,255,.22)', 3);
+    drawArcText(ctx, 'RWA · 2026', cx + 1.2, cy + 1.2, rText, 150, 30, false, 13, 'rgba(255,255,255,.22)', 2.5);
+    drawArcText(ctx, 'BY YURICH', cx, cy, rText, -150, -30, true, 15, 'rgba(92,8,44,.92)', 3);
+    drawArcText(ctx, 'RWA · 2026', cx, cy, rText, 150, 30, false, 13, 'rgba(92,8,44,.92)', 2.5);
+    /* гравированный глитч-Y */
+    drawGlitchY(ctx, cx, cy, 44, 'rgba(74,5,36,.95)', 'rgba(255,255,255,.28)');
+    ctx.restore();
+  }
+
+  function drawCard(termNum){
+    var d = TERMS[termNum];
+    if(!d) return null;
+    var secNum = TERM_SECTION[String(termNum)] || '1';
+    var W = 1080, H = 1350, M = 64, CW = W - M * 2;
+    var cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    var ctx = cv.getContext('2d');
+
+    /* бумага */
+    ctx.fillStyle = CREAM; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle = 'rgba(24,20,15,.07)';
+    for(var y = 3; y < H; y += 6){
+      for(var x = 3; x < W; x += 6){
+        ctx.beginPath(); ctx.arc(x, y, 1, 0, 6.283); ctx.fill();
+      }
+    }
+    ctx.strokeStyle = BLACK; ctx.lineWidth = 10; ctx.strokeRect(18, 18, W-36, H-36);
+
+    /* шапка */
+    ctx.fillStyle = PINK; ctx.fillRect(M, 72, 22, 22);
+    ctx.fillStyle = BLACK;
+    ctx.font = '400 26px Anton, sans-serif';
+    ctx.fillText('YURICHHUB — ГЛОССАРИЙ RWA', M + 38, 93);
+
+    /* раздел + номер термина */
+    ctx.fillStyle = PINK;
+    ctx.font = '800 24px Archivo, sans-serif';
+    ctx.fillText(d.sec.toUpperCase(), M, 168);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(24,20,15,.55)';
+    ctx.font = '400 26px Anton, sans-serif';
+    ctx.fillText('ТЕРМИН ' + ('0' + termNum).slice(-2), W - M, 168);
+    ctx.textAlign = 'left';
+
+    /* название */
+    var y = 246;
+    ctx.fillStyle = BLACK;
+    var name = fitFont(ctx, d.name.toUpperCase(), M, y, CW, 2, 134, 54, 44, '400 %spx Anton, sans-serif', 1.14);
+    y = name.yAfter + 22;
+
+    /* drop-строка */
+    ctx.fillStyle = PINK;
+    var drop = fitFont(ctx, d.drop, M, y, CW, 3, 132, 30, 24, '800 %spx Archivo, sans-serif', 1.4);
+    y = drop.yAfter + 20;
+
+    /* divider */
+    ctx.fillStyle = BLACK; ctx.fillRect(M, y, 200, 6);
+    y += 38;
+
+    /* тело термина целиком */
+    var bottomStart = H - 300;
+    var mainReserve = 190;
+    ctx.fillStyle = 'rgba(24,20,15,.88)';
+    var body = fitFont(ctx, d.body, M, y, CW, 12, bottomStart - mainReserve - y - 30, 28, 22, '400 %spx Archivo, sans-serif', 1.42);
+    y = body.yAfter + 34;
+
+    /* плашка ГЛАВНОЕ */
+    ctx.font = '400 26px Anton, sans-serif';
+    var gw = ctx.measureText('ГЛАВНОЕ').width;
+    ctx.fillStyle = BLACK;
+    ctx.fillRect(M, y, gw + 36, 44);
+    ctx.fillStyle = YELLOW;
+    ctx.fillText('ГЛАВНОЕ', M + 18, y + 32);
+    y += 44 + 22;
+
+    /* главное */
+    ctx.fillStyle = 'rgba(24,20,15,.92)';
+    var main = fitFont(ctx, d.main, M, y, CW, 3, bottomStart - 20 - y, 27, 21, '700 %spx Archivo, sans-serif', 1.42);
+    y = main.yAfter;
+
+    /* нижняя лента */
+    ctx.strokeStyle = 'rgba(24,20,15,.22)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(M, bottomStart - 22); ctx.lineTo(W - M, bottomStart - 22); ctx.stroke();
+
+    /* комикс-мини */
+    var cs = 200, cx = W - M - cs, cy = H - M - cs;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(cx, cy, cs, cs); ctx.clip();
+    var im = comicCache[secNum];
+    if(im && im.complete && im.naturalWidth){
+      ctx.fillStyle = BLACK; ctx.fillRect(cx, cy, cs, cs);
+      var r = Math.min(cs / im.naturalWidth, cs / im.naturalHeight);
+      var dw = im.naturalWidth * r, dh = im.naturalHeight * r;
+      ctx.drawImage(im, cx + (cs-dw)/2, cy + (cs-dh)/2, dw, dh);
+    } else {
+      ctx.fillStyle = PINK; ctx.fillRect(cx, cy, cs, cs);
+      ctx.fillStyle = BLACK; ctx.font = '800 22px Archivo, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('comics' + secNum, cx + cs/2, cy + cs/2 + 8);
+      ctx.textAlign = 'left';
+    }
+    ctx.restore();
+    ctx.strokeStyle = BLACK; ctx.lineWidth = 6; ctx.strokeRect(cx, cy, cs, cs);
+
+    /* подвал: ссылка + подпись */
+    ctx.fillStyle = 'rgba(24,20,15,.55)';
+    ctx.font = '700 21px Archivo, sans-serif';
+    ctx.fillText('ПОЛНЫЙ ГЛОССАРИЙ', M, bottomStart + 42);
+    ctx.fillStyle = BLACK;
+    ctx.font = '800 22px Archivo, sans-serif';
+    ctx.fillText(SITE + '/glossary.html', M, bottomStart + 82);
+    ctx.font = '800 30px Archivo, sans-serif';
+    ctx.fillText('by YuRich', M, bottomStart + 144);
+    var sw = ctx.measureText('by YuRich').width;
+    ctx.fillStyle = PINK; ctx.fillRect(M, bottomStart + 160, sw, 6);
+
+    /* восковая печать — слот между текстом и комиксом, без перекрытия */
+    var sealR = 84;
+    var sealX = W - M - 200 - 24 - sealR;
+    var sealY = H - M - 100;
+    drawWaxSeal(ctx, sealX, sealY, sealR);
+    return cv;
+  }
+
+  /* ================= mobile-safe scroll lock (iOS) ================= */
+  var isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var savedScroll = 0;
+  function lockScroll(){
+    if(isIOS){
+      savedScroll = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = (-savedScroll) + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+  function unlockScroll(){
+    if(isIOS){
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      window.scrollTo(0, savedScroll);
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
+  /* ================= toast ================= */
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    if(!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2600);
+  }
+
+  function termText(termNum){
+    var d = TERMS[termNum];
+    return 'ТЕРМИН ' + ('0' + termNum).slice(-2) + ' · ' + d.sec.toUpperCase() + '\n' +
+           d.name.toUpperCase() + '\n\n' +
+           d.drop + '\n\n' +
+           d.body + '\n\n' +
+           'ГЛАВНОЕ: ' + d.main + '\n\n' +
+           'Полный глоссарий: https://' + SITE + '/glossary.html\n' +
+           'by YuRich';
+  }
+  function fallbackCopy(txt){
+    var ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    ta.remove();
+  }
+  function copyTermText(termNum){
+    var txt = termText(termNum);
+    function done(){
+      shareCopy.textContent = 'Скопировано ✓';
+      setTimeout(function(){ shareCopy.textContent = 'Скопировать текст'; }, 1800);
+      showToast('Текст скопирован — вставь в мессенджер');
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ fallbackCopy(txt); done(); });
+    } else { fallbackCopy(txt); done(); }
+  }
+
+  function openShare(termNum){
+    if(!TERMS[termNum]) return;
+    /* fonts.ready может зависнуть на мобилке (слабый интернет) — гонка с таймаутом,
+       чтобы кнопка никогда не молчала */
+    /* прогреваем шрифты до замера — иначе метрики фолбэка и текст накладывается */
+    var wanted = ['400 54px Anton', '800 30px Archivo', '400 28px Archivo', '700 27px Archivo', '800 22px Archivo', '800 15px Archivo'];
+    var fontsReady = (document.fonts && document.fonts.load)
+      ? Promise.race([Promise.all(wanted.map(function(f){ return document.fonts.load(f).catch(function(){}); })),
+                      new Promise(function(res){ setTimeout(res, 1800); })])
+      : Promise.resolve();
+    fontsReady.then(function(){
+      try{
+        var cv = drawCard(termNum);
+        if(!cv) throw new Error('canvas');
+        var url = cv.toDataURL('image/png');
+        shareImg.style.display = '';
+        shareImg.src = url;
+        lastData = { url:url, termNum:termNum, canvas:cv };
+        shareDownload.href = url;
+        shareDownload.style.display = '';
+        shareDownload.download = 'yurich-glossary-termin-' + ('0' + termNum).slice(-2) + '.png';
+        shareNative.style.display = (navigator.share && window.File) ? '' : 'none';
+        modal.classList.add('open');
+        lockScroll();
+      }catch(err){
+        /* canvas не собрался (редко) — не оставляем пользователя ни с чем */
+        shareImg.style.display = 'none';
+        shareDownload.style.display = 'none';
+        shareNative.style.display = 'none';
+        lastData = { url:null, termNum:termNum, canvas:null };
+        modal.classList.add('open');
+        lockScroll();
+        copyTermText(termNum);
+      }
+    });
+  }
+  function closeShare(){
+    modal.classList.remove('open');
+    unlockScroll();
+  }
+
+  document.querySelectorAll('.share-btn').forEach(function(b){
+    b.addEventListener('click', function(){ openShare(parseInt(b.getAttribute('data-term'), 10)); });
+  });
+  document.getElementById('modalClose').addEventListener('click', closeShare);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeShare(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeShare(); });
+
+  shareCopy.addEventListener('click', function(){
+    if(lastData) copyTermText(lastData.termNum);
+  });
+
+  /* нативный шеринг (Web Share API) — на телефоне карточка уходит
+     в Telegram/WhatsApp/Instagram прямо из системного меню */
+  var shareNative = document.getElementById('shareNative');
+  shareNative.addEventListener('click', function(){
+    if(!lastData || !lastData.canvas) return;
+    var termNum = lastData.termNum;
+    var finish = function(blob){
+      if(!blob) return;
+      var file = new File([blob], 'yurich-glossary-termin-' + ('0' + termNum).slice(-2) + '.png', { type:'image/png' });
+      navigator.share({
+        title:'YuRich RWA — глоссарий',
+        text: TERMS[termNum].drop,
+        files:[file]
+      }).catch(function(){
+        navigator.share({ title:'YuRich RWA — глоссарий', text: termText(termNum) }).catch(function(){});
+      });
+    };
+    if(typeof lastData.canvas.toBlob === 'function'){
+      lastData.canvas.toBlob(function(b){ finish(b); }, 'image/png');
+    }
+  });
+})();
+</script>
+<div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
