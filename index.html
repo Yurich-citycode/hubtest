@@ -352,7 +352,9 @@
   }
   .partner:hover img{ transform:translateY(-3px) scale(1.04); box-shadow:0 10px 26px rgba(0,0,0,.5); }
   .partner img.hermes{ width:168px; height:168px; object-position:center 12%; }
-  .partner img.nebank{ width:168px; height:168px; object-position:center 72%; }
+  /* Небанк — прозрачный PNG без фона: надпись и все три карты целиком,
+     высота с кружком Гермеса; вся плитка кликабельна */
+  .partner img.nebank{ width:auto; height:168px; border-radius:0; object-fit:contain; }
   .partner small{ color:var(--ink-dim); font-size:11px; letter-spacing:.08em; text-transform:uppercase; line-height:1.4; }
 
   /* ================= 03 CRIMEA RWA ================= */
@@ -744,7 +746,7 @@
         <small>Hermes Exchange (Financial infra)</small>
       </a>
       <a class="partner magnetic" href="https://t.me/NeBankRobot?start=YURICH" target="_blank" rel="noopener">
-        <img class="nebank" src="nebank.jpg" alt="Небанк App">
+        <img class="nebank" src="nebank.png" alt="Небанк App">
         <small>Небанк App (Financial infra)</small>
       </a>
     </div>
