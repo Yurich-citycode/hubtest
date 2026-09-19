@@ -352,7 +352,9 @@
   }
   .partner:hover img{ transform:translateY(-3px) scale(1.04); box-shadow:0 10px 26px rgba(0,0,0,.5); }
   .partner img.hermes{ width:168px; height:168px; object-position:center 12%; }
-  .partner img.nebank{ width:168px; height:168px; object-position:center 72%; }
+  /* Небанк — без круглой обрезки: видно и надпись, и все три карты целиком,
+     вся плитка кликабельна (ссылка оборачивает изображение) */
+  .partner img.nebank{ width:200px; height:auto; border-radius:8px; }
   .partner small{ color:var(--ink-dim); font-size:11px; letter-spacing:.08em; text-transform:uppercase; line-height:1.4; }
 
   /* ================= 03 CRIMEA RWA ================= */
