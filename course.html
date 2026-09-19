@@ -27,7 +27,8 @@
   }
   html.page-ready{ opacity:1; }
   html.page-leaving{ opacity:0; pointer-events:none; }
-
+  html, body{ overflow-x:hidden; }
+  
   body{
     margin:0; background:var(--cream); color:var(--black);
     font-family:'Archivo', sans-serif; position:relative;
@@ -115,6 +116,7 @@
     position:relative; margin-top:44px; overflow:hidden;
     border-top:3px solid var(--black); border-bottom:3px solid var(--black);
     background:var(--black); padding:12px 0;
+    width:100vw; margin-left:calc(50% - 50vw);
   }
   .ticker::before{
     content:''; position:absolute; inset:0;
