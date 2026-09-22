@@ -1,0 +1,20 @@
+{
+  "lang": "en",
+  "module": "research",
+  "layout": "poster",
+  "format": "x",
+  "title": "X ALGO HACK",
+  "subtitle": "THE X ALGORITHM: WHAT THE CODE ACTUALLY SAYS",
+  "body": "Replies and reposts never reach non-followers' feeds. One content type puts you in front of new people: your own post.",
+  "source": "SOURCE: GITHUB.COM/XAI-ORG/X-ALGORITHM",
+  "date": "09.2026",
+  "series": "X ALGO HACK",
+  "footerNote": "X ALGORITHM BREAKDOWN // STRAIGHT FROM THE CODE",
+  "glitch": true,
+  "stats": [
+    { "value": "0.5", "label": "LIKE WEIGHT", "color": "lime" },
+    { "value": "20", "label": "COPY-LINK WEIGHT", "color": "ink" },
+    { "value": "-234", "label": "REPORT WEIGHT", "color": "pink" },
+    { "value": "48 H", "label": "POST LIFESPAN", "color": "gold" }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "lang": "ru",
+  "module": "research",
+  "layout": "poster",
+  "format": "x",
+  "title": "X ALGO HACK",
+  "subtitle": "АЛГОРИТМ Х: ЧТО РЕАЛЬНО НАПИСАНО В КОДЕ",
+  "body": "Ответы и репосты не выносят в чужие ленты. В ленту к новым людям тебя выносит один тип контента: твой пост.",
+  "source": "ИСТОЧНИК: GITHUB.COM/XAI-ORG/X-ALGORITHM",
+  "date": "09.2026",
+  "series": "X ALGO HACK",
+  "footerNote": "РАЗБОР АЛГОРИТМА X // ПО ОТКРЫТОМУ КОДУ",
+  "glitch": true,
+  "stats": [
+    { "value": "0,5", "label": "ВЕС ЛАЙКА", "color": "lime" },
+    { "value": "20", "label": "ВЕС КОПИИ ССЫЛКИ", "color": "ink" },
+    { "value": "−234", "label": "ВЕС ЖАЛОБЫ", "color": "pink" },
+    { "value": "48 Ч", "label": "ЖИЗНЬ ПОСТА", "color": "gold" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "lang": "ru",
+  "module": "sevastopol",
+  "layout": "poster",
+  "format": "x",
+  "title": "SEVASTOPOL AI",
+  "subtitle": "ГОРОД, КОТОРЫЙ ОТВЕЧАЕТ",
+  "body": "Не справочник на 200 позиций. Где сегодня закат, где сесть поесть, какой маршрут пройти заново.",
+  "source": "T.ME/SEVASTOPOLAIBOT",
+  "date": "09.2026",
+  "stats": [
+    { "value": "160+", "label": "МЕСТ ЕДЫ", "color": "gold" },
+    { "value": "55", "label": "ЛОКАЦИЙ", "color": "ink" },
+    { "value": "01", "label": "ОТКРЫТИЕ", "color": "lime" },
+    { "value": "0", "label": "НАКРУТОК", "color": "pink" }
+  ]
+}

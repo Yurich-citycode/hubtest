@@ -1,0 +1,18 @@
+{
+  "lang": "ru",
+  "module": "rwa",
+  "layout": "poster",
+  "format": "x",
+  "title": "CRIMEA RWA",
+  "subtitle": "СНАЧАЛА АКТИВ. ПОТОМ ФОРМА.",
+  "subtitleColor": "bronze",
+  "body": "Доля дохода, право на объект, доступ к событию. Город остаётся городом. Меняется способ владения.",
+  "source": "СЛЕДУЮЩИЙ ГОРИЗОНТ",
+  "date": "09.2026",
+  "stats": [
+    { "value": "А", "label": "ОБЪЕКТ", "color": "bronze" },
+    { "value": "Б", "label": "СТРУКТУРА", "color": "gold" },
+    { "value": "В", "label": "ТОКЕН", "color": "ink" },
+    { "value": "03", "label": "ВЛАДЕНИЕ", "color": "pink" }
+  ]
+}

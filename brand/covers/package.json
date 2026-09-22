@@ -1,0 +1,14 @@
+{
+  "name": "yurichhub-covers",
+  "version": "1.0.0",
+  "private": true,
+  "description": "YurichHub post-cover template. Swap titles in a JSON spec, keep the house chassis. See ../YURICHHUB-STYLE.md",
+  "scripts": {
+    "cover": "node render.js",
+    "examples": "node render-all.js"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "lang": "ru",
+  "module": "research",
+  "layout": "statement",
+  "format": "x",
+  "kicker": "ON-CHAIN FORENSIC. Я ПОПАЛ В ЭТУ ВОЛНУ",
+  "source": "ИСТОЧНИК: ОТЧЁТ FASOL.TRADE V2",
+  "lines": [
+    { "text": "МЕНЯ СДРЕЙНИЛИ.", "color": "ink", "glitch": true },
+    { "text": "НАШЁЛ ДВА ВЫХОДА", "color": "lime" },
+    { "text": "НА БИРЖЕВЫЕ КОШЕЛЬКИ.", "color": "gold" }
+  ],
+  "body": [
+    "Один collector. Скриптовый sweep 200+ кошельков за 20 минут. Relay-лестница,",
+    "DEX-конвертация. Две метки Solscan, подтверждённые хоп за хопом. Это не вся куча."
+  ],
+  "stats": [
+    { "value": "930", "label": "ПЕРЕВОДОВ ЗА 20 МИНУТ", "color": "lime" },
+    { "value": "202", "label": "КОШЕЛЬКА-ИСТОЧНИКА", "color": "ink" },
+    { "value": "1 481", "label": "SOL ЧЕРЕЗ 5 RELAY", "color": "ink" },
+    { "value": "2", "label": "ВЫХОДА С МЕТКАМИ CEX", "color": "pink" }
+  ],
+  "cta": "ВСЯ КАРТА ДЕНЕГ »",
+  "date": "19–20 СЕН 2026 · UTC",
+  "footerNote": "ON-CHAIN FORENSIC // SOLANA, ВОЛНА ДРЕЙНОВ",
+  "index": "01/04"
+}

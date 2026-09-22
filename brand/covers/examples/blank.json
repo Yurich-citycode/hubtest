@@ -1,0 +1,20 @@
+{
+  "lang": "ru",
+  "module": "hub",
+  "layout": "poster",
+  "format": "x",
+  "title": "ЗАГОЛОВОК",
+  "subtitle": "ОДНА СТРОКА ЗОЛОТОМ. КОРОТКО.",
+  "body": "Одно предложение. Что человек должен унести, если не откроет пост.",
+  "source": "ИСТОЧНИК: ...",
+  "date": "09.2026",
+  "series": "СЕРИЯ",
+  "footerNote": "РУБРИКА // КОРОТКАЯ ПОДПИСЬ",
+  "glitch": true,
+  "stats": [
+    { "value": "01", "label": "ПЕРВАЯ ЦИФРА", "color": "lime" },
+    { "value": "02", "label": "ВТОРАЯ ЦИФРА", "color": "ink" },
+    { "value": "03", "label": "ОПАСНАЯ ЦИФРА", "color": "pink" },
+    { "value": "04", "label": "СРОК ИЛИ ЦЕНА", "color": "gold" }
+  ]
+}
