@@ -1,0 +1,17 @@
+{
+  "lang": "ru",
+  "module": "glossary",
+  "layout": "poster",
+  "format": "x",
+  "title": "ГЛОССАРИЙ",
+  "subtitle": "СЛОВАРЬ, БЕЗ КОТОРОГО РЫНОК НЕ ЧИТАЕТСЯ",
+  "body": "Total Value это не TVL. Заявленная доходность это не то, что доезжает до кошелька. Сначала слово, потом цифра.",
+  "source": "57 ТЕРМИНОВ // 11 РАЗДЕЛОВ",
+  "date": "09.2026",
+  "stats": [
+    { "value": "57", "label": "ТЕРМИНОВ", "color": "pink" },
+    { "value": "11", "label": "РАЗДЕЛОВ", "color": "ink" },
+    { "value": "06", "label": "КОМИКСОВ В РЕПО", "color": "gold" },
+    { "value": "TVL", "label": "НЕ РАВНО TOTAL VALUE", "color": "lime" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "lang": "ru",
+  "module": "course",
+  "layout": "poster",
+  "format": "x",
+  "title": "YURICH RWA",
+  "subtitle": "ШЕСТЬ МОДУЛЕЙ. БЕЗ СИГНАЛОВ.",
+  "body": "Язык рынка: что такое RWA, что такое ЦФА, что покупает инвестор и где здесь риски. Трейдинг живёт в канале, не здесь.",
+  "source": "T.ME/YURICHRWA",
+  "date": "09.2026",
+  "stats": [
+    { "value": "06", "label": "МОДУЛЕЙ", "color": "pink" },
+    { "value": "00", "label": "СТАРТ", "color": "ink" },
+    { "value": "0", "label": "СИГНАЛОВ", "color": "lime" },
+    { "value": "57", "label": "ТЕРМИНОВ В СЛОВАРЕ", "color": "gold" }
+  ]
+}

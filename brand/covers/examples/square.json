@@ -1,0 +1,17 @@
+{
+  "lang": "ru",
+  "module": "citycode",
+  "layout": "poster",
+  "format": "square",
+  "title": "CITY CODE",
+  "subtitle": "НЕ ПРОМОКОД",
+  "body": "Шесть ключей. Закрытый круг. Город, в который входят, а не заходят за скидкой.",
+  "source": "YURICHHUB",
+  "date": "09.2026",
+  "stats": [
+    { "value": "06", "label": "КЛЮЧЕЙ", "color": "lime" },
+    { "value": "0", "label": "ПРОМОКОДОВ", "color": "pink" },
+    { "value": "CODE", "label": "ПРАВИЛА", "color": "ink" },
+    { "value": "02", "label": "ПРИНАДЛЕЖНОСТЬ", "color": "gold" }
+  ]
+}

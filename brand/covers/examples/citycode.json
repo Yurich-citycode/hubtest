@@ -1,0 +1,17 @@
+{
+  "lang": "ru",
+  "module": "citycode",
+  "layout": "poster",
+  "format": "x",
+  "title": "CITY CODE",
+  "subtitle": "КЛЮЧ, КОТОРЫЙ ОТКРЫВАЕТ ГОРОД ИНАЧЕ",
+  "body": "Закрытое сообщество вокруг города. Шесть ключей на одной связке. Не скидочная карта и не промокод.",
+  "source": "YURICHHUB // СЕВАСТОПОЛЬ",
+  "date": "09.2026",
+  "stats": [
+    { "value": "06", "label": "КЛЮЧЕЙ НА СВЯЗКЕ", "color": "lime" },
+    { "value": "0", "label": "ПРОМОКОДОВ", "color": "pink" },
+    { "value": "CODE", "label": "ПРАВИЛА СИСТЕМЫ", "color": "ink" },
+    { "value": "02", "label": "ПРИНАДЛЕЖНОСТЬ", "color": "gold" }
+  ]
+}
