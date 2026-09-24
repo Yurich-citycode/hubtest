@@ -381,9 +381,9 @@
     transform:rotate(-2deg);
   }
 
-  /* 03: «как это устроено» — вкладки А/Б/В (стиль wembi HOW) + 3D-монета и сертификат */
+  /* 03: «как это устроено» — вкладки А/Б/В (стиль wembi HOW) */
   .rwa-how{
-    display:grid; grid-template-columns:1.05fr .95fr; gap:64px; align-items:center;
+    display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:64px; align-items:center;
     margin-top:64px; text-align:left; width:100%;
   }
   .rwa-tabs{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px; }
@@ -407,58 +407,135 @@
   .rwa-step p{ margin:0; font-size:14px; line-height:1.65; color:#C4C4C4; }
   @keyframes stepPulse{ 0%{ border-color:var(--bronze); } 100%{ border-color:var(--line); } }
 
+  /* правый блок: три экрана А/Б/В, переключаются табами */
   .rwa-visual{ position:relative; }
-  .coin-stage{ position:relative; width:200px; height:200px; margin:0 auto 40px; perspective:1000px; }
-  .coin{ position:absolute; inset:0; transform-style:preserve-3d; animation:coinSpin 16s linear infinite; }
-  .coin-face{
-    position:absolute; inset:0; border-radius:50%;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    backface-visibility:hidden; -webkit-backface-visibility:hidden;
-    background:radial-gradient(circle at 32% 28%, #2b2519 0%, #151209 58%, #0c0a06 100%);
-    border:2px solid rgba(201,138,78,.75);
-    box-shadow:0 0 38px rgba(201,138,78,.22), inset 0 0 28px rgba(0,0,0,.85);
-  }
-  .coin-face::before{ content:''; position:absolute; inset:13px; border-radius:50%; border:1px dashed rgba(201,138,78,.45); }
-  .coin-face .c1{ font-family:var(--font-display); font-size:34px; letter-spacing:.02em; color:var(--bronze); }
-  .coin-face .c2{ font-size:8.5px; font-weight:800; letter-spacing:.34em; color:rgba(243,241,234,.55); margin-top:8px; }
-  .coin-back{ transform:rotateY(180deg); }
-  .coin-edge{ position:absolute; inset:0; border-radius:50%; background:#181310; border:2px solid rgba(201,138,78,.35); }
-  @keyframes coinSpin{ from{ transform:rotateX(10deg) rotateY(0deg); } to{ transform:rotateX(10deg) rotateY(360deg); } }
+  .rwa-screen{ display:none; }
+  .rwa-screen.is-active{ display:block; animation:screenIn .45s cubic-bezier(.2,.8,.2,1); }
+  @keyframes screenIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
 
-  .token-card{
-    position:relative; max-width:400px; margin:0 auto;
-    border:1px solid rgba(201,138,78,.5);
-    background:linear-gradient(160deg, rgba(201,138,78,.09), rgba(10,10,10,.5) 62%);
-    padding:24px 26px 20px; transform:rotate(-1.6deg);
-    box-shadow:0 18px 44px rgba(0,0,0,.6);
-    transition:transform .3s cubic-bezier(.2,.8,.2,1);
+  /* А · Объект — фото актива крупно + плашка «доцифровой слой» */
+  .asset-shot{ position:relative; margin:0; border:1px solid var(--line); background:#0c0b09; }
+  .asset-shot img{
+    display:block; width:100%; height:352px; object-fit:cover; object-position:center 42%;
+    filter:saturate(.94) contrast(1.05) brightness(.96);
   }
-  .token-card:hover{ transform:rotate(-.4deg) translateY(-4px); }
-  .token-card .tc-demo{
-    position:absolute; top:-11px; right:16px; font-size:8.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--bronze); border:1px solid rgba(201,138,78,.55); padding:4px 9px; background:var(--bg); transform:rotate(2deg);
+  .asset-shot::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(10,10,10,.05) 45%, rgba(10,10,10,.66) 100%);
   }
-  .token-card .tc-top{
-    display:flex; justify-content:space-between; gap:10px;
-    font-size:9.5px; font-weight:700; letter-spacing:.18em; color:var(--ink-dim); text-transform:uppercase;
-    border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:14px;
+  .asset-flag{
+    position:absolute; top:12px; right:12px; z-index:1;
+    font-size:8.5px; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--bronze); border:1px solid rgba(201,138,78,.55); background:rgba(10,10,10,.72);
+    padding:4px 9px;
   }
-  .token-card .tc-asset{
-    font-family:var(--font-display); font-size:20px; text-transform:uppercase; color:var(--bronze);
-    margin:2px 0 14px; min-height:26px;
+  .asset-plate{ border:1px solid var(--line); border-top:0; background:rgba(255,255,255,.02); padding:16px 18px 12px; }
+  .asset-plate .ap-head{
+    font-size:9.5px; font-weight:800; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--bronze); margin-bottom:6px;
   }
-  .token-card .tc-row{ display:flex; justify-content:space-between; gap:12px; font-size:11px; margin-bottom:8px; }
-  .token-card .tc-row b{ font-weight:700; color:var(--ink); }
-  .token-card .tc-row span{ color:var(--ink-dim); }
-  .token-card .tc-bar{
-    height:34px; margin-top:12px; opacity:.8;
-    background:repeating-linear-gradient(90deg,
-      rgba(243,241,234,.75) 0 2px, transparent 2px 5px,
-      rgba(243,241,234,.75) 5px 6px, transparent 6px 11px,
-      rgba(243,241,234,.75) 11px 14px, transparent 14px 17px,
-      rgba(243,241,234,.75) 17px 18px, transparent 18px 24px);
+  .ap-row{ display:flex; justify-content:space-between; gap:14px; padding:8px 0; border-top:1px solid var(--line); font-size:12px; line-height:1.5; }
+  .ap-row b{ flex:0 0 78px; font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); padding-top:2px; }
+  .ap-row span{ color:var(--ink); text-align:right; }
+
+  /* Б · Структура — вертикальный документ «Решение о выпуске», тёмная бумага */
+  .doc-sheet{
+    max-width:440px; margin:0 auto; position:relative;
+    background:linear-gradient(180deg, #12100d 0%, #0d0c0a 100%);
+    border:1px solid rgba(201,138,78,.38);
+    box-shadow:0 26px 60px rgba(0,0,0,.55);
+    padding:26px 28px 22px;
   }
-  .token-card .tc-serial{ margin-top:8px; font-size:9px; letter-spacing:.22em; color:var(--ink-dim); text-align:center; }
+  .doc-sheet::before{
+    content:''; position:absolute; top:0; bottom:0; left:14px; width:1px;
+    background:linear-gradient(180deg, transparent, rgba(201,138,78,.4) 12%, rgba(201,138,78,.4) 88%, transparent);
+  }
+  .doc-head{ border-bottom:1px solid rgba(201,138,78,.3); padding-bottom:16px; margin-bottom:4px; }
+  .doc-kicker{
+    display:inline-block; font-size:8.5px; font-weight:800; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--bronze); border:1px solid rgba(201,138,78,.5); padding:4px 9px; margin-bottom:12px;
+  }
+  .doc-title{ font-family:var(--font-display); font-size:24px; line-height:1.05; text-transform:uppercase; margin:0 0 6px; color:var(--ink); }
+  .doc-sub{ font-size:11px; letter-spacing:.08em; color:var(--ink-dim); }
+  .doc-fields{ margin:0; }
+  .doc-fields .df{ display:flex; justify-content:space-between; gap:16px; padding:9px 0; border-bottom:1px dashed rgba(243,241,234,.12); font-size:12px; line-height:1.5; }
+  .doc-fields dt{ flex:0 0 116px; color:var(--ink-dim); font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding-top:2px; }
+  .doc-fields dd{ margin:0; color:var(--ink); text-align:right; }
+  .doc-fields dd.doc-status{ color:var(--bronze); font-weight:700; }
+  .doc-pdf{
+    display:inline-flex; align-items:center; gap:8px; margin-top:18px; padding-bottom:3px;
+    border:0; border-bottom:1px solid rgba(201,138,78,.5); background:none; cursor:pointer;
+    font-family:var(--font-sans); font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--bronze); text-decoration:none;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .doc-pdf:hover{ color:var(--ink); border-color:var(--ink); }
+
+  /* В · Токен — учебный макет экрана брокера 390×844, светлая карточка актива */
+  .broker-stage{ position:relative; width:100%; max-width:390px; margin:0 auto; }
+  .broker{
+    position:absolute; top:0; left:0; width:390px; height:844px; transform-origin:top left;
+    background:#f2f0ec; color:#17171a; border:1px solid rgba(10,10,10,.5); border-radius:34px;
+    overflow:hidden; box-shadow:0 30px 70px rgba(0,0,0,.6);
+  }
+  .bk-status{ display:flex; justify-content:space-between; align-items:center; padding:16px 26px 6px; font-size:13px; font-weight:700; }
+  .bk-status-ico{ display:inline-flex; align-items:flex-end; gap:3px; }
+  .bk-status-ico i{ display:block; width:3px; background:#17171a; border-radius:1px; }
+  .bk-status-ico i:nth-child(1){ height:5px; }
+  .bk-status-ico i:nth-child(2){ height:8px; }
+  .bk-status-ico i:nth-child(3){ height:11px; }
+  .bk-status-ico i:nth-child(4){ width:16px; height:8px; margin-left:4px; border:1.5px solid #17171a; border-radius:2px; background:linear-gradient(90deg,#17171a 70%, transparent 70%); }
+  .bk-bar{ display:flex; align-items:center; justify-content:space-between; padding:8px 22px 10px; font-size:15px; font-weight:700; }
+  .bk-bar .bk-edge{ color:#8a8a90; font-size:18px; line-height:1; }
+  .bk-card{ margin:6px 14px 0; background:#fff; border-radius:22px; padding:18px 18px 14px; box-shadow:0 10px 26px rgba(23,23,26,.08); }
+  .bk-head{ display:flex; gap:12px; align-items:flex-start; }
+  .bk-ico{
+    flex:0 0 44px; width:44px; height:44px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(201,138,78,.14); color:#a06a33;
+  }
+  .bk-names{ flex:1 1 auto; min-width:0; }
+  .bk-names b{ display:block; font-size:16px; line-height:1.25; font-weight:800; }
+  .bk-names span{ display:block; margin-top:3px; font-size:12.5px; color:#77777d; }
+  .bk-chip{
+    flex:0 0 auto; padding:5px 10px; border-radius:999px; white-space:nowrap;
+    font-size:11px; font-weight:800; letter-spacing:.04em; color:#1d7a3d; background:rgba(29,122,61,.1);
+  }
+  .bk-yield{ display:flex; align-items:baseline; gap:10px; margin:14px 0 2px; }
+  .bk-y-num{ font-size:34px; font-weight:800; letter-spacing:-.01em; }
+  .bk-y-lbl{ font-size:12.5px; color:#77777d; }
+  .bk-rows{ margin-top:12px; border-top:1px solid #ececea; }
+  .bk-row{ display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid #ececea; font-size:13.5px; }
+  .bk-row span{ color:#77777d; }
+  .bk-row b{ font-weight:700; }
+  .bk-ois{
+    display:flex; align-items:center; gap:8px; margin-top:14px; padding:10px 12px;
+    background:#f6f4f0; border-radius:12px; font-size:12.5px; color:#55555b;
+  }
+  .bk-ois svg{ flex:0 0 16px; color:#a06a33; }
+  .bk-cta{
+    width:100%; margin-top:14px; padding:14px 16px; border:0; border-radius:14px; cursor:pointer;
+    background:#17171a; color:#fff; font-family:var(--font-sans); font-size:14px; font-weight:700;
+  }
+  .bk-note{ margin-top:8px; font-size:11px; line-height:1.45; color:#9a9aa0; text-align:center; }
+  .bk-card + .bk-card{ margin-top:12px; }
+  .bk-chart-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:10px; }
+  .bk-chart-head b{ font-size:13.5px; }
+  .bk-chart-head span{ font-size:11px; color:#77777d; white-space:nowrap; }
+  .bk-chart{ width:100%; height:64px; display:block; }
+  .bk-about{ font-size:12.5px; line-height:1.55; color:#55555b; }
+  .bk-tabbar{
+    position:absolute; left:0; right:0; bottom:0; padding:10px 22px 24px;
+    display:flex; justify-content:space-between; background:#fbfaf8; border-top:1px solid #ececea;
+  }
+  .bk-tabbar span{ font-size:10.5px; font-weight:700; letter-spacing:.02em; color:#9a9aa0; }
+  .bk-tabbar span.on{ color:#17171a; }
+
+  /* мелкая строка под всеми тремя экранами */
+  .rwa-legal{
+    margin:26px auto 0; max-width:520px; text-align:center;
+    font-size:10.5px; line-height:1.6; letter-spacing:.04em; color:var(--ink-dim);
+  }
 
   /* ================= 04 COURSE ================= */
   .mod-counter{ display:flex; align-items:baseline; gap:16px; margin:40px 0 18px; }
@@ -552,7 +629,7 @@
     .cc-grid{ grid-template-columns:1fr; }
     section.chapter{ padding:84px 0; }
     .routecard{ margin:0 auto; }
-    .rwa-how{ grid-template-columns:1fr; gap:56px; margin-top:56px; }
+    .rwa-how{ grid-template-columns:minmax(0,1fr); gap:56px; margin-top:56px; }
     .steps{ grid-template-columns:1fr; border-top:0; }
     .step-cell{ border-right:0; border-top:2px solid var(--line); padding:24px 0 14px; }
     .step-cell + .step-cell{ padding-left:0; }
@@ -579,8 +656,14 @@
     .bg-num{ display:none; }
     .thesis-scatter{ min-height:auto; }
     .tf{ position:static !important; display:block; transform:none !important; white-space:normal; margin:0 0 12px; }
-    .coin-stage{ width:170px; height:170px; }
-    .coin-face .c1{ font-size:28px; }
+    .asset-shot img{ height:250px; }
+    .ap-row{ flex-direction:column; gap:2px; }
+    .ap-row b{ flex:none; }
+    .ap-row span{ text-align:left; }
+    .doc-sheet{ padding:22px 20px 18px; }
+    .doc-fields .df{ flex-direction:column; gap:2px; }
+    .doc-fields dt{ flex:none; }
+    .doc-fields dd{ text-align:left; }
   }
   @media (max-width:700px){
     .wordwall .big{ -webkit-text-stroke:1px rgba(215,255,61,.5); }
@@ -596,14 +679,14 @@
     .reveal{ opacity:1; transform:none; transition:none; }
     .rword-inner{ transform:none; transition:none; }
     .wipe{ display:none; }
-    .stamp, .kc-photo-wrap, .status-card .sc-dot, .kc-hot.is-active, .coin{ animation:none; }
+    .stamp, .kc-photo-wrap, .status-card .sc-dot, .kc-hot.is-active, .rwa-screen.is-active{ animation:none; }
     .kicker, .poster .word, .hero .sub, .cta-row, .status-card{
       animation:none !important; opacity:1 !important; transform:none;
     }
     .marquee-track{ animation:none; transform:none; flex-wrap:wrap; justify-content:center; row-gap:10px; }
     .marquee-track .item:last-child{ display:none; }
     .cur-dot, .cur-ring{ display:none !important; }
-    .emblem, .partner img, .btn, .token-card, .rwa-tab, .cc-chip{ transition:none; }
+    .emblem, .partner img, .btn, .rwa-tab, .cc-chip{ transition:none; }
   }
 </style>
 </head>
@@ -630,7 +713,7 @@
 <section class="hero" id="top">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-portrait">
-    <img class="p-base" src="yurichhub.jpg" alt="YuRich Hub — портрет">
+    <img class="p-base" src="yurichhub.jpg" fetchpriority="high" decoding="async" width="640" height="640" alt="YuRich Hub — портрет">
   </div>
   <div class="hero-scrim"></div>
   <div class="spotlight" id="spotlight"></div>
@@ -732,7 +815,7 @@
       <a href="https://t.me/SevastopolAIBot" target="_blank" rel="noopener" class="btn magnetic" style="margin-top:22px;background:var(--gold);border-color:var(--gold);">Открыть Sevastopol AI</a>
     </div>
     <div class="routecard reveal">
-      <img src="ai-screen.jpg" alt="Родмап Sevastopol AI: локации, маршруты, события, сообщество">
+      <img src="ai-screen.jpg" loading="lazy" decoding="async" width="1024" height="1280" alt="Родмап Sevastopol AI: локации, маршруты, события, сообщество">
     </div>
   </div>
 </section>
@@ -745,7 +828,7 @@
     <div class="keychain-stage">
       <div class="kc-photo-wrap">
         <div class="kc-tilt">
-          <img class="kc-photo" src="keychain.png" alt="Связка ключей City Code: Code, Privileges, Partner Circle, Events, Insights, Member Circle">
+          <img class="kc-photo" src="keychain.webp" loading="lazy" decoding="async" width="1536" height="1024" alt="Связка ключей City Code: Code, Privileges, Partner Circle, Events, Insights, Member Circle">
         </div>
         <div class="kc-hotspots">
           <button type="button" class="kc-hot hs-hex"    data-key="code"       title="Code"            aria-label="01 Code" style="--hc:#d7ff3d;"></button>
@@ -785,11 +868,11 @@
   <div class="wrap">
     <div class="partners">
       <a class="partner magnetic" href="https://t.me/thehermesex" target="_blank" rel="noopener">
-        <img class="hermes" src="hermes.jpg" alt="Hermes Exchange">
+        <img class="hermes" src="hermes.jpg" loading="lazy" decoding="async" width="336" height="336" alt="Hermes Exchange">
         <small>Hermes Exchange (Financial infra)</small>
       </a>
       <a class="partner magnetic" href="https://t.me/NeBankRobot?start=YURICH" target="_blank" rel="noopener">
-        <img class="nebank" src="nebank.png" alt="Небанк App">
+        <img class="nebank" src="nebank.png" loading="lazy" decoding="async" width="389" height="317" alt="Небанк App">
         <small>Небанк App (Financial infra)</small>
       </a>
     </div>
@@ -808,9 +891,9 @@
     <div class="rwa-how reveal">
       <div>
         <div class="rwa-tabs" role="tablist" aria-label="Как устроена токенизация">
-          <button type="button" class="rwa-tab active" data-rwa="obj" role="tab" aria-selected="true">А · Объект</button>
-          <button type="button" class="rwa-tab" data-rwa="str" role="tab" aria-selected="false">Б · Структура</button>
-          <button type="button" class="rwa-tab" data-rwa="tok" role="tab" aria-selected="false">В · Токен</button>
+          <button type="button" id="rwaTabObj" class="rwa-tab active" data-rwa="obj" role="tab" aria-selected="true">А · Объект</button>
+          <button type="button" id="rwaTabStr" class="rwa-tab" data-rwa="str" role="tab" aria-selected="false">Б · Структура</button>
+          <button type="button" id="rwaTabTok" class="rwa-tab" data-rwa="tok" role="tab" aria-selected="false">В · Токен</button>
         </div>
         <div class="rwa-step" id="rwaStep" aria-live="polite">
           <div class="rs-letter" id="rwaLetter">А</div>
@@ -819,26 +902,98 @@
         </div>
       </div>
       <div class="rwa-visual">
-        <div class="coin-stage" aria-hidden="true">
-          <div class="coin">
-            <div class="coin-edge" style="transform:translateZ(-10px);"></div>
-            <div class="coin-edge" style="transform:translateZ(-7.5px);"></div>
-            <div class="coin-edge" style="transform:translateZ(-5px);"></div>
-            <div class="coin-edge" style="transform:translateZ(-2.5px);"></div>
-            <div class="coin-face coin-front"><span class="c1">RWA</span><span class="c2">CRIMEA</span></div>
-            <div class="coin-face coin-back"><span class="c1">ЦФА</span><span class="c2">2026</span></div>
+        <!-- А · Объект: фото актива + плашка «доцифровой слой» -->
+        <div class="rwa-screen is-active" data-rwa-screen="obj" role="tabpanel" aria-labelledby="rwaTabObj">
+          <figure class="asset-shot">
+            <img src="rwa-asset-coffee.jpg" loading="lazy" decoding="async" width="1040" height="567" alt="Стойка кофейни в вечернем свете: эспрессо-машина, чашки, руки бариста с темпером">
+            <figcaption class="asset-flag">условный пример</figcaption>
+          </figure>
+          <div class="asset-plate">
+            <div class="ap-head">доцифровой слой</div>
+            <div class="ap-row"><b>Актив</b><span>доля дохода кофейни-партнёра City Code, Севастополь</span></div>
+            <div class="ap-row"><b>Владелец</b><span>собственник точки, партнёр City Code</span></div>
+            <div class="ap-row"><b>Оборот</b><span>кассовая выручка, история 12 месяцев</span></div>
           </div>
         </div>
-        <div class="token-card" aria-hidden="true">
-          <div class="tc-demo">условный пример</div>
-          <div class="tc-top"><span>Сертификат</span><span>ЦФА · реестр ОИС</span></div>
-          <div class="tc-asset" id="tcAsset">Доля дохода партнёра</div>
-          <div class="tc-row"><b>Эмитент</b><span>CRIMEA RWA</span></div>
-          <div class="tc-row"><b>Актив</b><span id="tcAssetRow">доля дохода — кофейня</span></div>
-          <div class="tc-row"><b>Реестр</b><span>оператор из реестра ЦБ</span></div>
-          <div class="tc-bar"></div>
-          <div class="tc-serial">CC-26 · № 0001</div>
+
+        <!-- Б · Структура: вертикальный документ «Решение о выпуске» -->
+        <div class="rwa-screen" data-rwa-screen="str" role="tabpanel" aria-labelledby="rwaTabStr">
+          <article class="doc-sheet">
+            <header class="doc-head">
+              <span class="doc-kicker">проект · не оферта</span>
+              <h3 class="doc-title">Решение о выпуске</h3>
+              <div class="doc-sub">цифровых финансовых активов · 259-ФЗ</div>
+            </header>
+            <dl class="doc-fields">
+              <div class="df"><dt>Эмитент</dt><dd>ООО «Кофейня-партнёр City Code», Севастополь</dd></div>
+              <div class="df"><dt>ОИС</dt><dd>оператор из реестра Банка России</dd></div>
+              <div class="df"><dt>ЦФА удостоверяет</dt><dd>денежное требование — доля дохода точки</dd></div>
+              <div class="df"><dt>Номинал единицы</dt><dd>1 000 ₽</dd></div>
+              <div class="df"><dt>Объём выпуска</dt><dd>1 000 000 ₽ · 1 000 единиц</dd></div>
+              <div class="df"><dt>Погашение</dt><dd>31.12.2028</dd></div>
+              <div class="df"><dt>Порядок выплат</dt><dd>ежеквартально, из выручки точки</dd></div>
+              <div class="df"><dt>Инвестор</dt><dd>неквалифицированные — в пределах лимита</dd></div>
+              <div class="df"><dt>Статус</dt><dd class="doc-status">условный пример</dd></div>
+            </dl>
+            <a class="doc-pdf" href="https://atomyze.ru/oper-docs/releases/" target="_blank" rel="noopener"
+               title="Пример раскрытия оператора: таблица выпусков с PDF решений">PDF решения у оператора <span aria-hidden="true">↗</span></a>
+          </article>
         </div>
+
+        <!-- В · Токен: учебный макет экрана брокера 390×844 -->
+        <div class="rwa-screen" data-rwa-screen="tok" role="tabpanel" aria-labelledby="rwaTabTok">
+          <div class="broker-stage" id="brokerStage">
+            <div class="broker" id="brokerScreen">
+              <div class="bk-status"><span>9:41</span><span class="bk-status-ico" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div>
+              <div class="bk-bar"><span class="bk-edge" aria-hidden="true">‹</span><span>Актив</span><span class="bk-edge" aria-hidden="true">⋯</span></div>
+              <div class="bk-card">
+                <div class="bk-head">
+                  <span class="bk-ico" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h11v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9Z"/><path d="M15 10h2.5a2.5 2.5 0 0 1 0 5H15"/><path d="M7 5.5c0 1-1 1.2-1 2.2M11 5.5c0 1-1 1.2-1 2.2"/></svg>
+                  </span>
+                  <div class="bk-names">
+                    <b>Доля дохода кофейни · City Code</b>
+                    <span>ЦФА · денежное требование</span>
+                  </div>
+                  <span class="bk-chip">в обращении</span>
+                </div>
+                <div class="bk-yield"><span class="bk-y-num">17,5%</span><span class="bk-y-lbl">годовых · расчёт условный</span></div>
+                <div class="bk-rows">
+                  <div class="bk-row"><span>Минимум</span><b>1 000 ₽</b></div>
+                  <div class="bk-row"><span>Номинал единицы</span><b>1 000 ₽</b></div>
+                  <div class="bk-row"><span>Погашение</span><b>31.12.2028</b></div>
+                </div>
+                <div class="bk-ois">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>
+                  ОИС · запись в реестре оператора из реестра ЦБ
+                </div>
+                <button type="button" class="bk-cta" id="bkToDoc">Условия выпуска</button>
+                <div class="bk-note">Учебный макет экрана. Не приложение банка, не оферта.</div>
+              </div>
+              <div class="bk-card">
+                <div class="bk-chart-head"><b>Выручка точки · по месяцам</b><span>расчёт выпуска</span></div>
+                <svg class="bk-chart" viewBox="0 0 312 84" preserveAspectRatio="none" aria-hidden="true">
+                  <rect x="0"   y="50" width="18" height="34" rx="3" fill="#C98A4E" opacity=".35"/>
+                  <rect x="26"  y="44" width="18" height="40" rx="3" fill="#C98A4E" opacity=".4"/>
+                  <rect x="52"  y="46" width="18" height="38" rx="3" fill="#C98A4E" opacity=".45"/>
+                  <rect x="78"  y="38" width="18" height="46" rx="3" fill="#C98A4E" opacity=".5"/>
+                  <rect x="104" y="40" width="18" height="44" rx="3" fill="#C98A4E" opacity=".55"/>
+                  <rect x="130" y="32" width="18" height="52" rx="3" fill="#C98A4E" opacity=".6"/>
+                  <rect x="156" y="34" width="18" height="50" rx="3" fill="#C98A4E" opacity=".68"/>
+                  <rect x="182" y="26" width="18" height="58" rx="3" fill="#C98A4E" opacity=".76"/>
+                  <rect x="208" y="28" width="18" height="56" rx="3" fill="#C98A4E" opacity=".84"/>
+                  <rect x="234" y="20" width="18" height="64" rx="3" fill="#C98A4E" opacity=".92"/>
+                  <rect x="260" y="24" width="18" height="60" rx="3" fill="#C98A4E" opacity=".96"/>
+                  <rect x="286" y="14" width="18" height="70" rx="3" fill="#C98A4E"/>
+                </svg>
+              </div>
+              <div class="bk-card bk-about">ЦФА — запись в реестре оператора из реестра Банка России. Не криптоактив и не вклад.</div>
+              <div class="bk-tabbar" aria-hidden="true"><span class="on">Рынок</span><span>Портфель</span><span>Сделки</span><span>Ещё</span></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="rwa-legal">YuRich не ОИС и не биржа. Выпуск делает оператор из реестра Банка России.</p>
       </div>
     </div>
 
@@ -1283,21 +1438,29 @@
   /* ================= 03 Crimea RWA: вкладки А/Б/В ================= */
   var rwaData = {
     obj: { l:'А', t:'Объект',
-           d:'Реальная вещь или право: доля дохода партнёра, права на оборудование или помещение, доступ к закрытому событию. У неё уже есть владелец, стоимость и история — до всякой цифровизации.',
-           a:'Доля дохода партнёра', ar:'доля дохода — кофейня' },
+           d:'Реальная вещь или право: доля дохода партнёра, права на оборудование или помещение, доступ к закрытому событию. У неё уже есть владелец, стоимость и история — до всякой цифровизации.' },
     str: { l:'Б', t:'Структура',
-           d:'Фиксируем права и обязанности: кто эмитент, что именно передаётся, кто ведёт реестр, как проходит переход владения. Сухой слой — без него токенизация остаётся игрушкой.',
-           a:'Права · Обязанности', ar:'состав прав и условий' },
+           d:'Фиксируем права и обязанности: кто эмитент, что удостоверяет ЦФА, кто ведёт реестр и как проходят выплаты. Решение о выпуске — сухой юридический слой: без него цифровая форма остаётся игрушкой.' },
     tok: { l:'В', t:'Токен',
-           d:'Актив получает цифровую форму: сертификат в реестре площадки из реестра Банка России. Владельцы, история переходов и условия — проверяемы. Город остаётся городом, меняется способ владения.',
-           a:'Цифровой сертификат', ar:'сертификат · реестр ОИС' }
+           d:'Актив получает цифровую форму: запись в реестре оператора из реестра Банка России и строку в приложении брокера. Владельцы, история переходов и условия выпуска — проверяемы. Город остаётся городом, меняется способ владения.' }
   };
   var rwaLetter = document.getElementById('rwaLetter');
   var rwaTitle  = document.getElementById('rwaTitle');
   var rwaDesc   = document.getElementById('rwaDesc');
   var rwaStep   = document.getElementById('rwaStep');
-  var tcAsset   = document.getElementById('tcAsset');
-  var tcAssetRow= document.getElementById('tcAssetRow');
+  var rwaScreens = Array.prototype.slice.call(document.querySelectorAll('.rwa-screen'));
+
+  /* макет экрана брокера: точные 390×844, масштабируются под колонку */
+  var brokerStage = document.getElementById('brokerStage');
+  var brokerScreen = document.getElementById('brokerScreen');
+  function fitBroker(){
+    if(!brokerStage || !brokerScreen) return;
+    if(!brokerStage.offsetParent) return; /* экран скрыт — посчитаем при открытии */
+    var s = Math.min(1, (brokerStage.clientWidth || 390) / 390);
+    brokerScreen.style.transform = 'scale(' + s + ')';
+    brokerStage.style.height = Math.round(844 * s) + 'px';
+  }
+  window.addEventListener('resize', fitBroker);
 
   function activateRwa(key){
     var d = rwaData[key];
@@ -1305,8 +1468,10 @@
     rwaLetter.textContent = d.l;
     rwaTitle.textContent  = d.t;
     rwaDesc.textContent   = d.d;
-    if(tcAsset)    tcAsset.textContent = d.a;
-    if(tcAssetRow) tcAssetRow.textContent = d.ar;
+    rwaScreens.forEach(function(s){
+      s.classList.toggle('is-active', s.getAttribute('data-rwa-screen') === key);
+    });
+    if(key === 'tok') fitBroker();
     if(rwaStep){
       rwaStep.style.animation = 'none';
       void rwaStep.offsetWidth;
@@ -1321,6 +1486,11 @@
   document.querySelectorAll('.rwa-tab').forEach(function(b){
     b.addEventListener('click', function(){ activateRwa(b.getAttribute('data-rwa')); });
   });
+  var bkToDoc = document.getElementById('bkToDoc');
+  if(bkToDoc){
+    bkToDoc.addEventListener('click', function(){ activateRwa('str'); });
+  }
+  fitBroker();
 
   /* ================= hero spotlight ================= */
   var heroEl = document.querySelector('.hero');
