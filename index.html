@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
 <style>
-  /* ================= TOKENS ================= */
+  
   :root{
     --bg:#0A0A0A;
     --ink:#F3F1EA;
@@ -42,7 +42,6 @@
   html,body{ margin:0; }
   html{ scroll-behavior:auto; }
 
-  /* ================= PAGE FADE ================= */
   html{ opacity:0; transition:opacity .38s ease; }
   html.page-ready{ opacity:1; }
   html.page-leaving{ opacity:0; pointer-events:none; }
@@ -72,14 +71,11 @@
 
   .wrap{ max-width:1240px; margin:0 auto; padding:0 56px; position:relative; z-index:1; }
 
-  /* fixed-content smooth scroll (fine pointers with motion enabled only) */
   #scroll-spacer{ display:none; width:100%; pointer-events:none; }
-  /* fixed-режим включает только JS (класс .smooth-scroll) — CSS и скролл-движок
-     не могут разойтись в выборе режима (важно для pointer:none и headless) */
+  
   html.smooth-scroll #scroll-content{ position:fixed; top:0; left:0; width:100%; will-change:transform; }
   html.smooth-scroll #scroll-spacer{ display:block; }
 
-  /* ================= NAV ================= */
   header{ position:relative; z-index:5; padding:28px 0 0; }
   .nav{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
   .brand{ font-family:var(--font-display); font-size:19px; letter-spacing:.01em; text-transform:uppercase; }
@@ -92,7 +88,6 @@
   }
   .navlinks a:hover{ opacity:1; border-color:var(--lime); color:var(--lime); }
 
-  /* ================= HERO ================= */
   .hero{
     position:relative; min-height:100svh; display:flex; align-items:center;
     overflow:hidden; background-color:var(--bg); isolation:isolate;
@@ -181,7 +176,6 @@
     background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%), rgba(215,255,61,.10), transparent 60%);
   }
 
-  /* status widget */
   .status-card{
     display:inline-flex; flex-direction:column; gap:8px; margin-top:34px;
     max-width:280px; text-decoration:none;
@@ -197,7 +191,6 @@
   .status-card .sc-dot{ width:6px; height:6px; border-radius:50%; background:var(--pink); box-shadow:0 0 8px var(--pink); animation:pulse 1.8s ease-in-out infinite; }
   @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
 
-  /* ================= MARQUEE ================= */
   .marquee{
     overflow:hidden; border-top:2px solid var(--line); border-bottom:2px solid var(--line);
     padding:18px 0; position:relative; z-index:1; background:var(--bg);
@@ -213,7 +206,6 @@
   .marquee-track .item .sep{ color:var(--ink-dim); font-size:14px; }
   @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
-  /* ================= CHAPTER SHELL ================= */
   section.chapter{
     position:relative; padding:120px 0; border-top:2px solid var(--line);
     background-color:var(--bg); isolation:isolate;
@@ -239,10 +231,6 @@
 
   .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
 
-  /* section wipe curtain.
-     По умолчанию шторка ОТКРЫТА (scaleX 0) — контент не может быть заблокирован,
-     если JS не отработал. Класс .curtains на <html> ставит только сам скрипт,
-     и тогда шторки закрываются и открываются по мере прокрутки. */
   .wipe{
     position:absolute; inset:0; z-index:6; transform-origin:left center;
     pointer-events:none; transform:scaleX(0);
@@ -251,7 +239,6 @@
   html.curtains .wipe{ transform:scaleX(1); }
   html.curtains .wipe.wiped{ transform:scaleX(0); }
 
-  /* giant background numerals */
   .bg-num{
     position:absolute; z-index:0; top:-.15em; right:-.03em; font-family:var(--font-display);
     font-size:clamp(240px,32vw,460px); line-height:1; color:transparent;
@@ -259,7 +246,6 @@
     pointer-events:none; user-select:none;
   }
 
-  /* ================= 01 SEVASTOPOL AI ================= */
   .routecard{ position:relative; max-width:520px; margin-left:auto; }
   .routecard img{
     display:block; width:100%; height:auto; border-radius:20px;
@@ -267,7 +253,6 @@
     box-shadow:0 20px 50px rgba(0,0,0,.9), 0 0 30px rgba(200,162,74,.22);
   }
 
-  /* ================= 02 CITY CODE ================= */
   .cc-section{ background:radial-gradient(ellipse 1000px 560px at 76% 30%, rgba(215,255,61,.09), transparent 62%); }
   .cc-grid{ grid-template-columns:1.45fr 1fr; gap:40px; }
 
@@ -293,9 +278,6 @@
   }
   .kc-tilt{ transition:transform .35s ease; transform-style:preserve-3d; }
 
-  /* Каждый хотспот накрывает всё фото, а кликабельная область вырезается
-     clip-path по реальному силуэту брелка (координаты — в % фото).
-     z-index повторяет физический порядок укладки брелков на снимке. */
   .kc-hotspots{ position:absolute; inset:0; z-index:3; }
   .kc-hot{
     position:absolute; inset:0; width:100%; height:100%; padding:0;
@@ -316,7 +298,6 @@
   .hs-bar{ z-index:3; clip-path:polygon(60.2% 47.5%, 64.5% 43.8%, 79.2% 84.2%, 72.6% 91.8%, 66.8% 85.2%); }
   .hs-circle{ z-index:2; clip-path:polygon(84.1% 61.5%, 83.5% 65.1%, 81.6% 68.3%, 78.8% 70.7%, 75.3% 71.9%, 71.7% 71.9%, 68.2% 70.7%, 65.4% 68.3%, 63.5% 65.1%, 62.9% 61.5%, 63.5% 57.9%, 65.4% 54.7%, 68.2% 52.3%, 71.7% 51.1%, 75.3% 51.1%, 78.8% 52.3%, 81.6% 54.7%, 83.5% 57.9%); }
 
-  /* spark burst on click */
   .kc-spark{
     position:absolute; z-index:100; width:6px; height:6px; border-radius:50%;
     pointer-events:none; will-change:transform, opacity;
@@ -355,7 +336,6 @@
   .cc-chip:active{ transform:scale(.96) rotate(0deg); }
   .cc-chip.active{ color:#0A0A0A; background:var(--lime); border-color:var(--lime); }
 
-  /* partners */
   .partners{ display:flex; gap:36px; align-items:flex-start; flex-wrap:wrap; margin-top:48px; }
   .partner{ display:flex; flex-direction:column; gap:10px; max-width:200px; text-decoration:none; }
   .partner img{
@@ -365,12 +345,10 @@
   }
   .partner:hover img{ transform:translateY(-3px) scale(1.04); box-shadow:0 10px 26px rgba(0,0,0,.5); }
   .partner img.hermes{ width:168px; height:168px; object-position:center 12%; }
-  /* Небанк — прозрачный PNG без фона: надпись и все три карты целиком,
-     высота с кружком Гермеса; вся плитка кликабельна */
+  
   .partner img.nebank{ width:auto; height:168px; border-radius:0; object-fit:contain; }
   .partner small{ color:var(--ink-dim); font-size:11px; letter-spacing:.08em; text-transform:uppercase; line-height:1.4; }
 
-  /* ================= 03 CRIMEA RWA ================= */
   .rwa-section{ text-align:center; }
   .rwa-section .wrap{ display:flex; flex-direction:column; align-items:center; }
   .rwa-section h2, .rwa-section .copy{ margin-left:auto; margin-right:auto; }
@@ -381,7 +359,6 @@
     transform:rotate(-2deg);
   }
 
-  /* 03: «как это устроено» — вкладки А/Б/В (стиль wembi HOW) */
   .rwa-how{
     display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:64px; align-items:center;
     margin-top:64px; text-align:left; width:100%;
@@ -407,13 +384,11 @@
   .rwa-step p{ margin:0; font-size:14px; line-height:1.65; color:#C4C4C4; }
   @keyframes stepPulse{ 0%{ border-color:var(--bronze); } 100%{ border-color:var(--line); } }
 
-  /* правый блок: три экрана А/Б/В, переключаются табами */
   .rwa-visual{ position:relative; }
   .rwa-screen{ display:none; }
   .rwa-screen.is-active{ display:block; animation:screenIn .45s cubic-bezier(.2,.8,.2,1); }
   @keyframes screenIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
 
-  /* А · Объект — фото актива крупно + плашка «доцифровой слой» */
   .asset-shot{ position:relative; margin:0; border:1px solid var(--line); background:#0c0b09; }
   .asset-shot img{
     display:block; width:100%; height:352px; object-fit:cover; object-position:center 42%;
@@ -438,7 +413,6 @@
   .ap-row b{ flex:0 0 78px; font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); padding-top:2px; }
   .ap-row span{ color:var(--ink); text-align:right; }
 
-  /* Б · Структура — вертикальный документ «Решение о выпуске», тёмная бумага */
   .doc-sheet{
     max-width:440px; margin:0 auto; position:relative;
     background:linear-gradient(180deg, #12100d 0%, #0d0c0a 100%);
@@ -471,7 +445,6 @@
   }
   .doc-pdf:hover{ color:var(--ink); border-color:var(--ink); }
 
-  /* В · Токен — учебный макет экрана брокера 390×844, светлая карточка актива */
   .broker-stage{ position:relative; width:100%; max-width:390px; margin:0 auto; }
   .broker{
     position:absolute; top:0; left:0; width:390px; height:844px; transform-origin:top left;
@@ -531,13 +504,11 @@
   .bk-tabbar span{ font-size:10.5px; font-weight:700; letter-spacing:.02em; color:#9a9aa0; }
   .bk-tabbar span.on{ color:#17171a; }
 
-  /* мелкая строка под всеми тремя экранами */
   .rwa-legal{
     margin:26px auto 0; max-width:520px; text-align:center;
     font-size:10.5px; line-height:1.6; letter-spacing:.04em; color:var(--ink-dim);
   }
 
-  /* ================= 04 COURSE ================= */
   .mod-counter{ display:flex; align-items:baseline; gap:16px; margin:40px 0 18px; }
   .mod-counter .mc-num{ font-family:var(--font-display); font-size:clamp(52px,7vw,84px); line-height:1; color:transparent; -webkit-text-stroke:1.5px var(--pink); }
   .mod-counter .mc-lbl{ font-size:12px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-dim); }
@@ -546,7 +517,6 @@
   .mod-note b{ color:var(--ink); }
   .mod-fmt{ margin-bottom:4px; }
 
-  /* ================= 05 CFA ================= */
   .steps{ display:grid; grid-template-columns:repeat(3,1fr); margin:46px 0 30px; border-top:2px solid var(--line); text-align:left; }
   .step-cell{ padding:28px 28px 10px 0; border-right:1px solid var(--line); }
   .step-cell:last-child{ border-right:0; }
@@ -561,7 +531,6 @@
   }
   .nots{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
 
-  /* ================= THESIS ================= */
   .thesis{ padding:120px 0; text-align:center; border-top:2px solid var(--line); }
   .thesis-scatter{ position:relative; max-width:1000px; margin:0 auto 40px; min-height:560px; }
   .tf{ position:absolute; font-family:var(--font-display); text-transform:uppercase; line-height:1.05; white-space:nowrap; margin:0; }
@@ -580,7 +549,6 @@
   .tf8{ top:74%;  left:30%; transform:rotate(-1.2deg); font-size:clamp(24px,3.6vw,42px); }
   .signature{ margin-top:26px; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:var(--ink-dim); text-transform:uppercase; }
 
-  /* ================= WORDWALL / FOOTER ================= */
   .wordwall{ overflow:hidden; border-top:2px solid var(--line); padding:40px 0 10px; position:relative; }
   .wordwall .big{
     font-family:var(--font-display); text-transform:uppercase; white-space:nowrap;
@@ -598,7 +566,6 @@
   }
   .foot-links a:hover{ opacity:1; color:var(--lime); }
 
-  /* ================= CUSTOM CURSOR ================= */
   .cur-dot, .cur-ring{
     position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
     border-radius:50%; transform:translate(-50%,-50%);
@@ -614,7 +581,6 @@
   .cur-ring.hover{ width:64px; height:64px; background:rgba(215,255,61,.08); border-color:var(--lime); }
   .cur-ring.hover-pink{ width:64px; height:64px; background:rgba(232,55,126,.1); border-color:var(--pink); }
 
-  /* ================= SCROLL REVEAL ================= */
   .reveal{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
   .reveal.in-view{ opacity:1; transform:translateY(0); }
   .reveal-2{ transition-delay:.12s; }
@@ -623,7 +589,6 @@
   .rword-inner{ display:inline-block; transform:translateY(115%); transition:transform .7s cubic-bezier(.2,.8,.2,1); }
   .split.revealed .rword-inner{ transform:translateY(0); }
 
-  /* ================= RESPONSIVE ================= */
   @media (max-width:900px){
     .grid-2{ grid-template-columns:1fr; gap:64px; }
     .cc-grid{ grid-template-columns:1fr; }
@@ -673,7 +638,6 @@
     .btn{ padding:13px 20px; font-size:12px; }
   }
 
-  /* ================= REDUCED MOTION ================= */
   @media (prefers-reduced-motion:reduce){
     html{ opacity:1; transition:none; }
     .reveal{ opacity:1; transform:none; transition:none; }
@@ -686,7 +650,7 @@
     .marquee-track{ animation:none; transform:none; flex-wrap:wrap; justify-content:center; row-gap:10px; }
     .marquee-track .item:last-child{ display:none; }
     .cur-dot, .cur-ring{ display:none !important; }
-    .emblem, .partner img, .btn, .rwa-tab, .cc-chip{ transition:none; }
+    .partner img, .btn, .rwa-tab, .cc-chip{ transition:none; }
   }
 </style>
 </head>
@@ -709,7 +673,6 @@
   </div>
 </header>
 
-<!-- ================= HERO ================= -->
 <section class="hero" id="top">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-portrait">
@@ -802,7 +765,6 @@
   </div>
 </div>
 
-<!-- ================= 01 SEVASTOPOL AI ================= -->
 <section class="chapter" id="sevastopol">
   <div class="wipe" style="background:var(--gold)" aria-hidden="true"></div>
   <span class="bg-num" aria-hidden="true">01</span>
@@ -820,7 +782,6 @@
   </div>
 </section>
 
-<!-- ================= 02 CITY CODE ================= -->
 <section class="chapter cc-section" id="citycode">
   <div class="wipe" style="background:var(--lime)" aria-hidden="true"></div>
   <span class="bg-num" style="-webkit-text-stroke-color:rgba(215,255,61,.10);" aria-hidden="true">02</span>
@@ -879,7 +840,6 @@
   </div>
 </section>
 
-<!-- ================= 03 CRIMEA RWA ================= -->
 <section class="chapter rwa-section" id="rwa">
   <div class="wipe" style="background:var(--bronze)" aria-hidden="true"></div>
   <span class="bg-num" style="right:auto; left:-.03em; -webkit-text-stroke-color:rgba(201,138,78,.12);" aria-hidden="true">03</span>
@@ -902,7 +862,7 @@
         </div>
       </div>
       <div class="rwa-visual">
-        <!-- А · Объект: фото актива + плашка «доцифровой слой» -->
+        
         <div class="rwa-screen is-active" data-rwa-screen="obj" role="tabpanel" aria-labelledby="rwaTabObj">
           <figure class="asset-shot">
             <img src="rwa-asset-coffee.jpg" loading="lazy" decoding="async" width="1040" height="567" alt="Стойка кофейни в вечернем свете: эспрессо-машина, чашки, руки бариста с темпером">
@@ -916,7 +876,6 @@
           </div>
         </div>
 
-        <!-- Б · Структура: вертикальный документ «Решение о выпуске» -->
         <div class="rwa-screen" data-rwa-screen="str" role="tabpanel" aria-labelledby="rwaTabStr">
           <article class="doc-sheet">
             <header class="doc-head">
@@ -940,7 +899,6 @@
           </article>
         </div>
 
-        <!-- В · Токен: учебный макет экрана брокера 390×844 -->
         <div class="rwa-screen" data-rwa-screen="tok" role="tabpanel" aria-labelledby="rwaTabTok">
           <div class="broker-stage" id="brokerStage">
             <div class="broker" id="brokerScreen">
@@ -1001,7 +959,6 @@
   </div>
 </section>
 
-<!-- ================= 04 COURSE ================= -->
 <section class="chapter" id="course">
   <div class="wipe" style="background:var(--pink)" aria-hidden="true"></div>
   <span class="bg-num" aria-hidden="true">04</span>
@@ -1032,7 +989,6 @@
   </div>
 </section>
 
-<!-- ================= 05 CFA ================= -->
 <section class="chapter" id="cfa">
   <div class="wipe" style="background:#2E3D52" aria-hidden="true"></div>
   <span class="bg-num" aria-hidden="true">05</span>
@@ -1074,7 +1030,6 @@
   </div>
 </section>
 
-<!-- ================= THESIS ================= -->
 <section class="thesis">
   <div class="wrap">
     <div class="thesis-scatter">
@@ -1104,7 +1059,7 @@
     </div>
   </div>
 </footer>
-</div><!-- /#scroll-content -->
+</div>
 <div id="scroll-spacer" aria-hidden="true"></div>
 
 <script>
@@ -1115,10 +1070,8 @@
   var reduced   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var TRANS_MS  = 380;
 
-  // взводим шторки только из работающего JS (см. .wipe в CSS)
   document.documentElement.classList.add('curtains');
 
-  /* ================= page fade transitions ================= */
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){ document.documentElement.classList.add('page-ready'); });
   });
@@ -1135,7 +1088,6 @@
     if(/^(mailto:|tel:)/i.test(href)) return;
     if(/^https?:\/\//i.test(href) && a.origin !== window.location.origin) return;
 
-    // same-page anchor
     if(href.charAt(0) === '#'){
       if(href.length > 1){
         var targetEl = document.querySelector(href);
@@ -1148,7 +1100,7 @@
       return;
     }
 
-    if(reduced){ return; } // let the browser navigate instantly
+    if(reduced){ return; }
     e.preventDefault();
     document.documentElement.classList.remove('page-ready');
     document.documentElement.classList.add('page-leaving');
@@ -1162,7 +1114,6 @@
     }
   });
 
-  /* ================= inertial smooth scroll ================= */
   var content = document.getElementById('scroll-content');
   var spacer  = document.getElementById('scroll-spacer');
   var smoothMQ = window.matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches;
@@ -1170,7 +1121,7 @@
   if(useSmooth) document.documentElement.classList.add('smooth-scroll');
   var current = window.scrollY;
   var target  = window.scrollY;
-  var checkReveals = null; // назначается ниже; в smooth-режиме вызывается каждый кадр
+  var checkReveals = null;
 
   function elementY(el){
     return el.getBoundingClientRect().top + window.scrollY;
@@ -1178,7 +1129,7 @@
   function scrollToElement(el){
     var y = elementY(el);
     if(useSmooth){
-      window.scrollTo(0, y); // move native scrollbar at once; the rAF loop eases the content
+      window.scrollTo(0, y);
       target = y;
     } else {
       window.scrollTo({ top:y, behavior:reduced ? 'auto' : 'smooth' });
@@ -1210,7 +1161,6 @@
       requestAnimationFrame(raf);
     })();
 
-    // deep-link anchor on first load (native anchor jump does not work inside fixed content)
     if(location.hash && location.hash.length > 1){
       var seekHash = function(){
         var deep = document.querySelector(location.hash);
@@ -1224,7 +1174,6 @@
     }
   }
 
-  /* ================= custom cursor ================= */
   var dot  = document.getElementById('curDot');
   var ring = document.getElementById('curRing');
   if(!isCoarse && !reduced && dot && ring){
@@ -1247,7 +1196,6 @@
     });
   }
 
-  /* ================= magnetic pull ================= */
   if(!isCoarse && !reduced){
     document.querySelectorAll('.magnetic').forEach(function(el){
       el.addEventListener('mousemove', function(e){
@@ -1260,13 +1208,6 @@
     });
   }
 
-  /* ================= scroll reveal / wipes =================
-     IntersectionObserver не надёжен внутри position:fixed-контента,
-     который двигается transform-ом (не вызывает колбэки в части браузеров),
-     поэтому в smooth-режиме видимость считается вручную в rAF-цикле.
-     В обычном режиме (тач/ reduced-motion) — нативный observer. */
-
-  /* word-split for headings — разметка до наблюдателей, идемпотентно */
   document.querySelectorAll('.split').forEach(function(el){
     if(el.getAttribute('data-split')) return;
     var words = el.textContent.trim().split(/\s+/);
@@ -1283,7 +1224,7 @@
                      .filter(function(el){ return !el.classList.contains('revealed'); });
 
   if(useSmooth){
-    /* ручной расчёт видимости по реальным координатам внутри transform-контейнера */
+    
     checkReveals = function(){
       var vh = window.innerHeight || document.documentElement.clientHeight;
       var i, r;
@@ -1303,8 +1244,7 @@
       }
       for(i = 0; i < chapterEls.length; i++){
         r = chapterEls[i].getBoundingClientRect();
-        /* секция зашла в зону показа — шторку открываем один раз и навсегда,
-           чтобы её край не мигал при выходе секции из вьюпорта */
+        
         var on = r.top < vh * 0.94 && r.bottom > vh * 0.06;
         var w = chapterEls[i].querySelector('.wipe');
         if(on && w && !w.classList.contains('wiped')) w.classList.add('wiped');
@@ -1331,19 +1271,18 @@
         if(en.isIntersecting){
           var w = en.target.querySelector('.wipe');
           if(w) w.classList.add('wiped');
-          wipeIo.unobserve(en.target); // одноразово
+          wipeIo.unobserve(en.target);
         }
       });
     }, { threshold:0.12 });
     chapterEls.forEach(function(el){ wipeIo.observe(el); });
   } else {
-    /* совсем старые браузеры — просто показываем всё */
+    
     revealEls.forEach(function(el){ el.classList.add('in-view'); });
     splitEls.forEach(function(el){ el.classList.add('revealed'); });
     chapterEls.forEach(function(el){ var w = el.querySelector('.wipe'); if(w) w.classList.add('wiped'); });
   }
 
-  /* подстраховка: ни одна шторка не должна остаться закрытой поверх видимой секции */
   function safetyOpenWipes(){
     var vh = window.innerHeight || document.documentElement.clientHeight;
     chapterEls.forEach(function(sec){
@@ -1357,7 +1296,6 @@
   window.addEventListener('load', function(){ setTimeout(safetyOpenWipes, 700); });
   setTimeout(safetyOpenWipes, 1500);
 
-  /* ================= City Code keychain ================= */
   var kcData = {
     code:       { n:'01', title:'Code',           desc:'Свод правил системы: что можно, что нельзя, как устроен доступ и на каких условиях можно потерять членство.' },
     privileges: { n:'02', title:'Privileges',      desc:'Привилегии участников у партнёров — фиксированная скидка или бонус на реальные покупки в сети.' },
@@ -1418,7 +1356,7 @@
       photoWrap.classList.add('is-active');
       if(e && !reduced){
         var x = e.clientX, y = e.clientY;
-        if(e.detail === 0){ // keyboard activation — burst from the hotspot center
+        if(e.detail === 0){
           var br = activeBtn.getBoundingClientRect();
           x = br.left + br.width / 2;
           y = br.top + br.height / 2;
@@ -1435,7 +1373,6 @@
   });
   activateKey('code');
 
-  /* ================= 03 Crimea RWA: вкладки А/Б/В ================= */
   var rwaData = {
     obj: { l:'А', t:'Объект',
            d:'Реальная вещь или право: доля дохода партнёра, права на оборудование или помещение, доступ к закрытому событию. У неё уже есть владелец, стоимость и история — до всякой цифровизации.' },
@@ -1450,12 +1387,11 @@
   var rwaStep   = document.getElementById('rwaStep');
   var rwaScreens = Array.prototype.slice.call(document.querySelectorAll('.rwa-screen'));
 
-  /* макет экрана брокера: точные 390×844, масштабируются под колонку */
   var brokerStage = document.getElementById('brokerStage');
   var brokerScreen = document.getElementById('brokerScreen');
   function fitBroker(){
     if(!brokerStage || !brokerScreen) return;
-    if(!brokerStage.offsetParent) return; /* экран скрыт — посчитаем при открытии */
+    if(!brokerStage.offsetParent) return; 
     var s = Math.min(1, (brokerStage.clientWidth || 390) / 390);
     brokerScreen.style.transform = 'scale(' + s + ')';
     brokerStage.style.height = Math.round(844 * s) + 'px';
@@ -1492,7 +1428,6 @@
   }
   fitBroker();
 
-  /* ================= hero spotlight ================= */
   var heroEl = document.querySelector('.hero');
   var spot   = document.getElementById('spotlight');
   if(heroEl && spot && !isCoarse){
@@ -1503,7 +1438,6 @@
     }, { passive:true });
   }
 
-  /* ================= keychain 3D tilt ================= */
   var stage = document.querySelector('.keychain-stage');
   var photo = document.querySelector('.kc-tilt');
   if(stage && photo && !isCoarse && !reduced){
