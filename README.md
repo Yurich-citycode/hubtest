@@ -25,18 +25,6 @@ cfapreview.jpg
 
 Всё остальное в корне (`CityCode.png`, `sevastopol-ai.png`, `nebank.jpg`, `brand/`) — не требуется для работы, но оставлено.
 
-## Запуск локально
-
-```bash
-python -m http.server 8000
-# http://localhost:8000
-```
-
-## GitHub Pages
-
-- Source: branch `main`, root
-- Домен сейчас: `https://yurich-citycode.github.io/hubtest/`
-- OG-теги уже настроены на этот домен
 
 ## Перенос на свой хост
 
