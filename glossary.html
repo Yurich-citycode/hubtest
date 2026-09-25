@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YuRich RWA — Полный глоссарий</title>
-<!-- КАНОН ГЛОССАРИЯ: это единственная живая страница — 11 разделов, 57 терминов.
-     Правки вносятся только здесь. Любые копии (в том числе прежняя версия на 31 термин) —
-     архив: помечать «архив, не канон» или удалять, но не править параллельно. -->
+
 <meta name="description" content="Полный глоссарий RWA: 57 понятий — от «что такое RWA» до регулирования СНГ и ЦФА. Справочник от YuRich RWA.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
@@ -26,9 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
 <style>
-  /* ================= Фирменная система (общая с course.html) =================
-     Палитра: cream / black / pink / yellow — без новых цветов.
-     Бумага: halftone-точки 3px — один и тот же паттерн на обеих страницах. */
+  
   :root{
     --cream:#F1E9D8;
     --cream-line:#DCD0B2;
@@ -52,13 +48,11 @@
   img{ max-width:100%; }
   a, button{ touch-action:manipulation; -webkit-tap-highlight-color:transparent; }
 
-  /* ================= progress bar ================= */
   #readbar{
     position:fixed; top:0; left:0; right:0; height:4px; z-index:90; background:transparent;
   }
   #readbar i{ display:block; height:100%; width:100%; background:var(--pink); transform-origin:left; transform:scaleX(0); }
 
-  /* ================= header ================= */
   .top{ padding:30px 0 10px; }
   .wrap{ max-width:1180px; margin:0 auto; padding:0 40px; position:relative; z-index:1; }
   .top-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:44px; }
@@ -77,7 +71,6 @@
   .head-sub{ font-size:15px; line-height:1.65; max-width:62ch; margin:0; color:rgba(24,20,15,.78); }
   .head-sub b{ font-weight:800; }
 
-  /* ================= layout: content + sticky index ================= */
   .layout{ display:grid; grid-template-columns:minmax(0,760px) 230px; gap:70px; align-items:start; margin-top:54px; }
   .content{ min-width:0; }
 
@@ -106,10 +99,8 @@
   .sindex a.featured.active{ color:var(--black); }
   .sindex a.featured:hover, .sindex a.featured.active{ text-shadow:0 0 14px rgba(232,55,126,.5); }
 
-  /* mobile chip index */
   .chipindex{ display:none; }
 
-  /* ================= section ================= */
   section.sec{ scroll-margin-top:90px; margin-bottom:20px; }
   .sec-head{ margin:74px 0 34px; }
   section.sec:first-of-type .sec-head{ margin-top:0; }
@@ -123,7 +114,6 @@
     font-size:clamp(26px,3.6vw,40px); line-height:1; margin:14px 0 0;
   }
 
-  /* ================= term ================= */
   .term{
     border:3px solid var(--black); background:var(--cream);
     box-shadow:9px 9px 0 var(--black);
@@ -176,7 +166,6 @@
   .share-btn:active{ transform:translateY(0); }
   .t-main p{ margin:0; font-size:15px; line-height:1.65; }
 
-  /* ================= comic plate ================= */
   .comic-plate{ margin:10px 0 26px; text-align:center; }
   .cp-kicker{
     display:inline-block; font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase;
@@ -197,7 +186,6 @@
     color:var(--cream); background:var(--black); padding:10px 18px; border:1.5px dashed var(--cream);
   }
 
-  /* ================= footer ================= */
   .foot{ margin-top:90px; border-top:3px solid var(--black); padding-top:44px; }
   .foot h3{
     font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
@@ -217,7 +205,6 @@
   .fbtn:active{ transform:translate(2px,2px); box-shadow:3px 3px 0 var(--black); }
   .f-meta{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(24,20,15,.45); }
 
-  /* ================= share modal ================= */
   .modal{
     position:fixed; inset:0; z-index:100; display:none;
     align-items:center; justify-content:center; padding:20px;
@@ -254,9 +241,6 @@
   #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
   button.mact{ cursor:pointer; font-family:'Archivo', sans-serif; }
 
-  /* ================= маршруты чтения (3 чипа) =================
-     Не оглавление: чип подсвечивает свой трек, остальные карточки остаются
-     на странице и лишь тускнеют. Повторный клик снимает фильтр. */
   .routes{ margin:30px 0 0; }
   .rt-label{
     font-size:11px; font-weight:800; letter-spacing:.22em; text-transform:uppercase;
@@ -289,7 +273,6 @@
   .rt-sub:hover{ border-color:var(--black); }
   .rt-sub[aria-pressed="true"]{ background:var(--yellow); border-color:var(--black); }
 
-  /* подсветка трека: свои карточки — рамкой и точкой, чужие — тише */
   .term{ position:relative; }
   body.routes-on .term{ transition:opacity .25s ease, box-shadow .25s ease, border-color .25s ease; }
   body.routes-on .term.rt-off{ opacity:.32; }
@@ -299,13 +282,11 @@
     border-radius:50%; background:var(--pink); border:2px solid var(--black);
   }
 
-  /* служебная строка раздела (раздел 11) */
   .sec-note{
     font-size:14px; line-height:1.6; color:rgba(24,20,15,.75); max-width:70ch;
     margin:16px 0 0; padding-left:14px; border-left:4px solid var(--black);
   }
 
-  /* пять вопросов в термине 57 */
   .t-body.qs{ list-style:none; counter-reset:qs; padding:0; }
   .t-body.qs li{
     position:relative; padding-left:46px; margin-bottom:12px; font-weight:600; color:var(--black);
@@ -317,7 +298,6 @@
     background:var(--black); color:var(--yellow);
   }
 
-  /* ================= responsive ================= */
   @media (max-width:1080px){
     .layout{ grid-template-columns:1fr; gap:0; }
     .sindex{ display:none; }
@@ -348,7 +328,6 @@
     .cp-frame{ box-shadow:7px 7px 0 var(--black); }
   }
 
-  /* ================= reduced motion ================= */
   @media (prefers-reduced-motion:reduce){
     html{ scroll-behavior:auto; }
     .term{ animation:none !important; }
@@ -398,7 +377,6 @@
   <div class="layout">
     <div class="content">
 
-      <!-- ================= 01 ОСНОВЫ ================= -->
       <section class="sec" id="sec-1" data-sec="1">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 01</div>
@@ -500,7 +478,6 @@
         </div>
       </section>
 
-      <!-- ================= 02 АКЦИИ ================= -->
       <section class="sec" id="sec-2" data-sec="2">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 02</div>
@@ -558,7 +535,6 @@
         </div>
       </section>
 
-      <!-- ================= 03 РЫНОК ================= -->
       <section class="sec" id="sec-3" data-sec="3">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 03</div>
@@ -616,7 +592,6 @@
         </div>
       </section>
 
-      <!-- ================= 04 ТРЕЖЕРИС ================= -->
       <section class="sec" id="sec-4" data-sec="4">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 04</div>
@@ -674,7 +649,6 @@
         </div>
       </section>
 
-      <!-- ================= 05 ДОХОДНОСТЬ ================= -->
       <section class="sec" id="sec-5" data-sec="5">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 05</div>
@@ -732,7 +706,6 @@
         </div>
       </section>
 
-      <!-- ================= 06 PRIVATE CREDIT ================= -->
       <section class="sec" id="sec-6" data-sec="6">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 06</div>
@@ -790,7 +763,6 @@
         </div>
       </section>
 
-      <!-- ================= 07 НЕДВИЖИМОСТЬ ================= -->
       <section class="sec" id="sec-7" data-sec="7">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 07</div>
@@ -850,7 +822,6 @@
         </div>
       </section>
 
-      <!-- ================= 08 ИНФРАСТРУКТУРА И КОМПЛАЕНС ================= -->
       <section class="sec" id="sec-8" data-sec="8">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 08</div>
@@ -919,7 +890,6 @@
         </div>
       </section>
 
-      <!-- ================= 09 СЫРЬЁ ================= -->
       <section class="sec" id="sec-9" data-sec="9">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 09</div>
@@ -966,7 +936,6 @@
         </div>
       </section>
 
-      <!-- ================= 10 ФОНДЫ ================= -->
       <section class="sec" id="sec-10" data-sec="10">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 10</div>
@@ -1002,7 +971,6 @@
         </div>
       </section>
 
-      <!-- ================= 11 СНГ И ЦФА ================= -->
       <section class="sec" id="sec-11" data-sec="11">
         <div class="sec-head">
           <div class="sec-kicker">Раздел 11</div>
@@ -1190,7 +1158,6 @@
         </div>
       </section>
 
-      <!-- ================= FOOTER / ВОРОНКА ================= -->
       <div class="foot">
         <h3>Проверь, что запомнилось</h3>
         <p class="f-sub">Глоссарий — это фундамент. Дальше — квиз «твой уровень RWA» и полный курс: шесть модулей от матчасти до карты рынка. Без трейдинга и сигналов — механика, регулирование, риски.</p>
@@ -1204,7 +1171,6 @@
 
     </div>
 
-    <!-- sticky индекс (десктоп) -->
     <nav class="sindex" id="sideIndex" aria-label="Разделы глоссария">
       <div class="si-title">Разделы</div>
       <a href="#sec-1" data-sec="1"><span class="si-num">01</span>Основы</a>
@@ -1222,7 +1188,6 @@
   </div>
 </div>
 
-<!-- ================= SHARE MODAL ================= -->
 <div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-label="Карточка термина">
   <div class="modal-box">
     <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
@@ -1239,7 +1204,6 @@
 (function(){
   'use strict';
 
-  /* ================= данные терминов (для карточки) ================= */
   var TERMS = {
     1:{sec:'01 · Основы', name:'RWA — реальный актив', drop:'Актив живёт не в блокчейне. В блокчейне живёт право на него.', body:'RWA — это актив, у которого есть дом за пределами сети: облигация, кредитный портфель, склад, слиток золота. На него выпускают токен, и этот токен — не сам актив, а расписка, которая даёт право его потребовать. Расписка перемещается со скоростью интернета. Актив внизу — нет: здание не переезжает, когда токен на него меняет владельца, меняется только запись о том, кому теперь принадлежит право.', main:'Токенизация не трогает цену актива. Она трогает то, кто может его держать и как быстро это можно передать дальше.'},
     2:{sec:'01 · Основы', name:'Токенизация', drop:'Актив остаётся собой. Меняется труба, по которой он ходит.', body:'Токенизировать — значит взять существующий актив, например корпоративную облигацию или долю в фонде недвижимости, и выпустить на неё цифровое право требования. В самом активе ничего не перестраивается: у облигации тот же эмитент и тот же купон. Перестраивается способ, которым право переходит из рук в руки: расчёт занимает минуты вместо дней, торги идут не по расписанию биржи, а когда угодно, а дробить актив можно куда мельче исходного лота.', main:'Токенизация не создаёт новый актив. Она меняет три вещи: скорость передачи права, размер минимального лота и часы, когда сделку вообще можно закрыть.'},
@@ -1309,7 +1273,6 @@
   var CREAM='#F1E9D8', BLACK='#18140F', PINK='#E8377E', YELLOW='#FFD23F';
   var SITE = 'yurich-citycode.github.io/hubtest';
 
-  /* ================= progress + scroll-spy ================= */
   var bar = document.querySelector('#readbar i');
   var secs = Array.prototype.slice.call(document.querySelectorAll('section.sec'));
   var sideLinks = Array.prototype.slice.call(document.querySelectorAll('#sideIndex a'));
@@ -1336,9 +1299,6 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
-  /* ================= маршруты чтения (3 чипа) =================
-     Чип не прячет термины: он подсвечивает карточки трека, остальные
-     остаются на странице и лишь тускнеют. Повторный клик снимает фильтр. */
   var ROUTES = {
     base:{ nums:[1,2,3,4,5,6,8], hint:'7 карточек · основы' },
     product:{ nums:[4,5,6,13,21,22,23,24,57], hint:'9 карточек · проверка сделки',
@@ -1434,8 +1394,6 @@
     });
   }
 
-
-  /* flash цели якорного перехода */
   function flashTarget(){
     var id = location.hash.replace('#','');
     if(!id) return;
@@ -1449,9 +1407,6 @@
   window.addEventListener('hashchange', flashTarget);
   window.addEventListener('load', function(){ setTimeout(flashTarget, 400); });
 
-  /* ================= магнитная подсветка featured-раздела =================
-     Тот же приём, что у .magnetic-кнопок в хабе: элемент тянется к курсору,
-     свечение задаёт CSS. Только точный указатель и без reduced-motion. */
   var hotLink = document.querySelector('#sideIndex a.featured');
   if(hotLink && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     hotLink.addEventListener('mousemove', function(e){
@@ -1463,7 +1418,6 @@
     hotLink.addEventListener('mouseleave', function(){ hotLink.style.transform = ''; });
   }
 
-  /* ================= share card (canvas) ================= */
   var modal = document.getElementById('shareModal');
   var shareImg = document.getElementById('shareImg');
   var shareDownload = document.getElementById('shareDownload');
@@ -1483,7 +1437,6 @@
     return lines;
   }
 
-  /* подбирает кегль, чтобы текст влез в maxLines строк и maxH пикселей */
   function fitFont(ctx, text, x, y, maxW, maxLines, maxH, startSize, minSize, fontTpl, lh){
     var size = startSize;
     var lines, lineH;
@@ -1502,9 +1455,6 @@
     return { lines:lines.length, yAfter:yAfter };
   }
 
-  /* ================= watermark: печать-кольцо + глитч-Y =================
-     Сдержанные знаки авторства в своих слотах — не перекрывают текст.
-     Цвета — только чёрный (полупрозрачный) и фирменный розовый. */
   function drawArcText(ctx, text, cx, cy, r, fromDeg, toDeg, top, size, color, tracking){
     var chars = text.split('');
     ctx.font = '800 ' + size + 'px Archivo, sans-serif';
@@ -1543,11 +1493,6 @@
     ctx.restore();
   }
 
-  /* ================= wax seal — авторская печать =================
-     Рисуется целиком на canvas: органический контур (неравный край,
-     как отбитый воск), градиент, вкатанное кольцо, краклеры, свет
-     с лево-верх, тень на бумагу, гравировка двойным офсетом.
-     Отпечаток одинаковый на каждой карточке — это и есть провенанс. */
   function waxPath(ctx, cx, cy, r){
     var N = 72;
     ctx.beginPath();
@@ -1573,7 +1518,7 @@
 
   function drawWaxSeal(ctx, cx, cy, R){
     ctx.save();
-    /* тень — печать «лежит» на бумаге */
+    
     ctx.save();
     ctx.shadowColor = 'rgba(24,20,15,.32)';
     ctx.shadowBlur = 16;
@@ -1583,11 +1528,11 @@
     ctx.fillStyle = '#B0235D';
     ctx.fill();
     ctx.restore();
-    /* база воска (тёмный край — «борт» отбивки) */
+    
     waxPath(ctx, cx, cy, R);
     ctx.fillStyle = '#B0235D';
     ctx.fill();
-    /* центр — светлее, блик с лево-верх */
+    
     waxPath(ctx, cx, cy, R * 0.9);
     var g = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.3, R * 0.1, cx, cy, R * 0.92);
     g.addColorStop(0, '#F06EA7');
@@ -1595,18 +1540,18 @@
     g.addColorStop(1, '#D22E6F');
     ctx.fillStyle = g;
     ctx.fill();
-    /* вкатанное кольцо */
+    
     waxPath(ctx, cx, cy, R * 0.78);
     ctx.strokeStyle = 'rgba(120,10,50,.4)';
     ctx.lineWidth = 1.6;
     ctx.stroke();
-    /* краклеры */
+    
     ctx.save();
     waxPath(ctx, cx, cy, R * 0.9);
     ctx.clip();
     waxSpeckle(ctx, cx, cy, R * 0.9, 130);
     ctx.restore();
-    /* свет */
+    
     ctx.lineCap = 'round';
     ctx.strokeStyle = 'rgba(255,255,255,.16)';
     ctx.lineWidth = 9;
@@ -1614,13 +1559,13 @@
     ctx.strokeStyle = 'rgba(255,255,255,.1)';
     ctx.lineWidth = 5;
     ctx.beginPath(); ctx.arc(cx, cy, R * 0.62, -2.5, -1.7); ctx.stroke();
-    /* гравировка: светлый офсет + тёмный */
+    
     var rText = R * 0.7;
     drawArcText(ctx, 'BY YURICH', cx + 1.2, cy + 1.2, rText, -150, -30, true, 15, 'rgba(255,255,255,.22)', 3);
     drawArcText(ctx, 'RWA · 2026', cx + 1.2, cy + 1.2, rText, 150, 30, false, 13, 'rgba(255,255,255,.22)', 2.5);
     drawArcText(ctx, 'BY YURICH', cx, cy, rText, -150, -30, true, 15, 'rgba(92,8,44,.92)', 3);
     drawArcText(ctx, 'RWA · 2026', cx, cy, rText, 150, 30, false, 13, 'rgba(92,8,44,.92)', 2.5);
-    /* гравированный глитч-Y */
+    
     drawGlitchY(ctx, cx, cy, 44, 'rgba(74,5,36,.95)', 'rgba(255,255,255,.28)');
     ctx.restore();
   }
@@ -1634,7 +1579,6 @@
     cv.width = W; cv.height = H;
     var ctx = cv.getContext('2d');
 
-    /* бумага */
     ctx.fillStyle = CREAM; ctx.fillRect(0,0,W,H);
     ctx.fillStyle = 'rgba(24,20,15,.07)';
     for(var y = 3; y < H; y += 6){
@@ -1644,13 +1588,11 @@
     }
     ctx.strokeStyle = BLACK; ctx.lineWidth = 10; ctx.strokeRect(18, 18, W-36, H-36);
 
-    /* шапка */
     ctx.fillStyle = PINK; ctx.fillRect(M, 72, 22, 22);
     ctx.fillStyle = BLACK;
     ctx.font = '400 26px Anton, sans-serif';
     ctx.fillText('YURICHHUB — ГЛОССАРИЙ RWA', M + 38, 93);
 
-    /* раздел + номер термина */
     ctx.fillStyle = PINK;
     ctx.font = '800 24px Archivo, sans-serif';
     ctx.fillText(d.sec.toUpperCase(), M, 168);
@@ -1660,29 +1602,24 @@
     ctx.fillText('ТЕРМИН ' + ('0' + termNum).slice(-2), W - M, 168);
     ctx.textAlign = 'left';
 
-    /* название */
     var y = 246;
     ctx.fillStyle = BLACK;
     var name = fitFont(ctx, d.name.toUpperCase(), M, y, CW, 2, 134, 54, 44, '400 %spx Anton, sans-serif', 1.14);
     y = name.yAfter + 22;
 
-    /* drop-строка */
     ctx.fillStyle = PINK;
     var drop = fitFont(ctx, d.drop, M, y, CW, 3, 132, 30, 24, '800 %spx Archivo, sans-serif', 1.4);
     y = drop.yAfter + 20;
 
-    /* divider */
     ctx.fillStyle = BLACK; ctx.fillRect(M, y, 200, 6);
     y += 38;
 
-    /* тело термина целиком */
     var bottomStart = H - 300;
     var mainReserve = 190;
     ctx.fillStyle = 'rgba(24,20,15,.88)';
     var body = fitFont(ctx, d.body, M, y, CW, 12, bottomStart - mainReserve - y - 30, 28, 22, '400 %spx Archivo, sans-serif', 1.42);
     y = body.yAfter + 34;
 
-    /* плашка ГЛАВНОЕ */
     ctx.font = '400 26px Anton, sans-serif';
     var gw = ctx.measureText('ГЛАВНОЕ').width;
     ctx.fillStyle = BLACK;
@@ -1691,16 +1628,13 @@
     ctx.fillText('ГЛАВНОЕ', M + 18, y + 32);
     y += 44 + 22;
 
-    /* главное */
     ctx.fillStyle = 'rgba(24,20,15,.92)';
     var main = fitFont(ctx, d.main, M, y, CW, 3, bottomStart - 20 - y, 27, 21, '700 %spx Archivo, sans-serif', 1.42);
     y = main.yAfter;
 
-    /* нижняя лента */
     ctx.strokeStyle = 'rgba(24,20,15,.22)'; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(M, bottomStart - 22); ctx.lineTo(W - M, bottomStart - 22); ctx.stroke();
 
-    /* подвал: ссылка + подпись */
     ctx.fillStyle = 'rgba(24,20,15,.55)';
     ctx.font = '700 21px Archivo, sans-serif';
     ctx.fillText('ПОЛНЫЙ ГЛОССАРИЙ', M, bottomStart + 42);
@@ -1712,7 +1646,6 @@
     var sw = ctx.measureText('by YuRich').width;
     ctx.fillStyle = PINK; ctx.fillRect(M, bottomStart + 160, sw, 6);
 
-    /* восковая печать — слот между текстом и комиксом, без перекрытия */
     var sealR = 110;
     var sealX = W - M - sealR;
     var sealY = bottomStart + 118;
@@ -1720,7 +1653,6 @@
     return cv;
   }
 
-  /* ================= mobile-safe scroll lock (iOS) ================= */
   var isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var savedScroll = 0;
   function lockScroll(){
@@ -1746,7 +1678,6 @@
     }
   }
 
-  /* ================= toast ================= */
   var toastEl = document.getElementById('toast');
   var toastTimer = null;
   function showToast(msg){
@@ -1788,9 +1719,7 @@
 
   function openShare(termNum){
     if(!TERMS[termNum]) return;
-    /* fonts.ready может зависнуть на мобилке (слабый интернет) — гонка с таймаутом,
-       чтобы кнопка никогда не молчала */
-    /* прогреваем шрифты до замера — иначе метрики фолбэка и текст накладывается */
+
     var wanted = ['400 54px Anton', '800 30px Archivo', '400 28px Archivo', '700 27px Archivo', '800 22px Archivo', '800 15px Archivo'];
     var fontsReady = (document.fonts && document.fonts.load)
       ? Promise.race([Promise.all(wanted.map(function(f){ return document.fonts.load(f).catch(function(){}); })),
@@ -1811,7 +1740,7 @@
         modal.classList.add('open');
         lockScroll();
       }catch(err){
-        /* canvas не собрался (редко) — не оставляем пользователя ни с чем */
+        
         shareImg.style.display = 'none';
         shareDownload.style.display = 'none';
         shareNative.style.display = 'none';
@@ -1838,8 +1767,6 @@
     if(lastData) copyTermText(lastData.termNum);
   });
 
-  /* нативный шеринг (Web Share API) — на телефоне карточка уходит
-     в Telegram/WhatsApp/Instagram прямо из системного меню */
   var shareNative = document.getElementById('shareNative');
   shareNative.addEventListener('click', function(){
     if(!lastData || !lastData.canvas) return;

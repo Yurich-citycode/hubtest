@@ -30,6 +30,7 @@
     --pink:#E8377E;
     --pink-glow:#F5A8C8;
     --comic-yellow:#FFD23F;
+    --blue-glow:#3E6FA8;
   }
   *{ box-sizing:border-box; }
   html{
@@ -92,7 +93,6 @@
   .menu-btn.open span:first-child{ transform:translateY(3.5px) rotate(45deg); }
   .menu-btn.open span:last-child{ transform:translateY(-3.5px) rotate(-45deg); }
 
-  /* ---- hero / glitch headline ---- */
   .hero{ padding:44px 0 20px; position:relative; }
   .hero .line1{
     font-family:'Anton', sans-serif; font-weight:400; text-transform:uppercase;
@@ -108,7 +108,7 @@
     -webkit-text-stroke:0; mix-blend-mode:multiply;
   }
   .glitch::before{ color:var(--pink); transform:translate(6px,5px); opacity:.75; filter:blur(.3px); }
-  .glitch::after{ color:var(--blue-glow,#3E6FA8); transform:translate(-5px,-4px); opacity:.55; filter:blur(.4px); }
+  .glitch::after{ color:var(--blue-glow); transform:translate(-5px,-4px); opacity:.55; filter:blur(.4px); }
   .glitch-mirror{
     font-family:'Anton', sans-serif; text-transform:uppercase; color:var(--black);
     font-size:clamp(70px,15vw,180px); line-height:.85; opacity:.16; margin:0;
@@ -129,7 +129,6 @@
   }
   .doodle-1 .star{ color:var(--pink); font-size:1.3em; letter-spacing:0; margin-top:14px; }
 
-  /* ---- comic ticker ---- */
   .ticker{
     position:relative; margin-top:44px; overflow:hidden;
     border-top:3px solid var(--black); border-bottom:3px solid var(--black);
@@ -148,7 +147,6 @@
   .ticker-track .item b{ color:var(--comic-yellow); font-family:'Anton', sans-serif; font-weight:400; letter-spacing:.02em; }
   .ticker-track .star{ color:var(--pink); font-size:15px; }
 
-  /* ---- quiz ---- */
   .quizsec{ padding:80px 0 20px; scroll-margin-top:20px; }
   .quizsec .kicker{ font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; opacity:.5; margin-bottom:6px; }
   .quizsec h2{ font-family:'Archivo', sans-serif; font-size:clamp(28px,4vw,46px); font-weight:900; margin:0 0 34px; line-height:1; text-transform:lowercase; }
@@ -215,7 +213,6 @@
   .qresult .score{ font-size:12px; font-weight:700; opacity:.5; margin-bottom:14px; }
   .qresult .actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
 
-  /* ---- modules index ---- */
   .modsec{ padding:80px 0 40px; scroll-margin-top:20px; }
   .modsec .kicker{ font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; opacity:.5; margin-bottom:6px; }
   .modsec h2{ font-family:'Archivo', sans-serif; font-size:clamp(28px,4vw,46px); font-weight:900; margin:0 0 40px; line-height:1; text-transform:lowercase; }
@@ -445,7 +442,6 @@
 (function(){
   'use strict';
 
-  /* ---------- page fade transitions ---------- */
   var TRANS_MS = 380;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -461,7 +457,7 @@
     if(!href) return;
     if(a.target === '_blank' || a.hasAttribute('download')) return;
     if(/^(mailto:|tel:)/i.test(href)) return;
-    if(href.charAt(0) === '#') return; // same-page anchor — native smooth scroll (CSS) handles it
+    if(href.charAt(0) === '#') return;
     if(/^https?:\/\//i.test(href) && a.origin !== window.location.origin) return;
     if(reduced) return;
     e.preventDefault();
@@ -477,7 +473,6 @@
     }
   });
 
-  /* ---------- mobile menu ---------- */
   var menuBtn = document.getElementById('menuBtn');
   var navlinks = document.getElementById('navlinks');
   function setMenu(open){
@@ -498,7 +493,6 @@
     if(e.key === 'Escape') setMenu(false);
   });
 
-  /* ---------- live ticker ---------- */
   var tickerItems = [
     'ОНЧЕЙН-RWA <b>$25 МЛРД+</b>',
     'КАЗАХСТАН — ЗАКОН О ЦФА <b>С МАЯ 2026</b>',
@@ -508,10 +502,9 @@
     'ПРАКТИКА — <b>В КАНАЛЕ YURICHRWA</b>'
   ];
   var track = document.getElementById('tickerTrack');
-  var seq = tickerItems.concat(tickerItems); // duplicate for seamless loop
+  var seq = tickerItems.concat(tickerItems);
   track.innerHTML = seq.map(function(t){ return '<span class="item">' + t + '</span><span class="star">★</span>'; }).join('');
 
-  /* ---------- module tabs ---------- */
   var modrow = document.getElementById('modrow');
   var tabs = Array.prototype.slice.call(modrow.querySelectorAll('.modtab[data-mod]'));
   var counter = document.getElementById('modCounter');
@@ -535,7 +528,7 @@
   tabs.forEach(function(t){
     var n = Number(t.getAttribute('data-mod'));
     t.addEventListener('click', function(){
-      if(modrow.classList.contains('all-open')) return; // keep all expanded
+      if(modrow.classList.contains('all-open')) return;
       setActive(n, true);
     });
     t.addEventListener('keydown', function(e){
@@ -563,7 +556,6 @@
   });
   setActive(1);
 
-  /* ---------- comic quiz ---------- */
   var CHANNEL_URL = 'https://t.me/YuRichRWA';
   var questions = [
     {
