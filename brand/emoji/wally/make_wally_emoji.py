@@ -29,10 +29,16 @@ make_wally_emoji.py
      бивни и зубы ВНУТРИ морды не страдают. У генераций с чёрным
      фоном родной внешний контур сливается с фоном — скрипт
      дорисовывает его заново (add_contour, BLACK_PX).
-  2. Сглаживание альфы (гаусс) и ресайз LANCZOS -> 512.
-  3. Белый стикер-контур: дилатация альфы MaxFilter, подложка белым.
-  4. Вписывание в квадрат 512×512 по центру, заполнение ~90%.
-  5. Даунскейл до 100×100 LANCZOS + UnsharpMask только по RGB
+  2. Toon-clean: медиана по RGB убирает AI-зерно («грязь»)
+     с генераций (двойной проход на сыром разрешении + один
+     после ink-буста). Альфа не трогается.
+  3. Ink-буст (только варианты в шапках): степенная кривая
+     приводит серые контуры и линзы к «жирному чёрному» стилю
+     базового WALLY; насыщенные цвета не трогаются.
+  4. Ресайз LANCZOS -> 512.
+  5. Белый стикер-контур: дилатация альфы MaxFilter, подложка белым.
+  6. Вписывание в квадрат 512×512 по центру, заполнение ~90%.
+  7. Даунскейл до 100×100 LANCZOS + UnsharpMask только по RGB
      (альфа не трогается, чтобы не было ореолов), WEBP lossless.
 
 Запуск:
@@ -65,7 +71,9 @@ MAX_BYTES = 64 * 1024 # лимит Telegram для эмодзи
 SENTINEL = (255, 0, 255)
 
 STICKERS = [
-    # (имя, подпись, эмодзи для привязки, ink-буст)
+    # (имя, подпись, эмодзи для привязки, ink/cel-обработка)
+    # ink=True — вариант с «мягкой» генерацией: медиана + cel-выравнивание
+    # тонов (все текущие raw чистые, флаг выключен)
     ("wally",        "базовый WALLY",              "🐘", False),
     ("wally_crown",  "корона (кит-король)",        "👑", True),
     ("wally_cap",    "оранжевая кепка",            "🧢", True),
@@ -156,31 +164,236 @@ def remove_bg(img):
     return rgba, 1.0, corner, dark_bg
 
 
-def ink_boost(img, power=2.9, knee=178, spread=32):
+def toon_clean(img, passes=1):
     """
-    Приводит мягкие серые контуры/линзы к «жирному чёрному» стилю
-    базового WALLY (у второй модели генерации контуры выходят
-    серыми ~90-130 вместо чёрных).
+    Убрать AI-зерно («грязь») с генераций: медианный фильтр по RGB.
+    Альфа не трогается, чтобы не размыть край. Медиана убирает
+    одиночные тёмные/светлые speckle'ы, но сохраняет плоские цвета
+    и контуры.
+    """
+    r, g, b, a = img.split()
+    rgb = Image.merge("RGB", (r, g, b))
+    for _ in range(passes):
+        rgb = rgb.filter(ImageFilter.MedianFilter(3))
+    r2, g2, b2 = rgb.split()
+    return Image.merge("RGBA", (r2, g2, b2, a))
 
-    Степенная кривая f(l) = l^power / knee^(power-1) применяется
-    ТОЛЬКО к нейтральным пикселям (max-min <= spread): контуры,
-    очки, серые тени. Насыщенные цвета — оранжевая кепка, золотая
-    корона — не трогаются, чтобы не потерять фирменные цвета.
-    Светлое (l >= knee) не меняется вовсе.
+
+def draw_shades(img, min_area=40, gap=18):
     """
-    lut = [0] * 256
-    for l in range(1, 256):
-        lut[l] = l if l >= knee else min(255, round(l ** power / knee ** (power - 1)))
+    Рисует сигнатурные БОЛЬШИЕ чёрные очки-полосу с белыми
+    зигзаг-бликами — как у базового WALLY (модели на вариантах с
+    шапками упорно рисуют мелкие очки/глаза, которые не читаются
+    в 100 px).
+
+    Позиция глаз находится по тёмным кластерам в зоне лица
+    (36-60% высоты, 25-75% ширины контента). Кластеры, касающиеся
+    границ зоны (шляпа сверху, уши по бокам), отбрасываются.
+    Если уже есть широкая тёмная полоса (очки есть) — ничего не
+    рисуем.
+    """
+    a = img.split()[3]
+    bbox = a.point(lambda v: 255 if v > 8 else 0).getbbox()
+    if not bbox:
+        return img
+    x0, y0, x1, y1 = bbox
+    W, H = x1 - x0, y1 - y0
+    zx0, zx1 = x0 + int(W * 0.25), x0 + int(W * 0.75)
+    zy0, zy1 = y0 + int(H * 0.36), y0 + int(H * 0.60)
+
+    px = img.load()
+    dark = set()
+    for y in range(zy0, zy1):
+        for x in range(zx0, zx1):
+            r, g, b, al = px[x, y]
+            if al > 150 and (r + g + b) < 450:
+                dark.add((x, y))
+    if not dark:
+        return img
+
+    # связные компоненты (8-связность, BFS)
+    seen = set()
+    comps = []
+    for p in sorted(dark):
+        if p in seen:
+            continue
+        stack, comp = [p], []
+        seen.add(p)
+        while stack:
+            q = stack.pop()
+            comp.append(q)
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    n = (q[0] + dx, q[1] + dy)
+                    if n in dark and n not in seen:
+                        seen.add(n)
+                        stack.append(n)
+        comps.append(comp)
+    boxes = []
+    for c in comps:
+        if len(c) < min_area:
+            continue
+        bx0, by0 = min(p[0] for p in c), min(p[1] for p in c)
+        bx1, by1 = max(p[0] for p in c), max(p[1] for p in c)
+        # отбрасываем то, что касается границ зоны (шляпа/уши)
+        if by0 <= zy0 or bx0 <= zx0 or bx1 >= zx1:
+            continue
+        # и слишком вытянутое по вертикали (шляпа спускается)
+        if by1 - by0 > 70:
+            continue
+        boxes.append((bx0, by0, bx1, by1))
+    if not boxes:
+        return img
+
+    # объединяем близкие боксы (два глаза могут быть одной деталью)
+    def merge(boxes):
+        out = []
+        for b in sorted(boxes):
+            for i, o in enumerate(out):
+                if b[0] <= o[2] + gap and o[0] <= b[2] + gap and \
+                   b[1] <= o[3] + gap and o[1] <= b[3] + gap:
+                    out[i] = (min(o[0], b[0]), min(o[1], b[1]),
+                              max(o[2], b[2]), max(o[3], b[3]))
+                    break
+            else:
+                out.append(b)
+        return out
+
+    boxes = merge(merge(boxes))
+    # уже есть широкая полоса очков — не рисуем
+    if boxes[0][2] - boxes[0][0] > W * 0.42:
+        return img
+
+    # итоговая плашка: объединение двух самых крупных кластеров
+    boxes.sort(key=lambda b: (b[2] - b[0]) * (b[3] - b[1]), reverse=True)
+    eyes = boxes[:2]
+    ex0 = min(b[0] for b in eyes) - 14
+    ex1 = max(b[2] for b in eyes) + 14
+    ey0 = min(b[1] for b in eyes) - 8
+    ey1 = max(b[3] for b in eyes) + 10
+
+    # сигнатурные очки — БОЛЬШИЕ, как у базового WALLY (~60% ширины
+    # лица): если детект нашёл мало — расширяем до минимума
+    cx = (ex0 + ex1) // 2
+    min_w = int(W * 0.45)
+    if ex1 - ex0 < min_w:
+        ex0, ex1 = cx - min_w // 2, cx + min_w // 2
+    ex0 = max(ex0, x0 + int(W * 0.10))
+    ex1 = min(ex1, x1 - int(W * 0.10))
+    min_h = int(H * 0.10)
+    if ey1 - ey0 < min_h:
+        cy = (ey0 + ey1) // 2
+        ey0, ey1 = cy - min_h // 2, cy + min_h // 2
+    # не залезаем на шапку сверху и на рот снизу
+    ey0 = max(ey0, y0 + int(H * 0.32))
+    ey1 = min(ey1, y0 + int(H * 0.63))
+
+    d = ImageDraw.Draw(img)
+    rh = ey1 - ey0
+    d.rounded_rectangle((ex0, ey0, ex1, ey1), radius=min(28, rh // 2),
+                        fill=(0, 0, 0, 255))
+
+    # белые зигзаг-блики по центру каждого глаза
+    centers = [((b[0] + b[2]) // 2, (b[1] + b[3]) // 2) for b in eyes]
+    for cx, cy in centers:
+        pts = []
+        for i in range(5):
+            pts.append((cx - 18 + i * 9, cy - 9 + (18 if i % 2 else 0)))
+        d.line(pts, fill=(255, 255, 255, 255), width=7, joint="curve")
+    return img
+
+
+def cel_flatten(img, edge_thresh=120, spread=32, vote=9):
+    """
+    Приводит вариант в шапке к ПЛОСКОМУ мультяшному стилю базового
+    WALLY (у него кожа — ровная серебристая заливка без полутеней).
+
+    Шаги:
+      1. Нейтральные пиксели вне ЖЁСТКИХ краёв (защищаются только
+         AA-переходы с контрастом > edge_thresh — контуры, зигзаг)
+         снапятся к двум тонам: чёрный (25..145) и кожа (145..232).
+      2. Голосование: медиана карты тонов чинит границы зон.
+      3. Морфологическое ОТКРЫТИЕ масок (эрозия+дилатация):
+         в чёрном выживает только толще ~10 px — контуры, линзы,
+         чёрные шляпы; тонкие серые морщины/полутени (3-8 px)
+         стираются безусловно, какой бы длинной ни была линия.
+         Тонкие (<6 px) островки кожи внутри чёрного тоже убираются.
+      4. Насыщенные цвета (оранжевая кепка, золото), белые детали
+         (зубы, зигзаг) и AA-переходы не трогаются вовсе.
+
+    Так уходит серая «грязь» — нарисованные шумные полутени и
+    морщины, которых нет в плоском стиле базового WALLY.
+    """
+    lum = img.convert("RGB").convert("L")
+    med5 = lum.filter(ImageFilter.MedianFilter(5))
+    rng = ImageChops.subtract(med5.filter(ImageFilter.MaxFilter(3)),
+                              med5.filter(ImageFilter.MinFilter(3)))
+    rng_px = rng.load()
     px = img.load()
     w, h = img.size
+
+    # тон кожи: медианный RGB нейтральных пикселей яркости 190..235
+    sample = []
+    for y in range(0, h, 4):
+        for x in range(0, w, 4):
+            r, g, b, a = px[x, y]
+            if a > 150 and max(r, g, b) - min(r, g, b) <= spread:
+                l = (r + g + b) // 3
+                if 190 <= l <= 235:
+                    sample.append((r, g, b))
+    if sample:
+        n = len(sample)
+        skin = tuple(sorted(c[i] for c in sample)[n // 2] for i in range(3))
+    else:
+        skin = (203, 206, 213)
+
+    # карта тонов: 0 = чёрный, 255 = кожа, 128 = не снаплено
+    tone = Image.new("L", (w, h), 128)
+    tpx = tone.load()
+    snapped = Image.new("L", (w, h), 0)   # маска: что реально снапили
+    spx = snapped.load()
     for y in range(h):
         for x in range(w):
             r, g, b, a = px[x, y]
-            if a > 8 and max(r, g, b) - min(r, g, b) <= spread:
-                l = (r + g + b) // 3
-                if l:
-                    s = lut[l] / l
-                    px[x, y] = (round(r * s), round(g * s), round(b * s), a)
+            if a <= 8 or rng_px[x, y] > edge_thresh:
+                continue
+            if max(r, g, b) - min(r, g, b) > spread:
+                continue
+            l = (r + g + b) // 3
+            if 25 <= l < 145:
+                tpx[x, y] = 0
+                spx[x, y] = 255
+            elif 145 <= l <= 232:
+                tpx[x, y] = 255
+                spx[x, y] = 255
+
+    # голосование большинством (чинит границы зон)
+    tone = tone.filter(ImageFilter.MedianFilter(vote))
+    tpx = tone.load()
+
+    # морфологическое открытие: чёрное толще ~10 px, кожа толще ~6 px
+    black_ok = tone.point(lambda v: 255 if v == 0 else 0) \
+                   .filter(ImageFilter.MinFilter(11)) \
+                   .filter(ImageFilter.MaxFilter(11))
+    skin_ok = tone.point(lambda v: 255 if v == 255 else 0) \
+                  .filter(ImageFilter.MinFilter(7)) \
+                  .filter(ImageFilter.MaxFilter(7))
+    bok = black_ok.load()
+    sok = skin_ok.load()
+
+    black = 30
+    for y in range(h):
+        for x in range(w):
+            if not spx[x, y]:
+                continue                     # не снаплено — не трогаем
+            r, g, b, a = px[x, y]
+            if bok[x, y]:
+                px[x, y] = (black, black, black, a)
+            elif sok[x, y]:
+                px[x, y] = (*skin, a)
+            # открытие съело обе зоны (не должно случаться) — кожа
+            else:
+                px[x, y] = (*skin, a)
     return img
 
 
@@ -330,6 +543,11 @@ def build(name, report):
     raw_size = img.size
     img, kept, corner, dark_bg = remove_bg(img)
 
+    if ink:
+        # зернистость сырой генерации убираем на её же разрешении,
+        # двойным проходом медианы
+        img = toon_clean(img, passes=2)
+
     # рабочий размер 512 (LANCZOS сглаживает жёсткую границу floodfill)
     if max(img.size) != MASTER:
         img = img.resize(
@@ -337,7 +555,12 @@ def build(name, report):
              round(img.height * MASTER / max(img.size))), Image.LANCZOS)
 
     if ink:
-        img = ink_boost(img)
+        # сигнатурные большие чёрные очки (если их нет)
+        img = draw_shades(img)
+        # плоская мультяшная заливка (контур/кожа/белое) + чистка
+        # возможных speckle на границах тонов. Нарисованная плашка
+        # очков и белые зигзаги выравниванием не трогаются.
+        img = toon_clean(cel_flatten(img))
     if dark_bg:
         # родной внешний контур съеден вместе с тёмным фоном —
         # рисуем заново, толщиной как у остальных стикеров набора
