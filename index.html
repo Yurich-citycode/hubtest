@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YurichHub — Sevastopol AI × City Code × Crimea RWA</title>
-<meta name="description" content="YurichHub — экосистема Севастополя: Sevastopol AI открывает город, City Code превращает открытие в закрытое сообщество, Crimea RWA — в реальное владение.">
+<meta name="description" content="YurichHub — три двери в Севастополь: Sevastopol AI — бот по городу, City Code — закрытый круг, Crimea RWA — доля городской кассы в ЦФА.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://yurich-citycode.github.io/hubtest/">
 <meta property="og:title" content="YurichHub — Sevastopol AI × City Code × Crimea RWA">
-<meta property="og:description" content="YurichHub — экосистема Севастополя: Sevastopol AI открывает город, City Code превращает открытие в закрытое сообщество, Crimea RWA — в реальное владение.">
+<meta property="og:description" content="YurichHub — три двери в Севастополь: Sevastopol AI — бот по городу, City Code — закрытый круг, Crimea RWA — доля городской кассы в ЦФА.">
 <meta property="og:image" content="https://yurich-citycode.github.io/hubtest/indexpreview.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="YurichHub — Sevastopol AI × City Code × Crimea RWA">
-<meta name="twitter:description" content="YurichHub — экосистема Севастополя: Sevastopol AI открывает город, City Code превращает открытие в закрытое сообщество, Crimea RWA — в реальное владение.">
+<meta name="twitter:description" content="YurichHub — три двери в Севастополь: Sevastopol AI — бот по городу, City Code — закрытый круг, Crimea RWA — доля городской кассы в ЦФА.">
 <meta name="twitter:image" content="https://yurich-citycode.github.io/hubtest/indexpreview.jpg">
 <link rel="canonical" href="https://yurich-citycode.github.io/hubtest/">
 <meta name="theme-color" content="#0A0A0A">
@@ -140,12 +140,22 @@
     font-size:16px; line-height:1.7; color:#C4C4C4; max-width:48ch; margin:0 0 38px;
     opacity:0; animation:rise .8s ease .6s forwards;
   }
+  .hero .doors{ max-width:54ch; display:flex; flex-direction:column; gap:10px; margin:0 0 30px; }
+  .hero .door{
+    margin:0; padding-left:14px; border-left:2px solid var(--line);
+    font-size:15.5px; line-height:1.55;
+  }
   .chaos-tag{
     display:inline-block; font-weight:700; margin:0 .08em;
     transition:transform .2s ease;
   }
 
   .cta-row{ display:flex; gap:14px; flex-wrap:wrap; opacity:0; animation:rise .8s ease .72s forwards; }
+
+  .cta-note{
+    margin:18px 0 0; font-size:12.5px; line-height:1.5; color:var(--ink-dim);
+    opacity:0; animation:rise .8s ease .86s forwards;
+  }
 
   .btn{
     display:inline-flex; align-items:center; gap:10px;
@@ -176,20 +186,6 @@
     background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%), rgba(215,255,61,.10), transparent 60%);
   }
 
-  .status-card{
-    display:inline-flex; flex-direction:column; gap:8px; margin-top:34px;
-    max-width:280px; text-decoration:none;
-    border:1px solid rgba(232,55,126,.5); background:rgba(232,55,126,.05);
-    padding:14px 18px; opacity:0; animation:riseRotate2 .8s ease .86s forwards;
-    transition:border-color .2s ease, background-color .2s ease, transform .2s ease;
-  }
-  .status-card:hover{ border-color:var(--pink); background:rgba(232,55,126,.1); }
-  @keyframes riseRotate2{ from{ opacity:0; transform:translateY(10px) rotate(-1.4deg); } to{ opacity:1; transform:translateY(0) rotate(-1.4deg); } }
-  .status-card .sc-label{ font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--pink); }
-  .status-card .sc-title{ font-family:var(--font-display); font-size:16px; text-transform:uppercase; color:var(--ink); }
-  .status-card .sc-row{ display:flex; align-items:center; gap:7px; font-size:11px; color:var(--ink-dim); font-weight:600; }
-  .status-card .sc-dot{ width:6px; height:6px; border-radius:50%; background:var(--pink); box-shadow:0 0 8px var(--pink); animation:pulse 1.8s ease-in-out infinite; }
-  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
 
   .marquee{
     overflow:hidden; border-top:2px solid var(--line); border-bottom:2px solid var(--line);
@@ -475,6 +471,7 @@
     font-size:11px; font-weight:800; letter-spacing:.04em; color:#1d7a3d; background:rgba(29,122,61,.1);
   }
   .bk-yield{ display:flex; align-items:baseline; gap:10px; margin:14px 0 2px; }
+  .bk-y-pre{ font-size:12.5px; font-weight:700; color:#77777d; }
   .bk-y-num{ font-size:34px; font-weight:800; letter-spacing:-.01em; }
   .bk-y-lbl{ font-size:12.5px; color:#77777d; }
   .bk-rows{ margin-top:12px; border-top:1px solid #ececea; }
@@ -532,21 +529,21 @@
   .nots{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
 
   .thesis{ padding:120px 0; text-align:center; border-top:2px solid var(--line); }
-  .thesis-scatter{ position:relative; max-width:1000px; margin:0 auto 40px; min-height:560px; }
+  .thesis-scatter{ position:relative; max-width:1000px; margin:0 auto 40px; min-height:420px; }
   .tf{ position:absolute; font-family:var(--font-display); text-transform:uppercase; line-height:1.05; white-space:nowrap; margin:0; }
   .tf-big{ font-size:clamp(30px,4.6vw,54px); }
   .tf-sm{ font-family:var(--font-sans); font-weight:700; text-transform:none; font-size:clamp(15px,1.7vw,20px); letter-spacing:.01em; white-space:normal; max-width:26ch; }
   .tf-lime{ color:var(--lime); }
   .tf-pink{ color:var(--pink); }
+  .tf-gold{ color:var(--gold); }
+  .tf-bronze{ color:var(--bronze); }
   .tf-white{ color:var(--ink); }
-  .tf1{ top:0%;   left:1%;  transform:rotate(-3deg); }
-  .tf2{ top:7%;   left:40%; transform:rotate(1.5deg); }
-  .tf3{ top:19%;  left:9%;  transform:rotate(2deg); }
-  .tf4{ top:28%;  left:47%; transform:rotate(-1deg); }
-  .tf5{ top:39%;  left:3%;  transform:rotate(-2deg); }
-  .tf6{ top:50%;  left:43%; transform:rotate(1deg); }
-  .tf7{ top:61%;  left:15%; transform:rotate(3deg); }
-  .tf8{ top:74%;  left:30%; transform:rotate(-1.2deg); font-size:clamp(24px,3.6vw,42px); }
+  .tf1{ top:2%;   left:3%;  transform:rotate(-3deg); }
+  .tf2{ top:12%;  left:38%; transform:rotate(1.5deg); }
+  .tf3{ top:34%;  left:8%;  transform:rotate(2deg); }
+  .tf4{ top:44%;  left:44%; transform:rotate(-1deg); }
+  .tf5{ top:66%;  left:4%;  transform:rotate(-2deg); }
+  .tf6{ top:76%;  left:40%; transform:rotate(1deg); }
   .signature{ margin-top:26px; font-size:11.5px; font-weight:700; letter-spacing:.1em; color:var(--ink-dim); text-transform:uppercase; }
 
   .wordwall{ overflow:hidden; border-top:2px solid var(--line); padding:40px 0 10px; position:relative; }
@@ -643,8 +640,8 @@
     .reveal{ opacity:1; transform:none; transition:none; }
     .rword-inner{ transform:none; transition:none; }
     .wipe{ display:none; }
-    .stamp, .kc-photo-wrap, .status-card .sc-dot, .kc-hot.is-active, .rwa-screen.is-active{ animation:none; }
-    .kicker, .poster .word, .hero .sub, .cta-row, .status-card{
+    .stamp, .kc-photo-wrap, .kc-hot.is-active, .rwa-screen.is-active{ animation:none; }
+    .kicker, .poster .word, .hero .sub, .cta-row, .cta-note{
       animation:none !important; opacity:1 !important; transform:none;
     }
     .marquee-track{ animation:none; transform:none; flex-wrap:wrap; justify-content:center; row-gap:10px; }
@@ -695,23 +692,17 @@
       <span class="row"><span class="word lime">Войти.</span></span>
       <span class="row"><span class="word glitchw" data-text="Владеть.">Владеть.</span></span>
     </h1>
-    <p class="sub">
-      <span class="chaos-tag" style="color:var(--gold); transform:rotate(-1.5deg);">Sevastopol AI</span> открывает город.
-      <span class="chaos-tag" style="color:var(--lime); transform:rotate(1deg);">City Code</span> превращает открытие в
-      <span class="chaos-tag" style="color:var(--lime);">закрытое сообщество</span>.
-      <span class="chaos-tag" style="color:var(--bronze); transform:rotate(-1deg);">Crimea RWA</span> превращает живую экономику города в
-      <span class="chaos-tag" style="color:var(--bronze);">реальное владение</span>.
-    </p>
+    <div class="sub doors">
+      <p class="door"><span class="chaos-tag" style="color:var(--gold); transform:rotate(-1.5deg);">Sevastopol AI</span> — бот по городу. Где поесть, где закат, какой маршрут.</p>
+      <p class="door"><span class="chaos-tag" style="color:var(--lime); transform:rotate(1deg);">City Code</span> — закрытый круг. Правила, скидка у своих, мероприятия. Не скидочная карта.</p>
+      <p class="door"><span class="chaos-tag" style="color:var(--bronze); transform:rotate(-1deg);">Crimea RWA</span> — доля городской кассы в ЦФА. Сначала точка, потом бумага, потом оператор.</p>
+    </div>
     <div class="cta-row">
-      <span class="tilt-l"><a href="https://t.me/SevastopolAIBot" target="_blank" rel="noopener" class="btn magnetic">Открыть Sevastopol AI</a></span>
-      <span class="tilt-r"><a href="course.html" class="btn ghost magnetic">Курс RWA / ЦФА</a></span>
+      <span class="tilt-l"><a href="https://t.me/SevastopolAIBot" target="_blank" rel="noopener" class="btn magnetic">Открыть бота</a></span>
+      <span class="tilt-r"><a href="course.html" class="btn ghost magnetic">Курс RWA</a></span>
       <span class="tilt-r"><a href="cfa.html" class="btn ghost magnetic">Сборка выпуска</a></span>
     </div>
-    <a href="course.html" class="status-card magnetic">
-      <div class="sc-label">Идёт набор</div>
-      <div class="sc-title">YuRich RWA — курс</div>
-      <div class="sc-row"><span class="sc-dot" aria-hidden="true"></span>Книга-курс · Telegram · глоссарий</div>
-    </a>
+    <p class="cta-note">City Code — по заявке или за вклад в город.</p>
   </div>
 
   <div class="corner-coord bl">44.6167° N · 33.5258° E</div>
@@ -772,9 +763,9 @@
     <div>
       <div class="eyebrow" style="color:var(--gold)"><span class="num">01</span> Открытие</div>
       <h2 class="split">Город, который отвечает</h2>
-      <p class="copy reveal">Sevastopol AI — телеграм-бот и городской помощник с Кирой. Знает, где сегодня лучший закат, где вкусно поесть, какой маршрут стоит пройти заново. Уже 200+ мест еды, 100+ локаций, маршруты и события — с фото, координатами и живыми комментариями.</p>
-      <p class="copy reveal reveal-2">Приходят с простым вопросом — остаются пересматривать, изучать и дополнять, принося свои места. Этот первый круг людей и есть фундамент, на котором стоит всё остальное.</p>
-      <a href="https://t.me/SevastopolAIBot" target="_blank" rel="noopener" class="btn magnetic" style="margin-top:22px;background:var(--gold);border-color:var(--gold);">Открыть Sevastopol AI</a>
+      <p class="copy reveal">Sevastopol AI — телеграм-бот. Где поесть, где закат и др. 200+ мест еды, 100+ локаций, маршруты и события. Фото и координаты.</p>
+      <p class="copy reveal reveal-2">Заходят с одним вопросом. После добавляют свои места.</p>
+      <a href="https://t.me/SevastopolAIBot" target="_blank" rel="noopener" class="btn magnetic" style="margin-top:22px;background:var(--gold);border-color:var(--gold);">Открыть бота</a>
     </div>
     <div class="routecard reveal">
       <img src="ai-screen.jpg" loading="lazy" decoding="async" width="1024" height="1280" alt="Родмап Sevastopol AI: локации, маршруты, события, сообщество">
@@ -803,10 +794,9 @@
       <div class="kc-hint">Нажми на ключ →</div>
     </div>
     <div>
-      <div class="eyebrow" style="color:var(--lime)"><span class="num">02</span> Принадлежность</div>
-      <h2 class="split">Ключ, который открывает город иначе</h2>
-      <p class="copy reveal">City Code — закрытое сообщество вокруг города, а не скидочная карта. Шесть разделов — шесть ключей на одной связке: правила системы, привилегии у партнёров, сама сеть партнёров, закрытые события, данные о балансе и круг участников.</p>
-      <p class="copy reveal reveal-2">Всё про доступ и принадлежность.</p>
+      <div class="eyebrow" style="color:var(--lime)"><span class="num">02</span> Круг</div>
+      <h2 class="split">Ключ к городу</h2>
+      <p class="copy reveal">City Code — закрытый круг вокруг Севастополя. Шесть ключей: правила, скидка у партнёров, сами партнёры, закрытые мероприятия, люди.</p>
 
       <div class="kc-panel reveal" id="kcPanel" aria-live="polite">
         <div class="kc-panel-num" id="kcNum">01</div>
@@ -845,8 +835,8 @@
   <span class="bg-num" style="right:auto; left:-.03em; -webkit-text-stroke-color:rgba(201,138,78,.12);" aria-hidden="true">03</span>
   <div class="wrap">
     <div class="eyebrow" style="justify-content:center; color:var(--bronze)"><span class="num">03</span> Владение</div>
-    <h2 class="split">Экономика города, ставшая активом</h2>
-    <p class="copy reveal">За живой экономикой Севастополя уже стоят настоящий оборот и настоящие партнёры. Crimea RWA — следующий слой: превратить реальную ценность — долю дохода, право на объект, доступ к событию — в цифровой актив с понятными правами. Сначала актив и его смысл, потом форма.</p>
+    <h2 class="split">Касса города в выпуске</h2>
+    <p class="copy reveal">В городе уже есть оборот. Crimea RWA смотрит, можно ли долю этой кассы собрать под 259-ФЗ. Ниже учебный выпуск, не продажа.</p>
 
     <div class="rwa-how reveal">
       <div>
@@ -869,7 +859,7 @@
             <figcaption class="asset-flag">условный пример</figcaption>
           </figure>
           <div class="asset-plate">
-            <div class="ap-head">доцифровой слой</div>
+            <div class="ap-head">до выпуска</div>
             <div class="ap-row"><b>Актив</b><span>доля дохода кофейни-партнёра City Code, Севастополь</span></div>
             <div class="ap-row"><b>Владелец</b><span>собственник точки, партнёр City Code</span></div>
             <div class="ap-row"><b>Оборот</b><span>кассовая выручка, история 12 месяцев</span></div>
@@ -879,7 +869,7 @@
         <div class="rwa-screen" data-rwa-screen="str" role="tabpanel" aria-labelledby="rwaTabStr">
           <article class="doc-sheet">
             <header class="doc-head">
-              <span class="doc-kicker">проект · не оферта</span>
+              <span class="doc-kicker">учебный текст · не оферта</span>
               <h3 class="doc-title">Решение о выпуске</h3>
               <div class="doc-sub">цифровых финансовых активов · 259-ФЗ</div>
             </header>
@@ -892,7 +882,7 @@
               <div class="df"><dt>Погашение</dt><dd>31.12.2028</dd></div>
               <div class="df"><dt>Порядок выплат</dt><dd>ежеквартально, из выручки точки</dd></div>
               <div class="df"><dt>Инвестор</dt><dd>неквалифицированные — в пределах лимита</dd></div>
-              <div class="df"><dt>Статус</dt><dd class="doc-status">условный пример</dd></div>
+              <div class="df"><dt>Статус</dt><dd class="doc-status">учебный макет</dd></div>
             </dl>
             <a class="doc-pdf" href="https://atomyze.ru/oper-docs/releases/" target="_blank" rel="noopener"
                title="Пример раскрытия оператора: таблица выпусков с PDF решений">PDF решения у оператора <span aria-hidden="true">↗</span></a>
@@ -915,11 +905,11 @@
                   </div>
                   <span class="bk-chip">в обращении</span>
                 </div>
-                <div class="bk-yield"><span class="bk-y-num">17,5%</span><span class="bk-y-lbl">годовых · расчёт условный</span></div>
+                <div class="bk-yield"><span class="bk-y-pre">ориентир</span><span class="bk-y-num">17,5%</span><span class="bk-y-lbl">· учебный счёт</span></div>
                 <div class="bk-rows">
                   <div class="bk-row"><span>Минимум</span><b>5 000 ₽</b></div>
                   <div class="bk-row"><span>Номинал единицы</span><b>5 000 ₽</b></div>
-                  <div class="bk-row"><span>Погашение</span><b>31.12.2027</b></div>
+                  <div class="bk-row"><span>Погашение</span><b>31.12.2028</b></div>
                 </div>
                 <div class="bk-ois">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -963,9 +953,9 @@
   <div class="wipe" style="background:var(--pink)" aria-hidden="true"></div>
   <span class="bg-num" aria-hidden="true">04</span>
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--pink)"><span class="num">04</span> выход</div>
-    <h2 class="split">Курс и язык рынка</h2>
-    <p class="copy reveal">Не обязательно жить в Севастополе, чтобы понимать, о чём речь. Курс учит языку рынка: что такое RWA, что такое ЦФА, что на самом деле покупает инвестор и где здесь риски. От матчасти — до карты рынка.</p>
+    <div class="eyebrow" style="color:var(--pink)"><span class="num">04</span> Курс</div>
+    <h2 class="split">Шесть модулей, без сигналов</h2>
+    <p class="copy reveal">Курс про то, что человек покупает, когда ему показывают токен на актив. Матчасть, механика, 259-ФЗ, риски, карта игроков.</p>
 
     <div class="mod-counter reveal">
       <span class="mc-num">06</span>
@@ -995,7 +985,7 @@
   <div class="wrap">
     <div class="eyebrow"><span class="num">05</span> для бизнеса</div>
     <h2 class="split">Сборка выпуска ЦФА</h2>
-    <p class="copy reveal">Для партнёров City Code и для внешнего запроса. Собираем выпуск ЦФА из реального актива и доводим до площадки. Роли понятны с первого звонка: YuRich не оператор и не биржа — ЦФА выпускает оператор из реестра Банка России и только через лиц. площадку.</p>
+    <p class="copy reveal">Партнёрам City Code и любому желающему. Созвон, разбор, посадка на ОИС. Выпускает оператор из реестра ЦБ. Если займ дешевле, скажу на созвоне.</p>
 
     <div class="steps reveal">
       <div class="step-cell">
@@ -1033,20 +1023,18 @@
 <section class="thesis">
   <div class="wrap">
     <div class="thesis-scatter">
-      <p class="tf tf1 tf-big tf-lime split">Открытие</p>
-      <p class="tf tf2 tf-sm tf-white split">рождает участие.</p>
-      <p class="tf tf3 tf-big tf-pink split">Участие</p>
-      <p class="tf tf4 tf-sm tf-white split">рождает сообщество.</p>
-      <p class="tf tf5 tf-big tf-lime split">Сообщество</p>
-      <p class="tf tf6 tf-sm tf-white split">рождает экономику.</p>
-      <p class="tf tf7 tf-big tf-pink split">Экономика</p>
-      <p class="tf tf8 tf-big tf-white split">становится владением.</p>
+      <p class="tf tf1 tf-big tf-gold split">Бот</p>
+      <p class="tf tf2 tf-sm tf-white split">открывает город.</p>
+      <p class="tf tf3 tf-big tf-lime split">Круг</p>
+      <p class="tf tf4 tf-sm tf-white split">пускает внутрь.</p>
+      <p class="tf tf5 tf-big tf-bronze split">Касса</p>
+      <p class="tf tf6 tf-sm tf-white split">может стать выпуском.</p>
     </div>
     <div class="signature">YURICHHUB — SEVASTOPOL AI · CITY CODE · CRIMEA RWA</div>
   </div>
 </section>
 
-<div class="wordwall" aria-hidden="true"><p class="big">YURICHHUB · YURICHHUB ·</p></div>
+<div class="wordwall" aria-hidden="true"><p class="big">YURICHHUB</p></div>
 
 <footer>
   <div class="wrap foot-row">
@@ -1189,7 +1177,7 @@
     })();
     document.querySelectorAll('a, button, .kc-photo-wrap').forEach(function(el){
       el.addEventListener('mouseenter', function(){
-        var pink = el.closest('.status-card') || el.closest('#citycode');
+        var pink = el.closest('#citycode');
         ring.classList.add(pink ? 'hover-pink' : 'hover');
       });
       el.addEventListener('mouseleave', function(){ ring.classList.remove('hover', 'hover-pink'); });
@@ -1377,9 +1365,9 @@
     obj: { l:'А', t:'Объект',
            d:'Реальная вещь или право: доля дохода партнёра, права на оборудование или помещение, доступ к закрытому событию. У неё уже есть владелец, стоимость и история — до всякой цифровизации.' },
     str: { l:'Б', t:'Структура',
-           d:'Фиксируем права и обязанности: кто эмитент, что удостоверяет ЦФА, кто ведёт реестр и как проходят выплаты. Решение о выпуске — сухой юридический слой: без него цифровая форма остаётся игрушкой.' },
+           d:'Фиксируем права и обязанности: кто эмитент, что удостоверяет ЦФА, кто ведёт реестр и как проходят выплаты. Решение о выпуске — сухой юридический документ: без него запись в реестре ничего не значит.' },
     tok: { l:'В', t:'Токен',
-           d:'Актив получает цифровую форму: запись в реестре оператора из реестра Банка России и строку в приложении брокера. Владельцы, история переходов и условия выпуска — проверяемы. Город остаётся городом, меняется способ владения.' }
+           d:'Актив получает запись в реестре оператора из реестра Банка России и строку в приложении брокера. Владельцы, история переходов и условия выпуска — проверяемы. Город остаётся городом, меняется способ владения.' }
   };
   var rwaLetter = document.getElementById('rwaLetter');
   var rwaTitle  = document.getElementById('rwaTitle');
