@@ -1,0 +1,19 @@
+{
+  "lang": "en",
+  "module": "hub",
+  "accent": "bronze",
+  "layout": "poster",
+  "format": "x",
+  "title": "LAYER 3",
+  "subtitle": "OWNERSHIP, NOT A SHELF PRODUCT",
+  "body": "A coffee shop's revenue share. A test CFA issuance. Investor money never lands on my account.",
+  "source": "SLIDE 3 OF 3, HORIZON",
+  "footerNote": "P3 ARCHITECTURE // OPEN ENTER OWN",
+  "stats": [
+    { "value": "A", "label": "OBJECT", "color": "bronze" },
+    { "value": "B", "label": "STRUCTURE", "color": "gold" },
+    { "value": "C", "label": "TOKEN", "color": "ink" },
+    { "value": "0", "label": "MONEY TO MY ACCOUNT", "color": "pink" }
+  ],
+  "index": "03/03"
+}

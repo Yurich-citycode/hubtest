@@ -1,0 +1,18 @@
+{
+  "lang": "en",
+  "module": "rwa",
+  "layout": "poster",
+  "format": "x",
+  "title": "TOKEN: THE NUMBERS",
+  "subtitle": "WHAT THE INVESTOR ACTUALLY BUYS",
+  "body": "Not the coffee shop. A monetary claim, a scheduled payout from the venue's revenue.",
+  "source": "SLIDE 3 OF 3, EDUCATIONAL MOCKUP",
+  "footerNote": "P4 RWA MECHANICS // 259-FZ",
+  "stats": [
+    { "value": "5,000", "label": "PAR VALUE, RUB", "color": "ink" },
+    { "value": "10M", "label": "TOTAL ISSUANCE, RUB", "color": "gold" },
+    { "value": "2,000", "label": "UNITS ISSUED", "color": "lime" },
+    { "value": "2028", "label": "MATURITY, QUARTERLY", "color": "pink" }
+  ],
+  "index": "03/03"
+}

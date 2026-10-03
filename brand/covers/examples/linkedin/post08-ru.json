@@ -1,0 +1,18 @@
+{
+  "lang": "ru",
+  "module": "sevastopol",
+  "layout": "poster",
+  "format": "x",
+  "title": "SEVASTOPOL AI",
+  "subtitle": "ЦИФРЫ, А НЕ КОНЦЕПЦИЯ",
+  "body": "Бот открывает город. Дальше я считаю, сколько мест добавили сами жители, а не я.",
+  "source": "T.ME/SEVASTOPOLAIBOT",
+  "date": "10.2026",
+  "footerNote": "P5 ПУБЛИЧНАЯ РАЗРАБОТКА // ЖИВЫЕ ЦИФРЫ",
+  "stats": [
+    { "value": "200+", "label": "ЗАВЕДЕНИЙ ЕДЫ В БОТЕ", "color": "gold" },
+    { "value": "100+", "label": "ЛОКАЦИЙ КРОМЕ ЕДЫ", "color": "lime" },
+    { "value": "0", "label": "ПЛАТНЫХ ПОДПИСОК ДЛЯ ВХОДА", "color": "pink" },
+    { "value": "01", "label": "СЛОЙ СИСТЕМЫ: ОТКРЫТЬ", "color": "ink" }
+  ]
+}

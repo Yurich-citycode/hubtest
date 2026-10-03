@@ -86,6 +86,15 @@ p.cta{background:var(--card);border:1px solid var(--line);border-top:2px solid v
 p.hashtags{background:var(--card);border:1px solid var(--line);border-top:none;color:var(--lime);
   font-size:13px;padding:10px 20px 18px;margin:0 0 30px;font-family:monospace;}
 
+.post-media{background:var(--card);border:1px solid var(--line);border-top:none;padding:0 20px 20px;margin:-30px 0 30px;}
+.post-media .cap{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  padding:14px 0 10px;margin:0;font-family:monospace;}
+.post-media img{display:block;width:100%;height:auto;border:1px solid var(--line);}
+.post-carousel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.post-carousel img{border:1px solid var(--line);width:100%;height:auto;display:block;margin:0;}
+@media (max-width:700px){.post-carousel{grid-template-columns:1fr;}}
+@media print{.post-media{break-inside:avoid;}.post-media img{max-height:320px;object-fit:contain;}}
+
 .pos-box{margin:30px 0 10px;padding:30px;border:2px solid var(--lime);background:var(--card);}
 .pos-box blockquote{border:none;padding:0;margin:0;background:transparent;font-size:18px;line-height:1.75;}
 
@@ -194,6 +203,7 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>Токенизация реального актива сама по себе не делает его доступным обычному человеку. Доступность появляется только тогда, когда кто-то целенаправленно строит продукт для розничного, а не институционального инвестора. Это ровно то, чем я занимаюсь, только не с трежерис, а с экономикой одного конкретного города.</p>
 <p class="cta"><span class="cta-label">CTA</span> Как думаешь, когда розничный инвестор реально получит доступ к RWA, а не только к заголовкам про RWA?</p>
 <p class="hashtags">#RWA #Tokenization</p>
+<div class="post-media"><p class="cap">Прикреплённая карточка-цифра</p><img src="post-cards/post02-ru.jpg" alt="Карточка: рост рынка RWA в разы, менее 1% мирового рынка акций и облигаций, около 70% держателей, институционалы"></div>
 <div class="div"></div>
 <h4 class="post-title">03 / Я не строю приложение. Я строю операционную систему города</h4>
 <p class="meta-line">P3 · Архитектура Ситикод · Формат: Текст · Хук: Прямая польза</p>
@@ -229,6 +239,11 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>Карусель с разбором каждого слоя, объект, структура, токен, в карточках ниже.</p>
 <p class="cta"><span class="cta-label">CTA</span> Какой шаг в этой цепочке тебе кажется самым непрозрачным?</p>
 <p class="hashtags">#RWA #CFA #Regulation</p>
+<div class="post-media"><p class="cap">Карусель, 3 карточки: объект, структура, токен</p><div class="post-carousel">
+<img src="post-cards/post05-ru-1.jpg" alt="Карточка 1: объект, доля дохода кофейни-партнёра">
+<img src="post-cards/post05-ru-2.jpg" alt="Карточка 2: структура, эмитент и оператор по 259-ФЗ">
+<img src="post-cards/post05-ru-3.jpg" alt="Карточка 3: параметры токена, номинал 5000 рублей, объём 10 000 000 рублей">
+</div></div>
 <div class="div"></div>
 <h4 class="post-title">06 / Как город становится активом. Три слоя одной системы</h4>
 <p class="meta-line">P3 · Архитектура Ситикод · Формат: Карусель-документ · Хук: Прямая польза</p>
@@ -240,6 +255,11 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>Карусель ниже, пошагово, что происходит на каждом слое и кто за него отвечает.</p>
 <p class="cta"><span class="cta-label">CTA</span> На каком слое, по твоей оценке, стоит сегодня твой город?</p>
 <p class="hashtags">#RWA #UrbanTech #CityCode</p>
+<div class="post-media"><p class="cap">Карусель, 3 карточки: разметка, отбор, владение</p><div class="post-carousel">
+<img src="post-cards/post06-ru-1.jpg" alt="Карточка 1: слой разметки, бот на 200+ заведений и 100+ локаций">
+<img src="post-cards/post06-ru-2.jpg" alt="Карточка 2: слой отбора, шесть ключей City Code">
+<img src="post-cards/post06-ru-3.jpg" alt="Карточка 3: слой владения, Crimea RWA и 259-ФЗ">
+</div></div>
 <div class="div"></div>
 <h4 class="post-title">07 / Большая часть рынка RWA сегодня недоступна обычному человеку</h4>
 <p class="meta-line">P2 · Боль и мифы RWA · Формат: Текст · Хук: Статистика</p>
@@ -260,6 +280,7 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>Если соотношение растёт, следующий слой, City Code, имеет смысл строить. Если нет, не имеет смысла звать людей в закрытый круг вокруг города, которому они не доверяют настолько, чтобы добавить туда своё любимое место.</p>
 <p class="cta"><span class="cta-label">CTA</span> Какую метрику ты бы на моём месте считал главной?</p>
 <p class="hashtags">#BuildInPublic #RWA</p>
+<div class="post-media"><p class="cap">Прикреплённая карточка-цифра</p><img src="post-cards/post08-ru.jpg" alt="Карточка: более 200 заведений еды, более 100 локаций в Sevastopol AI"></div>
 <div class="div"></div>
 <h4 class="post-title">09 / Ситикод это не скидочная карта</h4>
 <p class="meta-line">P3 · Архитектура Ситикод · Формат: Текст · Хук: Контринтуитив</p>
@@ -426,6 +447,7 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>Tokenizing a real asset does not automatically make it accessible to an ordinary person. Accessibility only shows up when someone deliberately builds a product for the retail investor, not the institutional one. That is exactly what I am doing, just not with treasuries. With the economy of one specific city.</p>
 <p class="cta"><span class="cta-label">CTA</span> When do you think a retail investor actually gets access to RWA, not just the headlines about it?</p>
 <p class="hashtags">#RWA #Tokenization</p>
+<div class="post-media"><p class="cap">Attached number card</p><img src="post-cards/post02-en.jpg" alt="Card: RWA market grew several times over, under 1% of global stock and bond market, roughly 70% institutional holders"></div>
 <div class="div"></div>
 <h4 class="post-title">03 / I am not building an app. I am building an operating system for a city</h4>
 <p class="meta-line">P3 - City Code architecture · Format: Text · Hook: Direct utility</p>
@@ -461,6 +483,11 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>Full breakdown of each layer, object, structure, token, in the carousel below.</p>
 <p class="cta"><span class="cta-label">CTA</span> Which step in this chain feels the least transparent to you?</p>
 <p class="hashtags">#RWA #Tokenization #Regulation</p>
+<div class="post-media"><p class="cap">Carousel, 3 cards: object, structure, token</p><div class="post-carousel">
+<img src="post-cards/post05-en-1.jpg" alt="Card 1: the object, a partner coffee shop's revenue share">
+<img src="post-cards/post05-en-2.jpg" alt="Card 2: the structure, issuer and operator under 259-FZ">
+<img src="post-cards/post05-en-3.jpg" alt="Card 3: token parameters, 5,000 ruble par value, 10,000,000 rubles total issuance">
+</div></div>
 <div class="div"></div>
 <h4 class="post-title">06 / How a city becomes an asset. Three layers, one system</h4>
 <p class="meta-line">P3 - City Code architecture · Format: Document carousel · Hook: Direct utility</p>
@@ -472,6 +499,11 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>Carousel below walks through what happens on each layer and who is accountable for it.</p>
 <p class="cta"><span class="cta-label">CTA</span> Which layer do you think your own city is standing on right now?</p>
 <p class="hashtags">#RWA #UrbanTech #CityCode</p>
+<div class="post-media"><p class="cap">Carousel, 3 cards: map, select, own</p><div class="post-carousel">
+<img src="post-cards/post06-en-1.jpg" alt="Card 1: the mapping layer, a bot covering 200+ venues and 100+ locations">
+<img src="post-cards/post06-en-2.jpg" alt="Card 2: the selection layer, City Code's six keys">
+<img src="post-cards/post06-en-3.jpg" alt="Card 3: the ownership layer, Crimea RWA and 259-FZ">
+</div></div>
 <div class="div"></div>
 <h4 class="post-title">07 / Most of the RWA market is still out of reach for an ordinary person</h4>
 <p class="meta-line">P2 - RWA pain points and myths · Format: Text · Hook: Statistic</p>
@@ -492,6 +524,7 @@ footer{border-top:2px solid var(--line);padding:40px 0 80px;color:var(--dim);fon
 <p>If that ratio is climbing, the next layer, City Code, is worth building. If it is not, there is no point inviting people into a closed circle around a city they do not trust enough to add their own favorite spot.</p>
 <p class="cta"><span class="cta-label">CTA</span> Which metric would you treat as the main one if you were in my position?</p>
 <p class="hashtags">#BuildInPublic #RWA</p>
+<div class="post-media"><p class="cap">Attached number card</p><img src="post-cards/post08-en.jpg" alt="Card: over 200 food venues, over 100 locations in Sevastopol AI"></div>
 <div class="div"></div>
 <h4 class="post-title">09 / City Code is not a discount card</h4>
 <p class="meta-line">P3 - City Code architecture · Format: Text · Hook: Counterintuitive</p>
