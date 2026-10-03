@@ -1,0 +1,19 @@
+{
+  "lang": "ru",
+  "module": "research",
+  "layout": "poster",
+  "format": "x",
+  "title": "РЫНОК RWA",
+  "subtitle": "ВЫРОС В РАЗЫ. КОМУ ДОСТАЛСЯ РОСТ?",
+  "subtitleColor": "gold",
+  "body": "Рост большой, база меньше 1% рынка акций и облигаций. Беру только проверенные публичные оценки.",
+  "source": "ОЦЕНКИ RWA.XYZ, BCG, MCKINSEY",
+  "date": "10.2026",
+  "footerNote": "P2 БОЛЬ РЫНКА // МИФЫ RWA",
+  "stats": [
+    { "value": "~5X", "label": "РОСТ РЫНКА RWA ЗА ГОД", "color": "lime" },
+    { "value": "<1%", "label": "ОТ РЫНКА АКЦИЙ И ОБЛИГАЦИЙ", "color": "pink" },
+    { "value": "~70%", "label": "ДЕРЖАТЕЛЕЙ - ИНСТИТУЦИОНАЛЫ", "color": "gold" },
+    { "value": "0", "label": "ИЗ ЭТОГО РОСТА - ТЕБЕ НАПРЯМУЮ", "color": "ink" }
+  ]
+}

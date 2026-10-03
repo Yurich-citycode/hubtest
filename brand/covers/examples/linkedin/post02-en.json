@@ -1,0 +1,19 @@
+{
+  "lang": "en",
+  "module": "research",
+  "layout": "poster",
+  "format": "x",
+  "title": "RWA MARKET",
+  "subtitle": "MULTIPLIED. WHO CAPTURED IT?",
+  "subtitleColor": "gold",
+  "body": "The growth is real, the base is still under 1% of global stocks and bonds. I use widely cited public estimates.",
+  "source": "ESTIMATES: RWA.XYZ, BCG, MCKINSEY",
+  "date": "10.2026",
+  "footerNote": "P2 RWA PAIN POINTS // MYTHS",
+  "stats": [
+    { "value": "~5X", "label": "RWA MARKET GROWTH, 1 YEAR", "color": "lime" },
+    { "value": "<1%", "label": "OF GLOBAL STOCKS AND BONDS", "color": "pink" },
+    { "value": "~70%", "label": "HOLDERS ARE INSTITUTIONS", "color": "gold" },
+    { "value": "0", "label": "OF THAT GROWTH REACHES YOU", "color": "ink" }
+  ]
+}

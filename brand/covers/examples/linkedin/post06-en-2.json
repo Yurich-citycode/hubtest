@@ -1,0 +1,18 @@
+{
+  "lang": "en",
+  "module": "hub",
+  "layout": "poster",
+  "format": "x",
+  "title": "LAYERS 1 AND 2",
+  "subtitle": "UTILITY FIRST, STRUCTURE SECOND",
+  "body": "The bot is free and open. The circle is closed, reachable by application or by contribution to the city.",
+  "source": "SLIDE 2 OF 3",
+  "footerNote": "P3 ARCHITECTURE // OPEN ENTER OWN",
+  "stats": [
+    { "value": "200+", "label": "VENUES IN THE BOT", "color": "gold" },
+    { "value": "100+", "label": "LOCATIONS IN THE BOT", "color": "gold" },
+    { "value": "06", "label": "CITY CODE KEYS", "color": "lime" },
+    { "value": "0", "label": "DISCOUNT CODES", "color": "pink" }
+  ],
+  "index": "02/03"
+}

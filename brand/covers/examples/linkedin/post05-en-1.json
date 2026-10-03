@@ -1,0 +1,23 @@
+{
+  "lang": "en",
+  "module": "rwa",
+  "layout": "statement",
+  "format": "x",
+  "kicker": "ISSUANCE ANATOMY",
+  "source": "EDUCATIONAL EXAMPLE, NOT AN OFFER",
+  "lines": [
+    { "text": "A TOKEN", "color": "ink", "glitch": true },
+    { "text": "IS NOT AN ASSET", "color": "pink" },
+    { "text": "HERE IS PROOF", "color": "gold" }
+  ],
+  "body": ["A token is a record.", "An asset is what stands behind it."],
+  "stats": [
+    { "value": "A", "label": "OBJECT", "color": "bronze" },
+    { "value": "B", "label": "STRUCTURE", "color": "gold" },
+    { "value": "C", "label": "TOKEN", "color": "ink" },
+    { "value": "2028", "label": "MATURITY", "color": "pink" }
+  ],
+  "cta": "SWIPE FOR SLIDE 2 »",
+  "index": "01/03",
+  "footerNote": "P4 RWA MECHANICS // 259-FZ"
+}

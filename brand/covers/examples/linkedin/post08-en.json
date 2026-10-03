@@ -1,0 +1,18 @@
+{
+  "lang": "en",
+  "module": "sevastopol",
+  "layout": "poster",
+  "format": "x",
+  "title": "SEVASTOPOL AI",
+  "subtitle": "NUMBERS, NOT A CONCEPT",
+  "body": "The bot opens the city. What I actually track is how much was added by residents, not by me.",
+  "source": "T.ME/SEVASTOPOLAIBOT",
+  "date": "10.2026",
+  "footerNote": "P5 BUILDING IN PUBLIC // LIVE NUMBERS",
+  "stats": [
+    { "value": "200+", "label": "FOOD VENUES IN THE BOT", "color": "gold" },
+    { "value": "100+", "label": "NON FOOD LOCATIONS", "color": "lime" },
+    { "value": "0", "label": "PAID SUBSCRIPTIONS TO ENTER", "color": "pink" },
+    { "value": "01", "label": "SYSTEM LAYER: OPEN", "color": "ink" }
+  ]
+}

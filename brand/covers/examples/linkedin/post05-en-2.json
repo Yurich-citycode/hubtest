@@ -1,0 +1,18 @@
+{
+  "lang": "en",
+  "module": "rwa",
+  "layout": "poster",
+  "format": "x",
+  "title": "OBJECT. STRUCTURE.",
+  "subtitle": "BEFORE THE TOKEN EXISTS",
+  "body": "A partner coffee shop, 12 months of revenue, an issuer entity, an operator registered with the central bank.",
+  "source": "SLIDE 2 OF 3",
+  "footerNote": "P4 RWA MECHANICS // 259-FZ",
+  "stats": [
+    { "value": "A", "label": "OBJECT: REVENUE SHARE", "color": "bronze" },
+    { "value": "B", "label": "259-FZ ISSUANCE DECISION", "color": "gold" },
+    { "value": "OP", "label": "OPERATOR, BANK OF RUSSIA", "color": "ink" },
+    { "value": "12", "label": "MONTHS OF REVENUE HISTORY", "color": "lime" }
+  ],
+  "index": "02/03"
+}

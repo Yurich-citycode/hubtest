@@ -1,0 +1,19 @@
+{
+  "lang": "ru",
+  "module": "hub",
+  "accent": "bronze",
+  "layout": "poster",
+  "format": "x",
+  "title": "СЛОЙ 3",
+  "subtitle": "ВЛАДЕНИЕ, НЕ ПРОДУКТ НА ПОЛКЕ",
+  "body": "Доля дохода кофейни. Тестовый выпуск ЦФА. Деньги инвестора не идут на мой счёт.",
+  "source": "СЛАЙД 3 ИЗ 3, ГОРИЗОНТ",
+  "footerNote": "P3 АРХИТЕКТУРА // ОТКРЫТЬ ВОЙТИ ВЛАДЕТЬ",
+  "stats": [
+    { "value": "А", "label": "ОБЪЕКТ", "color": "bronze" },
+    { "value": "Б", "label": "СТРУКТУРА", "color": "gold" },
+    { "value": "В", "label": "ТОКЕН", "color": "ink" },
+    { "value": "0", "label": "ДЕНЕГ НА МОЙ СЧЁТ", "color": "pink" }
+  ],
+  "index": "03/03"
+}

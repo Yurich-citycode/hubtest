@@ -1,0 +1,23 @@
+{
+  "lang": "ru",
+  "module": "hub",
+  "layout": "statement",
+  "format": "x",
+  "kicker": "ТРИ СЛОЯ ОДНОЙ СИСТЕМЫ",
+  "source": "МОЯ СИСТЕМА // YURICHHUB",
+  "lines": [
+    { "text": "ОТКРЫТЬ", "color": "gold", "glitch": true },
+    { "text": "ВОЙТИ", "color": "lime" },
+    { "text": "ВЛАДЕТЬ", "color": "bronze" }
+  ],
+  "body": ["Бот. Закрытый круг. Токенизация.", "Три разных навыка, один порядок."],
+  "stats": [
+    { "value": "01", "label": "SEVASTOPOL AI", "color": "gold" },
+    { "value": "02", "label": "CITY CODE", "color": "lime" },
+    { "value": "03", "label": "CRIMEA RWA", "color": "bronze" },
+    { "value": "0", "label": "ПЕРЕСКОКОВ ЧЕРЕЗ СЛОЙ", "color": "pink" }
+  ],
+  "cta": "СМОТРИ СЛАЙД 2 »",
+  "index": "01/03",
+  "footerNote": "P3 АРХИТЕКТУРА // ОТКРЫТЬ ВОЙТИ ВЛАДЕТЬ"
+}

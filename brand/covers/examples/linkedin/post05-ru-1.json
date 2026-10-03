@@ -1,0 +1,23 @@
+{
+  "lang": "ru",
+  "module": "rwa",
+  "layout": "statement",
+  "format": "x",
+  "kicker": "АНАТОМИЯ ВЫПУСКА",
+  "source": "УЧЕБНЫЙ ПРИМЕР, НЕ ОФЕРТА",
+  "lines": [
+    { "text": "ТОКЕН", "color": "ink", "glitch": true },
+    { "text": "НЕ РАВНО АКТИВ", "color": "pink" },
+    { "text": "ВОТ ДОКАЗАТЕЛЬСТВО", "color": "gold" }
+  ],
+  "body": ["Токен - это запись.", "Актив - то, что стоит за записью."],
+  "stats": [
+    { "value": "А", "label": "ОБЪЕКТ", "color": "bronze" },
+    { "value": "Б", "label": "СТРУКТУРА", "color": "gold" },
+    { "value": "В", "label": "ТОКЕН", "color": "ink" },
+    { "value": "2028", "label": "ПОГАШЕНИЕ", "color": "pink" }
+  ],
+  "cta": "СМОТРИ СЛАЙД 2 »",
+  "index": "01/03",
+  "footerNote": "P4 МЕХАНИКА RWA // 259-ФЗ"
+}

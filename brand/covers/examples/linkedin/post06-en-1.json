@@ -1,0 +1,23 @@
+{
+  "lang": "en",
+  "module": "hub",
+  "layout": "statement",
+  "format": "x",
+  "kicker": "THREE LAYERS, ONE SYSTEM",
+  "source": "MY SYSTEM // YURICHHUB",
+  "lines": [
+    { "text": "OPEN", "color": "gold", "glitch": true },
+    { "text": "ENTER", "color": "lime" },
+    { "text": "OWN", "color": "bronze" }
+  ],
+  "body": ["A bot. A closed circle. Tokenization.", "Three different skills, one order."],
+  "stats": [
+    { "value": "01", "label": "SEVASTOPOL AI", "color": "gold" },
+    { "value": "02", "label": "CITY CODE", "color": "lime" },
+    { "value": "03", "label": "CRIMEA RWA", "color": "bronze" },
+    { "value": "0", "label": "LAYERS SKIPPED", "color": "pink" }
+  ],
+  "cta": "SWIPE FOR SLIDE 2 »",
+  "index": "01/03",
+  "footerNote": "P3 ARCHITECTURE // OPEN ENTER OWN"
+}
