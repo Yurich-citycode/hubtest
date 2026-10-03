@@ -23,7 +23,7 @@ cfapreview.jpg
 .nojekyll
 ```
 
-Всё остальное в корне (`CityCode.png`, `sevastopol-ai.png`, `nebank.jpg`, `brand/`) — не требуется для работы, но оставлено.
+Всё остальное в корне (`CityCode.png`, `brand/`) — не требуется для работы, но оставлено как исходник для `brand/emoji/make_emoji_photo.py`.
 
 
 ## Перенос на свой хост
@@ -33,5 +33,4 @@ cfapreview.jpg
    - `og:url`, `og:image`, `twitter:image`, `canonical`
 3. Готово — все ссылки относительные.
 
-Подробный аудит: `AUDIT_REPORT.md`
 Канон стиля обложек: `brand/YURICHHUB-STYLE.md`
