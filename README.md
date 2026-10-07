@@ -34,3 +34,7 @@ cfapreview.jpg
 3. Готово — все ссылки относительные.
 
 Канон стиля обложек: `brand/YURICHHUB-STYLE.md`
+
+## Telegram buybot для Solana-токена
+
+Код бота и инструкция по запуску находятся в [`Shiva/README.md`](Shiva/README.md). Настоящий Telegram-токен храните только в `Shiva/.env` — не коммитьте его и не отправляйте в чат.

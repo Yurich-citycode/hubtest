@@ -1,0 +1,14 @@
+{
+  "name": "shiva-buybot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Telegram buy bot for a Solana token",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

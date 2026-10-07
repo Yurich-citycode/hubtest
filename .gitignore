@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+
+# Shiva Telegram bot — keep credentials and runtime state out of Git
+.env
+**/.env
+node_modules/
+Shiva/data/
