@@ -3,7 +3,7 @@
 Содержание резюме: Pavel Yurich Vasilkovsky → Head of RWA, Solana Foundation.
 
 Правится только этот файл. Верстка — в build_cv.py.
-Разметка: **жирный** внутри текста и пунктов, ссылки — в поле "links".
+Стиль: живой текст, минимум жаргона, без списков. **жирный** — акценты и цифры.
 """
 
 CONTENT = {
@@ -13,8 +13,8 @@ CONTENT = {
         "title": "Pavel Yurich Vasilkovsky — Curriculum Vitae — Head of RWA",
         "lang": "en-GB",
         "name": "PAVEL YURICH VASILKOVSKY",
-        "role": "RWA Tokenization & Growth Lead",
-        "subrole": "Issuer pipeline · post-launch TVL growth · liquidity & market structure · Solana",
+        "role": "Head of RWA — growth, tokenization and institutional partnerships",
+        "subrole": "Issuer pipeline · post-launch growth · liquidity and distribution · Solana ecosystem",
         "contacts": [
             ("web3yurich@gmail.com", "mailto:web3yurich@gmail.com"),
             ("@PavelYuRichRWA (X)", "https://x.com/PavelYuRichRWA"),
@@ -23,101 +23,153 @@ CONTENT = {
             ("github.com/Yurich-citycode", "https://github.com/Yurich-citycode"),
             ("t.me/YuRichRWA", "https://t.me/YuRichRWA"),
         ],
-        "availability": "Remote (UTC+3) · Open to relocation — New York · Available to travel 25–40%",
+        "availability": "Remote (UTC+3) · Open to relocation — New York · Available to travel 25–40% of the time",
         "sections": [
             {
                 "label": "Profile",
                 "blocks": [
                     {"kind": "text", "body":
-                        "RWA operator who builds tokenized products and then owns their growth. **10+ years** shipping "
-                        "production software, the last two dedicated entirely to real-world-asset tokenization: issuer "
-                        "structuring under a regulated digital-rights regime, instrument design, liquidity incentives and "
-                        "distribution. Built a working city-economy tokenization stack from zero — an open city guide, a paid "
-                        "membership circle and a revenue-share instrument structured together with an operator from the national "
-                        "registry — and took that design to real, revenue-generating businesses. I understand the machinery that "
-                        "decides who can hold an asset at all — allowlists, transfer restrictions, KYC/KYB gates — because I have "
-                        "operated on both sides of it, and I know where tokenized products actually die after launch: liquidity, "
-                        "secondary-market design and distribution, not the smart contract."},
+                        "I grow products that have to be trusted before they can be bought — and that is the whole job in "
+                        "tokenized real-world assets. More than **ten years** of building and shipping digital products, the last "
+                        "two of them inside RWA: taking a tokenized product from an empty pipeline to live demand, and staying "
+                        "responsible for whether it actually grows afterwards. I have worked both ends of this market — retail "
+                        "launches and influencer networks on one side, issuer structuring and investor limits on the other — which is "
+                        "why I know where post-launch products quietly die: liquidity, secondary market and distribution, rarely the "
+                        "technology. I build on Solana, I write my own analysis in English and Russian, and I am still learning in "
+                        "public every single week."},
                 ],
             },
             {
-                "label": "Core Expertise",
+                "label": "What I Bring",
                 "blocks": [
-                    {"kind": "kv", "items": [
-                        ["Tokenization & product", "RWA issuance structuring · instrument design (monetary claims, revenue share, funds) · NAV and redemption mechanics · issuer pipeline qualification · post-launch growth playbooks · TVL/AUM metrics"],
-                        ["Liquidity & market structure", "Market-maker relationships · DEX/AMM integrations · yield strategies for tokenized collateral · secondary-market development · oracle and liquidation mechanics"],
-                        ["Institutional & compliance", "Operator-registry issuance workflow · qualified / non-qualified investor limits · allowlists and transfer restrictions · sanctions and KYC screening reality · jurisdiction mapping (US / EU / CIS) · partner success and KPI reporting"],
-                        ["Technical", "Solana (SPL tokens, transfer-fee and holder-incentive mechanics, tooling) · Python · TypeScript / Node.js · Docker · APIs and data pipelines · AI-assisted delivery · GitHub CI"],
+                    {"kind": "prose", "items": [
+                        "**Growth and go-to-market.** I take products to market with real money on the line: funnels, audience "
+                        "segmentation, channel pricing, partnerships and retention. One launch went from a $2M to a **$25M+ valuation "
+                        "in a week on a $700 campaign budget**, because I picked the right channels instead of the loudest ones. I have "
+                        "also run an affiliate and trading-partner network for a tier-1 exchange, moving around **$30M of monthly "
+                        "turnover**, and coordinated a pool of **200+ influencers** on a single project.",
+                        "**Tokenization and the institutional side.** I qualify issuers, build the structure around a real asset and "
+                        "take it to an operator on the national registry — from the first call with a business owner to a signed "
+                        "issuance and reporting to holders. I have assembled a pipeline of **dozens of business owners** with live "
+                        "revenue, and I know the mechanics that decide who may hold a tokenized asset at all: allowlists, transfer "
+                        "restrictions, qualified and non-qualified investor limits, KYC and AML.",
+                        "**Market education and distribution.** I turn trust into pipeline. A 13-chapter book on tokenization, a "
+                        "glossary of 76 terms, a six-module course and a steady stream of analysis in English and Russian — written "
+                        "for people who are about to make a decision with their own money, and used by owners who are deciding "
+                        "whether tokenization is right for them.",
+                        "**Ownership.** I build the first version of a product myself, verify numbers before they leave the building, "
+                        "and run distributed teams across content, community and development. I use AI to move faster on preparation, "
+                        "but I keep negotiations, partnerships and relationships personal.",
                     ]},
                 ],
             },
             {
-                "label": "Experience & Impact",
+                "label": "Experience",
                 "blocks": [
                     {"kind": "roles", "items": [
                         {
-                            "org": "RWA Structuring & Tokenization Practice",
-                            "dates": "2025 — present",
-                            "meta": "Founder & Lead — independent advisory for real-economy issuers",
-                            "bullets": [
-                                "Built an end-to-end issuance service for businesses: qualification diagnostics → structure → operator onboarding → placement support → holder reporting. Commercial model: fixed-fee diagnostics, fixed structuring fee, **success fee on placed volume**.",
-                                "Designed the full issuance pattern for a revenue-share instrument: issuer entity, operator from the Bank of Russia registry under **259-FZ (digital financial assets)**, the instrument as a monetary claim, unit nominal, payout schedule from venue revenue, limits for non-qualified investors.",
-                                "Assembled and qualified a pipeline of **dozens of business owners** with live revenue and legal entities; applied a hard against-the-alternative test (does the tokenized structure beat a plain loan?) to keep the pipeline honest.",
-                                "Isolated the real growth bottleneck and built the process around it: technology deploys in weeks, whereas a business owner's consent to put revenue into a regulated instrument takes months. **Trust is the growth lever**; code is not.",
+                            "org": "ChainZap",
+                            "dates": "Jul 2026 — present",
+                            "meta": "Head of Growth — remote",
+                            "paras": [
+                                "Own growth for a Web3 product end to end — acquisition channels, partner network, conversion and "
+                                "retention — with direct responsibility for user and volume targets rather than for activity.",
+                                "Work sits on the edge of product, compliance and market: keeping the growth engine honest in a "
+                                "regulated industry, where a good funnel that fails KYC brings nothing.",
                             ],
                         },
                         {
-                            "org": "City AI + City Code",
-                            "dates": "2026 — present",
-                            "meta": "Founder & Product Lead — city-economy tokenization stack, built in public",
-                            "bullets": [
-                                "**City AI (open layer):** Telegram bot on Python / aiogram 3 in Docker, Google Sheets as the live data store, Cloudflare Worker for community submissions — **200+ food venues, 100+ locations**, routes and events, XP mechanics, resident-contributed content, zero barrier to entry.",
-                                "**City Code (closed layer):** paid membership circle built on six keys — rules, partner perks, the partner network itself, closed events, market insights, member community. Converts free reach into recurring revenue and into standing with local businesses.",
-                                "**City RWA (ownership layer):** structuring a share of a real venue's revenue as a digital financial instrument — the pilot that proves the model on one asset type before scaling across others.",
-                                "Growth logic that transfers to any RWA issuer: **open → enter → own**. Each layer funds the next; community and revenue exist before any token does — the reverse of how most tokenization projects are built.",
+                            "org": "CityCode (with City AI)",
+                            "dates": "May 2026 — present",
+                            "meta": "Founder — closed city infrastructure on Web3 rails, CIS, hybrid",
+                            "paras": [
+                                "Built a three-layer city economy from zero: a free city guide, a paid closed membership circle with "
+                                "the local businesses, and a tokenization layer that turns the city's live revenue into a regulated "
+                                "instrument. Each layer pays for the next, so community and revenue exist before any token does — the "
+                                "reverse of how most RWA projects are built.",
+                                "Ran the demand side myself: dozens of business owners in the city, venues, routes and events, with "
+                                "resident-contributed content and a partner circle that now generates recurring revenue.",
                             ],
                         },
                         {
-                            "org": "RWA Research, Market Education & Distribution",
-                            "dates": "2024 — present",
-                            "meta": "Author & publisher — EN/RU",
-                            "bullets": [
-                                "Book-course **“RWA: We Explain” — 13 chapters**, a **76-term glossary** and a **6-module course** with assessment; deliberately no price calls and no signals. Used as market education for non-institutional audiences and as sales-enablement material for owners weighing an issuance.",
-                                "Published analysis of the adoption gap that RWA growth teams are paid to close: the market multiplied roughly 5× in a year to $25–35B, still **under 1% of global stocks and bonds**, with institutions capturing most of it. Argued and evidenced where retail access actually comes from.",
-                                "Built the publishing and design system behind it: JSON-driven cover renderer (Node.js + SVG + @resvg/resvg-js), strict brand canon, parallel EN/RU content pipeline, GitHub Pages distribution.",
+                            "org": "Web3Yurich Agency",
+                            "dates": "Aug 2024 — present",
+                            "meta": "Founder & CEO — RWA and local tokenization advisory",
+                            "paras": [
+                                "Advise real-economy businesses and founders on tokenization: whether it makes sense at all compared "
+                                "with an ordinary loan, what the instrument should be, who the issuer is, how payouts are scheduled "
+                                "and which limits apply to ordinary investors.",
+                                "Took projects from first call to structure: diagnostics, financial review, the issuance paperwork and "
+                                "placement support. Part of the work with international RWA companies sits under NDA and can be "
+                                "discussed in detail in conversation.",
                             ],
                         },
                         {
-                            "org": "Solana Ecosystem",
-                            "dates": "2026 — present",
-                            "meta": "Builder — tooling, incentives, community assets",
-                            "bullets": [
-                                "Ship and operate Solana-side tooling: **SPL token launches**, holder-reward and **transfer-fee redistribution** mechanics, Telegram trading and notification bot infrastructure in Python.",
-                                "**Superteam Earn** contributor; built community assets and custom emoji/sticker packs for RWA Foundation (@RWAFoundation_) — early-stage, retail-facing RWA community building.",
-                                "Track the Solana RWA stack closely: tokenized treasuries and funds, transfer restrictions in the Token Extensions style, DeFi integrations, RWA market dashboards (RWA.xyz) and ecosystem programmes.",
+                            "org": "BYDFi (tier-1 exchange)",
+                            "dates": "Oct 2025 — Jan 2026",
+                            "meta": "Business Development, affiliate and trading partners — CIS, remote",
+                            "paras": [
+                                "Grew the exchange's affiliate side: recruited and managed partners and traffic buyers who bring "
+                                "trading volume, negotiated terms and kept the funnel moving. The network I worked with carried from "
+                                "**$10M weekly to roughly $30M monthly turnover**.",
                             ],
                         },
                         {
-                            "org": "Software Engineering",
-                            "dates": "10+ years",
-                            "meta": "Full-cycle delivery",
-                            "bullets": [
-                                "10+ years of full-cycle delivery: requirements, architecture, implementation, deployment, operations, tests, secrets management. Comfortable being the sole technical owner of a product.",
-                                "Python (aiogram, automation, data tooling) · JavaScript / TypeScript and Node.js (rendering, tooling) · Docker · REST APIs · Google Workspace API · Cloudflare Workers · GitHub Actions · Google Colab. AI-assisted development as a delivery multiplier.",
+                            "org": "Web3YuRich",
+                            "dates": "May 2022 — May 2026",
+                            "meta": "Independent trading and market research — remote",
+                            "paras": [
+                                "Four years of trading my own capital across exchanges and on-chain venues. It is where I learned "
+                                "market structure from the inside — liquidity, price discovery, spreads and the behaviour of real "
+                                "holders under stress — and where I became certain that adoption is won on distribution, not on "
+                                "technology.",
                             ],
                         },
                     ]},
                 ],
             },
             {
-                "label": "Professional Development",
+                "label": "Selected Track Record",
                 "blocks": [
-                    {"kind": "bullets", "items": [
-                        "**RWA & tokenization:** tokenized treasuries, private credit, funds, real estate, commodities — instrument mechanics end to end.",
-                        "**Digital-asset regulation:** 259-FZ (digital financial assets) and 282-FZ (digital currency), operator-registry mechanics, qualified / non-qualified investor regimes, sanctions and payment-rail reality across the CIS.",
-                        "**DeFi market structure:** AMM vs. order book, oracles, liquidation engines, yield strategies, market making.",
-                        "**Solana development track** and AI-assisted product delivery; continuous self-directed study with published output at every stage.",
+                    {"kind": "prose", "items": [
+                        "**Token launches.** SNG lead for the token launch of music producer Yuriy Bardash, the producer behind the "
+                        "band Griby — fan base to crypto audience on TON, peak valuation **$1.5M+**. Team lead on the TRON project "
+                        "$CIS — influencer and moderator coordination, valuation **$5M+**. Invited as SNG marketer into a foreign "
+                        "team for $ChillHouse: a $700 channel budget and a hand-picked warm network took the project from a **$2M "
+                        "to a $25M+ valuation in a week**.",
+                        "**Trading infrastructure and exchange growth.** Advised GmGn — the Solana trading terminal — on its entry "
+                        "into the SNG market, where marketing-attributed traffic carried **$100M+ of monthly turnover**. Partner for "
+                        "the Bloom trading terminal, responsible for SNG traffic and promotion, and part of the launch phase for the "
+                        "Xbot and Raptor trading bots.",
+                        "The numbers above describe each project's own outcome rather than an isolated personal figure — attribution "
+                        "in this sector was rarely recorded systematically. In every case named here my role was direct and deciding, "
+                        "not advisory, and I am glad to walk through any of them in detail.",
                     ]},
+                ],
+            },
+            {
+                "label": "How I Work",
+                "blocks": [
+                    {"kind": "prose", "items": [
+                        "Warm audiences before cold ones — I do not burn a channel's reputation for fast early numbers. I will not "
+                        "scale traffic to a product I have not personally used end to end, and I would rather fix what I find there "
+                        "than explain it later.",
+                        "I separate market hype from what is actually true: every figure I publish or report is checked before it "
+                        "goes anywhere, which matters more in RWA than in any other part of this industry.",
+                        "I know exactly what I am strong at and where I am still learning, and I say so out loud — that habit is the "
+                        "reason I have stayed useful across four very different market cycles.",
+                    ]},
+                ],
+            },
+            {
+                "label": "Learning & Development",
+                "blocks": [
+                    {"kind": "text", "body":
+                        "Continuous, self-directed and published: tokenization mechanics across treasuries, private credit, funds, "
+                        "real estate and commodities; digital-asset regulation and the operating regimes of the CIS, including "
+                        "issuance through registry operators and investor limits; KYC, AML and banking regulation as the practical "
+                        "frame around every tokenized product; DeFi market structure — liquidity, oracles, liquidations and yield; "
+                        "and a working Solana track, from retail tools to token incentives."},
                 ],
             },
             {
@@ -129,12 +181,10 @@ CONTENT = {
             {
                 "label": "Selected Publications",
                 "blocks": [
-                    {"kind": "bullets", "items": [
-                        "**“RWA. Мы объясняем”** — 13-chapter book-course on tokenization, 2026.",
-                        "**RWA Glossary** — 76 terms covering instruments, funds, risks, access and the CIS/CFA regimes.",
-                        "**“YuRich RWA” course** — 6 modules plus knowledge assessment.",
-                        "**X @PavelYuRichRWA · Telegram t.me/YuRichRWA** — RWA market analysis in English and Russian, built in public.",
-                    ]},
+                    {"kind": "text", "body":
+                        "Author of the book-course **“RWA. Мы объясняем”** (13 chapters), the **RWA glossary** (76 terms) and the "
+                        "**“YuRich RWA” course** (six modules) — no price calls, no signals. Weekly market analysis in English and "
+                        "Russian on X **@PavelYuRichRWA** and Telegram **t.me/YuRichRWA**, built in public."},
                 ],
             },
         ],
@@ -147,8 +197,8 @@ CONTENT = {
         "title": "Павел Юрич Васильковский — Резюме — Head of RWA",
         "lang": "ru-RU",
         "name": "ПАВЕЛ ЮРИЧ ВАСИЛЬКОВСКИЙ",
-        "role": "RWA: токенизация и рост продуктов",
-        "subrole": "Пайплайн эмитентов · рост TVL после запуска · ликвидность и структура рынка · Solana",
+        "role": "Head of RWA — рост продуктов, токенизация и институциональные партнёрства",
+        "subrole": "Пайплайн эмитентов · рост после запуска · ликвидность и дистрибуция · экосистема Solana",
         "contacts": [
             ("web3yurich@gmail.com", "mailto:web3yurich@gmail.com"),
             ("@PavelYuRichRWA (X)", "https://x.com/PavelYuRichRWA"),
@@ -163,94 +213,146 @@ CONTENT = {
                 "label": "Профиль",
                 "blocks": [
                     {"kind": "text", "body":
-                        "Оператор RWA: строю токенизированные продукты и сам отвечаю за их рост. **10+ лет** в разработке и выпуске "
-                        "продакшн-систем, последние два года — целиком в токенизации реальных активов: конструкция выпуска в "
-                        "регулируемом режиме цифровых прав, дизайн инструмента, ликвидность и дистрибуция. С нуля собрал работающий "
-                        "стек токенизации городской экономики: открытый городской гид, платный закрытый круг и инструмент на долю "
-                        "выручки, собранный вместе с оператором из реестра регулятора, — и вывел этот дизайн на реальный бизнес с "
-                        "живой выручкой. Понимаю механику, которая решает, кто вообще может держать актив: allowlist, ограничения "
-                        "передачи, KYC/KYB — прошёл это с обеих сторон. Знаю, где продукты умирают после запуска: ликвидность, "
-                        "вторичный рынок и дистрибуция, а не смарт-контракт."},
+                        "Я занимаюсь ростом продуктов, которым сначала нужно доверие, а потом уже покупка — а в токенизации "
+                        "реальных активов это и есть вся работа. Больше **десяти лет** строю и вывожу цифровые продукты, "
+                        "последние два года — в RWA: от пустого пайплайна до живого спроса, и отвечаю за то, что происходит с "
+                        "продуктом после запуска. Я работал на обоих концах этого рынка — розничные запуски и инфлюенсер-сети с "
+                        "одной стороны, конструкция выпуска и лимиты инвесторов с другой, — поэтому точно знаю, где продукты "
+                        "умирают после запуска: ликвидность, вторичный рынок и дистрибуция, и почти никогда — технология. Строю "
+                        "на Solana, пишу собственные разборы на английском и русском и продолжаю учиться публично каждую неделю."},
                 ],
             },
             {
-                "label": "Компетенции",
+                "label": "Что я приношу",
                 "blocks": [
-                    {"kind": "kv", "items": [
-                        ["Токенизация и продукт", "Конструкция выпуска RWA · дизайн инструмента (денежное требование, доля выручки, фонды) · NAV и механика погашения · квалификация пайплайна эмитентов · playbook роста после запуска · метрики TVL/AUM"],
-                        ["Ликвидность и рынок", "Маркет-мейкеры · интеграции с DEX/AMM · yield-сценарии для токенизированного обеспечения · развитие вторичного рынка · оракулы и ликвидационные механики"],
-                        ["Институции и комплаенс", "Работа с оператором из реестра · лимиты квал/неквал · allowlist и трансферные ограничения · санкционный и KYC-скрининг · карта юрисдикций (US / EU / СНГ) · partner success и отчётность по KPI"],
-                        ["Технологии", "Solana (SPL-токены, механики transfer fee и вознаграждения держателей, тулинг) · Python · TypeScript / Node.js · Docker · API и пайплайны данных · ИИ-assisted разработка · GitHub CI"],
+                    {"kind": "prose", "items": [
+                        "**Рост и выход на рынок.** Вывожу продукты, когда на кону живые деньги: воронки, сегментация "
+                        "аудитории, цена каналов, партнёрства, удержание. Один запуск вырос с $2M до **оценки $25M+ за неделю "
+                        "при бюджете $700** — потому что я выбрал правильные каналы, а не самые громкие. Вёл партнёрскую и "
+                        "аффилиатную сеть тир-1 биржи с оборотом около **$30M в месяц** и координировал пул из **200+ "
+                        "инфлюенсеров** в одном проекте.",
+                        "**Токенизация и институциональная сторона.** Нахожу и квалифицирую эмитентов, собираю конструкцию "
+                        "вокруг реального актива и довожу её до площадки: от первого созвона с собственником до подписанного "
+                        "выпуска и отчётности перед держателями. Собрал пайплайн из **десятков собственников** с живой выручкой "
+                        "и знаю механику, которая решает, кто вообще может держать токенизированный актив: allowlist, "
+                        "ограничения передачи, лимиты квал и неквал, KYC и ПОД/ФТ.",
+                        "**Обучение рынка и дистрибуция.** Превращаю доверие в пайплайн. Книга о токенизации из 13 глав, "
+                        "глоссарий на 76 терминов, курс из шести модулей и постоянные разборы на двух языках — написанные для "
+                        "человека, который прямо сейчас принимает решение своими деньгами.",
+                        "**Ответственность за результат.** Первую версию продукта собираю сам, любые цифры проверяю до того, "
+                        "как они уходят наружу, и управляю распределёнными командами — контент, комьюнити, разработка. ИИ "
+                        "использую для скорости на подготовке, но переговоры и отношения всегда веду лично.",
                     ]},
                 ],
             },
             {
-                "label": "Опыт и результаты",
+                "label": "Опыт",
                 "blocks": [
                     {"kind": "roles", "items": [
                         {
-                            "org": "Практика конструирования выпусков RWA",
-                            "dates": "2025 — н. в.",
-                            "meta": "Основатель и руководитель — независимый консалтинг для эмитентов реального сектора",
-                            "bullets": [
-                                "Собрал сквозную услугу для бизнеса: диагностика → разбор → конструкция → посадка на оператора → сопровождение размещения → отчётность держателям. Модель: фикс за диагностику, фикс за сборку, **процент с фактически привлечённого объёма**.",
-                                "Разработал полный шаблон выпуска на долю выручки: эмитент — юрлицо, оператор из реестра Банка России в рамках **259-ФЗ (цифровые финансовые активы)**, инструмент — денежное требование, номинал единицы, график выплат из выручки точки, лимиты для неквалифицированных инвесторов.",
-                                "Собрал и квалифицировал пайплайн из **десятков собственников** с живой выручкой и юрлицом; ввёл жёсткую проверку «токен дешевле обычного займа?» — она держит пайплайн честным.",
-                                "Нашёл настоящий барьер роста и построил процесс вокруг него: технология разворачивается неделями, а согласие собственника отдать долю выручки в регулируемый инструмент — месяцами. **Доверие и есть рычаг роста**; код — нет.",
+                            "org": "ChainZap",
+                            "dates": "июль 2026 — н. в.",
+                            "meta": "Head of Growth — удалённо",
+                            "paras": [
+                                "Отвечаю за рост Web3-продукта целиком — каналы привлечения, партнёрская сеть, конверсия и "
+                                "удержание — с прямой ответственностью за пользователей и объёмы, а не за активность.",
+                                "Работа идёт на стыке продукта, комплаенса и рынка: держу воронку честной в регулируемой "
+                                "отрасли, где красивая воронка без пройденного KYC не даёт ничего.",
                             ],
                         },
                         {
-                            "org": "City AI + City Code",
-                            "dates": "2026 — н. в.",
-                            "meta": "Основатель и продакт-лид — стек токенизации городской экономики, разработка в публичном режиме",
-                            "bullets": [
-                                "**City AI (открытый слой):** телеграм-бот на Python / aiogram 3 в Docker, Google-таблица как живое хранилище, Cloudflare Worker для заявок от жителей — **200+ точек еды, 100+ локаций**, маршруты и события, XP-механика, места добавляют сами горожане, нулевой порог входа.",
-                                "**City Code (закрытый слой):** платный круг на шести ключах — правила, скидки у партнёров, сам партнёрский круг, закрытые мероприятия, рыночная аналитика, сообщество участников. Превращает бесплатный охват в регулярную выручку и в доверие локального бизнеса.",
-                                "**City RWA (слой владения):** конструкция доли выручки реальной точки как цифрового финансового инструмента — пилот, который доказывает модель на одном классе активов до масштабирования на другие.",
-                                "Логика роста, переносимая на любого эмитента RWA: **открыть → войти → владеть**. Каждый слой финансирует следующий; сообщество и выручка появляются до токена — обратный порядок по отношению к большинству проектов токенизации.",
+                            "org": "CityCode (вместе с City AI)",
+                            "dates": "май 2026 — н. в.",
+                            "meta": "Основатель — закрытая городская инфраструктура на Web3-рельсах, СНГ, гибрид",
+                            "paras": [
+                                "С нуля построил городскую экономику из трёх слоёв: бесплатный городской гид, платный закрытый "
+                                "круг вместе с локальным бизнесом и слой токенизации, который превращает живую выручку города в "
+                                "регулируемый инструмент. Каждый слой финансирует следующий, поэтому сообщество и выручка "
+                                "появляются до токена — обратный порядок по отношению к большинству RWA-проектов.",
+                                "Спрос собирал сам: десятки собственников в городе, точки, маршруты и события, места добавляют "
+                                "жители, а партнёрский круг уже приносит регулярную выручку.",
                             ],
                         },
                         {
-                            "org": "Исследование рынка RWA, обучение и дистрибуция контента",
-                            "dates": "2024 — н. в.",
-                            "meta": "Автор и издатель — EN/RU",
-                            "bullets": [
-                                "Книга-курс **«RWA. Мы объясняем» — 13 глав**, **глоссарий на 76 терминов** и **курс из 6 модулей** с проверкой знаний; намеренно без прогнозов цены и сигналов. Используется как обучение рынка для неинституциональной аудитории и как sales enablement для собственников, которые взвешивают выпуск.",
-                                "Опубликовал разбор разрыва доступа, который как раз и закрывают growth-команды RWA: рынок вырос примерно в 5 раз за год до $25–35 млрд, но это **меньше 1% мирового рынка акций и облигаций**, и основную часть держат институты. Показал и обосновал, откуда берётся розничный доступ.",
-                                "Построил издательскую и дизайн-систему: рендер обложек из JSON (Node.js + SVG + @resvg/resvg-js), строгий бренд-канон, параллельный контент-пайплайн EN/RU, распространение через GitHub Pages.",
+                            "org": "Web3Yurich Agency",
+                            "dates": "авг. 2024 — н. в.",
+                            "meta": "Основатель и CEO — консалтинг по RWA и локальной токенизации",
+                            "paras": [
+                                "Консультирую бизнес и фаундеров по токенизации: имеет ли она смысл вообще по сравнению с "
+                                "обычным займом, каким должен быть инструмент, кто эмитент, как устроен график выплат и какие "
+                                "лимиты действуют для обычных инвесторов.",
+                                "Провожу проекты от первого созвона до конструкции: диагностика, разбор финансов, документы "
+                                "выпуска и сопровождение размещения. Часть работы с зарубежными RWA-компаниями под NDA — детали "
+                                "готов разобрать в разговоре.",
                             ],
                         },
                         {
-                            "org": "Экосистема Solana",
-                            "dates": "2026 — н. в.",
-                            "meta": "Билдер — тулинг, механики вознаграждения, ассеты для комьюнити",
-                            "bullets": [
-                                "Пишу и эксплуатирую инструменты на стороне Solana: **запуски SPL-токенов**, механики вознаграждения держателей и **перераспределения transfer fee**, инфраструктура телеграм-ботов для торговли и уведомлений на Python.",
-                                "Участник **Superteam Earn**; собрал ассеты для комьюнити и кастомные эмодзи-паки для RWA Foundation (@RWAFoundation_) — ранняя розничная сборка RWA-сообщества.",
-                                "Плотно слежу за RWA-стеком Solana: токенизированные трежерис и фонды, трансферные ограничения в стиле Token Extensions, интеграции с DeFi, рыночные дашборды (RWA.xyz) и экосистемные программы.",
+                            "org": "BYDFi (тир-1 биржа)",
+                            "dates": "окт. 2025 — янв. 2026",
+                            "meta": "Business Development, аффилиат и торговые партнёры — СНГ, удалённо",
+                            "paras": [
+                                "Развивал аффилиатное направление биржи: находил и вёл партнёров и трафик-байеров, которые "
+                                "приносят торговый объём, согласовывал условия и держал воронку живой. Сеть, с которой я "
+                                "работал, давала от **$10M оборота в неделю до примерно $30M в месяц**.",
                             ],
                         },
                         {
-                            "org": "Разработка программного обеспечения",
-                            "dates": "10+ лет",
-                            "meta": "Полный цикл",
-                            "bullets": [
-                                "10+ лет полного цикла: требования, архитектура, реализация, деплой, эксплуатация, тесты, управление секретами. Комфортно быть единственным техническим владельцем продукта.",
-                                "Python (aiogram, автоматизация, работа с данными) · JavaScript / TypeScript и Node.js (рендеринг, тулинг) · Docker · REST API · Google Workspace API · Cloudflare Workers · GitHub Actions · Google Colab. ИИ-assisted разработка как множитель скорости.",
+                            "org": "Web3YuRich",
+                            "dates": "май 2022 — май 2026",
+                            "meta": "Самостоятельная торговля и исследование рынка — удалённо",
+                            "paras": [
+                                "Четыре года торговли своим капиталом на биржах и в ончейн-протоколах. Именно там я выучил "
+                                "структуру рынка изнутри — ликвидность, обнаружение цены, спреды и поведение реальных "
+                                "держателей под нагрузкой — и убедился, что массовость выигрывается дистрибуцией, а не "
+                                "технологией.",
                             ],
                         },
                     ]},
                 ],
             },
             {
-                "label": "Профессиональное развитие",
+                "label": "Из трек-рекорда",
                 "blocks": [
-                    {"kind": "bullets", "items": [
-                        "**RWA и токенизация:** токенизированные трежерис, частный кредит, фонды, недвижимость, сырьё — механика инструментов от начала до конца.",
-                        "**Регулирование цифровых активов:** 259-ФЗ (ЦФА) и 282-ФЗ (цифровые валюты), механика реестра операторов, режимы квал/неквал, санкционная реальность и платёжные рельсы в СНГ.",
-                        "**Структура рынка DeFi:** AMM против книги заявок, оракулы, ликвидационные движки, yield-стратегии, маркет-мейкинг.",
-                        "**Трек разработки на Solana** и ИИ-assisted продуктовая разработка; непрерывное самообразование с публичным результатом на каждом этапе.",
+                    {"kind": "prose", "items": [
+                        "**Запуски токенов.** Отвечал за маркетинг в СНГ на запуске токена музыкального продюсера Юрия "
+                        "Бардаша, продюсера группы «Грибы» — от фан-базы артиста к криптоаудитории TON, пиковая оценка "
+                        "**$1.5M+**. Тимлид проекта $CIS на TRON — координация инфлюенсеров и модераторов, оценка **$5M+**. "
+                        "Приглашён SNG-маркетологом в зарубежную команду $ChillHouse: бюджет $700 на каналы и собранная лично "
+                        "тёплая сеть подняли проект с **$2M до оценки $25M+ за неделю**.",
+                        "**Торговая инфраструктура и рост биржи.** Консультировал GmGn — торговый терминал на Solana — по "
+                        "выходу на рынок СНГ: трафик, приведённый маркетингом, давал **$100M+ оборота в месяц**. Партнёр "
+                        "торгового терминала Bloom, отвечал за трафик и продвижение в СНГ; участвовал в выводе на рынок "
+                        "торговых ботов Xbot и Raptor.",
+                        "Цифры выше описывают результат самих проектов, а не изолированный личный вклад: в этом секторе "
+                        "атрибуцию почти никогда не фиксировали системно. Во всех перечисленных кейсах моя роль была прямой и "
+                        "определяющей, а не консультативной, и по каждому из них готов разобрать детали.",
                     ]},
+                ],
+            },
+            {
+                "label": "Как я работаю",
+                "blocks": [
+                    {"kind": "prose", "items": [
+                        "Сначала тёплая аудитория, потом холодная — не жгу репутацию канала ради быстрых первых цифр. Не "
+                        "масштабирую трафик на продукт, который сам не прошёл от начала до конца, и предпочитаю починить то, "
+                        "что там нашёл, а не объяснять это потом.",
+                        "Отделяю рыночный шум от того, что есть на самом деле: каждую цифру, которую публикую или отдаю "
+                        "руководителю, проверяю до публикации — в RWA это важнее, чем где-либо ещё.",
+                        "Я хорошо знаю, в чём силён, и честно говорю, где ещё учусь — эта привычка и есть причина, по которой "
+                        "я остаюсь полезным уже четвёртый рыночный цикл.",
+                    ]},
+                ],
+            },
+            {
+                "label": "Обучение и развитие",
+                "blocks": [
+                    {"kind": "text", "body":
+                        "Постоянно, самостоятельно и публично: механика токенизации по классам активов — трежерис, частный "
+                        "кредит, фонды, недвижимость, сырьё; регулирование цифровых активов и рабочие режимы СНГ, включая "
+                        "выпуск через операторов из реестра и лимиты инвесторов; KYC, ПОД/ФТ и банковское законодательство как "
+                        "практическая рамка вокруг любого токенизированного продукта; структура рынка DeFi — ликвидность, "
+                        "оракулы, ликвидации, доходность; и рабочий трек Solana — от розничных инструментов до механик "
+                        "вознаграждения держателей."},
                 ],
             },
             {
@@ -262,12 +364,11 @@ CONTENT = {
             {
                 "label": "Публикации",
                 "blocks": [
-                    {"kind": "bullets", "items": [
-                        "**«RWA. Мы объясняем»** — книга-курс из 13 глав о токенизации, 2026.",
-                        "**Глоссарий RWA** — 76 терминов: инструменты, фонды, риски, доступ, режимы СНГ/ЦФА.",
-                        "**Курс «YuRich RWA»** — 6 модулей плюс проверка знаний.",
-                        "**X @PavelYuRichRWA · Telegram t.me/YuRichRWA** — аналитика рынка RWA на английском и русском, разработка в публичном режиме.",
-                    ]},
+                    {"kind": "text", "body":
+                        "Автор книги-курса **«RWA. Мы объясняем»** (13 глав), **глоссария RWA** (76 терминов) и **курса "
+                        "«YuRich RWA»** (шесть модулей) — без прогнозов цены и сигналов. Еженедельные разборы рынка на "
+                        "английском и русском в X **@PavelYuRichRWA** и Telegram **t.me/YuRichRWA**, разработка в публичном "
+                        "режиме."},
                 ],
             },
         ],

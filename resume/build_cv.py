@@ -59,6 +59,11 @@ class CV(FPDF):
         self.set_creator("resume/build_cv.py")
         self.set_lang(meta["lang"])
         self.set_text_color(*INK)
+        # RU-текст длиннее в знаках — сажаем кегль и интерлиньяж плотнее, чтобы держать две страницы
+        if lang == "ru":
+            self.bsize, self.blh, self.blh_sm = 8.55, 4.12, 3.95
+        else:
+            self.bsize, self.blh, self.blh_sm = 9.0, LH, LH_SM
         self._register_fonts()
 
     # ————————————————————————————————————————————— шрифты
@@ -95,7 +100,9 @@ class CV(FPDF):
         self.set_line_width(w)
         self.line(x1, x2, y) if False else self.line(x1, y, x2, y)
 
-    def text_block(self, body, x, y, w, size=9.0, lh=LH, color=INK_SOFT, family="Sans"):
+    def text_block(self, body, x, y, w, size=None, lh=None, color=INK_SOFT, family="Sans"):
+        size = self.bsize if size is None else size
+        lh = self.blh if lh is None else lh
         self.set_xy(x, y)
         self.set_font(family, "", size)
         self.set_text_color(*color)
@@ -124,7 +131,8 @@ class CV(FPDF):
             self.set_char_spacing(0.0)
         self.set_y(y + 4.3)
 
-    def bullets(self, items, x=ML, w=CW, size=9.0):
+    def bullets(self, items, x=ML, w=CW, size=None):
+        size = self.bsize if size is None else size
         for it in items:
             if self.get_y() + 6.0 > PAGE_H - MB - 4:
                 self.add_page()
@@ -132,14 +140,15 @@ class CV(FPDF):
             self.set_xy(x, y)
             self.set_font("Sans", "", size)
             self.set_text_color(*GRAY)
-            self.cell(3.6, LH, "—", align="L")
+            self.cell(3.6, self.blh, "—", align="L")
             self.set_xy(x + 3.6, y)
             self.set_font("Sans", "", size)
             self.set_text_color(*INK_SOFT)
-            self.multi_cell(w - 3.6, LH, it, markdown=True)
+            self.multi_cell(w - 3.6, self.blh, it, markdown=True)
             self.set_y(self.get_y() + 1.9)
 
-    def kv_rows(self, items, x=ML, w=CW, size=8.8, label_w=33.0):
+    def kv_rows(self, items, x=ML, w=CW, size=None, label_w=33.0):
+        size = self.bsize if size is None else size
         for label, value in items:
             if self.get_y() + 8.0 > PAGE_H - MB - 4:
                 self.add_page()
@@ -155,7 +164,21 @@ class CV(FPDF):
             self.multi_cell(w - label_w, LH_SM, value)
             self.set_y(max(self.get_y(), y_lab_end) + 1.9)
 
-    def role(self, item, size=9.0):
+    def paragraphs(self, items, size=None, gap=2.2):
+        """Абзацы свободного текста — без маркеров списка."""
+        size = self.bsize if size is None else size
+        for para in items:
+            if self.get_y() + 9.0 > PAGE_H - MB - 4:
+                self.add_page()
+            y = self.get_y()
+            self.set_xy(ML, y)
+            self.set_font("Sans", "", size)
+            self.set_text_color(*INK_SOFT)
+            self.multi_cell(CW, self.blh, para, markdown=True)
+            self.set_y(self.get_y() + gap)
+
+    def role(self, item, size=None):
+        size = self.bsize if size is None else size
         if self.get_y() + 20.0 > PAGE_H - MB - 4:
             self.add_page()
         y = self.get_y()
@@ -174,7 +197,10 @@ class CV(FPDF):
         self.set_text_color(*ACCENT)
         self.multi_cell(CW, 4.0, item["meta"])
         self.set_y(self.get_y() + 1.5)
-        self.bullets(item["bullets"], size=size)
+        if item.get("paras"):
+            self.paragraphs(item["paras"], size=size, gap=2.0)
+        else:
+            self.bullets(item.get("bullets", []), size=size)
         self.set_y(self.get_y() + 1.2)
 
 
@@ -259,6 +285,8 @@ def build(lang):
                 pdf.set_y(pdf.text_block(b["body"], ML, pdf.get_y(), CW) + 1.2)
             elif b["kind"] == "bullets":
                 pdf.bullets(b["items"])
+            elif b["kind"] == "prose":
+                pdf.paragraphs(b["items"])
             elif b["kind"] == "kv":
                 pdf.kv_rows(b["items"], label_w=36.0 if lang == "ru" else 34.0)
             elif b["kind"] == "roles":
@@ -293,14 +321,23 @@ def to_markdown(lang):
                 for label, value in b["items"]:
                     L.append(f"- **{label}.** {value}")
                 L.append("")
+            elif b["kind"] == "prose":
+                for para in b["items"]:
+                    L.append(para)
+                    L.append("")
             elif b["kind"] == "roles":
                 for it in b["items"]:
                     L.append(f"### {it['org']} — {it['dates']}")
                     L.append(f"*{it['meta']}*")
                     L.append("")
-                    for bull in it["bullets"]:
-                        L.append(f"- {bull}")
-                    L.append("")
+                    if it.get("paras"):
+                        for para in it["paras"]:
+                            L.append(para)
+                            L.append("")
+                    else:
+                        for bull in it.get("bullets", []):
+                            L.append(f"- {bull}")
+                        L.append("")
     path = os.path.join(HERE, f"CV-{lang.upper()}.md")
     with open(path, "w", encoding="utf-8") as fh:
         fh.write("\n".join(L).rstrip() + "\n")
