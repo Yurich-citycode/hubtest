@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0A0A0F">
-<meta name="description" content="Early Projects / RWA Early — curated, smart-filtered feed of early-stage crypto projects: RWA, DeFi, AI, Infrastructure, Gaming, Social. Dynamics tracking, post generator, 18 data sources (mock now, API-ready).">
-<title>Early Projects · RWA Early — Early-Stage Crypto Scanner</title>
+<meta name="description" content="RWA Early — ранние криптопроекты: RWA, DeFi, AI, Инфраструктура. Кураторская лента с динамикой, пост-карточками и живыми источниками. YurichHub.">
+<title>RWA Early · Ранние проекты — YurichHub</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%2334D399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 6.5l6.2 9.5L16 25.5 9.8 16z' fill='white' opacity='.95'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
-   EARLY PROJECTS / RWA EARLY — single-file prototype
-   Palette: graphite dark + violet (#8B5CF6) + emerald (#34D399)
-   Mobile-first, clean & extensible.
-   Views: Feed / Track / Sources / Post
+   RWA EARLY / РАННИЕ ПРОЕКТЫ — YurichHub
+   Один файл. Тёмная тема, фиолет + изумруд, сигнатура YurichHub.
+   Вкладки: Лента / Динамика / Источники / Пост
    ============================================================ */
 :root{
   --bg:        #0A0A0F;
@@ -37,6 +36,8 @@
   --amber:     #FBBF24;
   --sky:       #38BDF8;
   --red:       #F87171;
+  --lime:      #D7FF3D;
+  --pink:      #E8377E;
   --radius:    14px;
   --font:      "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -44,13 +45,9 @@
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font);
-  font-size:14px;
-  line-height:1.5;
-  min-height:100vh;
-  -webkit-font-smoothing:antialiased;
+  background:var(--bg);color:var(--text);
+  font-family:var(--font);font-size:14px;line-height:1.5;
+  min-height:100vh;-webkit-font-smoothing:antialiased;
 }
 ::selection{background:rgba(139,92,246,.35)}
 a{color:inherit;text-decoration:none}
@@ -59,6 +56,9 @@ button{font-family:inherit}
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-thumb{background:#262633;border-radius:99px;border:2px solid var(--bg)}
 ::-webkit-scrollbar-track{background:transparent}
+.muted{color:var(--text-faint)}
+.pos{color:var(--emerald)}
+.neg{color:var(--red)}
 
 .bg-glow{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
@@ -69,8 +69,6 @@ button{font-family:inherit}
     var(--bg);
 }
 .container{width:100%;max-width:1240px;margin:0 auto;padding:0 16px}
-.pos{color:var(--emerald)}
-.neg{color:var(--red)}
 
 /* ============================ HEADER ============================ */
 .site-header{
@@ -101,6 +99,11 @@ button{font-family:inherit}
   background:rgba(52,211,153,.08);
   padding:2.5px 8px;border-radius:999px;white-space:nowrap;
 }
+.yurich{
+  font-size:11px;font-weight:600;letter-spacing:.03em;
+  color:var(--text-faint);white-space:nowrap;
+}
+.yurich b{color:var(--lime);font-weight:800}
 .hrow-1 .hrow-1-right{margin-left:auto;display:flex;align-items:center;gap:8px}
 
 .live-pill{
@@ -111,11 +114,7 @@ button{font-family:inherit}
   padding:6px 11px;border-radius:999px;white-space:nowrap;
   font-variant-numeric:tabular-nums;
 }
-.live-dot{
-  width:7px;height:7px;border-radius:50%;flex-shrink:0;
-  background:var(--emerald);
-  animation:pulse 2s infinite;
-}
+.live-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--emerald);animation:pulse 2s infinite}
 @keyframes pulse{
   0%{box-shadow:0 0 0 0 rgba(52,211,153,.45)}
   70%{box-shadow:0 0 0 7px rgba(52,211,153,0)}
@@ -137,12 +136,9 @@ button{font-family:inherit}
 .search-wrap{position:relative;display:flex;align-items:center;width:100%}
 .search-wrap .lead{position:absolute;left:11px;width:15px;height:15px;color:var(--text-faint);pointer-events:none}
 #searchInput{
-  width:100%;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:11px;
-  color:var(--text);
-  font-family:inherit;font-size:13px;
+  width:100%;background:var(--card);
+  border:1px solid var(--border);border-radius:11px;
+  color:var(--text);font-family:inherit;font-size:13px;
   padding:9px 36px 9px 34px;
   transition:border-color .15s, box-shadow .15s;
 }
@@ -150,9 +146,8 @@ button{font-family:inherit}
 #searchInput:focus{outline:none;border-color:rgba(139,92,246,.55);box-shadow:0 0 0 3px rgba(139,92,246,.12)}
 #searchClear{
   position:absolute;right:6px;width:24px;height:24px;
-  border-radius:7px;border:0;
-  background:rgba(255,255,255,.06);color:var(--text-dim);
-  display:grid;place-items:center;cursor:pointer;transition:.15s;
+  border-radius:7px;border:0;background:rgba(255,255,255,.06);
+  color:var(--text-dim);display:grid;place-items:center;cursor:pointer;transition:.15s;
 }
 #searchClear:hover{color:var(--text);background:rgba(255,255,255,.1)}
 #searchClear svg{width:11px;height:11px}
@@ -162,12 +157,9 @@ button{font-family:inherit}
 .chips::-webkit-scrollbar{display:none}
 .chip{
   flex-shrink:0;white-space:nowrap;
-  font-size:12.5px;font-weight:600;
-  color:var(--text-dim);
-  background:transparent;
-  border:1px solid var(--border);
-  border-radius:999px;
-  padding:6px 13px;cursor:pointer;
+  font-size:12.5px;font-weight:600;color:var(--text-dim);
+  background:transparent;border:1px solid var(--border);
+  border-radius:999px;padding:6px 13px;cursor:pointer;
   transition:color .15s,background .15s,border-color .15s;
 }
 .chip:hover{color:var(--text);border-color:var(--border-2)}
@@ -179,12 +171,9 @@ button{font-family:inherit}
 select{
   appearance:none;-webkit-appearance:none;
   background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238b90a0' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center;
-  border:1px solid var(--border);
-  border-radius:9px;
-  color:var(--text-dim);
-  font-family:inherit;font-size:12.5px;font-weight:500;
-  padding:7px 28px 7px 11px;
-  cursor:pointer;transition:border-color .15s,color .15s;
+  border:1px solid var(--border);border-radius:9px;
+  color:var(--text-dim);font-family:inherit;font-size:12.5px;font-weight:500;
+  padding:7px 28px 7px 11px;cursor:pointer;transition:border-color .15s,color .15s;
 }
 select:hover{color:var(--text);border-color:var(--border-2)}
 select:focus{outline:none;border-color:rgba(139,92,246,.55)}
@@ -194,8 +183,7 @@ select option{background:var(--card);color:var(--text)}
   position:fixed;left:0;right:0;bottom:0;z-index:70;
   display:flex;flex-wrap:wrap;align-items:center;gap:8px;
   background:rgba(13,13,20,.97);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-top:1px solid var(--border);
   border-radius:18px 18px 0 0;
   padding:14px 16px calc(14px + env(safe-area-inset-bottom));
@@ -203,70 +191,55 @@ select option{background:var(--card);color:var(--text)}
   transition:transform .32s cubic-bezier(.2,.7,.3,1);
 }
 body.sheet-open .filterbar{transform:translateY(0)}
-.backdrop{
-  position:fixed;inset:0;z-index:60;
-  background:rgba(0,0,0,.55);
-  opacity:0;pointer-events:none;transition:opacity .3s;
-}
+.backdrop{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .3s}
 body.sheet-open .backdrop{opacity:1;pointer-events:auto}
 .sheet-close{
-  position:absolute;top:10px;right:12px;
-  width:28px;height:28px;border-radius:8px;border:0;
-  background:rgba(255,255,255,.05);color:var(--text-dim);
-  display:grid;place-items:center;cursor:pointer;
+  position:absolute;top:10px;right:12px;width:28px;height:28px;
+  border-radius:8px;border:0;background:rgba(255,255,255,.05);
+  color:var(--text-dim);display:grid;place-items:center;cursor:pointer;
 }
 .sheet-close svg{width:12px;height:12px}
-
 .filters-btn{
   display:inline-flex;align-items:center;gap:7px;
   font-size:12.5px;font-weight:600;color:var(--text-dim);
   background:var(--card);border:1px solid var(--border);
-  border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s;
-  white-space:nowrap;
+  border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s;white-space:nowrap;
 }
 .filters-btn:hover{color:var(--text);border-color:var(--border-2)}
 .filters-btn svg{width:13px;height:13px}
 .fcount{
   min-width:17px;height:17px;padding:0 5px;border-radius:99px;
-  background:var(--violet);color:#fff;
-  font-size:10.5px;font-weight:700;
+  background:var(--violet);color:#fff;font-size:10.5px;font-weight:700;
   display:grid;place-items:center;
 }
-
 .soc-toggles{display:flex;gap:5px}
 .soc-toggle{
-  font-size:11.5px;font-weight:600;
-  color:var(--text-faint);
-  background:transparent;
-  border:1px solid var(--border);
+  font-size:11.5px;font-weight:600;color:var(--text-faint);
+  background:transparent;border:1px solid var(--border);
   border-radius:8px;padding:6px 9px;cursor:pointer;transition:.15s;
 }
 .soc-toggle:hover{color:var(--text)}
 .soc-toggle.active{color:var(--violet-text);background:var(--violet-soft);border-color:rgba(139,92,246,.45)}
-
 .reset-btn{
-  margin-left:auto;
-  font-size:12px;font-weight:600;color:var(--text-faint);
+  margin-left:auto;font-size:12px;font-weight:600;color:var(--text-faint);
   background:transparent;border:1px solid transparent;border-radius:8px;
-  padding:6px 10px;cursor:pointer;transition:.15s;
-  white-space:nowrap;
+  padding:6px 10px;cursor:pointer;transition:.15s;white-space:nowrap;
 }
 .reset-btn:hover{color:var(--red);background:rgba(248,113,113,.07)}
 
 @media (min-width:720px){
   .container{padding:0 20px}
-  .hrow-1 .search-wrap{order:0;flex:1 1 auto;flex-basis:auto;max-width:440px;margin:0 6px}
+  .hrow-1 .search-wrap{order:0;flex:1 1 auto;flex-basis:auto;max-width:420px;margin:0 6px}
   .filterbar{
     position:static;transform:none;
     background:rgba(255,255,255,.02);
-    border:1px solid var(--border);
-    border-radius:12px;
+    border:1px solid var(--border);border-radius:12px;
     padding:10px;margin-top:2px;
   }
   .sheet-close,.backdrop,.filters-btn{display:none!important}
 }
 
-/* ============================ VIEWS / TABS ============================ */
+/* ============================ TABS ============================ */
 .tabs{
   display:flex;gap:4px;margin:22px 0 16px;
   border-bottom:1px solid var(--border);
@@ -274,31 +247,21 @@ body.sheet-open .backdrop{opacity:1;pointer-events:auto}
 }
 .tabs::-webkit-scrollbar{display:none}
 .tab{
-  position:relative;
-  font-size:13px;font-weight:600;color:var(--text-faint);
-  background:none;border:0;
-  padding:9px 14px;cursor:pointer;white-space:nowrap;
-  display:inline-flex;align-items:center;gap:7px;
-  transition:color .15s;
+  position:relative;font-size:13px;font-weight:600;color:var(--text-faint);
+  background:none;border:0;padding:9px 14px;cursor:pointer;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:7px;transition:color .15s;
 }
 .tab:hover{color:var(--text)}
 .tab.active{color:var(--text)}
-.tab.active::after{
-  content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;
-  background:var(--violet);border-radius:2px;
-}
+.tab.active::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:var(--violet);border-radius:2px}
 .tab-count{
   min-width:17px;height:17px;padding:0 5px;border-radius:99px;
-  background:var(--violet);color:#fff;
-  font-size:10.5px;font-weight:700;
+  background:var(--violet);color:#fff;font-size:10.5px;font-weight:700;
   display:grid;place-items:center;
 }
 
 main{padding-bottom:30px}
-.feed-head{
-  display:flex;align-items:baseline;justify-content:space-between;
-  gap:12px;margin:0 0 14px;flex-wrap:wrap;
-}
+.feed-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 14px;flex-wrap:wrap}
 .feed-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .feed-title h2{font-size:20px;font-weight:700;letter-spacing:-.015em}
 .feed-count{font-size:12.5px;color:var(--text-faint);font-variant-numeric:tabular-nums}
@@ -320,8 +283,7 @@ main{padding-bottom:30px}
   display:flex;gap:12px;align-items:flex-start;
   border:1px solid rgba(52,211,153,.25);
   background:linear-gradient(135deg, rgba(52,211,153,.09), rgba(139,92,246,.05) 70%);
-  border-radius:var(--radius);
-  padding:14px 16px;margin-bottom:14px;
+  border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;
 }
 .rwa-banner .rb-icon{flex-shrink:0;margin-top:1px;color:var(--emerald-text)}
 .rwa-banner .rb-icon svg{width:17px;height:17px}
@@ -330,22 +292,23 @@ main{padding-bottom:30px}
 
 /* ============================ CARDS ============================ */
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:14px}
-
 .card{
   display:flex;flex-direction:column;gap:11px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;
   transition:border-color .2s,transform .2s,box-shadow .2s;
   animation:cardIn .45s cubic-bezier(.2,.7,.3,1) both;
   animation-delay:var(--d,0ms);
 }
 @keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .card:hover{
-  border-color:rgba(139,92,246,.38);
-  transform:translateY(-2px);
+  border-color:rgba(139,92,246,.38);transform:translateY(-2px);
   box-shadow:0 10px 30px rgba(0,0,0,.38), 0 0 0 1px rgba(139,92,246,.07);
+}
+.card.flash{animation:flash 1.8s ease}
+@keyframes flash{
+  0%,55%{box-shadow:0 0 0 3px rgba(215,255,61,.75), 0 0 44px rgba(215,255,61,.3)}
+  100%{box-shadow:none}
 }
 
 .card-top{display:flex;gap:11px;align-items:flex-start}
@@ -353,8 +316,7 @@ main{padding-bottom:30px}
   width:42px;height:42px;border-radius:12px;flex-shrink:0;
   display:grid;place-items:center;
   font-size:13.5px;font-weight:700;color:#fff;letter-spacing:.02em;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
-  overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);overflow:hidden;
 }
 .avatar.sm{width:26px;height:26px;border-radius:8px;font-size:10px}
 .avatar img{width:100%;height:100%;object-fit:cover}
@@ -362,10 +324,8 @@ main{padding-bottom:30px}
 .card-name-row{display:flex;align-items:center;gap:8px}
 .card-name{font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ticker{
-  font-size:10.5px;font-weight:700;letter-spacing:.05em;
-  color:var(--text-faint);
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--border);
+  font-size:10.5px;font-weight:700;letter-spacing:.05em;color:var(--text-faint);
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
   padding:2px 7px;border-radius:6px;white-space:nowrap;
 }
 .qmeter{display:inline-flex;gap:2px;align-items:flex-end;cursor:help}
@@ -380,11 +340,9 @@ main{padding-bottom:30px}
 .qmeter.q2 i.on{background:var(--amber)}
 .qmeter.q1 i.on{background:var(--text-faint)}
 .star{
-  margin-left:auto;flex-shrink:0;
-  display:grid;place-items:center;
+  margin-left:auto;flex-shrink:0;display:grid;place-items:center;
   width:28px;height:28px;border-radius:8px;
-  border:0;background:transparent;color:var(--text-faint);
-  cursor:pointer;transition:.15s;
+  border:0;background:transparent;color:var(--text-faint);cursor:pointer;transition:.15s;
 }
 .star:hover{color:var(--amber);background:rgba(251,191,36,.08)}
 .star svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
@@ -394,8 +352,7 @@ main{padding-bottom:30px}
 
 .badge{
   font-size:10.5px;font-weight:600;letter-spacing:.02em;
-  padding:3px 8px;border-radius:6px;
-  border:1px solid transparent;white-space:nowrap;
+  padding:3px 8px;border-radius:6px;border:1px solid transparent;white-space:nowrap;
 }
 .badge.curated{display:inline-flex;align-items:center;gap:4px}
 .badge.curated svg{width:9px;height:9px;fill:currentColor}
@@ -418,11 +375,9 @@ main{padding-bottom:30px}
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   min-height:36px;
 }
-
 .card-notes{display:flex;flex-direction:column;gap:5px}
 .note{
-  font-size:11.5px;line-height:1.45;color:var(--text-dim);
-  padding-left:8px;
+  font-size:11.5px;line-height:1.45;color:var(--text-dim);padding-left:8px;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
 .note.why{border-left:2px solid rgba(139,92,246,.5)}
@@ -431,20 +386,17 @@ main{padding-bottom:30px}
 
 .metrics{
   display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
-  padding:10px 12px;
-  background:rgba(255,255,255,.02);
-  border:1px solid rgba(255,255,255,.045);
-  border-radius:10px;
+  padding:10px 12px;background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.045);border-radius:10px;
 }
 .metric{min-width:0}
 .m-label{
   display:block;font-size:9.5px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.09em;
+  text-transform:uppercase;letter-spacing:.08em;
   color:var(--text-faint);margin-bottom:2px;
 }
 .m-val{
-  display:block;font-size:13px;font-weight:650;
-  font-variant-numeric:tabular-nums;
+  display:block;font-size:13px;font-weight:650;font-variant-numeric:tabular-nums;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .m-val.small{font-size:11.5px;font-weight:500;white-space:normal;line-height:1.3}
@@ -454,17 +406,11 @@ main{padding-bottom:30px}
 .stage-move{color:var(--emerald-text)}
 @media (max-width:479px){.metrics{grid-template-columns:repeat(2,1fr)}}
 
-.card-foot{
-  margin-top:auto;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:8px;flex-wrap:wrap;
-}
+.card-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .socials{display:flex;gap:6px}
 .soc{
-  width:30px;height:30px;
-  display:grid;place-items:center;
-  border-radius:8px;border:1px solid var(--border);
-  color:var(--text-dim);transition:.15s;
+  width:30px;height:30px;display:grid;place-items:center;
+  border-radius:8px;border:1px solid var(--border);color:var(--text-dim);transition:.15s;
 }
 .soc:hover{color:#fff;border-color:var(--violet);background:var(--violet-soft)}
 .soc svg{width:13.5px;height:13.5px}
@@ -485,13 +431,9 @@ main{padding-bottom:30px}
 
 .btn{
   display:inline-flex;align-items:center;gap:6px;
-  font-size:12px;font-weight:600;
-  color:var(--text-dim);
-  background:transparent;
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:6px 10px;cursor:pointer;
-  transition:.15s;white-space:nowrap;
+  font-size:12px;font-weight:600;color:var(--text-dim);
+  background:transparent;border:1px solid var(--border);
+  border-radius:8px;padding:6px 10px;cursor:pointer;transition:.15s;white-space:nowrap;
 }
 .btn svg{width:13px;height:13px}
 .btn:hover{color:var(--text);border-color:var(--border-2);background:rgba(255,255,255,.04)}
@@ -499,34 +441,26 @@ main{padding-bottom:30px}
 .btn-primary{color:#fff;background:var(--violet);border-color:var(--violet)}
 .btn-primary:hover{background:#7C4DEF;color:#fff}
 
-/* empty state */
 .empty{
-  text-align:center;
-  border:1px dashed var(--border-2);
-  border-radius:16px;
-  padding:72px 20px;margin:8px 0 10px;
-  color:var(--text-dim);
+  text-align:center;border:1px dashed var(--border-2);border-radius:16px;
+  padding:72px 20px;margin:8px 0 10px;color:var(--text-dim);
 }
 .empty-icon{
-  width:54px;height:54px;margin:0 auto 16px;
-  display:grid;place-items:center;
-  border-radius:16px;
-  background:rgba(139,92,246,.08);
-  border:1px solid rgba(139,92,246,.25);
-  color:var(--violet-text);
+  width:54px;height:54px;margin:0 auto 16px;display:grid;place-items:center;
+  border-radius:16px;background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.25);color:var(--violet-text);
 }
 .empty-icon svg{width:24px;height:24px}
 .empty h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
 .empty p{font-size:13px;margin-bottom:18px}
 
-/* ============================ TRACK VIEW ============================ */
+/* ============================ TRACK ============================ */
 .tstats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .tstat{
   display:flex;align-items:center;gap:7px;
   font-size:12px;font-weight:600;color:var(--text-dim);
   background:var(--card);border:1px solid var(--border);
-  border-radius:999px;padding:7px 13px;
-  font-variant-numeric:tabular-nums;
+  border-radius:999px;padding:7px 13px;font-variant-numeric:tabular-nums;
 }
 .tstat b{color:var(--text);font-weight:700}
 .tstat .dot{width:7px;height:7px;border-radius:50%}
@@ -535,16 +469,11 @@ main{padding-bottom:30px}
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
 table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:820px}
 th{
-  text-align:left;font-size:10px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.08em;
-  color:var(--text-faint);
-  padding:10px 12px;border-bottom:1px solid var(--border);
+  text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-faint);padding:10px 12px;border-bottom:1px solid var(--border);
   background:var(--card);white-space:nowrap;
 }
-td{
-  padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);
-  white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--text-dim);
-}
+td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--text-dim)}
 tr:last-child td{border-bottom:0}
 tbody tr:hover td{background:rgba(255,255,255,.02)}
 .t-name{display:flex;align-items:center;gap:9px;color:var(--text);font-weight:600}
@@ -552,10 +481,10 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
 .t-move{color:var(--emerald-text);font-size:11.5px}
 .track-note{margin-top:12px;font-size:12px;color:var(--text-faint);line-height:1.6}
 
-/* ============================ SOURCES VIEW ============================ */
+/* ============================ SOURCES ============================ */
 .view-sec{margin-bottom:26px}
-.view-sec h3{font-size:14px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
-.view-sec .sec-sub{font-size:12.5px;color:var(--text-dim);margin:-6px 0 12px;line-height:1.55}
+.view-sec h3{font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
+.view-sec .sec-sub{font-size:12.5px;color:var(--text-dim);margin:0 0 12px;line-height:1.55}
 .pipe{display:flex;flex-direction:column;gap:8px}
 .pipe-step{
   display:flex;gap:12px;align-items:flex-start;
@@ -572,8 +501,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
 .src-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
 .src-card{
   background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:12px 14px;
-  display:flex;flex-direction:column;gap:7px;
+  border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;
   transition:border-color .15s;
 }
 .src-card:hover{border-color:var(--border-2)}
@@ -592,67 +520,62 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
 .wl-chips{display:flex;flex-wrap:wrap;gap:6px}
 a.wl{
   font-size:12px;font-weight:500;color:var(--text-dim);
-  border:1px solid var(--border);border-radius:999px;
-  padding:5px 12px;transition:.15s;
+  border:1px solid var(--border);border-radius:999px;padding:5px 12px;transition:.15s;
 }
 a.wl:hover{color:var(--text);border-color:var(--violet);background:var(--violet-soft)}
 .wl-note{font-size:11.5px;color:var(--text-faint);margin-top:4px;line-height:1.5}
 
-/* ============================ POST VIEW ============================ */
+/* ============================ POST ============================ */
 .post-grid{display:grid;grid-template-columns:1fr;gap:14px}
-@media (min-width:900px){.post-grid{grid-template-columns:1fr 1.2fr}}
+@media (min-width:900px){.post-grid{grid-template-columns:1fr 1.35fr}}
 .panel{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius);padding:16px;
-  display:flex;flex-direction:column;gap:12px;min-width:0;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0;
 }
 .panel h3{font-size:14px;font-weight:700}
 .panel .sub{font-size:12px;color:var(--text-faint);line-height:1.5}
 .tg{
-  background:#10151C;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:14px;
-  padding:14px 16px;
-  font-size:13px;line-height:1.6;
+  background:#10151C;border:1px solid rgba(255,255,255,.06);border-radius:14px;
+  padding:14px 16px;font-size:13px;line-height:1.6;
   white-space:pre-wrap;word-break:break-word;
-  max-height:520px;overflow-y:auto;
-  font-variant-numeric:tabular-nums;
+  max-height:480px;overflow-y:auto;font-variant-numeric:tabular-nums;
 }
 .tg.placeholder{color:var(--text-faint);text-align:center;white-space:normal}
-.rules{display:flex;flex-direction:column;gap:7px}
-.rules li{
-  list-style:none;font-size:12px;color:var(--text-dim);line-height:1.5;
-  padding-left:22px;position:relative;
+#postCanvas{
+  width:100%;height:auto;display:block;
+  border-radius:12px;border:1px solid rgba(255,255,255,.08);
 }
+.canvas-cap{font-size:11.5px;color:var(--text-faint);line-height:1.5}
+.rules{display:flex;flex-direction:column;gap:7px}
+.rules li{list-style:none;font-size:12px;color:var(--text-dim);line-height:1.5;padding-left:22px;position:relative}
 .rules li::before{
-  content:"";position:absolute;left:2px;top:6px;
-  width:8px;height:8px;border-radius:3px;
+  content:"";position:absolute;left:2px;top:6px;width:8px;height:8px;border-radius:3px;
   background:var(--violet-soft);border:1px solid rgba(139,92,246,.5);
 }
 
 /* footer */
 footer{
-  margin-top:38px;padding-top:18px;
-  border-top:1px solid var(--border);
-  color:var(--text-faint);font-size:12px;
-  display:flex;flex-direction:column;gap:10px;
+  margin-top:38px;padding-top:18px;border-top:1px solid var(--border);
+  color:var(--text-faint);font-size:12px;display:flex;flex-direction:column;gap:10px;
 }
 .src-list{display:flex;flex-wrap:wrap;gap:6px 16px}
 footer .fine{line-height:1.6}
+.brand-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand-line .yurich-big{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--text);text-transform:uppercase}
+.brand-line .yurich-big b{color:var(--lime)}
+.a-links{display:flex;gap:14px;flex-wrap:wrap}
+.a-links a{color:var(--text-dim);transition:.15s}
+.a-links a:hover{color:var(--text)}
 
 /* toast */
 .toast{
   position:fixed;left:50%;bottom:26px;z-index:100;
   transform:translate(-50%,16px);
   display:flex;align-items:center;gap:9px;
-  background:#1B1B26;
-  border:1px solid var(--border-2);
-  color:var(--text);
-  font-size:13px;font-weight:500;
-  padding:11px 16px;border-radius:12px;
+  background:#1B1B26;border:1px solid var(--border-2);color:var(--text);
+  font-size:13px;font-weight:500;padding:11px 16px;border-radius:12px;
   box-shadow:0 12px 34px rgba(0,0,0,.45);
-  opacity:0;pointer-events:none;
-  transition:opacity .25s,transform .25s;
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;
   max-width:calc(100vw - 40px);
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -666,142 +589,144 @@ footer .fine{line-height:1.6}
 <body>
 <div class="bg-glow" aria-hidden="true"></div>
 
-<!-- ============================ STICKY HEADER ============================ -->
+<!-- ============================ ШАПКА ============================ -->
 <header class="site-header">
   <div class="container header-inner">
 
     <div class="hrow hrow-1">
-      <a class="brand" href="#" aria-label="Early Projects — home">
+      <a class="brand" href="#" aria-label="RWA Early — YurichHub">
         <span class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.7 6.5 6.5 2.7-6.5 2.7-2.7 6.5-2.7-6.5L2.8 12l6.5-2.7z"/></svg>
         </span>
-        <span class="brand-name">Early Projects</span>
-        <span class="brand-tag">RWA Early</span>
+        <span class="brand-name">RWA Early</span>
+        <span class="brand-tag">Ранние проекты</span>
+        <span class="yurich">by Yurich<b>Hub</b></span>
       </a>
 
       <div class="search-wrap">
         <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="searchInput" type="search" placeholder="Search projects, tickers, CA…" autocomplete="off" aria-label="Search projects">
-        <button id="searchClear" hidden aria-label="Clear search">
+        <input id="searchInput" type="search" placeholder="Поиск: проект, тикер, CA…" autocomplete="off" aria-label="Поиск по проектам">
+        <button id="searchClear" hidden aria-label="Очистить поиск">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
       <div class="hrow-1-right">
-        <div class="live-pill" title="Data refresh indicator">
+        <div class="live-pill" title="Когда данные были обновлены">
           <span class="live-dot" aria-hidden="true"></span>
-          <span id="liveText">Live · just now</span>
+          <span id="liveText">Live · только что</span>
         </div>
-        <button class="icon-btn" id="refreshBtn" title="Refresh feed" aria-label="Refresh feed">
+        <button class="icon-btn" id="sharePageBtn" title="Поделиться ссылкой" aria-label="Поделиться">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </button>
+        <button class="icon-btn" id="refreshBtn" title="Обновить данные" aria-label="Обновить данные">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
         </button>
       </div>
     </div>
 
     <div class="hrow hrow-3">
-      <nav class="chips" id="chips" aria-label="Quick filters">
-        <button class="chip active" data-chip="all">All</button>
+      <nav class="chips" id="chips" aria-label="Быстрые фильтры">
+        <button class="chip active" data-chip="all">Все</button>
         <button class="chip chip-rwa" data-chip="rwa">RWA</button>
         <button class="chip" data-chip="defi">DeFi</button>
         <button class="chip" data-chip="ai">AI</button>
-        <button class="chip" data-chip="infrastructure">Infrastructure</button>
-        <button class="chip" data-chip="new">New Tokens</button>
+        <button class="chip" data-chip="infrastructure">Инфра</button>
+        <button class="chip" data-chip="new">Новые токены</button>
         <button class="chip" data-chip="pretoken">Pre-Token</button>
       </nav>
       <div class="hrow-3-right">
-        <select id="networkSel" aria-label="Network">
-          <option value="all">All networks</option>
+        <select id="networkSel" aria-label="Сеть">
+          <option value="all">Все сети</option>
           <option value="solana">Solana</option>
           <option value="ethereum">Ethereum</option>
           <option value="base">Base</option>
           <option value="arbitrum">Arbitrum</option>
           <option value="polygon">Polygon</option>
+          <option value="monad">Monad</option>
         </select>
-        <button class="filters-btn" id="filterToggle" aria-label="Open filters">
+        <button class="filters-btn" id="filterToggle" aria-label="Открыть фильтры">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
-          Filters
+          Фильтры
           <span class="fcount" id="filterCount" hidden>0</span>
         </button>
       </div>
     </div>
 
-    <!-- advanced filters (static strip on desktop, bottom sheet on mobile) -->
     <div class="filterbar" id="filterbar">
-      <button class="sheet-close" id="sheetClose" aria-label="Close filters">
+      <button class="sheet-close" id="sheetClose" aria-label="Закрыть фильтры">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-      <select id="categorySel" aria-label="Category">
-        <option value="all">All categories</option>
+      <select id="categorySel" aria-label="Категория">
+        <option value="all">Все категории</option>
         <option value="rwa">RWA</option>
         <option value="defi">DeFi</option>
         <option value="ai">AI</option>
-        <option value="gaming">Gaming</option>
-        <option value="social">Social</option>
-        <option value="infrastructure">Infrastructure</option>
-        <option value="other">Other</option>
+        <option value="gaming">Гейминг</option>
+        <option value="social">Социалка</option>
+        <option value="infrastructure">Инфраструктура</option>
+        <option value="other">Другое</option>
       </select>
-      <select id="typeSel" aria-label="Type">
-        <option value="all">All types</option>
-        <option value="launched">Token launched</option>
+      <select id="typeSel" aria-label="Тип">
+        <option value="all">Все типы</option>
+        <option value="launched">Токен запущен</option>
         <option value="pre-token">Pre-Token</option>
-        <option value="fundraising">Fundraising</option>
-        <option value="announced">Just announced</option>
+        <option value="fundraising">Фандинг</option>
+        <option value="announced">Анонс</option>
       </select>
-      <select id="minLiqSel" aria-label="Minimum liquidity" title="Absolute liquidity floor. Early tokens often trade at $25–150K — use the Quality score for a relative view.">
-        <option value="0">Any liquidity</option>
-        <option value="25000">Liq ≥ $25K</option>
-        <option value="100000">Liq ≥ $100K</option>
-        <option value="250000">Liq ≥ $250K</option>
-        <option value="1000000">Liq ≥ $1M</option>
-        <option value="5000000">Liq ≥ $5M</option>
+      <select id="minLiqSel" aria-label="Минимальная ликвидность" title="Абсолютный порог. Ранние токены часто начинают с $25–100K — для относительной оценки используйте «Качество».">
+        <option value="0">Любая ликвидность</option>
+        <option value="25000">Ликвидность ≥ $25K</option>
+        <option value="100000">Ликвидность ≥ $100K</option>
+        <option value="250000">Ликвидность ≥ $250K</option>
+        <option value="1000000">Ликвидность ≥ $1M</option>
+        <option value="5000000">Ликвидность ≥ $5M</option>
       </select>
-      <select id="qSel" aria-label="Quality score" title="Relative quality score (0–5): liquidity tier + activity (vol/liq) + source strength + socials. Early tokens with $25–100K liquidity can still score 4+.">
-        <option value="0">Any quality</option>
-        <option value="3">Quality ≥ 3</option>
-        <option value="4">Quality ≥ 4</option>
+      <select id="qSel" aria-label="Качество" title="Оценочный балл 0–5: ликвидность + активность (объём/ликвидность) + сила источника + соцсети. Молодой токен с $86K ликвидности и горячим оборотом может получить 4+, а мёртвый пул на $500K — 2.">
+        <option value="0">Любое качество</option>
+        <option value="3">Качество ≥ 3</option>
+        <option value="4">Качество ≥ 4</option>
       </select>
-      <select id="ageSel" aria-label="Age">
-        <option value="0">Any age</option>
-        <option value="1">Last 24h</option>
-        <option value="7">Last 7 days</option>
-        <option value="30">Last 30 days</option>
+      <select id="ageSel" aria-label="Возраст">
+        <option value="0">Любой возраст</option>
+        <option value="1">Последние 24 часа</option>
+        <option value="7">Последние 7 дней</option>
+        <option value="30">Последние 30 дней</option>
       </select>
-      <div class="soc-toggles" role="group" aria-label="Require social links">
-        <button class="soc-toggle" data-soc="twitter" title="Only with X / Twitter">X</button>
-        <button class="soc-toggle" data-soc="telegram" title="Only with Telegram">TG</button>
-        <button class="soc-toggle" data-soc="website" title="Only with Website">Web</button>
+      <div class="soc-toggles" role="group" aria-label="Только с соцсетями">
+        <button class="soc-toggle" data-soc="twitter" title="Только с X / Twitter">X</button>
+        <button class="soc-toggle" data-soc="telegram" title="Только с Telegram">TG</button>
+        <button class="soc-toggle" data-soc="website" title="Только с сайтом">Web</button>
       </div>
-      <select id="sortSel" aria-label="Sort">
-        <option value="newest">Newest</option>
-        <option value="active">Most Active · 24h Vol</option>
-        <option value="interest">Highest Interest</option>
+      <select id="sortSel" aria-label="Сортировка">
+        <option value="newest">Сначала новые</option>
+        <option value="active">Самые активные</option>
+        <option value="interest">Высокий интерес</option>
       </select>
-      <button class="reset-btn" id="resetBtn">Reset</button>
+      <button class="reset-btn" id="resetBtn">Сбросить</button>
     </div>
   </div>
 </header>
-
 <main class="container">
-  <!-- tabs -->
   <div class="tabs" id="tabs" role="tablist">
-    <button class="tab active" data-view="feed" role="tab">Feed</button>
-    <button class="tab" data-view="track" role="tab">Track</button>
-    <button class="tab" data-view="sources" role="tab">Sources</button>
-    <button class="tab" data-view="post" role="tab">Post<span class="tab-count" id="postCount" hidden>0</span></button>
+    <button class="tab active" data-view="feed" role="tab">Лента</button>
+    <button class="tab" data-view="track" role="tab">Динамика</button>
+    <button class="tab" data-view="sources" role="tab">Источники</button>
+    <button class="tab" data-view="post" role="tab">Пост<span class="tab-count" id="postCount" hidden>0</span></button>
   </div>
 
-  <!-- ============================ FEED VIEW ============================ -->
+  <!-- ============================ ЛЕНТА ============================ -->
   <section id="view-feed">
     <div class="feed-head">
       <div class="feed-title">
-        <h2 id="feedTitle">All Early</h2>
+        <h2 id="feedTitle">Все ранние</h2>
         <span class="feed-count" id="feedCount"></span>
       </div>
       <div class="feed-actions">
         <span class="sort-hint" id="sortHint"></span>
-        <button class="star-filter" id="starFilter" title="Show only starred projects">
+        <button class="star-filter" id="starFilter" title="Показать только отмеченные">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Interesting <span id="starCount">0</span>
+          Интересное <span id="starCount">0</span>
         </button>
       </div>
     </div>
@@ -810,7 +735,7 @@ footer .fine{line-height:1.6}
       <span class="rb-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>
       </span>
-      <p><b>RWA Early</b> — tokenized real-world assets: treasuries, private credit, real estate, commodities &amp; funds. Curated picks are marked with the <b>RWA Early</b> badge.</p>
+      <p><b>RWA Early</b> — токенизированные реальные активы: трежерис, приват-кредит, недвижимость, коммодити и фонды. Кураторские выборы помечены бейджем <b>RWA Early</b>.</p>
     </div>
 
     <div class="feed" id="feed" aria-live="polite"></div>
@@ -819,21 +744,21 @@ footer .fine{line-height:1.6}
       <div class="empty-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
       </div>
-      <h3>No projects match your filters</h3>
-      <p>Try widening the age window, lowering the liquidity floor or clearing the category.</p>
-      <button class="btn btn-primary" id="emptyReset">Reset filters</button>
+      <h3>Ничего не найдено</h3>
+      <p>Попробуйте расширить фильтры или сбросить их.</p>
+      <button class="btn btn-primary" id="emptyReset">Сбросить фильтры</button>
     </div>
   </section>
 
-  <!-- ============================ TRACK VIEW ============================ -->
+  <!-- ============================ ДИНАМИКА ============================ -->
   <section id="view-track" hidden>
     <div class="track-head">
-      <h2>Track · dynamics</h2>
-      <select id="trackSortSel" aria-label="Track sort">
-        <option value="sinceAdd">Δ since added</option>
-        <option value="added">Newest added</option>
-        <option value="d1">Δ 24h</option>
-        <option value="quality">Quality</option>
+      <h2>Динамика</h2>
+      <select id="trackSortSel" aria-label="Сортировка динамики">
+        <option value="sinceAdd">Δ с добавления</option>
+        <option value="added">Новые в ленте</option>
+        <option value="d1">Δ 24 часа</option>
+        <option value="quality">Качество</option>
       </select>
     </div>
     <div class="tstats" id="trackStats"></div>
@@ -841,8 +766,8 @@ footer .fine{line-height:1.6}
       <table>
         <thead>
           <tr>
-            <th>Project</th><th>Added</th><th>Status</th><th>MC</th>
-            <th>Δ since added</th><th>24h</th><th>7d</th><th>30d</th><th>Q</th><th>★</th>
+            <th>Проект</th><th>Добавлен</th><th>Статус</th><th>MC</th>
+            <th>Δ с добавления</th><th>24ч</th><th>7д</th><th>30д</th><th>Q</th><th>★</th>
           </tr>
         </thead>
         <tbody id="trackBody"></tbody>
@@ -851,43 +776,43 @@ footer .fine{line-height:1.6}
     <p class="track-note" id="trackNote"></p>
   </section>
 
-  <!-- ============================ SOURCES VIEW ============================ -->
+  <!-- ============================ ИСТОЧНИКИ ============================ -->
   <section id="view-sources" hidden>
     <div class="view-sec">
-      <h3>How projects get into the feed</h3>
-      <p class="sec-sub">A 7-step pipeline. APIs find the fresh; curation decides what matters. Every card shows its source.</p>
+      <h3>Откуда берутся проекты</h3>
+      <p class="sec-sub">Лента собирается по шагам: автоисточники находят свежее, куратор решает, что важно. У каждой карточки в ленте — отметка, откуда проект.</p>
       <div class="pipe">
-        <div class="pipe-step"><span class="pipe-num">1</span><div><b>Fresh tokens &amp; pairs</b><span>DexScreener, GeckoTerminal, Helius webhooks — new pairs, liquidity, volume, age. Absolute liquidity floor is optional; early tokens often start at $25–100K.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">2</span><div><b>Protocols with TVL &amp; categories</b><span>DefiLlama — the core of the RWA rubric: real TVL, category tags, serious projects first.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">3</span><div><b>New listings, socials, descriptions</b><span>CoinGecko, CoinMarketCap, Messari — cross-check: if it's already on CoinGecko, it's not brand new.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">4</span><div><b>Solana depth</b><span>Birdeye, Jupiter, Helius, Moralis — most early activity is on Solana, so this layer is critical for the channel.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA registries</b><span>RWA.xyz, Tokenized — public pages (parsing), tokenized assets and issuers list.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">6</span><div><b>Curated layer</b><span>Manual adds: your picks, a colleague's list, X watchlist below. Marked with the <b>RWA Early / Curated</b> badge — this is what a scanner can't do.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">7</span><div><b>Quality score → feed</b><span>Relative score 0–5: liquidity tier + activity (vol/liq) + source strength + socials. A young token with $86K liquidity and 5× vol/liq scores higher than a dead $500K pool.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>DexScreener — новые пары с ликвидностью, объёмом и возрастом. Ранние токены часто стартуют с $25–100K ликвидности, поэтому порог — мягкий, а главное — оценка качества.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с TVL и категориями</b><span>DefiLlama — ядро рубрики RWA: настоящие TVL, категории, серьёзные проекты.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">3</span><div><b>Листинги, логотипы, описания</b><span>CoinGecko — кросс-проверка: если проект уже там, он не «вчера появился». Отсюда же реальные логотипы и цифры.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">4</span><div><b>Глубина по Solana</b><span>Birdeye, Jupiter, Helius — большая часть ранней активности живёт на Solana. Нужен бесплатный ключ — пришлёте, и подключим.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые страницы с токенизированными активами и эмитентами. Прямое топливо рубрики.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">6</span><div><b>Кураторский слой</b><span>Ручные вхождения: выборы автора, список коллеги, X-радар ниже. Отмечаются бейджем <b>RWA Early</b> — это то, что сканер не делает.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка качества → лента</b><span>Относительный балл 0–5: тир ликвидности + активность (объём/ликвидность) + сила источника + соцсети. Горячий молодой токен на $86K получает выше, чем мёртвый пул на $500K.</span></div></div>
       </div>
     </div>
 
     <div class="view-sec">
-      <h3>Data sources</h3>
-      <p class="sec-sub">All open-access sources wired in the data layer (<code>API_SOURCES</code>). Free ones can go live now; key-required and paid ones come later without touching the UI.</p>
+      <h3>Источники данных</h3>
+      <p class="sec-sub">Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.</p>
       <div class="src-grid" id="srcGrid"></div>
     </div>
 
     <div class="view-sec">
-      <h3>X / Twitter watchlist</h3>
-      <p class="sec-sub">Manual radar for now — the X API is paid and comes in the next stage. Until then: scan this list once a day (≈15 min) and feed the curated layer.</p>
+      <h3>X-радар</h3>
+      <p class="sec-sub">Список аккаунтов для ежедневного ручного обзора (≈15 минут). Автоматизация — на следующем этапе.</p>
       <div id="watchlistEl"></div>
-      <p class="wl-note">List is curated — verify handles before relying on them. Editable in <code>X_WATCHLIST</code> at the top of the script.</p>
+      <p class="wl-note">Список курируемый — перед использованием проверьте аккаунты.</p>
     </div>
   </section>
 
-  <!-- ============================ POST VIEW ============================ -->
+  <!-- ============================ ПОСТ ============================ -->
   <section id="view-post" hidden>
     <div class="post-grid">
       <div class="panel">
-        <h3>Post template</h3>
-        <p class="sub">Every project in the daily post follows this shape. «Почему интересно» и «Риск» — обязательные: это твоя интерпретация, а не копия описания.</p>
-        <div class="tg">🗒 #EarlyProjects — {дата}
+        <h3>Шаблон поста</h3>
+        <p class="sub">Каждый проект в дневном посте имеет такую структуру. «Почему интересно» и «Риск» — обязательные: это ваша интерпретация, а не копия описания.</p>
+        <div class="tg">🗒 #РанниеПроекты — {дата}
 
 1) {Название} ({тикер}) — {суть, 1 строка}
    • {Категория} · {сеть} · {статус/возраст} · {MC или раунд}
@@ -899,187 +824,132 @@ footer .fine{line-height:1.6}
 Источники: DexScreener · DefiLlama · CoinGecko · RWA Early
 Лента с историей: {ссылка на страницу}</div>
         <ul class="rules">
-          <li>Не больше 7 проектов в посте — качество &gt; количество.</li>
-          <li>Проект попадает, если подтверждён 2 независимыми источниками ИЛИ имеет жёсткий сигнал (дата TGE, закрытый раунд, реальная активность).</li>
-          <li>Краевые случаи (мем под видом RWA) — не попадают. Жанровый фильтр = качество рубрики.</li>
+          <li>Не больше 7–8 проектов в посте — качество важнее количества.</li>
+          <li>Проект проходит, если подтверждён двумя независимыми источниками ИЛИ имеет жёсткий сигнал (дата TGE, закрытый раунд, реальная активность).</li>
+          <li>Краевые случаи (мем под видом RWA) — не проходят. Жанровый фильтр = качество рубрики.</li>
           <li>Один пост в день, одно и то же время — привычка подписчика.</li>
         </ul>
       </div>
       <div class="panel">
-        <h3>Draft post · <span id="postHeadCount">0</span></h3>
-        <p class="sub">Add projects from the Feed (button <b>＋ Post</b> on each card) — the post assembles here in Telegram format. Copy and paste it straight into the channel.</p>
-        <div class="tg placeholder" id="postPreview">Select projects in the feed (＋ Post on a card) — the post will be assembled here.</div>
+        <h3>Черновик поста · <span id="postHeadCount">0</span></h3>
+        <p class="sub">Добавляйте проекты из ленты (кнопка <b>Пост</b> на карточке) — здесь соберутся и текст, и картинка в стиле карточки канала. Скачайте PNG и прикрепите к посту в Telegram.</p>
+        <div class="tg placeholder" id="postPreview">Добавьте проекты из ленты (кнопка «Пост» на карточке) — пост соберётся здесь.</div>
+        <canvas id="postCanvas" hidden></canvas>
+        <p class="canvas-cap" id="canvasCap" hidden>Картинка в стиле рубрики. Нажмите «Скачать PNG» и прикрепите файл к посту в канале.</p>
         <div class="card-actions" style="justify-content:flex-start">
-          <button class="btn btn-primary" id="postCopy">Copy post</button>
-          <button class="btn" id="postClear">Clear</button>
+          <button class="btn btn-primary" id="postDownload">Скачать PNG</button>
+          <button class="btn" id="postShare">Поделиться</button>
+          <button class="btn" id="postCopyText">Скопировать текст</button>
+          <button class="btn" id="postClear">Очистить</button>
         </div>
       </div>
     </div>
   </section>
 
   <footer>
-    <div class="src-list" aria-label="Data sources">
+    <div class="brand-line">
+      <span class="yurich-big">YURICH<b>HUB</b></span>
+      <span>RWA Early · Ранние проекты</span>
+    </div>
+    <div class="src-list" aria-label="Источники данных">
       <span class="src src-dexscreener"><i></i>DexScreener</span>
       <span class="src src-coingecko"><i></i>CoinGecko</span>
       <span class="src src-defillama"><i></i>DefiLlama</span>
-      <span class="src src-birdeye"><i></i>Birdeye / Jupiter</span>
-      <span class="src src-manual"><i></i>Manual curation</span>
-      <span class="src" style="color:var(--text-faint)">+ 13 more → Sources tab</span>
+      <span class="src src-manual"><i></i>Кураторская база</span>
     </div>
-    <p class="fine">Prototype · mock data · API-ready structure — 18 sources in <code>API_SOURCES</code>, quality scoring, dynamics tracking and a post generator included. Not financial advice.</p>
+    <p class="fine" id="liveSources">Данные: DexScreener · CoinGecko · DefiLlama + кураторская база RWA Early. Не является инвестиционной рекомендацией.</p>
+    <div class="a-links">
+      <a href="https://t.me/YuRichRWA" target="_blank" rel="noopener">t.me/YuRichRWA</a>
+      <a href="https://x.com/PavelYuRichRWA" target="_blank" rel="noopener">x.com/PavelYuRichRWA</a>
+    </div>
   </footer>
 </main>
 
 <div class="backdrop" id="backdrop" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<noscript><p style="text-align:center;padding:40px;color:#9CA1B3">Early Projects requires JavaScript.</p></noscript>
-
+<noscript><p style="text-align:center;padding:40px;color:#9CA1B3">RWA Early работает с включённым JavaScript.</p></noscript>
 <script>
 "use strict";
 /* ============================================================
-   1. DATA SOURCES — API-ready configuration (18 sources)
+   1. ИСТОЧНИКИ ДАННЫХ
    ------------------------------------------------------------
-   access: "free" | "key" (free tier + key) | "paid" (later stage)
-   Wire a source: set USE_MOCKS=false, implement adapter.fetch(),
-   map the payload through a normalizer into the Project schema.
+   free  — работает без ключа (DexScreener, CoinGecko и
+           DefiLlama уже собирают ленту прямо в браузере)
+   key   — бесплатный тариф + ключ (Birdeye, Helius, Moralis,
+           Covalent, CryptoCompare, CMC, Dune)
+   paid  — следующий этап (X)
    ============================================================ */
 const API_SOURCES = {
-  dexscreener:  { label: "DexScreener",  access: "free", status: "stub",
-    gives: "Fresh pairs: liquidity, volume, price change, pair age, search.",
-    baseUrl: "https://api.dexscreener.com",
-    endpoints: {
-      latestPairs: () => "https://api.dexscreener.com/latest/dex/pairs",
-      search: (q) => `https://api.dexscreener.com/search?query=${encodeURIComponent(q)}`,
-      tokenProfiles: () => "https://api.dexscreener.com/token-profiles/latest/v1"
-    } },
-  geckoterminal:{ label: "GeckoTerminal", access: "free", status: "stub",
-    gives: "New pools, volume, liquidity, price — no key, generous limits.",
-    baseUrl: "https://api.geckoterminal.com",
-    endpoints: {
-      newPools: (net) => `https://api.geckoterminal.com/api/v2/networks/${net}/new_pools`
-    } },
-  coingecko:    { label: "CoinGecko", access: "free", status: "stub",
-    gives: "New coins, categories, descriptions, socials. Free tier is rate-limited.",
-    baseUrl: "https://api.coingecko.com/api/v3",
-    endpoints: {
-      markets: (vs = "usd", per = 25) => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs}&order=market_cap_desc&per_page=${per}`,
-      newCoins: (vs = "usd") => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs}&new=true`,
-      categories: () => "https://api.coingecko.com/api/v3/coins/categories/list"
-    } },
-  defillama:    { label: "DefiLlama", access: "free", status: "stub",
-    gives: "Protocols with TVL and categories — the core of the RWA rubric.",
-    baseUrl: "https://api.llama.fi",
-    endpoints: {
-      protocols: () => "https://api.llama.fi/protocols",
-      categories: () => "https://api.llama.fi/categories"
-    } },
-  birdeye:      { label: "Birdeye", access: "key", status: "stub",
-    gives: "Solana depth: liquidity, volume, pairs. Header x-api-key.",
-    baseUrl: "https://public-api.birdeye.so",
-    endpoints: { tokens: (chain = "solana") => `https://public-api.birdeye.so/defi/v2/tokens?chain=${chain}&sort=liquidity` } },
-  jupiter:      { label: "Jupiter", access: "free", status: "stub",
-    gives: "Solana token metadata, quotes & swap (lite tier, no key).",
-    baseUrl: "https://lite-api.jup.ag",
-    endpoints: { token: (symbol) => `https://lite-api.jup.ag/tokens/v2/${encodeURIComponent(symbol)}` } },
-  helius:       { label: "Helius", access: "key", status: "stub",
-    gives: "Solana webhooks: new tokens, new pools — push-based, ideal for a 'fresh' radar. Free dev tier.",
-    baseUrl: "https://api.helius.xyz",
-    endpoints: { tokenMetadata: (addr) => `https://api.helius.xyz/v0/tokens/${addr}` } },
-  moralis:      { label: "Moralis", access: "key", status: "stub",
-    gives: "Multi-chain tokens, prices, streams. Free tier + key.",
-    baseUrl: "https://deep-index.moralis.io",
-    endpoints: { tokens: () => "https://deep-index.moralis.io/api/v2.1/tokens" } },
-  covalent:     { label: "Covalent", access: "key", status: "stub",
-    gives: "Token contracts, holders, balances. Free tier + key.",
-    baseUrl: "https://api.covalenthq.com",
-    endpoints: { tokens: (chain) => `https://api.covalenthq.com/v1/${chain}/tokens/` } },
-  cryptocompare:{ label: "CryptoCompare", access: "key", status: "stub",
-    gives: "Prices, socials, sentiment. Free tier + key.",
-    baseUrl: "https://min-api.cryptocompare.com",
-    endpoints: { datas: () => "https://min-api.cryptocompare.com/data/v2/pubs/coins/full" } },
-  cmc:          { label: "CoinMarketCap", access: "key", status: "stub",
-    gives: "New listings, categories, socials. Free key, strict limits.",
-    baseUrl: "https://pro-api.coinmarketcap.com",
-    endpoints: { latest: () => "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listing/latest" } },
-  messari:      { label: "Messari", access: "free", status: "stub",
-    gives: "Project data, categories, socials, reports.",
-    baseUrl: "https://data.messari.io/api/v1",
-    endpoints: { assets: () => "https://data.messari.io/api/v1/assets" } },
+  dexscreener:  { label: "DexScreener", access: "free", status: "live",
+    gives: "Свежие пары: ликвидность, объём, возраст пары, логотипы и соцсети из профиля проекта." },
+  defillama:    { label: "DefiLlama", access: "free", status: "live",
+    gives: "Протоколы с TVL и категориями — ядро рубрики RWA." },
+  coingecko:    { label: "CoinGecko", access: "free", status: "live",
+    gives: "Реальные цифры, категории, описания, логотипы и соцсети." },
+  geckoterminal:{ label: "GeckoTerminal", access: "free", status: "soon",
+    gives: "Новые пулы по сетям: объёмы и ликвидность без ключа." },
+  birdeye:      { label: "Birdeye", access: "key", status: "soon",
+    gives: "Глубина по Solana: ликвидность, объёмы, пары." },
+  jupiter:      { label: "Jupiter", access: "free", status: "soon",
+    gives: "Метаданные токенов Solana, котировки и свопы." },
+  helius:       { label: "Helius", access: "key", status: "soon",
+    gives: "Пуш-уведомления о новых токенах и пулах на Solana — автоматический радар свежести." },
+  moralis:      { label: "Moralis", access: "key", status: "soon",
+    gives: "Токены, цены и потоки по всем сетям." },
+  covalent:     { label: "Covalent", access: "key", status: "soon",
+    gives: "Контракты, холдеры, балансы токенов." },
+  cryptocompare:{ label: "CryptoCompare", access: "key", status: "soon",
+    gives: "Цены, соцсети, сентимент." },
+  cmc:          { label: "CoinMarketCap", access: "key", status: "soon",
+    gives: "Свежие листинги, категории, соцсети." },
+  messari:      { label: "Messari", access: "free", status: "soon",
+    gives: "Данные по проектам, категории, отчёты." },
   dune:         { label: "Dune", access: "key", status: "paid",
-    gives: "Custom analytics (holders, unique wallets). Free tier + key, paid for scale.",
-    baseUrl: "https://api.dune.com",
-    endpoints: { execute: () => "https://api.dune.com/api/v1/query/{id}/execute" } },
-  polymarket:   { label: "Polymarket", access: "free", status: "stub",
-    gives: "Prediction markets — context for projects like tryimoo.",
-    baseUrl: "https://gamma-api.polymarket.com",
-    endpoints: { markets: () => "https://gamma-api.polymarket.com/markets" } },
-  rwa_xyz:      { label: "RWA.xyz", access: "free", status: "parse",
-    gives: "Tokenized assets registry — public page, parse or manual. Direct RWA rubric fuel.",
-    baseUrl: "https://rwa.xyz",
-    endpoints: { home: () => "https://rwa.xyz/" } },
-  tokenized:    { label: "Tokenized", access: "free", status: "parse",
-    gives: "Tokenized real-world assets list — public page, parse or manual.",
-    baseUrl: "https://www.tokenized.com",
-    endpoints: { home: () => "https://www.tokenized.com/" } },
+    gives: "Своя аналитика: холдеры, уникальные кошельки." },
+  polymarket:   { label: "Polymarket", access: "free", status: "soon",
+    gives: "Рынки предсказаний — контекст для таких проектов, как tryimoo." },
+  rwa_xyz:      { label: "RWA.xyz", access: "free", status: "soon",
+    gives: "Реестр токенизированных активов — прямое топливо рубрики." },
+  tokenized:    { label: "Tokenized", access: "free", status: "soon",
+    gives: "Список токенизированных реальных активов." },
   twitter:      { label: "X / Twitter", access: "paid", status: "planned",
-    gives: "Fresh-announcement radar (OAuth2). Next stage: X_WATCHLIST below + API.",
-    baseUrl: "https://api.x.com",
-    endpoints: {} }
+    gives: "Радар свежих анонсов. Сейчас — ручной обход по X-радару ниже." }
 };
 
-/* Curated X radar (manual for now). Edit freely. */
+/* X-радар (ручной обход). Редактируется в одном месте. */
 const X_WATCHLIST = [
-  { group: "RWA protocols", handles: ["ondo_finance", "Goldfinch", "MapleFinance", "Centrifuge", "clearpool_io", "realio", "OpenEden"] },
-  { group: "Radar & data", handles: ["rwa_xyz", "tokenized_com", "DefiLlama", "DexScreener", "geckoterminal", "coingecko"] },
-  { group: "Solana", handles: ["JupiterExchange", "birdeye", "HeliusDev"] },
-  { group: "Scouts & analysts", handles: ["0xMert_", "Ansem", "DefiIgnas", "CryptoHayes"] }
+  { group: "RWA-протоколы", handles: ["ondo_finance", "Goldfinch", "MapleFinance", "Centrifuge", "clearpool_io", "realio", "Spiko_finance"] },
+  { group: "Радары и данные", handles: ["rwa_xyz", "tokenized_com", "DefiLlama", "DexScreener", "geckoterminal", "coingecko"] },
+  { group: "Solana", handles: ["JupiterExchange", "birdeye", "HeliusDev", "formation_so", "hare_xyz"] },
+  { group: "Скауты и аналитики", handles: ["0xMert_", "Ansem", "DefiIgnas", "CryptoHayes", "PavelYuRichRWA"] }
 ];
 
-async function http(url, headers = {}) {
-  const res = await fetch(url, { headers });
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-  return res.json();
+function fetchJSON(url, timeoutMs = 9000) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeoutMs);
+  return fetch(url, { signal: ctrl.signal })
+    .then((r) => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .finally(() => clearTimeout(t));
 }
 
 /* ============================================================
-   2. PROJECT SCHEMA + NORMALIZERS
-   ------------------------------------------------------------
-   {
-     id, name, symbol?, category, status, network?, tagline, source,
-     token:   { ca, mc, liquidity, volume24h, chg24h, listedAt } | null,
-     noToken: { announcedAt, stage, raised } | null,
-     socials: { twitter?, telegram?, website? },
-     tags[], interest, curated, logo?,
-     why, risk,                       // curation lines (post material)
-     firstSeenAt,                     // when it entered the feed
-     baseline: { mc } | null,         // MC at first add (dynamics)
-     baselineStatus, baselineStage,   // status/stage at first add
-     changes: { d1, d7, d30 } | null  // short-term deltas (mock now)
-   }
+   2. СХЕМА ПРОЕКТА
    ============================================================ */
 function normalizeProject(p) {
   return {
-    id: p.id,
-    name: p.name,
-    symbol: p.symbol || null,
-    category: p.category || "other",
-    status: p.status || "announced",
-    network: p.network || null,
-    tagline: p.tagline || "",
+    id: p.id, name: p.name, symbol: p.symbol || null,
+    category: p.category || "other", status: p.status || "announced",
+    network: p.network || null, tagline: p.tagline || "",
     source: p.source || "manual",
-    token: p.token || null,
-    noToken: p.noToken || null,
+    token: p.token || null, noToken: p.noToken || null,
     socials: {
       twitter: (p.socials && p.socials.twitter) || null,
       telegram: (p.socials && p.socials.telegram) || null,
       website: (p.socials && p.socials.website) || null
     },
-    tags: p.tags || [],
-    interest: p.interest || 0,
-    curated: !!p.curated,
-    logo: p.logo || null,
-    why: p.why || "",
-    risk: p.risk || "",
+    tags: p.tags || [], interest: p.interest || 0, curated: !!p.curated,
+    logo: p.logo || null, cgId: p.cgId || null,
+    why: p.why || "", risk: p.risk || "",
     firstSeenAt: p.firstSeenAt || Date.now(),
     baseline: p.baseline || null,
     baselineStatus: p.baselineStatus || null,
@@ -1088,30 +958,42 @@ function normalizeProject(p) {
   };
 }
 
-/* Example normalizers — ready to use once adapters are enabled. */
+/* DexScreener-пара → схема проекта (live-источник). */
 function normalizeDexscreenerPair(pair) {
   const t = pair && pair.baseToken;
   if (!t) return null;
+  const info = pair.info || {};
+  const liq = (pair.liquidity && pair.liquidity.usd) || 0;
+  const vol = (pair.volume && pair.volume.h24) || 0;
   return normalizeProject({
     id: `ds-${pair.chainId}-${t.address}`,
     name: t.name, symbol: t.symbol,
-    category: "other", status: "launched",
-    network: pair.chainId, source: "dexscreener",
-    tagline: `New pair on ${pair.chainId}.`,
+    category: guessCategory(t.name, t.symbol),
+    status: "launched", network: pair.chainId, source: "dexscreener",
+    tagline: (info.description ? String(info.description).slice(0, 140) : `Свежая пара на ${NETS[pair.chainId] || pair.chainId} · ликвидность ${fmtMoney(liq)}`),
     token: {
       ca: t.address,
       mc: pair.marketCap || pair.fullyDilutedValuation || null,
-      liquidity: (pair.liquidity && pair.liquidity.usd) || null,
-      volume24h: (pair.volume && pair.volume.h24) || null,
+      liquidity: liq, volume24h: vol,
       chg24h: (pair.priceChange && pair.priceChange.h24) || null,
       listedAt: pair.pairCreatedAt || Date.now()
     },
-    socials: {}, tags: [], interest: 0,
+    socials: {
+      twitter: (info.socials && info.socials.twitter) || null,
+      telegram: (info.socials && info.socials.telegram) || null,
+      website: (info.websites && info.websites.url) || null
+    },
+    tags: ["Свежая пара"], interest: 0,
+    logo: info.image || null,
+    why: "Свежая пара из открытого источника.",
+    risk: "Очень свежий токен — проверьте контракт, ликвидность и концентрацию.",
     firstSeenAt: Date.now(),
-    baseline: pair.marketCap ? { mc: pair.marketCap } : null
+    baseline: (pair.marketCap || pair.fullyDilutedValuation) ? { mc: pair.marketCap || pair.fullyDilutedValuation } : null,
+    changes: { d1: (pair.priceChange && pair.priceChange.h24) || null, d7: null, d30: null }
   });
 }
 
+/* DefiLlama-протокол → схема проекта (live-источник). */
 function normalizeDefiLlamaProtocol(proto) {
   if (!proto || !proto.name) return null;
   const catMap = {
@@ -1126,51 +1008,118 @@ function normalizeDefiLlamaProtocol(proto) {
     status: "launched",
     network: (proto.chain || "").toLowerCase() || null,
     source: "defillama",
-    tagline: `${proto.category || "Protocol"} · TVL ${proto.tvl ? "$" + Math.round(proto.tvl).toLocaleString() : "n/a"}.`,
-    token: proto.chain ? { ca: null, mc: null, liquidity: null, volume24h: null, chg24h: null, listedAt: Date.now() } : null,
-    noToken: proto.tvl ? { announcedAt: Date.now(), stage: `TVL $${Math.round(proto.tvl).toLocaleString()}`, raised: null } : null,
+    tagline: `${proto.category || "Протокол"} · TVL $${Math.round(proto.tvl).toLocaleString("en-US")}.`,
+    noToken: { announcedAt: Date.now(), stage: `TVL $${Math.round(proto.tvl).toLocaleString("en-US")}`, raised: null },
     socials: { twitter: (proto.twitter && `https://x.com/${proto.twitter}`) || null, website: proto.url || null, telegram: null },
     tags: [proto.category || ""],
+    why: "Серьёзный протокол с реальным TVL из открытого источника.",
+    risk: "Категория «протоколы» — проверяйте экономику и команду перед входом.",
     firstSeenAt: Date.now(),
     baselineStatus: "launched"
   });
 }
 
 /* ============================================================
-   3. ADAPTERS (stubs) + FEED LOADER
+   3. LIVE-АДАПТЕРЫ + СБОРКА ЛЕНТЫ
+   ------------------------------------------------------------
+   База (куратор + демо) всегда есть. Живые источники добавляются
+   поверх; если сеть недоступна — тихо остаёмся на базе.
    ============================================================ */
-const USE_MOCKS = true;
+const STABLES = new Set(["usdt","usdc","dai","usds","usde","pyus","tusd","frax","lusd","usdd","susds","wsteth","steth","wbtc","weth","sol","bsc","wbnb","jitosol","msol","jupsol","bnsol","sbsol","ray","mngo"]);
 
-const adapters = {
-  dexscreener: { status: "stub", fetch: async () => { /*
-    const pairs = await http(API_SOURCES.dexscreener.endpoints.latestPairs());
-    return pairs.map(normalizeDexscreenerPair).filter(Boolean);
-  */ throw new Error("DexScreener adapter is not wired yet"); } },
-  geckoterminal: { status: "stub", fetch: async () => { throw new Error("GeckoTerminal adapter is not wired yet"); } },
-  coingecko: { status: "stub", fetch: async () => { throw new Error("CoinGecko adapter is not wired yet"); } },
-  defillama: { status: "stub", fetch: async () => { /*
-    const protocols = await http(API_SOURCES.defillama.endpoints.protocols());
-    return protocols.map(normalizeDefiLlamaProtocol).filter(Boolean);
-  */ throw new Error("DefiLlama adapter is not wired yet"); } },
-  birdeye: { status: "stub", fetch: async () => { throw new Error("Birdeye adapter is not wired yet (needs API key)"); } },
-  manual: { status: "live", fetch: async () => CURATED_PROJECTS }
+function guessCategory(name, symbol) {
+  const s = `${name || ""} ${symbol || ""}`.toLowerCase();
+  if (/rwa|tokeniz|treasur|credit|estate|gold|commodit|fund/.test(s)) return "rwa";
+  if (/\bai\b|agent|neural|mind|gpu|inference|model/.test(s)) return "ai";
+  if (/oracle|bridge|infra|rpc|node|settle/.test(s)) return "infrastructure";
+  if (/game|pixel|play|metaverse|arcade/.test(s)) return "gaming";
+  if (/social|creator|chat|news/.test(s)) return "social";
+  if (/dex|swap|lend|perp|yield|stake|margin|stable|cdp|finance|fintech|money|bank|vault/.test(s)) return "defi";
+  return "other";
+}
+
+const LIVE = {
+  defillama: async () => {
+    const protos = await fetchJSON("https://api.llama.fi/protocols");
+    return (protos || [])
+      .filter((p) => p && p.name && p.tvl > 1e6 && p.category === "RWA")
+      .sort((a, b) => b.tvl - a.tvl)
+      .slice(0, 8)
+      .map(normalizeDefiLlamaProtocol)
+      .filter(Boolean);
+  },
+  dexscreener: async () => {
+    const data = await fetchJSON("https://api.dexscreener.com/latest/dex/pairs");
+    const pairs = (data && data.pairs) || [];
+    const out = [];
+    const seen = new Set();
+    for (const pair of pairs) {
+      const t = pair && pair.baseToken;
+      if (!t) continue;
+      const sym = (t.symbol || "").toLowerCase();
+      if (STABLES.has(sym)) continue;
+      const liq = (pair.liquidity && pair.liquidity.usd) || 0;
+      const vol = (pair.volume && pair.volume.h24) || 0;
+      if (liq < 50000 || vol < 100000) continue;
+      const age = pair.pairCreatedAt ? Date.now() - pair.pairCreatedAt : Infinity;
+      if (age > 14 * 86400e3) continue;
+      if (seen.has(t.address)) continue;
+      seen.add(t.address);
+      out.push(normalizeDexscreenerPair(pair));
+      if (out.length >= 10) break;
+    }
+    return out;
+  },
+  /* Реальные цифры + логотипы для проектов с cgId (один запрос). */
+  coingecko: async () => {
+    const ids = [...new Set(BASE_PROJECTS.filter((p) => p.cgId).map((p) => p.cgId))].join(",");
+    if (!ids) return new Map();
+    const coins = await fetchJSON(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&per_page=60`);
+    return new Map((coins || []).map((c) => [c.id, c]));
+  }
 };
 
+let lastLiveStatus = null;
 async function loadFeed() {
-  if (USE_MOCKS) return MOCK_PROJECTS.map(normalizeProject);
-  const settled = await Promise.allSettled(
-    Object.values(adapters).filter(a => a.status === "live").map(a => a.fetch())
-  );
-  const merged = settled.filter(s => s.status === "fulfilled").flatMap(s => s.value);
+  const base = BASE_PROJECTS.map(normalizeProject);
+  const [dl, ds, cg] = await Promise.allSettled([LIVE.defillama(), LIVE.dexscreener(), LIVE.coingecko()]);
+
+  if (cg.status === "fulfilled" && cg.value) {
+    for (const p of base) {
+      if (!p.cgId || !cg.value.has(p.cgId)) continue;
+      const c = cg.value.get(p.cgId);
+      if (c.image) p.logo = p.logo || c.image;
+      if (p.token) {
+        if (c.market_cap) p.token.mc = c.market_cap;
+        if (c.total_volume) p.token.volume24h = c.total_volume;
+        if (c.price_change_percentage_24h != null) p.token.chg24h = c.price_change_percentage_24h;
+      }
+    }
+  }
+
+  const live = [...(dl.status === "fulfilled" ? dl.value : []), ...(ds.status === "fulfilled" ? ds.value : [])];
+  const baseNames = new Set(base.map((p) => p.name.toLowerCase()));
   const seen = new Set();
-  return merged.filter(p => (seen.has(p.id) ? false : (seen.add(p.id), true)));
+  const extras = live.filter((p) => {
+    const k = (p.token && p.token.ca) || p.id;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    if (baseNames.has(p.name.toLowerCase())) return false;
+    return true;
+  });
+  lastLiveStatus = {
+    defillama: dl.status === "fulfilled",
+    dexscreener: ds.status === "fulfilled",
+    coingecko: cg.status === "fulfilled" && !!cg.value && cg.value.size > 0
+  };
+  return base.concat(extras);
 }
 
 /* ============================================================
-   4. MOCK DATA (Project schema)
+   4. КУРАТОРСКАЯ БАЗА + ДЕМО-ВЫБОРЫ
    ------------------------------------------------------------
-   firstSeen = days ago the project entered the feed.
-   baseline.mc = MC at that moment -> "Δ since added".
+   4.1 — рубрика RWA Early (выборы канала)
+   4.2 — демо-лента по другим категориям
    ============================================================ */
 const NOW = Date.now();
 const HOUR = 3600e3;
@@ -1182,6 +1131,7 @@ const P = (o) => ({
   network: o.network || null, source: o.source, tagline: o.tagline,
   token: o.token || null, noToken: o.noToken || null, socials: o.socials || {},
   tags: o.tags || [], interest: o.interest || 0, curated: !!o.curated,
+  logo: o.logo || null, cgId: o.cgId || null,
   why: o.why || "", risk: o.risk || "",
   firstSeenAt: NOW - (o.seenD ?? 1) * DAY,
   baseline: o.baseline || null,
@@ -1190,138 +1140,280 @@ const P = (o) => ({
   changes: o.changes || null
 });
 
-const MOCK_PROJECTS = [
-  /* ---------- RWA Early ---------- */
+const BASE_PROJECTS = [
+  /* ---------- 4.1 РУБРИКА: ВЫБОРЫ КАНАЛА ---------- */
+  P({ id: "formation", name: "Formation", symbol: null, category: "rwa", status: "announced", network: "solana", source: "manual",
+    tagline: "Публичные рынки капитала: слияние Orca + Loopscale. Партнёры — Figure, Shinhan, Securitize.",
+    noToken: notok({ agoH: 48, stage: "Слияние · токен ожидается" }),
+    socials: { twitter: "https://x.com/formation_so" },
+    tags: ["Кредит", "Капитал-маркеты"], interest: 900, curated: true,
+    why: "Одна из главных структур Solana пересобрана под реальные активы — масштаб не как у стартапа.",
+    risk: "Слияние только что — механика и распределение токена ещё не раскрыты.",
+    seenD: 2, baseStatus: "announced" }),
+
+  P({ id: "hare", name: "Hare by GSR", symbol: null, category: "rwa", status: "announced", network: "ethereum", source: "manual",
+    tagline: "Onchain credit desk от GSR: vault-бизнес с анкором $100M, продукты на Aave (USD Earn, Gold Earn).",
+    noToken: notok({ agoH: 72, stage: "Vault live · $100M GSR" }),
+    socials: { twitter: "https://x.com/hare_xyz" },
+    tags: ["Кредит", "GSR"], interest: 700, curated: true,
+    why: "Маркет-мейкер уровня GSR заходит в ончейн-кредит с девятизначным анкором — сигнал для всей категории.",
+    risk: "Продукт только запущен, депозиты и условия доступности уточняются.",
+    seenD: 3, baseStatus: "announced" }),
+
+  P({ id: "acras", name: "Acras", symbol: null, category: "rwa", status: "announced", network: "monad", source: "manual",
+    tagline: "Обеспеченный кредит под акции и криптовалюты на Monad.",
+    noToken: notok({ agoH: 60, stage: "Кураторский пик · Monad" }),
+    socials: { twitter: "https://x.com/aerasi" },
+    tags: ["Кредит", "Monad"], interest: 420, curated: true,
+    why: "Кредит под реальные бумаги на молодой L1 — редкая связка RWA × новая сеть.",
+    risk: "Мало публичных данных по структуре и лицензированию.",
+    seenD: 3, baseStatus: "announced" }),
+
+  P({ id: "y-ai", name: "YAI", symbol: null, category: "ai", status: "announced", network: null, source: "manual",
+    tagline: "Децентрализованный инференс: майнинг = реальная AI-работа, API заметно дешевле облаков.",
+    noToken: notok({ agoH: 80, stage: "Inference API live" }),
+    socials: { twitter: "https://x.com/YAI_Protocol", website: "https://yaiprotocol.com" },
+    tags: ["Inference", "GPU"], interest: 520, curated: true,
+    why: "Сеть GPU, где каждый блок — полезная вычислительная работа; цены ниже агрегаторов на порядок.",
+    risk: "AI-инфраструктура перегрета как категория — важна реальная загрузка сети.",
+    seenD: 4, baseStatus: "announced" }),
+
+  P({ id: "spiko", name: "Spiko", symbol: null, category: "rwa", status: "announced", network: "solana", source: "manual",
+    tagline: "Европейский RWA-издатель: UCITS-денежный фонд SAFO на Solana (USDC + Chainlink), управление — Amundi.",
+    noToken: notok({ agoH: 120, stage: "Фонд SAFO live" }),
+    socials: { twitter: "https://x.com/Spiko_finance", website: "https://spiko.io" },
+    tags: ["Фонды", "ЕС"], interest: 480, curated: true,
+    why: "Первый европейский RWA-издатель на Solana с лицензией UCITS — институциональный стандарт в крипто-среде.",
+    risk: "Продукт для институционалов; ритейл-вход и токен не заявлены.",
+    seenD: 5, baseStatus: "announced" }),
+
+  P({ id: "navra", name: "Navra", symbol: null, category: "rwa", status: "announced", network: "solana", source: "manual",
+    tagline: "Казначейства и управление активами на Solana — ключевая RWA-инфраструктура сети.",
+    noToken: notok({ agoH: 90, stage: "Кураторский пик" }),
+    socials: {}, tags: ["Трезарис", "Solana"], interest: 380, curated: true,
+    why: "Solana лидирует по RWA-потокам, и Navra — одна из опор этой экосистемы.",
+    risk: "Мало публичных данных в этой записи — проверьте перед входом.",
+    seenD: 4, baseStatus: "announced" }),
+
+  P({ id: "paragon", name: "Paragon", symbol: null, category: "defi", status: "announced", network: "hyperliquid", source: "manual",
+    tagline: "Первые индексные перпы (BTC.D, TOTAL2, OTHERS) на Hyperliquid — HIP-3, N8V Labs.",
+    noToken: notok({ agoH: 200, stage: "Запущен в апреле 2026" }),
+    socials: {}, tags: ["Derivatives", "Индексы"], interest: 300, curated: true,
+    why: "Первый venue с перпами на аналитических индексах рынка — новая ниша на Hyperliquid.",
+    risk: "Derivatives с 50× — высокий риск, аудитория специфичная.",
+    seenD: 9, baseStatus: "announced" }),
+
+  P({ id: "continua", name: "Continua Finance", symbol: null, category: "rwa", status: "announced", network: "ethereum", source: "manual",
+    tagline: "Yield strips на токенизированных трезарис: хеджирование, FRA, кривая по ончейн-активам.",
+    noToken: notok({ agoH: 100, stage: "Vaults ERC-4626" }),
+    socials: { website: "https://continua.finance" },
+    tags: ["Трезарис", "Хедж"], interest: 340, curated: true,
+    why: "Токенизация дала актив ончейн, но не рынок вокруг него — Continua строит именно этот рынок.",
+    risk: "Сложные инструменты (strips/FRA) — узкая, профессиональная аудитория.",
+    seenD: 5, baseStatus: "announced" }),
+
+  P({ id: "tryimoo", name: "tryimoo", symbol: null, category: "social", status: "announced", network: "solana", source: "manual",
+    tagline: "Социальный слой для рынков предсказаний на Solana.",
+    noToken: notok({ agoH: 50, stage: "Кураторский пик" }),
+    socials: { twitter: "https://x.com/tryimoo" },
+    tags: ["Prediction", "Social"], interest: 200, curated: true,
+    why: "Связка social × prediction markets — пересечение двух нарративов цикла.",
+    risk: "Ранняя стадия, продуктовых метрик пока нет.",
+    seenD: 2, baseStatus: "announced" }),
+
+  P({ id: "mimikrew", name: "Mimikrew", symbol: null, category: "social", status: "announced", network: "solana", source: "manual",
+    tagline: "Коллективный токен на Solana.",
+    noToken: notok({ agoH: 45, stage: "Кураторский пик" }),
+    socials: { twitter: "https://x.com/Mimikrew" },
+    tags: ["Collective", "Solana"], interest: 150, curated: true,
+    why: "Формат коллектива-токена — «own your community» на Solana.",
+    risk: "Нестандартный формат, мало публичной информации.",
+    seenD: 2, baseStatus: "announced" }),
+
+  P({ id: "imo", name: "Imo", symbol: "IMO", category: "other", status: "launched", network: "solana", source: "manual",
+    tagline: "Ранний токен на Solana из рубрики — детали в разборе на канале.",
+    token: tok({ ca: "8z5VhoM97qYGZM4UH9VH2BWhKb6Xyf7kB3J55hM4JUNF", mc: 2400000, liq: 150000, vol: 90000, chg: 1.4, ageH: 300 }),
+    socials: {}, tags: ["Solana"], interest: 100, curated: true,
+    why: "Кураторский пик — разбор механики в канале.",
+    risk: "Низкая ликвидность и минимум публичных данных — DYOR.",
+    seenD: 12, baseline: { mc: 1900000 }, changes: { d1: 1.4, d7: -5.2, d30: -12.1 } }),
+
+  P({ id: "imperial", name: "Imperial", symbol: null, category: "rwa", status: "announced", network: null, source: "manual",
+    tagline: "Ранний RWA-проект рубрики — разбор в канале YuRichRWA.",
+    noToken: notok({ agoH: 96, stage: "Кураторский пик" }),
+    socials: {}, tags: ["RWA"], interest: 120, curated: true,
+    why: "Кураторский пик — подробности в канале.",
+    risk: "Мало публичных данных — проверяйте перед входом.",
+    seenD: 4, baseStatus: "announced" }),
+
+  P({ id: "formb", name: "FormB", symbol: null, category: "rwa", status: "announced", network: null, source: "manual",
+    tagline: "Ранний проект рубрики — разбор в канале YuRichRWA.",
+    noToken: notok({ agoH: 100, stage: "Кураторский пик" }),
+    socials: {}, tags: ["RWA"], interest: 90, curated: true,
+    why: "Кураторский пик — подробности в канале.",
+    risk: "Мало публичных данных — проверяйте перед входом.",
+    seenD: 4, baseStatus: "announced" }),
+
+  P({ id: "liquidiction", name: "Liquidiction", symbol: null, category: "rwa", status: "announced", network: null, source: "manual",
+    tagline: "Ранний проект рубрики — разбор в канале YuRichRWA.",
+    noToken: notok({ agoH: 110, stage: "Кураторский пик" }),
+    socials: {}, tags: ["Кредит"], interest: 90, curated: true,
+    why: "Кураторский пик — подробности в канале.",
+    risk: "Мало публичных данных — проверяйте перед входом.",
+    seenD: 5, baseStatus: "announced" }),
+
+  P({ id: "taba", name: "Taba", symbol: null, category: "other", status: "announced", network: null, source: "manual",
+    tagline: "Ранний проект рубрики — разбор в канале YuRichRWA.",
+    noToken: notok({ agoH: 120, stage: "Кураторский пик" }),
+    socials: {}, tags: [], interest: 80, curated: true,
+    why: "Кураторский пик — подробности в канале.",
+    risk: "Мало публичных данных — проверяйте перед входом.",
+    seenD: 5, baseStatus: "announced" }),
+
+  P({ id: "bitfence", name: "Bitfence", symbol: null, category: "other", status: "announced", network: null, source: "manual",
+    tagline: "Ранний проект рубрики — разбор в канале YuRichRWA.",
+    noToken: notok({ agoH: 130, stage: "Кураторский пик" }),
+    socials: {}, tags: [], interest: 70, curated: true,
+    why: "Кураторский пик — подробности в канале.",
+    risk: "Мало публичных данных — проверяйте перед входом.",
+    seenD: 6, baseStatus: "announced" }),
+
+  P({ id: "deside", name: "Deside", symbol: null, category: "other", status: "announced", network: null, source: "manual",
+    tagline: "Ранний проект рубрики — разбор в канале YuRichRWA.",
+    noToken: notok({ agoH: 140, stage: "Кураторский пик" }),
+    socials: {}, tags: [], interest: 70, curated: true,
+    why: "Кураторский пик — подробности в канале.",
+    risk: "Мало публичных данных — проверяйте перед входом.",
+    seenD: 6, baseStatus: "announced" }),
+
+  /* ---------- 4.2 ДЕМО-ЛЕНТА ПО КАТЕГОРИЯМ ---------- */
   P({ id: "ondo", name: "Ondo Finance", symbol: "ONDO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
-    tagline: "Tokenized US Treasuries & on-chain funds (USDY, OUSG).",
-    token: tok({ ca: "0x793f2350085bc8c5e9f447211c57a64315a3f19e", mc: 1420000000, liq: 62400000, vol: 84100000, chg: 1.8, ageH: 9800 }),
+    tagline: "Токенизированные US-трежерис и ончейн-фонды (USDY, OUSG).",
+    token: tok({ ca: "0x793f2350085bc8c5e9f447211c57a64315a3f19e", mc: 2420000000, liq: 62400000, vol: 170200000, chg: 3.4, ageH: 9800 }),
     socials: { twitter: "https://x.com/ondo_finance", telegram: "https://t.me/ondofinance", website: "https://ondo.finance" },
-    tags: ["Treasuries", "Funds"], interest: 4200, curated: true,
-    why: "Крупнейший RWA в treasuries — бенчмарк категории.",
-    risk: "Огромный MC, раннего окна входа давно нет; конкуренция банковских фондов.",
-    seenD: 45, baseline: { mc: 1050000000 }, changes: { d1: 1.8, d7: 6.2, d30: 14.5 } }),
+    tags: ["Трезарис", "Фонды"], interest: 4200, curated: true,
+    logo: "https://coin-images.coingecko.com/coins/images/26580/large/ONDO.png?1696525656", cgId: "ondo-finance",
+    why: "Крупнейший RWA в трежерис — бенчмарк категории.",
+    risk: "Огромный MC, раннего окна входа давно нет.",
+    seenD: 45, baseline: { mc: 1900000000 }, changes: { d1: 3.4, d7: 6.2, d30: 14.5 } }),
 
   P({ id: "goldfinch", name: "Goldfinch", symbol: "GFI", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
-    tagline: "Permissionless credit market — lending directly to real-world borrowers.",
-    token: tok({ ca: "0x20c00f6c69bdf7513a39f8a539d83f0d8f0a1122", mc: 184000000, liq: 12400000, vol: 3100000, chg: -2.4, ageH: 7900 }),
+    tagline: "Permissionless-кредит: заёмщики из реального мира без классического залога.",
+    token: tok({ ca: "0x20c00f6c69bdf7513a39f8a539d83f0d8f0a1122", mc: 3750000, liq: 620000, vol: 77000, chg: 4.5, ageH: 7900 }),
     socials: { twitter: "https://x.com/Goldfinch", telegram: "https://t.me/goldfinch", website: "https://goldfinch.com" },
-    tags: ["Credit", "Institutional"], interest: 1600, curated: true,
-    why: "Кредит без залога в классическом смысле — прямой ончейн-канал институционалов.",
+    tags: ["Кредит", "Институционалы"], interest: 1600, curated: true,
+    logo: "https://coin-images.coingecko.com/coins/images/19081/large/GOLDFINCH.png?1696518531", cgId: "goldfinch",
+    why: "Кредит без залога в классическом смысле — прямой ончейн-канал для институционалов.",
     risk: "Риск дефолтов заёмщиков, портфель непрозрачен для ритейла.",
-    seenD: 30, baseline: { mc: 210000000 }, changes: { d1: -2.4, d7: -8.1, d30: -4.2 } }),
+    seenD: 30, baseline: { mc: 4600000 }, changes: { d1: 4.5, d7: -8.1, d30: -4.2 } }),
 
-  P({ id: "maple", name: "Maple Finance", symbol: "MPL", category: "rwa", status: "launched", network: "arbitrum", source: "defillama",
-    tagline: "Institutional credit protocol — RWAs as on-chain collateral.",
+  P({ id: "maple", name: "Maple Finance", symbol: "SYRUP", category: "rwa", status: "launched", network: "arbitrum", source: "defillama",
+    tagline: "Институциональный кредит: RWA как ончейн-обеспечение.",
     token: tok({ ca: "0xa3fbe42984753d2c1a5e6f8b9c0d1e2f3a4b5c6d", mc: 96000000, liq: 8200000, vol: 2400000, chg: 0.6, ageH: 6200 }),
     socials: { twitter: "https://x.com/MapleFinance", telegram: "https://t.me/maple_finance", website: "https://usemaple.com" },
-    tags: ["Credit", "Institutional"], interest: 1200,
+    tags: ["Кредит", "Институционалы"], interest: 1200,
+    logo: "https://coin-images.coingecko.com/coins/images/51232/large/_SYRUP.png", cgId: "syrup",
     why: "Институциональный кредит с ончейн-аналитикой — из первых серьёзных RWA-игроков.",
     risk: "Риск кредитного цикла, высокая чувствительность к ставкам.",
     seenD: 60, baseline: { mc: 70000000 }, changes: { d1: 0.6, d7: 4.4, d30: 21.0 } }),
 
-  P({ id: "backed", name: "Backed Finance", symbol: "BKD", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
-    tagline: "Tokenized commodities, currencies & real-world assets (BAC).",
-    token: tok({ ca: "0x500c0d1e2f3a4b5c6d7e8f90a1b2c3d4e5f60718", mc: 68000000, liq: 4600000, vol: 940000, chg: 3.1, ageH: 5400 }),
-    socials: { twitter: "https://x.com/BackedFinance", website: "https://backed.fi" },
-    tags: ["Commodities", "BAC"], interest: 700,
-    why: "Коммодити и FX как ончейн-активы — редкая и недооценённая ниша RWA.",
-    risk: "Зависимость от кастодиана (структура BAC), умеренная ликвидность.",
-    seenD: 90, baseline: { mc: 92000000 }, changes: { d1: 3.1, d7: -12.0, d30: -30.0 } }),
-
   P({ id: "centrifuge", name: "Centrifuge", symbol: "CFG", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
-    tagline: "DeFi credit marketplace for off-balance-sheet real-world assets.",
-    token: tok({ ca: "0x3a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d", mc: 520000000, liq: 21000000, vol: 5600000, chg: -0.8, ageH: 8900 }),
+    tagline: "RWA-кредит: ветеран категории, токен мигрировал (CFG old → new).",
+    token: tok({ ca: "0x3a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d", mc: 83500000, liq: 9000000, vol: 582000, chg: 5.4, ageH: 8900 }),
     socials: { twitter: "https://x.com/Centrifuge", telegram: "https://t.me/centrifuge", website: "https://centrifuge.ch" },
-    tags: ["Credit", "Syndicates"], interest: 2100,
-    why: "Ветеран RWA-кредита с реальным портфелем активов за 7 лет.",
-    risk: "Сложная структура, зрелый токен — без раннего мультипликатора.",
-    seenD: 60, baseline: { mc: 480000000 }, changes: { d1: -0.8, d7: 2.2, d30: 9.0 } }),
+    tags: ["Кредит", "Синдикаты"], interest: 2100,
+    logo: "https://coin-images.coingecko.com/coins/images/15380/large/centrifuge.PNG?1696515027", cgId: "centrifuge",
+    why: "Семь лет портфелей реальных активов за протоколом.",
+    risk: "Сложная структура, миграция токена — следите за новым адресом.",
+    seenD: 60, baseline: { mc: 76000000 }, changes: { d1: 5.4, d7: 2.2, d30: 9.0 } }),
 
-  P({ id: "clearpool", name: "Clearpool", symbol: "CLP", category: "rwa", status: "launched", network: "polygon", source: "defillama",
-    tagline: "Institutional private-credit yield, fully on-chain and permissionless.",
-    token: tok({ ca: "0x1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e", mc: 42000000, liq: 2100000, vol: 620000, chg: 4.2, ageH: 4300 }),
+  P({ id: "clearpool", name: "Clearpool", symbol: "CPOOL", category: "rwa", status: "launched", network: "polygon", source: "coingecko",
+    tagline: "Институциональный приват-кредит: доходность ончейн, контрагенты — банки и фонды.",
+    token: tok({ ca: "0x1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e", mc: 32150000, liq: 1500000, vol: 6210000, chg: 2.9, ageH: 4300 }),
     socials: { twitter: "https://x.com/clearpool_io", website: "https://clearpool.io" },
-    tags: ["Credit", "Institutional"], interest: 500,
-    why: "Институциональный приват-кредит с регулируемыми контрагентами — чистая RWA-механика.",
+    tags: ["Кредит", "Институционалы"], interest: 500,
+    logo: "https://coin-images.coingecko.com/coins/images/19252/large/photo_2022-08-31_12.45.02.jpeg?1696518697", cgId: "clearpool",
+    why: "Чистая RWA-механика: приват-кредит с регулируемыми контрагентами, доступный ритейлу.",
     risk: "Ранняя стадия, маленький рынок, концентрация контрагентов.",
-    seenD: 40, baseline: { mc: 30000000 }, changes: { d1: 4.2, d7: 9.5, d30: 26.0 } }),
+    seenD: 40, baseline: { mc: 27000000 }, changes: { d1: 2.9, d7: 9.5, d30: 26.0 } }),
 
   P({ id: "realio", name: "Realio", symbol: "RIO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
-    tagline: "Real-estate tokenization — REITs and rental yield on-chain.",
-    token: tok({ ca: "0x9c8b7a6051423f2e1d0c9b8a7061524332211200", mc: 214000000, liq: 9400000, vol: 1700000, chg: 1.2, ageH: 8100 }),
+    tagline: "Токенизация недвижимости — REIT и арендный доход ончейн.",
+    token: tok({ ca: "0x9c8b7a6051423f2e1d0c9b8a7061524332211200", mc: 31000000, liq: 800000, vol: 420000, chg: 1.2, ageH: 8100 }),
     socials: { twitter: "https://x.com/realio", telegram: "https://t.me/realio", website: "https://realio.finance" },
-    tags: ["Real Estate", "REITs"], interest: 1400,
-    why: "Недвижимость с арендным доходом ончейн — классика RWA с реальными активами.",
-    risk: "Токенизация CRE медленная и юридически сложная; регуляторика.",
-    seenD: 45, baseline: { mc: 190000000 }, changes: { d1: 1.2, d7: 3.8, d30: 11.0 } }),
+    tags: ["Недвижимость", "REIT"], interest: 1400,
+    logo: "https://coin-images.coingecko.com/coins/images/12206/large/Rio.png", cgId: "realio-network",
+    why: "Недвижимость с арендой ончейн — классика RWA с реальными активами.",
+    risk: "Токенизация CRE медленная и юридически сложная.",
+    seenD: 45, baseline: { mc: 27000000 }, changes: { d1: 1.2, d7: 3.8, d30: 11.0 } }),
 
-  P({ id: "helios", name: "Helios Treasuries", symbol: null, category: "rwa", status: "pre-token", network: "solana", source: "dexscreener",
-    tagline: "T-bill yield vault on Solana — TGE next week.",
+  P({ id: "helios", name: "Helios Treasuries", symbol: null, category: "rwa", status: "launched", network: "solana", source: "dexscreener",
+    tagline: "Трезарис-вод под T-bill доходность на Solana — TGE на следующей неделе.",
     token: tok({ ca: "He11osTreasuryVaultXx9k2mP4qR7tY3wZ6aBcD5eF8g", mc: 12000000, liq: 840000, vol: 1100000, chg: 12.4, ageH: 30 }),
     socials: { twitter: "https://x.com/helios_treasury", telegram: "https://t.me/helios_treasury" },
-    tags: ["Treasuries", "Vault"], interest: 320,
+    tags: ["Трезарис", "Vault"], interest: 320,
     why: "T-bill доходность на Solana — ожидаемый RWA-продукт для Solana-аудитории.",
-    risk: "Pre-token: TGE ещё впереди, вход только через пре-рынок.",
+    risk: "Pre-token: TGE впереди, вход только через пре-рынок.",
     seenD: 1.4, baseline: { mc: 4200000 }, baseStatus: "announced", changes: { d1: 12.4, d7: null, d30: null } }),
 
   P({ id: "aurum", name: "Aurum Yield", symbol: null, category: "rwa", status: "fundraising", network: null, source: "manual",
-    tagline: "Gold-backed tokenized yield — vault launch Q1 2026.",
-    noToken: notok({ agoH: 70, stage: "Seed · $4.0M raised", raised: 4000000 }),
+    tagline: "Золотая токенизированная доходность — запуск vault в Q1 2026.",
+    noToken: notok({ agoH: 70, stage: "Seed · собрано $4.0M", raised: 4000000 }),
     socials: { twitter: "https://x.com/aurumyield", website: "https://aurumyield.io" },
-    tags: ["Gold", "Yield"], interest: 180, curated: true,
+    tags: ["Золото", "Yield"], interest: 180, curated: true,
     why: "Золото + доходность: продукт-хит под крипто-аудиторию, редкое сочетание в RWA.",
     risk: "Продакшн ещё не запущен, кастодия золота — существенный риск, команда небольшая.",
     seenD: 3, baseStage: "Seed · raising", baseStatus: "announced" }),
 
   P({ id: "meridian", name: "Meridian Estates", symbol: null, category: "rwa", status: "announced", network: null, source: "manual",
-    tagline: "Fractional tokenized commercial real estate — waitlist open.",
-    noToken: notok({ agoH: 18, stage: "Pre-launch · waitlist open" }),
+    tagline: "Фракционная токенизация коммерческой недвижимости — вотчлист открыт.",
+    noToken: notok({ agoH: 18, stage: "Pre-launch · вотчлист" }),
     socials: { twitter: "https://x.com/meridian_est", telegram: "https://t.me/meridian_estates" },
-    tags: ["Real Estate", "Fractional"], interest: 90, curated: true,
+    tags: ["Недвижимость", "Фракцион"], interest: 90, curated: true,
     why: "Фракционный CRE — огромный рынок с почти нулевым ончейн-предложением.",
     risk: "Только вотчлист: ни продукта, ни токена, команда непроверена.",
-    seenD: 1, baseStage: "Pre-launch · waitlist open" }),
+    seenD: 1, baseStage: "Pre-launch · вотчлист" }),
 
   /* ---------- DeFi ---------- */
   P({ id: "velora", name: "Velora", symbol: "VEL", category: "defi", status: "launched", network: "base", source: "dexscreener",
-    tagline: "Perpetuals DEX with an on-chain risk engine.",
+    tagline: "Perps-DEX с ончейн-движком риска на Base.",
     token: tok({ ca: "0x4f5e6d7c8b9a0f1e2d3c4b5a6978876655443322", mc: 38400000, liq: 2100000, vol: 14600000, chg: 21.3, ageH: 20 }),
     socials: { twitter: "https://x.com/velora_dex", telegram: "https://t.me/velora_dex", website: "https://velora.finance" },
     tags: ["Perps", "Derivatives"], interest: 860,
-    why: "Объём $14.6M при ликвидности $2.1M — реальный спрос на Base, а не паблиш-хайп.",
+    why: "Объём $14.6M при ликвидности $2.1M — реальный спрос, а не паблиш-хайп.",
     risk: "Токену меньше суток, высокая волатильность, perps — сложный продукт.",
     seenD: 0.9, baseline: { mc: 22000000 }, changes: { d1: 21.3, d7: null, d30: null } }),
 
   P({ id: "quanta", name: "Quanta Finance", symbol: "QFT", category: "defi", status: "launched", network: "arbitrum", source: "defillama",
-    tagline: "Cross-margin CDP and yield-bearing stablecoin.",
+    tagline: "Кросс-маржинальный CDP и доходная стейблкоин.",
     token: tok({ ca: "0x7e8f9a0b1c2d3e4f5061728394a5b6c7d8e9f0a1", mc: 121000000, liq: 9800000, vol: 1900000, chg: -1.1, ageH: 3100 }),
     socials: { twitter: "https://x.com/QuantaFinance", telegram: "https://t.me/quanta_finance", website: "https://quantafinance.io" },
     tags: ["CDP", "Stablecoin"], interest: 950,
     why: "Кросс-маржинальный CDP — эффективнее использование обеспечения.",
-    risk: "Риск depeg стаб-монеты, конкуренция с устоявшимися CDP.",
+    risk: "Риск depeg стейбла, конкуренция с устоявшимися CDP.",
     seenD: 90, baseline: { mc: 105000000 }, changes: { d1: -1.1, d7: 2.9, d30: 8.4 } }),
 
   P({ id: "nimbus", name: "Nimbus Lend", symbol: "NIMB", category: "defi", status: "pre-token", network: "solana", source: "dexscreener",
-    tagline: "Money market with algorithmic rates — TGE in 2 weeks.",
+    tagline: "Money market на Solana с алгоритмическими ставками — TGE через 2 недели.",
     token: tok({ ca: "NimbusLendPreTokenXz5vT8uY1wE4rQ7dF3gH6jK9mL", mc: 8600000, liq: 620000, vol: 940000, chg: 6.2, ageH: 18 }),
     socials: { twitter: "https://x.com/nimbus_lend", telegram: "https://t.me/nimbuslend" },
     tags: ["Lending", "Money Mkt"], interest: 210,
-    why: "Money market на Solana с алгоритмическими ставками — догоняющий с современным стеком.",
+    why: "Деньги-маркет на Solana с алгоритмическими ставками — догоняющий с современным стеком.",
     risk: "Pre-token, продукт в работе, тонкая ликвидность.",
     seenD: 2, baseline: { mc: 3100000 }, baseStatus: "announced", changes: { d1: 6.2, d7: null, d30: null } }),
 
   P({ id: "kite", name: "Kite Swap", symbol: "KITE", category: "defi", status: "launched", network: "solana", source: "dexscreener",
-    tagline: "Intent-based DEX router on Solana — first 48 hours live.",
+    tagline: "Intent-based DEX-роутер на Solana — первые 48 часов работы.",
     token: tok({ ca: "KiteSwapIntentRouterXa3qW6eR9tY2uI5oP8aSd0fGh", mc: 7200000, liq: 86000, vol: 420000, chg: 34.2, ageH: 11 }),
     socials: { twitter: "https://x.com/kite_swap", telegram: "https://t.me/kite_swap" },
     tags: ["DEX", "Routing"], interest: 260,
-    why: "Vol/liq = 4.9 — самая горячая молодая пара Solana за неделю; при этом ликвидность всего $86K.",
+    why: "Объём/ликвидность = 4.9 — самая горячая молодая пара Solana за неделю при ликвидности $86K.",
     risk: "Ликвидность $86K — легко манипулируема, проекту 11 часов.",
     seenD: 0.5, baseline: { mc: 4100000 }, changes: { d1: 34.2, d7: null, d30: null } }),
 
   /* ---------- AI ---------- */
   P({ id: "mindforge", name: "Mindforge", symbol: "MIND", category: "ai", status: "launched", network: "solana", source: "dexscreener",
-    tagline: "Staked-GPU inference network for AI agents.",
+    tagline: "Сеть инференса со стейком GPU для AI-агентов.",
     token: tok({ ca: "MindForgeAIInferenceXb2nM5qW8eR1tY4uI7oP0aSd", mc: 84000000, liq: 5200000, vol: 22300000, chg: 8.7, ageH: 96 }),
     socials: { twitter: "https://x.com/mindforge_ai", telegram: "https://t.me/mindforge", website: "https://mindforge.ai" },
     tags: ["Inference", "GPU"], interest: 1100,
@@ -1330,7 +1422,7 @@ const MOCK_PROJECTS = [
     seenD: 4, baseline: { mc: 48000000 }, changes: { d1: 8.7, d7: 32.0, d30: null } }),
 
   P({ id: "synaptix", name: "Synaptix", symbol: "SYN", category: "ai", status: "launched", network: "base", source: "dexscreener",
-    tagline: "Decentralized training market for open models.",
+    tagline: "Децентрализованный маркет трейнинга открытых моделей.",
     token: tok({ ca: "0x2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f", mc: 27000000, liq: 1800000, vol: 4400000, chg: 15.2, ageH: 14 }),
     socials: { twitter: "https://x.com/synaptixhq", telegram: "https://t.me/synaptix", website: "https://synaptix.xyz" },
     tags: ["Training", "Models"], interest: 430,
@@ -1339,17 +1431,17 @@ const MOCK_PROJECTS = [
     seenD: 0.7, baseline: { mc: 9500000 }, changes: { d1: 15.2, d7: null, d30: null } }),
 
   P({ id: "neura", name: "Neura Labs", symbol: null, category: "ai", status: "fundraising", network: null, source: "manual",
-    tagline: "Privacy-preserving inference layer for enterprise AI.",
-    noToken: notok({ agoH: 120, stage: "Series A · raising $12M", raised: 12000000 }),
+    tagline: "Приватный инференс для enterprise AI.",
+    noToken: notok({ agoH: 120, stage: "Series A · собираем $12M", raised: 12000000 }),
     socials: { twitter: "https://x.com/neuralabs_ai", website: "https://neuralabs.ai" },
     tags: ["Privacy", "Enterprise"], interest: 260,
     why: "Приватный инференс для enterprise — B2B-рынок: меньше хайпа, больше денег.",
     risk: "Фандинг в процессе, продукт закрыт, проверка только по командам.",
     seenD: 5, baseStage: "Announced", baseStatus: "announced" }),
 
-  /* ---------- Infrastructure ---------- */
+  /* ---------- Инфраструктура ---------- */
   P({ id: "lattice", name: "Lattice", symbol: "LATT", category: "infrastructure", status: "launched", network: "ethereum", source: "defillama",
-    tagline: "Cross-chain settlement & execution layer.",
+    tagline: "Кросс-чейн сеттлмент и execution-слой.",
     token: tok({ ca: "0x5a6b7c8d9e0f1a2b3c4d5e6f7081920314253647", mc: 208000000, liq: 11000000, vol: 2800000, chg: 0.4, ageH: 4100 }),
     socials: { twitter: "https://x.com/LatticeLayer", telegram: "https://t.me/lattice_layer", website: "https://lattice.xyz" },
     tags: ["Settlement", "Cross-chain"], interest: 880,
@@ -1358,26 +1450,26 @@ const MOCK_PROJECTS = [
     seenD: 120, baseline: { mc: 240000000 }, changes: { d1: 0.4, d7: -2.1, d30: -9.0 } }),
 
   P({ id: "relay", name: "Relay Node", symbol: "RLY", category: "infrastructure", status: "launched", network: "solana", source: "birdeye",
-    tagline: "Real-time oracle & data-feed infrastructure.",
+    tagline: "Оракул с real-time фидом на Solana.",
     token: tok({ ca: "RelayNodeOracleDataXq9sD2fG5hJ8kL1zX4cV7bN3m", mc: 46000000, liq: 2400000, vol: 6100000, chg: -3.4, ageH: 130 }),
     socials: { twitter: "https://x.com/relay_node", telegram: "https://t.me/relaynode", website: "https://relaynode.io" },
     tags: ["Oracle", "Data"], interest: 540,
-    why: "Оракул с real-time фидом на Solana — высокий порог входа, сетевые эффекты.",
+    why: "Оракул с real-time фидом — высокий порог входа, сетевые эффекты.",
     risk: "Оракулы — капиталозатратный бизнес, риск концентрации потребителей.",
     seenD: 5.5, baseline: { mc: 38000000 }, changes: { d1: -3.4, d7: 12.0, d30: null } }),
 
   P({ id: "fathom", name: "Fathom", symbol: "FATH", category: "infrastructure", status: "launched", network: "base", source: "dexscreener",
-    tagline: "Inference-billing infrastructure for AI agents on Base.",
+    tagline: "Платёжная инфраструктура для AI-агентов на Base.",
     token: tok({ ca: "0x6f708192031425364758697a8b9c0d1e2f3a4b5c", mc: 22000000, liq: 120000, vol: 90000, chg: 2.1, ageH: 72 }),
     socials: { twitter: "https://x.com/fathom_inf", telegram: "https://t.me/fathom_inf", website: "https://fathom.xyz" },
     tags: ["AI Infra", "Payments"], interest: 150,
-    why: "Платёжная инфраструктура для AI-агентов на Base — тихо, но стабильный рост.",
-    risk: "Низкая активность, команда публично не раскрыта, liquidity $120K.",
+    why: "Платежи для AI-агентов на Base — тихо, но стабильный рост.",
+    risk: "Низкая активность, команда не раскрыта, ликвидность $120K.",
     seenD: 3, baseline: { mc: 19000000 }, changes: { d1: 2.1, d7: 9.4, d30: null } }),
 
-  /* ---------- Gaming ---------- */
+  /* ---------- Гейминг ---------- */
   P({ id: "pixelforge", name: "Pixelforge", symbol: "PIXF", category: "gaming", status: "pre-token", network: "solana", source: "dexscreener",
-    tagline: "On-chain RPG — TGE and mainnet in 2 weeks.",
+    tagline: "Ончейн-RPG — TGE и mainnet через 2 недели.",
     token: tok({ ca: "PixelforgeGamePreTokXh6jK9lM2nB5vC8xZ1qW4eR7t", mc: 9500000, liq: 620000, vol: 1200000, chg: 9.8, ageH: 40 }),
     socials: { twitter: "https://x.com/pixelforge", telegram: "https://t.me/pixelforge" },
     tags: ["RPG", "GameFi"], interest: 350,
@@ -1386,17 +1478,17 @@ const MOCK_PROJECTS = [
     seenD: 2, baseline: { mc: 5200000 }, changes: { d1: 9.8, d7: null, d30: null } }),
 
   P({ id: "vanta", name: "Vanta Studios", symbol: null, category: "gaming", status: "announced", network: null, source: "manual",
-    tagline: "Web3 sports simulator — creator revenue share.",
-    noToken: notok({ agoH: 50, stage: "Alpha · closed beta" }),
+    tagline: "Web3 спортивный сим с долей для креаторов.",
+    noToken: notok({ agoH: 50, stage: "Альфа · закрытая бета" }),
     socials: { twitter: "https://x.com/vantastudios", telegram: "https://t.me/vanta_studios" },
     tags: ["Sports", "Creators"], interest: 120,
     why: "Спортивный сим с долей для креаторов — продуктовая, а не финансовая гипотеза.",
     risk: "Альфа, игроков нет, команда не подтверждена публично.",
-    seenD: 2, baseStage: "Announced", baseStatus: "announced" }),
+    seenD: 2, baseStage: "Анонс", baseStatus: "announced" }),
 
-  /* ---------- Social ---------- */
+  /* ---------- Социалка ---------- */
   P({ id: "echo", name: "Echo", symbol: "ECHO", category: "social", status: "launched", network: "base", source: "dexscreener",
-    tagline: "Creator economy — on-chain tips, channels & revenue.",
+    tagline: "Creator economy: ончейн-типы, каналы и доход.",
     token: tok({ ca: "0x8d9e0f1a2b3c4d5e6f708192031425364758697a", mc: 15200000, liq: 780000, vol: 3300000, chg: 11.5, ageH: 21 }),
     socials: { twitter: "https://x.com/echo_protocol", telegram: "https://t.me/echo_protocol", website: "https://echo.social" },
     tags: ["Creators", "Tips"], interest: 300,
@@ -1405,35 +1497,24 @@ const MOCK_PROJECTS = [
     seenD: 1, baseline: { mc: 8400000 }, changes: { d1: 11.5, d7: null, d30: null } }),
 
   P({ id: "drift", name: "Drift Social", symbol: null, category: "social", status: "announced", network: null, source: "manual",
-    tagline: "Decentralized newsfeed with staked moderation — testnet live.",
-    noToken: notok({ agoH: 26, stage: "Testnet live" }),
+    tagline: "Децентрализованный ньюсфид со стейковой модерацией — тестнет запущен.",
+    noToken: notok({ agoH: 26, stage: "Тестнет запущен" }),
     socials: { twitter: "https://x.com/driftsocial", website: "https://drift.social" },
     tags: ["Newsfeed", "Staking"], interest: 140,
     why: "Модерация со стейком — модель, уже доказанная в DePIN-проектах.",
     risk: "Тестнет: проверить пока нечего, продуктовых метрик нет.",
-    seenD: 1.5, baseStage: "Announced" })
+    seenD: 1.5, baseStage: "Анонс" })
 ];
 
-const CURATED_PROJECTS = []; // future: hand-picked RWA Early entries (live in 'manual' adapter)
-
 /* ============================================================
-   5. STATE + REFS
+   5. СОСТОЯНИЕ + ЭЛЕМЕНТЫ
    ============================================================ */
 const state = {
-  query: "",
-  category: "all",
-  type: "all",
-  network: "all",
-  minLiq: 0,
-  minQ: 0,
-  ageDays: 0,
-  reqTwitter: false,
-  reqTelegram: false,
-  reqWebsite: false,
-  sort: "newest",
-  onlyStarred: false,
-  view: "feed",
-  trackSort: "sinceAdd"
+  query: "", category: "all", type: "all", network: "all",
+  minLiq: 0, minQ: 0, ageDays: 0,
+  reqTwitter: false, reqTelegram: false, reqWebsite: false,
+  sort: "newest", onlyStarred: false,
+  view: "feed", trackSort: "sinceAdd"
 };
 
 const STAR_KEY = "early.projects.stars.v1";
@@ -1454,22 +1535,22 @@ const feedEl = $("feed"), emptyEl = $("empty"), feedTitle = $("feedTitle"),
 
 const CATS = {
   rwa: { label: "RWA" }, defi: { label: "DeFi" }, ai: { label: "AI" },
-  gaming: { label: "Gaming" }, social: { label: "Social" },
-  infrastructure: { label: "Infrastructure" }, other: { label: "Other" }
+  gaming: { label: "Гейминг" }, social: { label: "Социалка" },
+  infrastructure: { label: "Инфраструктура" }, other: { label: "Другое" }
 };
 const STATUS = {
-  launched: { label: "Launched" }, "pre-token": { label: "Pre-Token" },
-  fundraising: { label: "Fundraising" }, announced: { label: "Announced" }
+  launched: { label: "Запущен" }, "pre-token": { label: "Pre-Token" },
+  fundraising: { label: "Фандинг" }, announced: { label: "Анонс" }
 };
-const NETS = { solana: "Solana", ethereum: "Ethereum", base: "Base", arbitrum: "Arbitrum", polygon: "Polygon", bsc: "BSC", monad: "Monad" };
+const NETS = { solana: "Solana", ethereum: "Ethereum", base: "Base", arbitrum: "Arbitrum", polygon: "Polygon", bsc: "BSC", monad: "Monad", hyperliquid: "Hyperliquid" };
 const SOURCES = {
   dexscreener: { label: "DexScreener" }, coingecko: { label: "CoinGecko" },
   defillama: { label: "DefiLlama" }, birdeye: { label: "Birdeye" },
-  manual: { label: "Curated" }
+  manual: { label: "Куратор" }
 };
-const SORTS = { newest: "Newest", active: "Most Active", interest: "Highest Interest" };
-const TRACK_SORTS = { sinceAdd: "Δ since added", added: "Newest added", d1: "Δ 24h", quality: "Quality" };
-const ACCESS = { free: "Free", key: "Free + key", paid: "Paid · later" };
+const SORTS = { newest: "новые", active: "активность", interest: "интерес" };
+const ACCESS = { free: "Без ключа", key: "Нужен ключ", paid: "Платный · позже" };
+const SRC_STATUS = { live: "в ленте", soon: "скоро", planned: "в планах" };
 
 const ICONS = {
   star: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
@@ -1481,11 +1562,12 @@ const ICONS = {
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
   external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-  post: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>'
+  post: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>'
 };
 
 /* ============================================================
-   6. FORMATTERS + QUALITY SCORE
+   6. ФОРМАТЫ + ОЦЕНКА КАЧЕСТВА
    ============================================================ */
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => (
   { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
@@ -1504,29 +1586,29 @@ function fmtMoney(n) {
   return "$" + Math.round(n);
 }
 function fmtAgeHours(h) {
-  if (h < 1) return "<1h";
-  if (h < 48) return Math.round(h) + "h";
+  if (h < 1) return "<1ч";
+  if (h < 48) return Math.round(h) + "ч";
   const d = h / 24;
-  if (d < 7) return Math.round(d) + "d";
-  if (d < 30) return trimNum(d / 7, 1) + "w";
+  if (d < 7) return Math.round(d) + "д";
+  if (d < 30) return trimNum(d / 7, 1) + "н";
   const m = d / 30.44;
-  if (m < 12) return trimNum(m, 1) + "mo";
-  return trimNum(m / 12, 1) + "y";
+  if (m < 12) return trimNum(m, 1) + "мес";
+  return trimNum(m / 12, 1) + "г";
 }
 function timeAgo(ts) {
   const s = (Date.now() - ts) / 1000;
-  if (s < 60) return Math.max(1, Math.floor(s)) + "s ago";
-  if (s < 3600) return Math.floor(s / 60) + "m ago";
-  if (s < 86400) return Math.floor(s / 3600) + "h ago";
-  if (s < 30 * 86400) return Math.floor(s / 86400) + "d ago";
-  return new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  if (s < 60) return Math.max(1, Math.floor(s)) + "с назад";
+  if (s < 3600) return Math.floor(s / 60) + "м назад";
+  if (s < 86400) return Math.floor(s / 3600) + "ч назад";
+  if (s < 30 * 86400) return Math.floor(s / 86400) + "д назад";
+  return new Date(ts).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
 }
 function listedAt(p) { return p.token ? p.token.listedAt : (p.noToken ? p.noToken.announcedAt : NOW); }
 function interestOf(p) { return (p.interest || 0) + (stars.has(p.id) ? 1000 : 0); }
 function hashHue(s) { let h = 7; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
 
-/* Relative quality score (0–5). Early tokens with $25–100K liquidity
-   score high if they're active + well-sourced + socially verified. */
+/* Относительная оценка качества 0–5. Молодой токен с $25–100K
+   ликвидностью получает высокий балл, если активен и подтверждён. */
 function qualityOf(p) {
   const soc = [p.socials.twitter, p.socials.telegram, p.socials.website].filter(Boolean).length;
   if (p.token) {
@@ -1552,12 +1634,11 @@ function qualityDetail(p) {
   if (p.token) {
     const liq = p.token.liquidity || 0;
     const r = liq > 0 ? (p.token.volume24h || 0) / liq : 0;
-    return `Quality ${trimNum(qualityOf(p), 1)}/5 · liquidity ${fmtMoney(liq)} · vol/liq ${trimNum(r, 1)} · source ${SOURCES[p.source].label} · socials ${[p.socials.twitter, p.socials.telegram, p.socials.website].filter(Boolean).length}/3`;
+    return `Качество ${trimNum(qualityOf(p), 1)}/5 · ликвидность ${fmtMoney(liq)} · оборот/ликвидность ${trimNum(r, 1)} · источник ${SOURCES[p.source].label} · соцсети ${[p.socials.twitter, p.socials.telegram, p.socials.website].filter(Boolean).length}/3`;
   }
   const n = p.noToken || {};
-  return `Quality ${trimNum(qualityOf(p), 1)}/5 · stage: ${n.stage || "—"}${n.raised ? " · raised " + fmtMoney(n.raised) : ""} · curated: ${p.curated ? "yes" : "no"}`;
+  return `Качество ${trimNum(qualityOf(p), 1)}/5 · стадия: ${n.stage || "—"}${n.raised ? " · собрано " + fmtMoney(n.raised) : ""} · кураторский выбор: ${p.curated ? "да" : "нет"}`;
 }
-
 function sinceAddPct(p) {
   if (p.token && p.baseline && p.baseline.mc && p.token.mc) {
     return (p.token.mc / p.baseline.mc - 1) * 100;
@@ -1565,29 +1646,34 @@ function sinceAddPct(p) {
   return null;
 }
 function statusMove(p) {
-  if (p.baselineStatus && p.baselineStatus !== p.status) {
-    return `→ ${STATUS[p.status].label}`;
-  }
-  if (p.baselineStage && p.noToken && p.baselineStage !== p.noToken.stage) {
-    return `→ ${p.noToken.stage}`;
-  }
-  return null;
+  const stMove = (p.baselineStatus && p.baselineStatus !== p.status) ? `→ ${STATUS[p.status].label}` : null;
+  const stageMove = (p.baselineStage && p.noToken && p.baselineStage !== p.noToken.stage) ? `→ ${p.noToken.stage}` : null;
+  /* у проектов без токена статус и так виден в бейдже — показываем прогресс стадии */
+  if (p.noToken) return stageMove || stMove;
+  return stMove;
 }
 
-/* chart link per source (works with mock data too) */
+/* Плитка-монограмма, пока у проекта нет логотипа. */
+function monogramUrl(p) {
+  const init = esc(p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase());
+  const hue = hashHue(p.id + p.name);
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='120' height='120' rx='26' fill='hsl(${hue},45%,16%)'/><rect x='86' y='86' width='22' height='22' rx='6' fill='hsl(${hue},80%,55%)'/><text x='56' y='72' font-family='Inter,Arial,sans-serif' font-size='44' font-weight='800' fill='#F2F3F7' text-anchor='middle'>${init}</text></svg>`;
+  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+}
+
 function chartUrl(p) {
   if (!p.token) return null;
   const t = p.token;
   if (p.source === "dexscreener" || p.source === "birdeye") {
     return `https://dexscreener.com/${p.network || "ethereum"}/${t.ca}`;
   }
-  if (p.source === "coingecko") return `https://www.coingecko.com/en/coins/${p.id}`;
-  if (p.source === "defillama") return `https://defillama.com/protocol/${p.id}`;
-  return null;
+  if (p.source === "coingecko" && p.cgId) return `https://www.coingecko.com/en/coins/${p.cgId}`;
+  if (p.source === "defillama") return `https://defillama.com/protocol/${p.id.replace("dl-", "")}`;
+  return p.socials.website || null;
 }
 
 /* ============================================================
-   7. FILTER + SORT
+   7. ФИЛЬТРЫ + СОРТИРОВКА
    ============================================================ */
 function applyFilters(list) {
   const q = state.query.trim().toLowerCase();
@@ -1618,16 +1704,14 @@ function applyFilters(list) {
   };
   return out.sort(sorters[state.sort] || sorters.newest);
 }
-
 function titleFor() {
-  if (state.onlyStarred) return "Interesting";
+  if (state.onlyStarred) return "Интересное";
   if (state.category === "rwa") return "RWA Early";
   if (state.category !== "all") return CATS[state.category].label;
-  if (state.type === "launched" && state.ageDays === 1) return "New Tokens · 24h";
+  if (state.type === "launched" && state.ageDays === 1) return "Новые токены · 24ч";
   if (state.type !== "all") return STATUS[state.type].label;
-  return "All Early";
+  return "Все ранние";
 }
-
 function activeChipId() {
   if (state.type === "launched" && state.ageDays === 1 && state.category === "all") return "new";
   if (state.type === "pre-token" && state.category === "all" && state.ageDays === 0) return "pretoken";
@@ -1637,7 +1721,7 @@ function activeChipId() {
 }
 
 /* ============================================================
-   8. RENDER — shared bits
+   8. ОТРИСОВКА: КАРТОЧКИ
    ============================================================ */
 function avatarHtml(p, sm) {
   const init = p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
@@ -1649,7 +1733,6 @@ function avatarHtml(p, sm) {
   }
   return `<div class="${cls}" style="background:${grad}" aria-hidden="true">${esc(init)}</div>`;
 }
-
 function qmeterHtml(p) {
   const q = qualityOf(p);
   const filled = Math.round(q);
@@ -1658,18 +1741,16 @@ function qmeterHtml(p) {
   for (let i = 1; i <= 5; i++) seg += `<i class="${i <= filled ? "on" : ""}"></i>`;
   return `<span class="${cls}" title="${esc(qualityDetail(p))}">${seg}</span>`;
 }
-
 function socialsHtml(p) {
   const s = p.socials;
   let out = "";
-  if (s.twitter) out += `<a class="soc" href="${esc(s.twitter)}" target="_blank" rel="noopener" title="Open X / Twitter">${ICONS.x}</a>`;
-  if (s.telegram) out += `<a class="soc" href="${esc(s.telegram)}" target="_blank" rel="noopener" title="Open Telegram">${ICONS.send}</a>`;
-  if (s.website) out += `<a class="soc" href="${esc(s.website)}" target="_blank" rel="noopener" title="Open website">${ICONS.globe}</a>`;
-  return out || `<span class="soc-none">No socials</span>`;
+  if (s.twitter) out += `<a class="soc" href="${esc(s.twitter)}" target="_blank" rel="noopener" title="Открыть X / Twitter">${ICONS.x}</a>`;
+  if (s.telegram) out += `<a class="soc" href="${esc(s.telegram)}" target="_blank" rel="noopener" title="Открыть Telegram">${ICONS.send}</a>`;
+  if (s.website) out += `<a class="soc" href="${esc(s.website)}" target="_blank" rel="noopener" title="Открыть сайт">${ICONS.globe}</a>`;
+  return out || `<span class="soc-none">Нет соцсетей</span>`;
 }
-
 function pctSpan(v) {
-  if (v == null) return `<span class="muted">—</span>`;
+  if (v == null || isNaN(v)) return `<span class="muted">—</span>`;
   const cls = v >= 0 ? "pos" : "neg";
   const arrow = v >= 0 ? "▲" : "▼";
   return `<span class="${cls}">${arrow} ${trimNum(Math.abs(v), 1)}%</span>`;
@@ -1682,15 +1763,14 @@ function tokenMetrics(p) {
     : "";
   const since = sinceAddPct(p);
   const sinceHtml = (since != null)
-    ? ` <span class="chg ${since >= 0 ? "pos" : "neg"}" title="MC change since added to feed">${since >= 0 ? "▲" : "▼"}${trimNum(Math.abs(since), 0)}%</span>`
+    ? ` <span class="chg ${since >= 0 ? "pos" : "neg"}" title="Изменение MC с момента добавления в ленту">${since >= 0 ? "▲" : "▼"}${trimNum(Math.abs(since), 0)}%</span>`
     : "";
   return `
-    <div class="metric"><span class="m-label">MC · since add</span><span class="m-val" title="MC and Δ since added to feed">${fmtMoney(t.mc)}${sinceHtml}</span></div>
-    <div class="metric"><span class="m-label">Liquidity</span><span class="m-val">${fmtMoney(t.liquidity)}</span></div>
-    <div class="metric"><span class="m-label">Vol 24h</span><span class="m-val">${fmtMoney(t.volume24h)}${chg}</span></div>
-    <div class="metric"><span class="m-label">Age</span><span class="m-val">${fmtAgeHours((Date.now() - t.listedAt) / HOUR)}</span></div>`;
+    <div class="metric"><span class="m-label">MC · с добавления</span><span class="m-val">${fmtMoney(t.mc)}${sinceHtml}</span></div>
+    <div class="metric"><span class="m-label">Ликвидность</span><span class="m-val">${fmtMoney(t.liquidity)}</span></div>
+    <div class="metric"><span class="m-label">Объём 24ч</span><span class="m-val">${fmtMoney(t.volume24h)}${chg}</span></div>
+    <div class="metric"><span class="m-label">Возраст</span><span class="m-val">${fmtAgeHours((Date.now() - t.listedAt) / HOUR)}</span></div>`;
 }
-
 function noTokenMetrics(p) {
   const n = p.noToken || {};
   const move = statusMove(p);
@@ -1698,12 +1778,11 @@ function noTokenMetrics(p) {
     ? `<span class="stage-move">${esc(p.baselineStage)} → ${esc(n.stage || "")}</span>`
     : esc(n.stage || "—");
   return `
-    <div class="metric"><span class="m-label">Announced</span><span class="m-val">${n.announcedAt ? timeAgo(n.announcedAt) : "—"}</span></div>
-    <div class="metric"><span class="m-label">Stage</span><span class="m-val small" title="${move ? "Progress since added" : ""}">${stageVal}</span></div>
-    <div class="metric"><span class="m-label">Raised</span><span class="m-val">${n.raised ? fmtMoney(n.raised) : "—"}</span></div>
-    <div class="metric"><span class="m-label">Chain</span><span class="m-val">${p.network ? esc(NETS[p.network] || p.network) : "TBD"}</span></div>`;
+    <div class="metric"><span class="m-label">Анонс</span><span class="m-val">${n.announcedAt ? timeAgo(n.announcedAt) : "—"}</span></div>
+    <div class="metric"><span class="m-label">Стадия</span><span class="m-val small" title="${move ? "Прогресс с момента добавления" : ""}">${stageVal}</span></div>
+    <div class="metric"><span class="m-label">Собрано</span><span class="m-val">${n.raised ? fmtMoney(n.raised) : "—"}</span></div>
+    <div class="metric"><span class="m-label">Сеть</span><span class="m-val">${p.network ? esc(NETS[p.network] || p.network) : "TBD"}</span></div>`;
 }
-
 function cardHtml(p, i) {
   const delay = Math.min(i, 10) * 45;
   const isToken = !!p.token;
@@ -1716,10 +1795,11 @@ function cardHtml(p, i) {
     : "";
   const actions = isToken
     ? `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
-       <button class="btn" data-action="chart" title="Open chart">${ICONS.chart}Chart</button>
-       <button class="btn" data-action="copy-ca" title="Copy contract address">${ICONS.copy}CA</button>`
+       <button class="btn" data-action="chart" title="Открыть график">${ICONS.chart}График</button>
+       <button class="btn" data-action="copy-ca" title="Скопировать CA">${ICONS.copy}CA</button>`
     : `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
-       <button class="btn btn-primary" data-action="open-website" title="Open website">${ICONS.external}Site</button>`;
+       <button class="btn btn-primary" data-action="open-website" title="Открыть сайт">${ICONS.external}Сайт</button>`;
+  const shareLink = `${location.origin}${location.pathname}#${p.id}`;
   return `
   <article class="card" data-id="${esc(p.id)}" style="--d:${delay}ms">
     <div class="card-top">
@@ -1730,14 +1810,14 @@ function cardHtml(p, i) {
           ${p.symbol ? `<span class="ticker">${esc(p.symbol)}</span>` : ""}
           ${qmeterHtml(p)}
           <button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star"
-                  title="${stars.has(p.id) ? "Remove from Interesting" : "Mark as Interesting"}"
-                  aria-label="Mark as Interesting">${ICONS.star}</button>
+                  title="${stars.has(p.id) ? "Убрать из «Интересного»" : "Добавить в «Интересное»"}"
+                  aria-label="Отметить интересным">${ICONS.star}</button>
         </div>
         <div class="card-badges">
           <span class="badge cat-${p.category}">${CATS[p.category].label}</span>
           <span class="badge st-${p.status}">${STATUS[p.status].label}</span>
           ${p.network ? `<span class="badge net">${esc(NETS[p.network] || p.network)}</span>` : ""}
-          ${p.curated ? `<span class="badge curated" title="Curated pick">${ICONS.sparkle}RWA Early</span>` : ""}
+          ${p.curated ? `<span class="badge curated" title="Кураторский выбор">${ICONS.sparkle}RWA Early</span>` : ""}
         </div>
       </div>
     </div>
@@ -1748,20 +1828,21 @@ function cardHtml(p, i) {
       <div class="socials">${socialsHtml(p)}</div>
       <div class="card-actions">
         ${actions}
-        <button class="btn btn-pick ${inDraft ? "on" : ""}" data-action="pick" title="${inDraft ? "Remove from post draft" : "Add to post draft"}">${ICONS.post}Post</button>
+        <button class="btn" data-action="share" data-link="${esc(shareLink)}" title="Ссылка на проект">${ICONS.share}</button>
+        <button class="btn btn-pick ${inDraft ? "on" : ""}" data-action="pick" title="${inDraft ? "Убрать из черновика поста" : "В черновик поста"}">${ICONS.post}Пост</button>
       </div>
     </div>
   </article>`;
 }
 
 /* ============================================================
-   9. RENDER — views
+   9. ВИДЫ
    ============================================================ */
 function renderFeed() {
   const list = applyFilters(ALL);
   feedTitle.textContent = titleFor();
-  feedCount.textContent = `Showing ${list.length} of ${ALL.length} projects`;
-  sortHint.textContent = `Sorted by ${SORTS[state.sort]}`;
+  feedCount.textContent = `Показано ${list.length} из ${ALL.length}`;
+  sortHint.textContent = `Сортировка: ${SORTS[state.sort]}`;
   rwaBanner.hidden = state.category !== "rwa";
   feedEl.innerHTML = list.map(cardHtml).join("");
   feedEl.hidden = list.length === 0;
@@ -1778,20 +1859,18 @@ function renderTrack() {
   };
   const list = [...ALL].sort(sorters[state.trackSort] || sorters.sinceAdd);
 
-  /* stats */
   const withBase = ALL.filter((p) => sinceAddPct(p) != null);
   const up = withBase.filter((p) => sinceAddPct(p) > 0).length;
   const down = withBase.length - up;
   const avg = withBase.length ? withBase.reduce((s, p) => s + sinceAddPct(p), 0) / withBase.length : 0;
   const moved = ALL.filter((p) => statusMove(p)).length;
   $("trackStats").innerHTML = `
-    <span class="tstat"><b>${ALL.length}</b> tracked</span>
-    <span class="tstat"><span class="dot" style="background:var(--emerald)"></span><b class="pos">${up}</b> up</span>
-    <span class="tstat"><span class="dot" style="background:var(--red)"></span><b class="neg">${down}</b> down</span>
-    <span class="tstat">avg ${avg >= 0 ? "+" : "−"}${trimNum(Math.abs(avg), 0)}% since added</span>
-    <span class="tstat"><span class="dot" style="background:var(--sky)"></span><b>${moved}</b> status moved</span>`;
+    <span class="tstat"><b>${ALL.length}</b> в ленте</span>
+    <span class="tstat"><span class="dot" style="background:var(--emerald)"></span><b class="pos">${up}</b> в плюсе</span>
+    <span class="tstat"><span class="dot" style="background:var(--red)"></span><b class="neg">${down}</b> в минусе</span>
+    <span class="tstat">в среднем ${avg >= 0 ? "+" : "−"}${trimNum(Math.abs(avg), 0)}% с добавления</span>
+    <span class="tstat"><span class="dot" style="background:var(--sky)"></span><b>${moved}</b> изменили статус</span>`;
 
-  /* rows */
   $("trackBody").innerHTML = list.map((p) => {
     const sa = sinceAddPct(p);
     const move = statusMove(p);
@@ -1809,18 +1888,14 @@ function renderTrack() {
       <td>${pctSpan(c.d7)}</td>
       <td>${pctSpan(c.d30)}</td>
       <td>${qmeterHtml(p)}</td>
-      <td><button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star" title="Mark as Interesting" aria-label="Mark as Interesting" style="margin:0;width:24px;height:24px">${ICONS.star}</button></td>
+      <td><button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star" title="Отметить интересным" aria-label="Отметить интересным" style="margin:0;width:24px;height:24px">${ICONS.star}</button></td>
     </tr>`;
   }).join("");
 
-  $("trackNote").innerHTML = p_note();
-  function p_note() {
-    return `<b>How it works:</b> when a project enters the feed we save its MC (or stage) as a baseline. «Δ since added» = current MC vs that baseline — so the table answers «what I showed you grew, and what didn't». Short-term columns (24h/7d/30d) are mock now and will come from DexScreener/Birdeye history. Status moved = TGE, round closed, testnet→mainnet etc.`;
-  }
+  $("trackNote").innerHTML = `Когда проект попадает в ленту, мы фиксируем его MC (или стадию). «Δ с добавления» — текущий MC против точки входа: так видно, что из показанного выросло, а что нет. ⚡ — сдвиг статуса: TGE, закрытый раунд, тестнет → mainnet и подобное.`;
 }
 
 function renderSources() {
-  /* source cards */
   $("srcGrid").innerHTML = Object.entries(API_SOURCES).map(([key, s]) => `
     <div class="src-card">
       <div class="row">
@@ -1828,30 +1903,28 @@ function renderSources() {
         <span class="access ${s.access}">${ACCESS[s.access] || s.access}</span>
       </div>
       <span class="gv">${esc(s.gives)}</span>
-      <span class="src" style="color:var(--text-faint)"><i style="background:${s.status === "stub" ? "#38BDF8" : s.status === "live" ? "#34D399" : s.status === "parse" ? "#FBBF24" : "#5E6474"}"></i>${esc(s.status)}${s.baseUrl ? ` · ${esc(new URL(s.baseUrl).hostname)}` : ""}</span>
+      <span class="src" style="color:var(--text-faint)"><i style="background:${s.status === "live" ? "#34D399" : s.status === "planned" ? "#5E6474" : "#38BDF8"}"></i>${SRC_STATUS[s.status] || s.status}</span>
     </div>`).join("");
 
-  /* X watchlist */
-  $("watchlistEl").innerHTML = X_WATCHLIST.map((g) => `
+  const groups = {};
+  for (const g of X_WATCHLIST) (groups[g.group] = groups[g.group] || []).push(...g.handles);
+  const uniq = (arr) => [...new Set(arr)];
+  $("watchlistEl").innerHTML = Object.entries(groups).map(([group, handles]) => `
     <div class="wl-group">
-      <h4>${esc(g.group)}</h4>
-      <div class="wl-chips">${g.handles.map((h) => `<a class="wl" href="https://x.com/${encodeURIComponent(h)}" target="_blank" rel="noopener">@${esc(h)}</a>`).join("")}</div>
+      <h4>${esc(group)}</h4>
+      <div class="wl-chips">${uniq(handles).map((h) => `<a class="wl" href="https://x.com/${encodeURIComponent(h)}" target="_blank" rel="noopener">@${esc(h)}</a>`).join("")}</div>
     </div>`).join("");
 }
 
-/* ---- post generator ---- */
-function shortLink(u) {
-  const s = String(u).replace(/^https?:\/\//, "");
-  return s.length > 46 ? s.slice(0, 42) + "…" : s;
-}
+/* ---------- Пост: текст ---------- */
 function buildPostText() {
   const list = draft.map((id) => ALL.find((p) => p.id === id)).filter(Boolean);
   const date = new Date().toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
-  const lines = [`🗒 #EarlyProjects — ${date}`, ""];
+  const lines = [`🗒 #РанниеПроекты — ${date}`, ""];
   list.forEach((p, i) => {
     lines.push(`${i + 1}) ${p.name}${p.symbol ? ` (${p.symbol})` : ""} — ${p.tagline}`);
     const head = p.token
-      ? `${CATS[p.category].label} · ${NETS[p.network] || "—"} · ${fmtAgeHours((Date.now() - p.token.listedAt) / HOUR)} to TGE · MC ${fmtMoney(p.token.mc)}`
+      ? `${CATS[p.category].label} · ${NETS[p.network] || "—"} · TGE ${fmtAgeHours((Date.now() - p.token.listedAt) / HOUR)} назад · MC ${fmtMoney(p.token.mc)}`
       : `${CATS[p.category].label} · ${p.network ? NETS[p.network] : "сеть TBD"} · ${p.noToken ? p.noToken.stage : "—"}`;
     lines.push(`   • ${head}`);
     if (p.why) lines.push(`   • 👀 Почему интересно: ${p.why}`);
@@ -1860,22 +1933,210 @@ function buildPostText() {
     if (link) lines.push(`   • ${link}`);
     lines.push("");
   });
-  lines.push("—", "Источники: DexScreener · DefiLlama · CoinGecko · RWA Early (куратор)", "Лента с историей: early-projects.html");
+  lines.push("—", "Источники: DexScreener · DefiLlama · CoinGecko · RWA Early", "Лента с историей: " + location.href.split("#")[0]);
   return lines.join("\n");
 }
+
+/* ---------- Пост: картинка (canvas, стиль карточки канала) ---------- */
+const CARD_PINK = "#FF2E88", CARD_LIME = "#D7FF3D", CARD_BG = "#E9E2CF", CARD_INK = "#141414";
+let cardImgs = {};
+
+function seededRand(seed) {
+  let s = seed >>> 0;
+  return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+}
+function roughPoly(ctx, pts, seed) {
+  const rnd = seededRand(seed);
+  ctx.beginPath();
+  pts.forEach(([x, y], i) => {
+    const jx = x + (rnd() - 0.5) * 10, jy = y + (rnd() - 0.5) * 10;
+    i ? ctx.lineTo(jx, jy) : ctx.moveTo(jx, jy);
+  });
+  ctx.closePath();
+  ctx.fill();
+}
+function truncateText(ctx, text, maxW) {
+  if (ctx.measureText(text).width <= maxW) return text;
+  let t = text;
+  while (t.length && ctx.measureText(t + "…").width > maxW) t = t.slice(0, -1);
+  return t + "…";
+}
+
+function preloadLogos(projects) {
+  if (typeof Image === "undefined") return Promise.resolve({});
+  const tasks = projects.map((p) => {
+    return new Promise((res) => {
+      if (!p.logo) { res(null); return; }
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      const done = (val) => { try { res(val); } catch (e) { res(null); } };
+      img.onload = () => done(img);
+      img.onerror = () => done(null);
+      img.src = p.logo;
+      setTimeout(() => done(null), 4000);
+    });
+  });
+  return Promise.all(tasks).then((imgs) => {
+    const map = {};
+    projects.forEach((p, i) => { if (imgs[i]) map[p.id] = imgs[i]; });
+    return map;
+  });
+}
+
+async function drawPostCard(projects) {
+  const canvas = $("postCanvas");
+  if (!canvas || !canvas.getContext) return;
+  try { if (document.fonts && document.fonts.load) { await document.fonts.load("800 120px Inter"); await document.fonts.load("700 26px Inter"); } } catch (e) {}
+  const imgs = await preloadLogos(projects).catch(() => ({}));
+  cardImgs = imgs;
+
+  const W = 1600, tile = 170, gapX = 48, gapY = 62, cols = 4;
+  const rows = Math.max(1, Math.ceil(projects.length / cols));
+  const gridTop = 336;
+  const H = Math.max(900, gridTop + rows * (tile + gapY) + 150);
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  /* фон + шум бумаги */
+  ctx.fillStyle = CARD_BG; ctx.fillRect(0, 0, W, H);
+  const rnd = seededRand(20261010);
+  for (let i = 0; i < 4200; i++) {
+    ctx.fillStyle = rnd() < 0.5 ? "rgba(0,0,0,.05)" : "rgba(255,255,255,.07)";
+    ctx.fillRect(rnd() * W, rnd() * H, 1.6, 1.6);
+  }
+
+  /* верх слева: засечки + RWA / Early */
+  ctx.fillStyle = CARD_INK; ctx.fillRect(70, 66, 26, 10);
+  ctx.fillStyle = CARD_PINK; ctx.fillRect(104, 66, 26, 10);
+  ctx.fillStyle = CARD_LIME; ctx.fillRect(138, 66, 26, 10);
+  ctx.fillStyle = CARD_INK;
+  ctx.font = "900 132px Inter, 'Arial Black', sans-serif";
+  ctx.fillText("RWA", 56, 208);
+  ctx.fillStyle = CARD_PINK;
+  ctx.fillText("Early", 52, 330);
+  ctx.strokeStyle = CARD_PINK; ctx.lineWidth = 10; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(58, 352);
+  ctx.quadraticCurveTo(220, 344, 408, 350); ctx.stroke();
+  ctx.fillStyle = "#8A8578";
+  ctx.font = "600 30px Inter, sans-serif";
+  ctx.fillText("Ранние проекты", 62, 404);
+
+  /* верх справа: точки + прицел + розовый блок */
+  ctx.fillStyle = "rgba(20,20,20,.75)";
+  for (let r = 0; r < 5; r++) for (let c = 0; c < 10; c++) {
+    ctx.beginPath(); ctx.arc(1150 + c * 15, 70 + r * 15, 2.4, 0, 7); ctx.fill();
+  }
+  ctx.strokeStyle = CARD_LIME; ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.arc(1430, 168, 42, 0, 7); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(1430, 168 - 60); ctx.lineTo(1430, 168 - 24);
+  ctx.moveTo(1430, 168 + 24); ctx.lineTo(1430, 168 + 60);
+  ctx.moveTo(1430 - 60, 168); ctx.lineTo(1430 - 24, 168);
+  ctx.moveTo(1430 + 24, 168); ctx.lineTo(1430 + 60, 168);
+  ctx.stroke();
+  ctx.fillStyle = CARD_PINK;
+  roughPoly(ctx, [[W - 240, -20], [W + 20, -20], [W + 20, 128], [W - 150, 112], [W - 216, 70]], 77);
+
+  /* левый край: розовая рваная полоса + чёрные мазки */
+  ctx.fillStyle = CARD_PINK;
+  roughPoly(ctx, [[-10, 300], [34, 316], [26, 470], [40, 620], [22, 760], [-10, 780]], 91);
+  ctx.strokeStyle = "rgba(20,20,20,.8)"; ctx.lineWidth = 5; ctx.lineCap = "round";
+  for (let i = 0; i < 4; i++) {
+    ctx.beginPath();
+    ctx.moveTo(14 + i * 8, 800 + i * 6);
+    ctx.lineTo(60 + i * 10, 790 + i * 12);
+    ctx.stroke();
+  }
+
+  /* низ: розовая полоса с рваным верхом + чёрный угол */
+  ctx.fillStyle = CARD_PINK;
+  roughPoly(ctx, [[-10, H - 34], [200, H - 40], [520, H - 30], [900, H - 42], [1300, H - 30], [W + 10, H - 38], [W + 10, H + 10], [-10, H + 10]], 33);
+  ctx.fillStyle = "rgba(20,20,20,.85)";
+  roughPoly(ctx, [[-10, H - 34], [120, H - 38], [230, H - 26], [260, H + 10], [-10, H + 10]], 44);
+
+  /* глобус справа внизу */
+  ctx.strokeStyle = "rgba(20,20,20,.22)"; ctx.lineWidth = 1.6;
+  const gx = 1450, gy = H - 190, gr = 150;
+  ctx.beginPath(); ctx.arc(gx, gy, gr, 0, 7); ctx.stroke();
+  for (let i = 1; i < 4; i++) {
+    ctx.beginPath(); ctx.ellipse(gx, gy, gr * (i / 4), gr, 0, 0, 7); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(gx, gy, gr, gr * (i / 4), 0, 0, 7); ctx.stroke();
+  }
+
+  /* сетка логотипов 4×N */
+  const gridW = cols * tile + (cols - 1) * gapX;
+  const x0 = (W - gridW) / 2;
+  projects.slice(0, cols * 4).forEach((p, i) => {
+    const col = i % cols, row = Math.floor(i / cols);
+    const x = x0 + col * (tile + gapX), y = gridTop + row * (tile + gapY);
+    ctx.fillStyle = "#101014";
+    ctx.beginPath();
+    const r = 30;
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + tile, y, x + tile, y + tile, r);
+    ctx.arcTo(x + tile, y + tile, x, y + tile, r);
+    ctx.arcTo(x, y + tile, x, y, r);
+    ctx.arcTo(x, y, x + tile, y, r);
+    ctx.closePath(); ctx.fill();
+    const pad = 18, inner = tile - pad * 2;
+    const img = imgs[p.id];
+    if (img) {
+      const sc = Math.min(inner / img.width, inner / img.height);
+      const w = img.width * sc, h = img.height * sc;
+      try { ctx.drawImage(img, x + (tile - w) / 2, y + (tile - h) / 2, w, h); } catch (e) {}
+    } else {
+      ctx.fillStyle = "#F2F3F7";
+      ctx.font = "800 56px Inter, 'Arial Black', sans-serif";
+      ctx.textAlign = "center";
+      const init = p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+      ctx.fillText(init, x + tile / 2, y + tile / 2 + 20);
+      ctx.textAlign = "left";
+    }
+    ctx.fillStyle = CARD_INK;
+    ctx.font = "700 26px Inter, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(truncateText(ctx, p.name, tile + gapX - 8), x + tile / 2, y + tile + 40);
+    ctx.textAlign = "left";
+  });
+
+  /* подпись автора */
+  const sy = H - 78;
+  ctx.fillStyle = "#4A463C";
+  ctx.font = "600 30px Inter, sans-serif";
+  ctx.fillText("—", 62, sy);
+  ctx.fillText("by ", 84, sy);
+  const byW = ctx.measureText("by ").width;
+  ctx.fillStyle = CARD_INK;
+  ctx.font = "800 34px Inter, 'Arial Black', sans-serif";
+  ctx.fillText("YuRichRWA", 84 + byW, sy);
+  ctx.strokeStyle = CARD_PINK; ctx.lineWidth = 6; ctx.lineCap = "round";
+  ctx.beginPath();
+  const uw = ctx.measureText("YuRichRWA").width;
+  ctx.moveTo(86 + byW, sy + 16);
+  ctx.quadraticCurveTo(86 + byW + uw / 2, sy + 26, 86 + byW + uw, sy + 14);
+  ctx.stroke();
+}
+
 function renderPost() {
   $("postHeadCount").textContent = draft.length;
   const pc = $("postCount");
   pc.hidden = draft.length === 0;
   pc.textContent = draft.length;
   const pre = $("postPreview");
+  const canvas = $("postCanvas");
+  const cap = $("canvasCap");
   if (draft.length === 0) {
     pre.classList.add("placeholder");
-    pre.textContent = "Select projects in the feed (＋ Post on a card) — the post will be assembled here.";
-  } else {
-    pre.classList.remove("placeholder");
-    pre.textContent = buildPostText();
+    pre.hidden = false;
+    pre.textContent = "Добавьте проекты из ленты (кнопка «Пост» на карточке) — пост соберётся здесь.";
+    canvas.hidden = true; cap.hidden = true;
+    return;
   }
+  pre.classList.remove("placeholder");
+  pre.textContent = buildPostText();
+  canvas.hidden = false; cap.hidden = false;
+  drawPostCard(draft.map((id) => ALL.find((p) => p.id === id)).filter(Boolean)).catch(() => {});
 }
 
 function render() {
@@ -1885,7 +2146,6 @@ function render() {
   if (state.view === "post") renderPost();
   syncControls();
 }
-
 function syncControls() {
   document.querySelectorAll("#chips .chip").forEach((b) =>
     b.classList.toggle("active", b.dataset.chip === activeChipId())
@@ -1913,7 +2173,7 @@ function syncControls() {
 }
 
 /* ============================================================
-   10. TOAST + CLIPBOARD + VIEWS
+   10. ТОСТЫ + КЛИПБОРД + ШАРИНГ
    ============================================================ */
 let toastTimer = null;
 function toast(msg) {
@@ -1938,6 +2198,60 @@ async function copyText(text, msg) {
   }
   toast(msg);
 }
+function shareLink(url, title) {
+  if (navigator.share) {
+    navigator.share({ title, url }).catch(() => {});
+  } else {
+    copyText(url, "Ссылка скопирована");
+  }
+}
+
+/* ============================================================
+   11. СОБЫТИЯ
+   ============================================================ */
+function onCardAction(el) {
+  const host = el.closest("[data-id]");
+  if (!host) return;
+  const p = ALL.find((x) => x.id === host.dataset.id);
+  if (!p) return;
+  switch (el.dataset.action) {
+    case "star": {
+      if (stars.has(p.id)) stars.delete(p.id); else stars.add(p.id);
+      saveStars();
+      toast(stars.has(p.id) ? `${p.name} — в «Интересном»` : `${p.name} — из «Интересного»`);
+      render();
+      break;
+    }
+    case "pick": {
+      if (draft.includes(p.id)) {
+        draft = draft.filter((id) => id !== p.id);
+        toast(`${p.name} — из черновика поста`);
+      } else {
+        draft.push(p.id);
+        toast(`${p.name} — в черновик поста (${draft.length})`);
+      }
+      saveDraft();
+      render();
+      break;
+    }
+    case "copy-ca":
+      if (p.token && p.token.ca) copyText(p.token.ca, "CA скопирован");
+      break;
+    case "share":
+      shareLink(el.dataset.link || "", p.name);
+      break;
+    case "chart": {
+      const u = chartUrl(p);
+      if (u) window.open(u, "_blank", "noopener");
+      break;
+    }
+    case "open-website": {
+      const u = p.socials.website || p.socials.twitter;
+      if (u) window.open(u, "_blank", "noopener");
+      break;
+    }
+  }
+}
 
 function setView(v) {
   state.view = v;
@@ -1948,12 +2262,11 @@ function setView(v) {
   });
   render();
 }
-
 function setChip(id) {
   state.category = "all";
   state.type = "all";
   state.ageDays = 0;
-  if (id === "rwa" || id === "defi" || id === "ai" || id === "infrastructure") state.category = id;
+  if (["rwa", "defi", "ai", "infrastructure"].includes(id)) state.category = id;
   if (id === "new") { state.type = "launched"; state.ageDays = 1; }
   if (id === "pretoken") state.type = "pre-token";
   render();
@@ -1969,53 +2282,6 @@ function resetFilters() {
   render();
   document.body.classList.remove("sheet-open");
   $("backdrop").hidden = true;
-}
-
-/* ============================================================
-   11. EVENTS
-   ============================================================ */
-function onCardAction(el, scopeEl) {
-  const host = el.closest("[data-id]");
-  if (!host) return;
-  const p = ALL.find((x) => x.id === host.dataset.id);
-  if (!p) return;
-  switch (el.dataset.action) {
-    case "star": {
-      if (stars.has(p.id)) stars.delete(p.id); else stars.add(p.id);
-      saveStars();
-      toast(stars.has(p.id) ? `${p.name} added to Interesting` : `${p.name} removed from Interesting`);
-      render();
-      break;
-    }
-    case "pick": {
-      if (draft.includes(p.id)) {
-        draft = draft.filter((id) => id !== p.id);
-        toast(`${p.name} removed from post draft`);
-      } else {
-        draft.push(p.id);
-        toast(`${p.name} added to post draft (${draft.length})`);
-      }
-      saveDraft();
-      render();
-      break;
-    }
-    case "copy-ca":
-      if (p.token && p.token.ca) copyText(p.token.ca, "Contract address copied");
-      break;
-    case "copy-link":
-      copyText(p.socials.website || p.socials.twitter || p.socials.telegram || "", "Link copied");
-      break;
-    case "chart": {
-      const u = chartUrl(p);
-      if (u) window.open(u, "_blank", "noopener");
-      break;
-    }
-    case "open-website": {
-      const u = p.socials.website;
-      if (u) window.open(u, "_blank", "noopener");
-      break;
-    }
-  }
 }
 
 function bindEvents() {
@@ -2060,19 +2326,13 @@ function bindEvents() {
 
   $("resetBtn").addEventListener("click", resetFilters);
   $("emptyReset").addEventListener("click", resetFilters);
+  $("starFilter").addEventListener("click", () => { state.onlyStarred = !state.onlyStarred; render(); });
 
-  $("starFilter").addEventListener("click", () => {
-    state.onlyStarred = !state.onlyStarred;
-    render();
-  });
-
-  /* tabs */
   $("tabs").addEventListener("click", (e) => {
     const t = e.target.closest(".tab");
     if (t) setView(t.dataset.view);
   });
 
-  /* mobile filter sheet */
   $("filterToggle").addEventListener("click", () => {
     document.body.classList.add("sheet-open");
     $("backdrop").hidden = false;
@@ -2085,7 +2345,6 @@ function bindEvents() {
   $("backdrop").addEventListener("click", closeSheet);
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
 
-  /* card + table actions (delegated) */
   feedEl.addEventListener("click", (e) => {
     const el = e.target.closest("[data-action]");
     if (el) onCardAction(el);
@@ -2095,23 +2354,63 @@ function bindEvents() {
     if (el) onCardAction(el);
   });
 
-  /* post actions */
-  $("postCopy").addEventListener("click", () => {
-    if (!draft.length) { toast("Draft is empty — add projects from the feed first"); return; }
-    copyText(buildPostText(), "Post copied — paste it into the channel");
+  /* шаринг страницы */
+  $("sharePageBtn").addEventListener("click", () => {
+    shareLink(location.href, "RWA Early · Ранние проекты — YurichHub");
+  });
+
+  /* пост */
+  $("postCopyText").addEventListener("click", () => {
+    if (!draft.length) { toast("Черновик пуст — добавьте проекты из ленты"); return; }
+    copyText(buildPostText(), "Текст поста скопирован — вставьте в канал");
+  });
+  $("postDownload").addEventListener("click", () => {
+    if (!draft.length) { toast("Черновик пуст — добавьте проекты из ленты"); return; }
+    const canvas = $("postCanvas");
+    if (!canvas || !canvas.toBlob) { toast("Картинка ещё собирается — попробуйте через секунду"); return; }
+    canvas.toBlob((blob) => {
+      if (!blob) { toast("Не получилось сохранить картинку"); return; }
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "rwa-early-" + new Date().toISOString().slice(0, 10) + ".png";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      toast("PNG сохранён — прикрепите его к посту");
+    }, "image/png");
+  });
+  $("postShare").addEventListener("click", () => {
+    if (!draft.length) { toast("Черновик пуст — добавьте проекты из ленты"); return; }
+    const canvas = $("postCanvas");
+    if (canvas && canvas.toBlob && navigator.share) {
+      canvas.toBlob(async (blob) => {
+        if (!blob) { window.open("https://t.me/share/url?url=" + encodeURIComponent(location.href), "_blank", "noopener"); return; }
+        try {
+          await navigator.share({
+            files: [new File([blob], "rwa-early.png", { type: "image/png" })],
+            title: "RWA Early · Ранние проекты",
+            text: buildPostText().split("\n").slice(0, 4).join("\n")
+          });
+        } catch (e) {
+          window.open("https://t.me/share/url?url=" + encodeURIComponent(location.href), "_blank", "noopener");
+        }
+      }, "image/png");
+      return;
+    }
+    window.open("https://t.me/share/url?url=" + encodeURIComponent(location.href) + "&text=" + encodeURIComponent("RWA Early · Ранние проекты"), "_blank", "noopener");
   });
   $("postClear").addEventListener("click", () => {
     draft = [];
     saveDraft();
     render();
-    toast("Post draft cleared");
+    toast("Черновик поста очищен");
   });
 
-  /* refresh (simulated poll until adapters go live) */
+  /* обновление данных */
   $("refreshBtn").addEventListener("click", async () => {
     const btn = $("refreshBtn");
     btn.classList.add("spin");
-    try { ALL = await loadFeed(); } catch (e) { /* keep current data */ }
+    try { ALL = await loadFeed(); } catch (e) {}
     lastUpdated = Date.now();
     render();
     updateLive();
@@ -2120,22 +2419,47 @@ function bindEvents() {
 }
 
 /* ============================================================
-   12. LIVE INDICATOR + BOOT
+   12. LIVE-ИНДИКАТОР + СТАРТ
    ============================================================ */
 let lastUpdated = Date.now();
 function updateLive() {
   const s = Math.floor((Date.now() - lastUpdated) / 1000);
   const el = $("liveText");
   if (!el) return;
-  el.textContent = s < 5 ? "Live · just now" : (s < 60 ? `Live · ${s}s ago` : `Live · ${Math.floor(s / 60)}m ago`);
+  el.textContent = s < 5 ? "Live · только что" : (s < 60 ? `Live · ${s}с назад` : `Live · ${Math.floor(s / 60)}м назад`);
+}
+function updateLiveSources() {
+  const el = $("liveSources");
+  if (!el || !lastLiveStatus) return;
+  const live = [
+    lastLiveStatus.dexscreener && "DexScreener",
+    lastLiveStatus.defillama && "DefiLlama",
+    lastLiveStatus.coingecko && "CoinGecko"
+  ].filter(Boolean).join(" · ");
+  el.textContent = live
+    ? `Live-данные: ${live} + кураторская база RWA Early. Не является инвестиционной рекомендацией.`
+    : "Live-источники сейчас недоступны — показана кураторская база. Не является инвестиционной рекомендацией.";
 }
 
 (async function boot() {
   bindEvents();
-  try { ALL = await loadFeed(); } catch (e) { ALL = MOCK_PROJECTS.map(normalizeProject); }
+  try { ALL = await loadFeed(); } catch (e) { ALL = BASE_PROJECTS.map(normalizeProject); }
   render();
   updateLive();
+  updateLiveSources();
   setInterval(updateLive, 1000);
+
+  /* глубокая ссылка #id — подсветка карточки */
+  const h = location.hash.slice(1);
+  if (h) {
+    setTimeout(() => {
+      const el = document.querySelector(`.card[data-id="${CSS.escape(h)}"]`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+        el.classList.add("flash");
+      }
+    }, 350);
+  }
 })();
 </script>
 </body>
