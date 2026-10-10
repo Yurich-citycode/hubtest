@@ -15,7 +15,7 @@
 /* ============================================================
    RWA EARLY / РАННИЕ ПРОЕКТЫ — YurichHub
    Один файл. Тёмная тема, фиолет + изумруд, сигнатура YurichHub.
-   Вкладки: Лента / Динамика / Источники / Пост
+   Вкладки: Лента / Динамика / Источники / Пост · RU/EN
    ============================================================ */
 :root{
   --bg:        #0A0A0F;
@@ -104,7 +104,15 @@ button{font-family:inherit}
   color:var(--text-faint);white-space:nowrap;
 }
 .yurich b{color:var(--lime);font-weight:800}
-.hrow-1 .hrow-1-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.hrow-1 .hrow-1-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.lang-switch{display:flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;flex-shrink:0;background:var(--card)}
+.lang-btn{
+  font-size:10.5px;font-weight:700;letter-spacing:.05em;padding:6px 10px;
+  border:0;background:transparent;color:var(--text-faint);cursor:pointer;transition:.15s;
+}
+.lang-btn:hover{color:var(--text)}
+.lang-btn.active{background:var(--violet-soft);color:var(--violet-text)}
 
 .live-pill{
   display:flex;align-items:center;gap:7px;
@@ -526,8 +534,7 @@ a.wl:hover{color:var(--text);border-color:var(--violet);background:var(--violet-
 .wl-note{font-size:11.5px;color:var(--text-faint);margin-top:4px;line-height:1.5}
 
 /* ============================ POST ============================ */
-.post-grid{display:grid;grid-template-columns:1fr;gap:14px}
-@media (min-width:900px){.post-grid{grid-template-columns:1fr 1.35fr}}
+.post-panel{margin-bottom:10px}
 .panel{
   background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
   padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0;
@@ -546,12 +553,35 @@ a.wl:hover{color:var(--text);border-color:var(--violet);background:var(--violet-
   border-radius:12px;border:1px solid rgba(255,255,255,.08);
 }
 .canvas-cap{font-size:11.5px;color:var(--text-faint);line-height:1.5}
-.rules{display:flex;flex-direction:column;gap:7px}
-.rules li{list-style:none;font-size:12px;color:var(--text-dim);line-height:1.5;padding-left:22px;position:relative}
-.rules li::before{
-  content:"";position:absolute;left:2px;top:6px;width:8px;height:8px;border-radius:3px;
-  background:var(--violet-soft);border:1px solid rgba(139,92,246,.5);
+
+/* состав карточки */
+.comp-wrap{display:flex;flex-direction:column;gap:8px}
+.comp-wrap h4{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint)}
+.comp-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto}
+.comp-row{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);
+  border-radius:10px;padding:8px 10px;
 }
+.comp-tile{
+  width:44px;height:44px;border-radius:10px;flex-shrink:0;
+  display:grid;place-items:center;overflow:hidden;
+  background:rgba(255,255,255,.06);font-weight:700;font-size:13px;color:#fff;
+}
+.comp-tile img{width:100%;height:100%;object-fit:cover}
+.comp-fields{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+.comp-fields input{
+  width:100%;background:var(--card-2);
+  border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:inherit;font-size:12px;padding:6px 9px;
+}
+.comp-fields input:focus{outline:none;border-color:rgba(139,92,246,.55)}
+.comp-fields input::placeholder{color:var(--text-faint)}
+.comp-del{
+  width:26px;height:26px;border-radius:7px;border:0;flex-shrink:0;
+  background:transparent;color:var(--text-faint);cursor:pointer;font-size:16px;line-height:1;
+}
+.comp-del:hover{color:var(--red);background:rgba(248,113,113,.08)}
 
 /* footer */
 footer{
@@ -599,27 +629,31 @@ footer .fine{line-height:1.6}
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.7 6.5 6.5 2.7-6.5 2.7-2.7 6.5-2.7-6.5L2.8 12l6.5-2.7z"/></svg>
         </span>
         <span class="brand-name">RWA Early</span>
-        <span class="brand-tag">Ранние проекты</span>
+        <span class="brand-tag" data-i18n="brandTag">Ранние проекты</span>
         <span class="yurich">by Yurich<b>Hub</b></span>
       </a>
 
       <div class="search-wrap">
         <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="searchInput" type="search" placeholder="Поиск: проект, тикер, CA…" autocomplete="off" aria-label="Поиск по проектам">
-        <button id="searchClear" hidden aria-label="Очистить поиск">
+        <input id="searchInput" type="search" placeholder="Поиск: проект, тикер, CA…" data-i18n-ph="searchPh" autocomplete="off" aria-label="Поиск">
+        <button id="searchClear" hidden aria-label="Очистить">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
       <div class="hrow-1-right">
-        <div class="live-pill" title="Когда данные были обновлены">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button class="lang-btn active" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <div class="live-pill" title="Обновлено">
           <span class="live-dot" aria-hidden="true"></span>
           <span id="liveText">Live · только что</span>
         </div>
-        <button class="icon-btn" id="sharePageBtn" title="Поделиться ссылкой" aria-label="Поделиться">
+        <button class="icon-btn" id="sharePageBtn" title="Поделиться" aria-label="Поделиться">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         </button>
-        <button class="icon-btn" id="refreshBtn" title="Обновить данные" aria-label="Обновить данные">
+        <button class="icon-btn" id="refreshBtn" title="Обновить" aria-label="Обновить">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
         </button>
       </div>
@@ -627,13 +661,13 @@ footer .fine{line-height:1.6}
 
     <div class="hrow hrow-3">
       <nav class="chips" id="chips" aria-label="Быстрые фильтры">
-        <button class="chip active" data-chip="all">Все</button>
-        <button class="chip chip-rwa" data-chip="rwa">RWA</button>
-        <button class="chip" data-chip="defi">DeFi</button>
-        <button class="chip" data-chip="ai">AI</button>
-        <button class="chip" data-chip="infrastructure">Инфра</button>
-        <button class="chip" data-chip="new">Новые токены</button>
-        <button class="chip" data-chip="pretoken">Pre-Token</button>
+        <button class="chip active" data-chip="all" data-i18n="chipAll">Все</button>
+        <button class="chip chip-rwa" data-chip="rwa" data-i18n="chipRwa">RWA</button>
+        <button class="chip" data-chip="defi" data-i18n="chipDefi">DeFi</button>
+        <button class="chip" data-chip="ai" data-i18n="chipAi">AI</button>
+        <button class="chip" data-chip="infrastructure" data-i18n="chipInfra">Инфра</button>
+        <button class="chip" data-chip="new" data-i18n="chipNew">Новые токены</button>
+        <button class="chip" data-chip="pretoken" data-i18n="chipPre">Pre-Token</button>
       </nav>
       <div class="hrow-3-right">
         <select id="networkSel" aria-label="Сеть">
@@ -645,16 +679,16 @@ footer .fine{line-height:1.6}
           <option value="polygon">Polygon</option>
           <option value="monad">Monad</option>
         </select>
-        <button class="filters-btn" id="filterToggle" aria-label="Открыть фильтры">
+        <button class="filters-btn" id="filterToggle" aria-label="Фильтры">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
-          Фильтры
+          <span data-i18n="filtersBtn">Фильтры</span>
           <span class="fcount" id="filterCount" hidden>0</span>
         </button>
       </div>
     </div>
 
     <div class="filterbar" id="filterbar">
-      <button class="sheet-close" id="sheetClose" aria-label="Закрыть фильтры">
+      <button class="sheet-close" id="sheetClose" aria-label="Закрыть">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <select id="categorySel" aria-label="Категория">
@@ -674,7 +708,7 @@ footer .fine{line-height:1.6}
         <option value="fundraising">Фандинг</option>
         <option value="announced">Анонс</option>
       </select>
-      <select id="minLiqSel" aria-label="Минимальная ликвидность" title="Абсолютный порог. Ранние токены часто начинают с $25–100K — для относительной оценки используйте «Качество».">
+      <select id="minLiqSel" aria-label="Ликвидность">
         <option value="0">Любая ликвидность</option>
         <option value="25000">Ликвидность ≥ $25K</option>
         <option value="100000">Ликвидность ≥ $100K</option>
@@ -682,7 +716,7 @@ footer .fine{line-height:1.6}
         <option value="1000000">Ликвидность ≥ $1M</option>
         <option value="5000000">Ликвидность ≥ $5M</option>
       </select>
-      <select id="qSel" aria-label="Качество" title="Оценочный балл 0–5: ликвидность + активность (объём/ликвидность) + сила источника + соцсети. Молодой токен с $86K ликвидности и горячим оборотом может получить 4+, а мёртвый пул на $500K — 2.">
+      <select id="qSel" aria-label="Качество">
         <option value="0">Любое качество</option>
         <option value="3">Качество ≥ 3</option>
         <option value="4">Качество ≥ 4</option>
@@ -693,26 +727,26 @@ footer .fine{line-height:1.6}
         <option value="7">Последние 7 дней</option>
         <option value="30">Последние 30 дней</option>
       </select>
-      <div class="soc-toggles" role="group" aria-label="Только с соцсетями">
-        <button class="soc-toggle" data-soc="twitter" title="Только с X / Twitter">X</button>
-        <button class="soc-toggle" data-soc="telegram" title="Только с Telegram">TG</button>
-        <button class="soc-toggle" data-soc="website" title="Только с сайтом">Web</button>
+      <div class="soc-toggles" role="group" aria-label="С соцсетями">
+        <button class="soc-toggle" data-soc="twitter" title="X / Twitter">X</button>
+        <button class="soc-toggle" data-soc="telegram" title="Telegram">TG</button>
+        <button class="soc-toggle" data-soc="website" title="Сайт" data-i18n-title="siteWord">Web</button>
       </div>
       <select id="sortSel" aria-label="Сортировка">
         <option value="newest">Сначала новые</option>
         <option value="active">Самые активные</option>
         <option value="interest">Высокий интерес</option>
       </select>
-      <button class="reset-btn" id="resetBtn">Сбросить</button>
+      <button class="reset-btn" id="resetBtn" data-i18n="reset">Сбросить</button>
     </div>
   </div>
 </header>
 <main class="container">
   <div class="tabs" id="tabs" role="tablist">
-    <button class="tab active" data-view="feed" role="tab">Лента</button>
-    <button class="tab" data-view="track" role="tab">Динамика</button>
-    <button class="tab" data-view="sources" role="tab">Источники</button>
-    <button class="tab" data-view="post" role="tab">Пост<span class="tab-count" id="postCount" hidden>0</span></button>
+    <button class="tab active" data-view="feed" role="tab" data-i18n="tabFeed">Лента</button>
+    <button class="tab" data-view="track" role="tab" data-i18n="tabTrack">Динамика</button>
+    <button class="tab" data-view="sources" role="tab" data-i18n="tabSources">Источники</button>
+    <button class="tab" data-view="post" role="tab"><span data-i18n="tabPost">Пост</span><span class="tab-count" id="postCount" hidden>0</span></button>
   </div>
 
   <!-- ============================ ЛЕНТА ============================ -->
@@ -726,7 +760,7 @@ footer .fine{line-height:1.6}
         <span class="sort-hint" id="sortHint"></span>
         <button class="star-filter" id="starFilter" title="Показать только отмеченные">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          Интересное <span id="starCount">0</span>
+          <span data-i18n="starWord">Интересное</span> <span id="starCount">0</span>
         </button>
       </div>
     </div>
@@ -735,7 +769,7 @@ footer .fine{line-height:1.6}
       <span class="rb-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>
       </span>
-      <p><b>RWA Early</b> — токенизированные реальные активы: трежерис, приват-кредит, недвижимость, коммодити и фонды. Кураторские выборы помечены бейджем <b>RWA Early</b>.</p>
+      <p data-i18n-html="rwaBanner"><b>RWA Early</b> — токенизированные реальные активы: трежерис, приват-кредит, недвижимость, коммодити и фонды. Кураторские выборы помечены бейджем <b>RWA Early</b>.</p>
     </div>
 
     <div class="feed" id="feed" aria-live="polite"></div>
@@ -744,17 +778,17 @@ footer .fine{line-height:1.6}
       <div class="empty-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
       </div>
-      <h3>Ничего не найдено</h3>
-      <p>Попробуйте расширить фильтры или сбросить их.</p>
-      <button class="btn btn-primary" id="emptyReset">Сбросить фильтры</button>
+      <h3 data-i18n="emptyTitle">Ничего не найдено</h3>
+      <p data-i18n="emptyText">Попробуйте расширить фильтры или сбросить их.</p>
+      <button class="btn btn-primary" id="emptyReset" data-i18n="emptyReset">Сбросить фильтры</button>
     </div>
   </section>
 
   <!-- ============================ ДИНАМИКА ============================ -->
   <section id="view-track" hidden>
     <div class="track-head">
-      <h2>Динамика</h2>
-      <select id="trackSortSel" aria-label="Сортировка динамики">
+      <h2 data-i18n="tabTrack">Динамика</h2>
+      <select id="trackSortSel" aria-label="Сортировка">
         <option value="sinceAdd">Δ с добавления</option>
         <option value="added">Новые в ленте</option>
         <option value="d1">Δ 24 часа</option>
@@ -766,8 +800,8 @@ footer .fine{line-height:1.6}
       <table>
         <thead>
           <tr>
-            <th>Проект</th><th>Добавлен</th><th>Статус</th><th>MC</th>
-            <th>Δ с добавления</th><th>24ч</th><th>7д</th><th>30д</th><th>Q</th><th>★</th>
+            <th data-i18n="thProject">Проект</th><th data-i18n="thAdded">Добавлен</th><th data-i18n="thStatus">Статус</th><th>MC</th>
+            <th data-i18n="thSince">Δ с добавления</th><th data-i18n="thD1">24ч</th><th data-i18n="thD7">7д</th><th data-i18n="thD30">30д</th><th>Q</th><th>★</th>
           </tr>
         </thead>
         <tbody id="trackBody"></tbody>
@@ -779,69 +813,52 @@ footer .fine{line-height:1.6}
   <!-- ============================ ИСТОЧНИКИ ============================ -->
   <section id="view-sources" hidden>
     <div class="view-sec">
-      <h3>Откуда берутся проекты</h3>
-      <p class="sec-sub">Лента собирается по шагам: автоисточники находят свежее, куратор решает, что важно. У каждой карточки в ленте — отметка, откуда проект.</p>
-      <div class="pipe">
-        <div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>DexScreener — новые пары с ликвидностью, объёмом и возрастом. Ранние токены часто стартуют с $25–100K ликвидности, поэтому порог — мягкий, а главное — оценка качества.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с TVL и категориями</b><span>DefiLlama — ядро рубрики RWA: настоящие TVL, категории, серьёзные проекты.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">3</span><div><b>Листинги, логотипы, описания</b><span>CoinGecko — кросс-проверка: если проект уже там, он не «вчера появился». Отсюда же реальные логотипы и цифры.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">4</span><div><b>Глубина по Solana</b><span>Birdeye, Jupiter, Helius — большая часть ранней активности живёт на Solana. Нужен бесплатный ключ — пришлёте, и подключим.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые страницы с токенизированными активами и эмитентами. Прямое топливо рубрики.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">6</span><div><b>Кураторский слой</b><span>Ручные вхождения: выборы автора, список коллеги, X-радар ниже. Отмечаются бейджем <b>RWA Early</b> — это то, что сканер не делает.</span></div></div>
-        <div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка качества → лента</b><span>Относительный балл 0–5: тир ликвидности + активность (объём/ликвидность) + сила источника + соцсети. Горячий молодой токен на $86K получает выше, чем мёртвый пул на $500K.</span></div></div>
+      <h3 data-i18n="pipeTitle">Откуда берутся проекты</h3>
+      <p class="sec-sub" data-i18n="pipeSub">Лента собирается по шагам: автоисточники находят свежее, куратор решает, что важно. У каждой карточки в ленте — отметка, откуда проект.</p>
+      <div data-i18n-html="pipeline">
+        <div class="pipe">
+          <div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>DexScreener — новые пары с ликвидностью, объёмом и возрастом. Ранние токены часто стартуют с $25–100K ликвидности, поэтому порог — мягкий, а главное — оценка качества.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с TVL и категориями</b><span>DefiLlama — ядро рубрики RWA: настоящие TVL, категории, серьёзные проекты.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">3</span><div><b>Листинги, логотипы, описания</b><span>CoinGecko — кросс-проверка: если проект уже там, он не «вчера появился». Отсюда же реальные логотипы и цифры.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">4</span><div><b>Глубина по Solana</b><span>Birdeye, Jupiter, Helius — большая часть ранней активности живёт на Solana. Нужен бесплатный ключ — пришлёте, и подключим.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые страницы с токенизированными активами и эмитентами. Прямое топливо рубрики.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">6</span><div><b>Кураторский слой</b><span>Ручные вхождения: выборы автора, список коллеги, X-радар ниже. Отмечаются бейджем <b>RWA Early</b> — это то, что сканер не делает.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка качества → лента</b><span>Относительный балл 0–5: тир ликвидности + активность (объём/ликвидность) + сила источника + соцсети. Горячий молодой токен на $86K получает выше, чем мёртвый пул на $500K.</span></div></div>
+        </div>
       </div>
     </div>
 
     <div class="view-sec">
-      <h3>Источники данных</h3>
-      <p class="sec-sub">Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.</p>
+      <h3 data-i18n="srcTitle">Источники данных</h3>
+      <p class="sec-sub" data-i18n="srcSub">Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.</p>
       <div class="src-grid" id="srcGrid"></div>
     </div>
 
     <div class="view-sec">
-      <h3>X-радар</h3>
-      <p class="sec-sub">Список аккаунтов для ежедневного ручного обзора (≈15 минут). Автоматизация — на следующем этапе.</p>
+      <h3 data-i18n="radarTitle">X-радар</h3>
+      <p class="sec-sub" data-i18n="radarSub">Список аккаунтов для ежедневного ручного обзора (≈15 минут). Автоматизация — на следующем этапе.</p>
       <div id="watchlistEl"></div>
-      <p class="wl-note">Список курируемый — перед использованием проверьте аккаунты.</p>
+      <p class="wl-note" data-i18n="wlNote">Список курируемый — перед использованием проверьте аккаунты.</p>
     </div>
   </section>
 
   <!-- ============================ ПОСТ ============================ -->
   <section id="view-post" hidden>
-    <div class="post-grid">
-      <div class="panel">
-        <h3>Шаблон поста</h3>
-        <p class="sub">Каждый проект в дневном посте имеет такую структуру. «Почему интересно» и «Риск» — обязательные: это ваша интерпретация, а не копия описания.</p>
-        <div class="tg">🗒 #РанниеПроекты — {дата}
-
-1) {Название} ({тикер}) — {суть, 1 строка}
-   • {Категория} · {сеть} · {статус/возраст} · {MC или раунд}
-   • 👀 Почему интересно: {твоя строка}
-   • ⚠️ Риск: {1 строка}
-   • {ссылка на чарт / сайт}
-
-—
-Источники: DexScreener · DefiLlama · CoinGecko · RWA Early
-Лента с историей: {ссылка на страницу}</div>
-        <ul class="rules">
-          <li>Не больше 7–8 проектов в посте — качество важнее количества.</li>
-          <li>Проект проходит, если подтверждён двумя независимыми источниками ИЛИ имеет жёсткий сигнал (дата TGE, закрытый раунд, реальная активность).</li>
-          <li>Краевые случаи (мем под видом RWA) — не проходят. Жанровый фильтр = качество рубрики.</li>
-          <li>Один пост в день, одно и то же время — привычка подписчика.</li>
-        </ul>
+    <div class="panel post-panel">
+      <h3><span data-i18n="postTitle">Черновик поста</span> · <span id="postHeadCount">0</span></h3>
+      <p class="sub" data-i18n-html="postSub">Нажимайте «Пост» на карточках — здесь соберутся текст и картинка в стиле канала. Названия и логотипы можно поменять прямо в составе — картинка обновится сама.</p>
+      <div class="comp-wrap" id="compWrap" hidden>
+        <h4 data-i18n="compTitle">Состав карточки</h4>
+        <div class="comp-list" id="compList"></div>
       </div>
-      <div class="panel">
-        <h3>Черновик поста · <span id="postHeadCount">0</span></h3>
-        <p class="sub">Добавляйте проекты из ленты (кнопка <b>Пост</b> на карточке) — здесь соберутся и текст, и картинка в стиле карточки канала. Скачайте PNG и прикрепите к посту в Telegram.</p>
-        <div class="tg placeholder" id="postPreview">Добавьте проекты из ленты (кнопка «Пост» на карточке) — пост соберётся здесь.</div>
-        <canvas id="postCanvas" hidden></canvas>
-        <p class="canvas-cap" id="canvasCap" hidden>Картинка в стиле рубрики. Нажмите «Скачать PNG» и прикрепите файл к посту в канале.</p>
-        <div class="card-actions" style="justify-content:flex-start">
-          <button class="btn btn-primary" id="postDownload">Скачать PNG</button>
-          <button class="btn" id="postShare">Поделиться</button>
-          <button class="btn" id="postCopyText">Скопировать текст</button>
-          <button class="btn" id="postClear">Очистить</button>
-        </div>
+      <div class="tg placeholder" id="postPreview" data-i18n="postEmpty">Добавьте проекты из ленты — пост соберётся здесь.</div>
+      <canvas id="postCanvas" hidden></canvas>
+      <p class="canvas-cap" id="canvasCap" data-i18n="canvasCap" hidden>Готовая картинка в стиле рубрики. Скачайте PNG и прикрепите к посту в Telegram.</p>
+      <div class="card-actions" style="justify-content:flex-start">
+        <button class="btn btn-primary" id="postDownload" data-i18n="btnDownload">Скачать PNG</button>
+        <button class="btn" id="postShare" data-i18n="btnShareP">Поделиться</button>
+        <button class="btn" id="postCopyText" data-i18n="btnCopy">Скопировать текст</button>
+        <button class="btn" id="postClear" data-i18n="btnClear">Очистить</button>
       </div>
     </div>
   </section>
@@ -849,7 +866,7 @@ footer .fine{line-height:1.6}
   <footer>
     <div class="brand-line">
       <span class="yurich-big">YURICH<b>HUB</b></span>
-      <span>RWA Early · Ранние проекты</span>
+      <span data-i18n="footSub">RWA Early · Ранние проекты</span>
     </div>
     <div class="src-list" aria-label="Источники данных">
       <span class="src src-dexscreener"><i></i>DexScreener</span>
@@ -871,52 +888,272 @@ footer .fine{line-height:1.6}
 <script>
 "use strict";
 /* ============================================================
-   1. ИСТОЧНИКИ ДАННЫХ
-   ------------------------------------------------------------
-   free  — работает без ключа (DexScreener, CoinGecko и
-           DefiLlama уже собирают ленту прямо в браузере)
-   key   — бесплатный тариф + ключ (Birdeye, Helius, Moralis,
-           Covalent, CryptoCompare, CMC, Dune)
-   paid  — следующий этап (X)
+   ЯЗЫК / LANGUAGE
    ============================================================ */
-const API_SOURCES = {
-  dexscreener:  { label: "DexScreener", access: "free", status: "live",
-    gives: "Свежие пары: ликвидность, объём, возраст пары, логотипы и соцсети из профиля проекта." },
-  defillama:    { label: "DefiLlama", access: "free", status: "live",
-    gives: "Протоколы с TVL и категориями — ядро рубрики RWA." },
-  coingecko:    { label: "CoinGecko", access: "free", status: "live",
-    gives: "Реальные цифры, категории, описания, логотипы и соцсети." },
-  geckoterminal:{ label: "GeckoTerminal", access: "free", status: "soon",
-    gives: "Новые пулы по сетям: объёмы и ликвидность без ключа." },
-  birdeye:      { label: "Birdeye", access: "key", status: "soon",
-    gives: "Глубина по Solana: ликвидность, объёмы, пары." },
-  jupiter:      { label: "Jupiter", access: "free", status: "soon",
-    gives: "Метаданные токенов Solana, котировки и свопы." },
-  helius:       { label: "Helius", access: "key", status: "soon",
-    gives: "Пуш-уведомления о новых токенах и пулах на Solana — автоматический радар свежести." },
-  moralis:      { label: "Moralis", access: "key", status: "soon",
-    gives: "Токены, цены и потоки по всем сетям." },
-  covalent:     { label: "Covalent", access: "key", status: "soon",
-    gives: "Контракты, холдеры, балансы токенов." },
-  cryptocompare:{ label: "CryptoCompare", access: "key", status: "soon",
-    gives: "Цены, соцсети, сентимент." },
-  cmc:          { label: "CoinMarketCap", access: "key", status: "soon",
-    gives: "Свежие листинги, категории, соцсети." },
-  messari:      { label: "Messari", access: "free", status: "soon",
-    gives: "Данные по проектам, категории, отчёты." },
-  dune:         { label: "Dune", access: "key", status: "paid",
-    gives: "Своя аналитика: холдеры, уникальные кошельки." },
-  polymarket:   { label: "Polymarket", access: "free", status: "soon",
-    gives: "Рынки предсказаний — контекст для таких проектов, как tryimoo." },
-  rwa_xyz:      { label: "RWA.xyz", access: "free", status: "soon",
-    gives: "Реестр токенизированных активов — прямое топливо рубрики." },
-  tokenized:    { label: "Tokenized", access: "free", status: "soon",
-    gives: "Список токенизированных реальных активов." },
-  twitter:      { label: "X / Twitter", access: "paid", status: "planned",
-    gives: "Радар свежих анонсов. Сейчас — ручной обход по X-радару ниже." }
+const LANGS = {
+  ru: {
+    docTitle: "RWA Early · Ранние проекты — YurichHub",
+    brandTag: "Ранние проекты",
+    searchPh: "Поиск: проект, тикер, CA…",
+    liveJust: "Live · только что",
+    liveSecs: "{n}с назад",
+    liveMin: "{n}м назад",
+    justNow: "только что",
+    chipAll: "Все", chipRwa: "RWA", chipDefi: "DeFi", chipAi: "AI", chipInfra: "Инфра",
+    chipNew: "Новые токены", chipPre: "Pre-Token",
+    filtersBtn: "Фильтры", reset: "Сбросить",
+    netAll: "Все сети",
+    catAll: "Все категории", catRwa: "RWA", catDefi: "DeFi", catAi: "AI",
+    catGaming: "Гейминг", catSocial: "Социалка", catInfra: "Инфраструктура", catOther: "Другое",
+    typeAll: "Все типы", typeLaunched: "Токен запущен", typePre: "Pre-Token", typeFund: "Фандинг", typeAnn: "Анонс",
+    liqAll: "Любая ликвидность", liq25: "Ликвидность ≥ $25K", liq100: "Ликвидность ≥ $100K",
+    liq250: "Ликвидность ≥ $250K", liq1M: "Ликвидность ≥ $1M", liq5M: "Ликвидность ≥ $5M",
+    qAll: "Любое качество", q3: "Качество ≥ 3", q4: "Качество ≥ 4",
+    ageAll: "Любой возраст", age1: "Последние 24 часа", age7: "Последние 7 дней", age30: "Последние 30 дней",
+    sortNewest: "Сначала новые", sortActive: "Самые активные", sortInterest: "Высокий интерес",
+    tabFeed: "Лента", tabTrack: "Динамика", tabSources: "Источники", tabPost: "Пост",
+    feedAllTitle: "Все ранние", feedNewTitle: "Новые токены · 24ч", feedStarTitle: "Интересное",
+    feedCount: "Показано {a} из {b}", sortHint: "Сортировка: {x}", starWord: "Интересное",
+    rwaBanner: "<b>RWA Early</b> — токенизированные реальные активы: трежерис, приват-кредит, недвижимость, коммодити и фонды. Кураторские выборы помечены бейджем <b>RWA Early</b>.",
+    emptyTitle: "Ничего не найдено",
+    emptyText: "Попробуйте расширить фильтры или сбросить их.",
+    emptyReset: "Сбросить фильтры",
+    mMc: "MC · с добавления", mLiq: "Ликвидность", mVol: "Объём 24ч", mAge: "Возраст",
+    mInFeed: "В ленте", mStage: "Стадия", mRaised: "Собрано", mNet: "Сеть",
+    mSinceTitle: "Изменение MC с момента добавления в ленту",
+    mStageTitle: "Прогресс с момента добавления",
+    noSoc: "Нет соцсетей",
+    siteWord: "Сайт",
+    btnChart: "График", btnCa: "CA", btnSite: "Сайт", btnPost: "Пост",
+    btnShareA: "Ссылка на проект", btnPostA: "В черновик поста", btnPostARm: "Убрать из черновика поста",
+    qdToken: "Качество {q}/5 · ликвидность {liq} · оборот/ликвидность {r} · источник {src} · соцсети {s}/3",
+    qdNo: "Качество {q}/5 · стадия: {st}{raised} · кураторский выбор: {cur}",
+    qdRaised: " · собрано {x}", qdCurYes: "да", qdCurNo: "нет",
+    thProject: "Проект", thAdded: "Добавлен", thStatus: "Статус",
+    thSince: "Δ с добавления", thD1: "24ч", thD7: "7д", thD30: "30д",
+    tsortSinceAdd: "Δ с добавления", tsortAdded: "Новые в ленте", tsortD1: "Δ 24 часа", tsortQ: "Качество",
+    statInFeed: "в ленте", statUp: "в плюсе", statDown: "в минусе",
+    statAvg: "в среднем {x} с добавления", statMoved: "изменили статус",
+    trackNote: "Когда проект попадает в ленту, мы фиксируем его MC (или стадию). «Δ с добавления» — текущий MC против точки входа: так видно, что из показанного выросло, а что нет. ⚡ — сдвиг статуса: TGE, закрытый раунд, тестнет → mainnet и подобное.",
+    pipeTitle: "Откуда берутся проекты",
+    pipeSub: "Лента собирается по шагам: автоисточники находят свежее, куратор решает, что важно. У каждой карточки в ленте — отметка, откуда проект.",
+    pipeline: '<div class="pipe">'
+      + '<div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>DexScreener — новые пары с ликвидностью, объёмом и возрастом. Ранние токены часто стартуют с $25–100K ликвидности, поэтому порог — мягкий, а главное — оценка качества.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с TVL и категориями</b><span>DefiLlama — ядро рубрики RWA: настоящие TVL, категории, серьёзные проекты.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">3</span><div><b>Листинги, логотипы, описания</b><span>CoinGecko — кросс-проверка: если проект уже там, он не «вчера появился». Отсюда же реальные логотипы и цифры.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">4</span><div><b>Глубина по Solana</b><span>Birdeye, Jupiter, Helius — большая часть ранней активности живёт на Solana. Нужен бесплатный ключ — пришлёте, и подключим.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые страницы с токенизированными активами и эмитентами. Прямое топливо рубрики.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">6</span><div><b>Кураторский слой</b><span>Ручные вхождения: выборы автора, список коллеги, X-радар ниже. Отмечаются бейджем <b>RWA Early</b> — это то, что сканер не делает.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка качества → лента</b><span>Относительный балл 0–5: тир ликвидности + активность (объём/ликвидность) + сила источника + соцсети. Горячий молодой токен на $86K получает выше, чем мёртвый пул на $500K.</span></div></div>'
+      + '</div>',
+    srcTitle: "Источники данных",
+    srcSub: "Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.",
+    radarTitle: "X-радар",
+    radarSub: "Список аккаунтов для ежедневного ручного обзора (≈15 минут). Автоматизация — на следующем этапе.",
+    wlNote: "Список курируемый — перед использованием проверьте аккаунты.",
+    postTitle: "Черновик поста",
+    postSub: "Нажимайте «Пост» на карточках — здесь соберутся текст и картинка в стиле канала. Названия и логотипы можно поменять прямо в составе — картинка обновится сама.",
+    compTitle: "Состав карточки",
+    compNamePh: "Название",
+    compLogoPh: "Ссылка на логотип (необязательно)",
+    compDel: "Убрать",
+    postEmpty: "Добавьте проекты из ленты — пост соберётся здесь.",
+    canvasCap: "Готовая картинка в стиле рубрики. Скачайте PNG и прикрепите к посту в Telegram.",
+    btnDownload: "Скачать PNG", btnShareP: "Поделиться", btnCopy: "Скопировать текст", btnClear: "Очистить",
+    ptHead: "🗒 #РанниеПроекты", ptTge: "TGE {x} назад", ptNetTbd: "сеть TBD",
+    ptWhy: "Почему интересно", ptRisk: "Риск",
+    ptSrc: "Источники: DexScreener · DefiLlama · CoinGecko · RWA Early",
+    ptFeed: "Лента с историей: ",
+    dsTagFresh: "Свежая пара на {chain} · ликвидность {liq}",
+    dsWhy: "Свежая пара из открытого источника.",
+    dsRisk: "Очень свежий токен — проверьте контракт, ликвидность и концентрацию.",
+    dlWhy: "Серьёзный протокол с реальным TVL из открытого источника.",
+    dlRisk: "Категория «протоколы» — проверяйте экономику и команду перед входом.",
+    tStarAdd: "{n} — в «Интересном»", tStarRm: "{n} — из «Интересного»",
+    tPickAdd: "{n} — в черновик поста ({c})", tPickRm: "{n} — из черновика поста",
+    tCa: "CA скопирован", tLink: "Ссылка скопирована",
+    tCopyOk: "Текст поста скопирован — вставьте в канал",
+    tPngOk: "PNG сохранён — прикрепите его к посту",
+    tPngFail: "Не получилось сохранить картинку",
+    tEmpty: "Черновик пуст — добавьте проекты из ленты",
+    tPngWait: "Картинка ещё собирается — попробуйте через секунду",
+    tCleared: "Черновик поста очищен",
+    footSub: "RWA Early · Ранние проекты",
+    fineLive: "Live-данные: {src} + кураторская база RWA Early. Не является инвестиционной рекомендацией.",
+    fineOff: "Live-источники сейчас недоступны — показана кураторская база. Не является инвестиционной рекомендацией.",
+    shareTitle: "RWA Early · Ранние проекты — YurichHub",
+    gives: {
+      dexscreener: "Свежие пары: ликвидность, объём, возраст пары, логотипы и соцсети из профиля проекта.",
+      defillama: "Протоколы с TVL и категориями — ядро рубрики RWA.",
+      coingecko: "Реальные цифры, категории, описания, логотипы и соцсети.",
+      geckoterminal: "Новые пулы по сетям: объёмы и ликвидность без ключа.",
+      birdeye: "Глубина по Solana: ликвидность, объёмы, пары.",
+      jupiter: "Метаданные токенов Solana, котировки и свопы.",
+      helius: "Пуш-уведомления о новых токенах и пулах на Solana — автоматический радар свежести.",
+      moralis: "Токены, цены и потоки по всем сетям.",
+      covalent: "Контракты, холдеры, балансы токенов.",
+      cryptocompare: "Цены, соцсети, сентимент.",
+      cmc: "Свежие листинги, категории, соцсети.",
+      messari: "Данные по проектам, категории, отчёты.",
+      dune: "Своя аналитика: холдеры, уникальные кошельки.",
+      polymarket: "Рынки предсказаний — контекст для таких проектов, как tryimoo.",
+      rwa_xyz: "Реестр токенизированных активов — прямое топливо рубрики.",
+      tokenized: "Список токенизированных реальных активов.",
+      twitter: "Радар свежих анонсов. Сейчас — ручной обход по X-радару ниже."
+    }
+  },
+  en: {
+    docTitle: "RWA Early · Early Projects — YurichHub",
+    brandTag: "Early projects",
+    searchPh: "Search: project, ticker, CA…",
+    liveJust: "Live · just now",
+    liveSecs: "{n}s ago",
+    liveMin: "{n}m ago",
+    justNow: "just now",
+    chipAll: "All", chipRwa: "RWA", chipDefi: "DeFi", chipAi: "AI", chipInfra: "Infra",
+    chipNew: "New tokens", chipPre: "Pre-Token",
+    filtersBtn: "Filters", reset: "Reset",
+    netAll: "All networks",
+    catAll: "All categories", catRwa: "RWA", catDefi: "DeFi", catAi: "AI",
+    catGaming: "Gaming", catSocial: "Social", catInfra: "Infrastructure", catOther: "Other",
+    typeAll: "All types", typeLaunched: "Token live", typePre: "Pre-Token", typeFund: "Fundraising", typeAnn: "Announced",
+    liqAll: "Any liquidity", liq25: "Liquidity ≥ $25K", liq100: "Liquidity ≥ $100K",
+    liq250: "Liquidity ≥ $250K", liq1M: "Liquidity ≥ $1M", liq5M: "Liquidity ≥ $5M",
+    qAll: "Any quality", q3: "Quality ≥ 3", q4: "Quality ≥ 4",
+    ageAll: "Any age", age1: "Last 24 hours", age7: "Last 7 days", age30: "Last 30 days",
+    sortNewest: "Newest first", sortActive: "Most active", sortInterest: "High interest",
+    tabFeed: "Feed", tabTrack: "Track", tabSources: "Sources", tabPost: "Post",
+    feedAllTitle: "All early", feedNewTitle: "New tokens · 24h", feedStarTitle: "Watchlist",
+    feedCount: "Showing {a} of {b}", sortHint: "Sort: {x}", starWord: "Watchlist",
+    rwaBanner: "<b>RWA Early</b> — tokenized real-world assets: treasuries, private credit, real estate, commodities and funds. Curated picks are marked with the <b>RWA Early</b> badge.",
+    emptyTitle: "Nothing found",
+    emptyText: "Try widening your filters or resetting them.",
+    emptyReset: "Reset filters",
+    mMc: "MC · since added", mLiq: "Liquidity", mVol: "Volume 24h", mAge: "Age",
+    mInFeed: "In feed", mStage: "Stage", mRaised: "Raised", mNet: "Chain",
+    mSinceTitle: "MC change since added to the feed",
+    mStageTitle: "Progress since added",
+    noSoc: "No socials",
+    siteWord: "Site",
+    btnChart: "Chart", btnCa: "CA", btnSite: "Website", btnPost: "Post",
+    btnShareA: "Link to project", btnPostA: "Add to post draft", btnPostARm: "Remove from post draft",
+    qdToken: "Quality {q}/5 · liquidity {liq} · volume/liquidity {r} · source {src} · socials {s}/3",
+    qdNo: "Quality {q}/5 · stage: {st}{raised} · curated pick: {cur}",
+    qdRaised: " · raised {x}", qdCurYes: "yes", qdCurNo: "no",
+    thProject: "Project", thAdded: "Added", thStatus: "Status",
+    thSince: "Δ since added", thD1: "24h", thD7: "7d", thD30: "30d",
+    tsortSinceAdd: "Δ since added", tsortAdded: "New in feed", tsortD1: "Δ 24h", tsortQ: "Quality",
+    statInFeed: "in feed", statUp: "up", statDown: "down",
+    statAvg: "avg {x} since added", statMoved: "changed status",
+    trackNote: "When a project enters the feed, we record its MC (or stage). \"Δ since added\" is the current MC versus the entry point: it shows what grew and what didn't. ⚡ — a status shift: TGE, closed round, testnet → mainnet, and similar.",
+    pipeTitle: "Where projects come from",
+    pipeSub: "The feed is built in steps: automatic sources find what's fresh, the curator decides what matters. Every card in the feed is marked with its source.",
+    pipeline: '<div class="pipe">'
+      + '<div class="pipe-step"><span class="pipe-num">1</span><div><b>Fresh tokens &amp; pairs</b><span>DexScreener — new pairs with liquidity, volume and age. Early tokens often start with $25–100K of liquidity, so the bar is soft and the real filter is the quality score.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">2</span><div><b>Protocols with TVL &amp; categories</b><span>DefiLlama — the core of the RWA rubric: real TVL, categories, serious projects.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">3</span><div><b>Listings, logos, descriptions</b><span>CoinGecko — cross-check: if a project is already there, it is not brand new. Also where real logos and numbers come from.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">4</span><div><b>Solana depth</b><span>Birdeye, Jupiter, Helius — most early activity lives on Solana. They need a free key — send it and we will plug them in.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA registries</b><span>RWA.xyz and Tokenized — open pages with tokenized assets and issuers. Direct fuel for the rubric.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">6</span><div><b>Curator layer</b><span>Manual picks: the author&#39;s choices, a peer&#39;s list, the X radar below. Marked with the <b>RWA Early</b> badge — the part a scanner cannot do.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Quality score → feed</b><span>A relative 0–5 score: liquidity tier + activity (volume/liquidity) + source strength + socials. A hot young token at $86K outscores a dead pool at $500K.</span></div></div>'
+      + '</div>',
+    srcTitle: "Data sources",
+    srcSub: "Open sources feeding the feed. The ones marked \"key needed\" have free plans — send a key (Birdeye, Helius, Moralis, CMC) and they will start working.",
+    radarTitle: "X Radar",
+    radarSub: "Accounts for a daily manual sweep (≈15 minutes). Automation — next step.",
+    wlNote: "The list is curated — verify accounts before using it.",
+    postTitle: "Post draft",
+    postSub: "Tap \"Post\" on cards — the text and a channel-style image are assembled here. You can rename items and swap logos in the composition below — the image updates on its own.",
+    compTitle: "Card composition",
+    compNamePh: "Name",
+    compLogoPh: "Logo URL (optional)",
+    compDel: "Remove",
+    postEmpty: "Add projects from the feed — the post will be assembled here.",
+    canvasCap: "The finished image in the rubric style. Download the PNG and attach it to your Telegram post.",
+    btnDownload: "Download PNG", btnShareP: "Share", btnCopy: "Copy text", btnClear: "Clear",
+    ptHead: "🗒 #EarlyProjects", ptTge: "TGE {x} ago", ptNetTbd: "chain TBD",
+    ptWhy: "Why it's interesting", ptRisk: "Risk",
+    ptSrc: "Sources: DexScreener · DefiLlama · CoinGecko · RWA Early",
+    ptFeed: "Full feed: ",
+    dsTagFresh: "Fresh pair on {chain} · liquidity {liq}",
+    dsWhy: "Fresh pair from an open source.",
+    dsRisk: "Very fresh token — check the contract, liquidity and concentration.",
+    dlWhy: "A serious protocol with real TVL from an open source.",
+    dlRisk: "Protocol category — check the economics and the team before entering.",
+    tStarAdd: "{n} — added to watchlist", tStarRm: "{n} — removed from watchlist",
+    tPickAdd: "{n} — added to post draft ({c})", tPickRm: "{n} — removed from post draft",
+    tCa: "CA copied", tLink: "Link copied",
+    tCopyOk: "Post text copied — paste it into your channel",
+    tPngOk: "PNG saved — attach it to your post",
+    tPngFail: "Couldn't save the image",
+    tEmpty: "The draft is empty — add projects from the feed",
+    tPngWait: "The image is still rendering — try again in a second",
+    tCleared: "Post draft cleared",
+    footSub: "RWA Early · Early Projects",
+    fineLive: "Live data: {src} + RWA Early curated base. Not investment advice.",
+    fineOff: "Live sources are unavailable right now — showing the curated base. Not investment advice.",
+    shareTitle: "RWA Early · Early Projects — YurichHub",
+    gives: {
+      dexscreener: "Fresh pairs: liquidity, volume, pair age, logos and socials from the project profile.",
+      defillama: "Protocols with TVL and categories — the core of the RWA rubric.",
+      coingecko: "Real numbers, categories, descriptions, logos and socials.",
+      geckoterminal: "New pools across chains: volumes and liquidity, no key.",
+      birdeye: "Solana depth: liquidity, volumes, pairs.",
+      jupiter: "Solana token metadata, quotes and swaps.",
+      helius: "Push alerts on new Solana tokens and pools — an automatic freshness radar.",
+      moralis: "Tokens, prices and flows across all chains.",
+      covalent: "Contracts, holders, token balances.",
+      cryptocompare: "Prices, socials, sentiment.",
+      cmc: "Fresh listings, categories, socials.",
+      messari: "Project data, categories, reports.",
+      dune: "Custom analytics: holders, unique wallets.",
+      polymarket: "Prediction markets — context for projects like tryimoo.",
+      rwa_xyz: "Tokenized asset registry — direct fuel for the rubric.",
+      tokenized: "List of tokenized real-world assets.",
+      twitter: "Radar for fresh announcements. For now — manual sweep via the X radar below."
+    }
+  }
 };
 
-/* X-радар (ручной обход). Редактируется в одном месте. */
+let lang = "ru";
+try {
+  const savedLang = localStorage.getItem("early.projects.lang");
+  if (savedLang === "en" || savedLang === "ru") lang = savedLang;
+} catch (e) {}
+function t(key) {
+  const L = LANGS[lang] || LANGS.ru;
+  if (L[key] != null) return L[key];
+  return LANGS.ru[key] != null ? LANGS.ru[key] : key;
+}
+
+/* ============================================================
+   1. ИСТОЧНИКИ ДАННЫХ
+   free — работает без ключа (DexScreener, CoinGecko и DefiLlama
+          уже собирают ленту прямо в браузере)
+   key  — бесплатный тариф + ключ
+   paid — следующий этап
+   ============================================================ */
+const API_SOURCES = {
+  dexscreener:  { label: "DexScreener", access: "free", status: "live" },
+  defillama:    { label: "DefiLlama", access: "free", status: "live" },
+  coingecko:    { label: "CoinGecko", access: "free", status: "live" },
+  geckoterminal:{ label: "GeckoTerminal", access: "free", status: "soon" },
+  birdeye:      { label: "Birdeye", access: "key", status: "soon" },
+  jupiter:      { label: "Jupiter", access: "free", status: "soon" },
+  helius:       { label: "Helius", access: "key", status: "soon" },
+  moralis:      { label: "Moralis", access: "key", status: "soon" },
+  covalent:     { label: "Covalent", access: "key", status: "soon" },
+  cryptocompare:{ label: "CryptoCompare", access: "key", status: "soon" },
+  cmc:          { label: "CoinMarketCap", access: "key", status: "soon" },
+  messari:      { label: "Messari", access: "free", status: "soon" },
+  dune:         { label: "Dune", access: "key", status: "paid" },
+  polymarket:   { label: "Polymarket", access: "free", status: "soon" },
+  rwa_xyz:      { label: "RWA.xyz", access: "free", status: "soon" },
+  tokenized:    { label: "Tokenized", access: "free", status: "soon" },
+  twitter:      { label: "X / Twitter", access: "paid", status: "planned" }
+};
+
+/* X-радар (ручной обход). */
 const X_WATCHLIST = [
   { group: "RWA-протоколы", handles: ["ondo_finance", "Goldfinch", "MapleFinance", "Centrifuge", "clearpool_io", "realio", "Spiko_finance"] },
   { group: "Радары и данные", handles: ["rwa_xyz", "tokenized_com", "DefiLlama", "DexScreener", "geckoterminal", "coingecko"] },
@@ -960,19 +1197,20 @@ function normalizeProject(p) {
 
 /* DexScreener-пара → схема проекта (live-источник). */
 function normalizeDexscreenerPair(pair) {
-  const t = pair && pair.baseToken;
-  if (!t) return null;
+  const bt = pair && pair.baseToken;
+  if (!bt) return null;
   const info = pair.info || {};
   const liq = (pair.liquidity && pair.liquidity.usd) || 0;
   const vol = (pair.volume && pair.volume.h24) || 0;
   return normalizeProject({
-    id: `ds-${pair.chainId}-${t.address}`,
-    name: t.name, symbol: t.symbol,
-    category: guessCategory(t.name, t.symbol),
+    id: `ds-${pair.chainId}-${bt.address}`,
+    name: bt.name, symbol: bt.symbol,
+    category: guessCategory(bt.name, bt.symbol),
     status: "launched", network: pair.chainId, source: "dexscreener",
-    tagline: (info.description ? String(info.description).slice(0, 140) : `Свежая пара на ${NETS[pair.chainId] || pair.chainId} · ликвидность ${fmtMoney(liq)}`),
+    tagline: (info.description ? String(info.description).slice(0, 140)
+      : t("dsTagFresh").replace("{chain}", NETS[pair.chainId] || pair.chainId).replace("{liq}", fmtMoney(liq))),
     token: {
-      ca: t.address,
+      ca: bt.address,
       mc: pair.marketCap || pair.fullyDilutedValuation || null,
       liquidity: liq, volume24h: vol,
       chg24h: (pair.priceChange && pair.priceChange.h24) || null,
@@ -983,10 +1221,10 @@ function normalizeDexscreenerPair(pair) {
       telegram: (info.socials && info.socials.telegram) || null,
       website: (info.websites && info.websites.url) || null
     },
-    tags: ["Свежая пара"], interest: 0,
+    tags: [], interest: 0,
     logo: info.image || null,
-    why: "Свежая пара из открытого источника.",
-    risk: "Очень свежий токен — проверьте контракт, ликвидность и концентрацию.",
+    why: t("dsWhy"),
+    risk: t("dsRisk"),
     firstSeenAt: Date.now(),
     baseline: (pair.marketCap || pair.fullyDilutedValuation) ? { mc: pair.marketCap || pair.fullyDilutedValuation } : null,
     changes: { d1: (pair.priceChange && pair.priceChange.h24) || null, d7: null, d30: null }
@@ -1008,12 +1246,12 @@ function normalizeDefiLlamaProtocol(proto) {
     status: "launched",
     network: (proto.chain || "").toLowerCase() || null,
     source: "defillama",
-    tagline: `${proto.category || "Протокол"} · TVL $${Math.round(proto.tvl).toLocaleString("en-US")}.`,
+    tagline: `${proto.category || ""} · TVL $${Math.round(proto.tvl).toLocaleString("en-US")}.`,
     noToken: { announcedAt: Date.now(), stage: `TVL $${Math.round(proto.tvl).toLocaleString("en-US")}`, raised: null },
     socials: { twitter: (proto.twitter && `https://x.com/${proto.twitter}`) || null, website: proto.url || null, telegram: null },
     tags: [proto.category || ""],
-    why: "Серьёзный протокол с реальным TVL из открытого источника.",
-    risk: "Категория «протоколы» — проверяйте экономику и команду перед входом.",
+    why: t("dlWhy"),
+    risk: t("dlRisk"),
     firstSeenAt: Date.now(),
     baselineStatus: "launched"
   });
@@ -1021,9 +1259,6 @@ function normalizeDefiLlamaProtocol(proto) {
 
 /* ============================================================
    3. LIVE-АДАПТЕРЫ + СБОРКА ЛЕНТЫ
-   ------------------------------------------------------------
-   База (куратор + демо) всегда есть. Живые источники добавляются
-   поверх; если сеть недоступна — тихо остаёмся на базе.
    ============================================================ */
 const STABLES = new Set(["usdt","usdc","dai","usds","usde","pyus","tusd","frax","lusd","usdd","susds","wsteth","steth","wbtc","weth","sol","bsc","wbnb","jitosol","msol","jupsol","bnsol","sbsol","ray","mngo"]);
 
@@ -1070,7 +1305,6 @@ const LIVE = {
     }
     return out;
   },
-  /* Реальные цифры + логотипы для проектов с cgId (один запрос). */
   coingecko: async () => {
     const ids = [...new Set(BASE_PROJECTS.filter((p) => p.cgId).map((p) => p.cgId))].join(",");
     if (!ids) return new Map();
@@ -1113,6 +1347,36 @@ async function loadFeed() {
     coingecko: cg.status === "fulfilled" && !!cg.value && cg.value.size > 0
   };
   return base.concat(extras);
+}
+
+/* Автопоиск логотипов для проектов, у которых их ещё нет.
+   Точное совпадение по имени или тикеру; кэш в localStorage. */
+const LOGO_CACHE_KEY = "early.projects.logos.v1";
+let logoCache = {};
+try { logoCache = JSON.parse(localStorage.getItem(LOGO_CACHE_KEY) || "{}") || {}; } catch (e) {}
+function logoMatch(coins, p) {
+  const target = p.name.toLowerCase();
+  for (const c of coins || []) {
+    if ((c.name || "").toLowerCase() === target) return c;
+    if (p.symbol && (c.symbol || "").toUpperCase() === p.symbol.toUpperCase()) return c;
+  }
+  return null;
+}
+async function fillLogos(projects) {
+  const need = projects.filter((p) => !p.logo && p.name && !logoCache[p.id]);
+  need.sort((a, b) => (b.curated ? 1 : 0) - (a.curated ? 1 : 0));
+  let changed = 0;
+  for (const p of need.slice(0, 12)) {
+    try {
+      const res = await fetchJSON(`https://api.coingecko.com/api/v3/search?query=${encodeURIComponent(p.name)}`, 6000);
+      const hit = logoMatch(res && res.coins, p);
+      if (hit && hit.large) { p.logo = hit.large; logoCache[p.id] = hit.large; changed++; }
+      else logoCache[p.id] = "none";
+      try { localStorage.setItem(LOGO_CACHE_KEY, JSON.stringify(logoCache)); } catch (e) {}
+      await new Promise((r) => setTimeout(r, 450));
+    } catch (e) { break; }
+  }
+  return changed;
 }
 
 /* ============================================================
@@ -1519,12 +1783,26 @@ const state = {
 
 const STAR_KEY = "early.projects.stars.v1";
 const DRAFT_KEY = "early.projects.draft.v1";
+const OVr_KEY = "early.projects.cardovr.v1";
 let stars = new Set();
 let draft = [];
+let cardOvr = {};
 try { stars = new Set(JSON.parse(localStorage.getItem(STAR_KEY) || "[]")); } catch (e) {}
 try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "[]"); if (!Array.isArray(draft)) draft = []; } catch (e) {}
+try { cardOvr = JSON.parse(localStorage.getItem(OVr_KEY) || "{}") || {}; if (typeof cardOvr !== "object") cardOvr = {}; } catch (e) {}
 function saveStars() { try { localStorage.setItem(STAR_KEY, JSON.stringify([...stars])); } catch (e) {} }
 function saveDraft() { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); } catch (e) {} }
+function saveOvr() { try { localStorage.setItem(OVr_KEY, JSON.stringify(cardOvr)); } catch (e) {} }
+function effProject(id) {
+  const p = ALL.find((x) => x.id === id) || null;
+  if (!p) return null;
+  const o = cardOvr[id];
+  if (!o) return p;
+  const q = Object.assign({}, p);
+  if (o.name && o.name.trim()) q.name = o.name.trim();
+  if (o.logo != null) q.logo = o.logo.trim() ? o.logo.trim() : null;
+  return q;
+}
 
 let ALL = [];
 const $ = (id) => document.getElementById(id);
@@ -1534,23 +1812,32 @@ const feedEl = $("feed"), emptyEl = $("empty"), feedTitle = $("feedTitle"),
       searchInput = $("searchInput"), searchClear = $("searchClear");
 
 const CATS = {
-  rwa: { label: "RWA" }, defi: { label: "DeFi" }, ai: { label: "AI" },
-  gaming: { label: "Гейминг" }, social: { label: "Социалка" },
-  infrastructure: { label: "Инфраструктура" }, other: { label: "Другое" }
+  rwa: { ru: "RWA", en: "RWA" }, defi: { ru: "DeFi", en: "DeFi" }, ai: { ru: "AI", en: "AI" },
+  gaming: { ru: "Гейминг", en: "Gaming" }, social: { ru: "Социалка", en: "Social" },
+  infrastructure: { ru: "Инфраструктура", en: "Infrastructure" }, other: { ru: "Другое", en: "Other" }
 };
 const STATUS = {
-  launched: { label: "Запущен" }, "pre-token": { label: "Pre-Token" },
-  fundraising: { label: "Фандинг" }, announced: { label: "Анонс" }
+  launched: { ru: "Запущен", en: "Live" }, "pre-token": { ru: "Pre-Token", en: "Pre-Token" },
+  fundraising: { ru: "Фандинг", en: "Fundraising" }, announced: { ru: "Анонс", en: "Announced" }
 };
 const NETS = { solana: "Solana", ethereum: "Ethereum", base: "Base", arbitrum: "Arbitrum", polygon: "Polygon", bsc: "BSC", monad: "Monad", hyperliquid: "Hyperliquid" };
 const SOURCES = {
-  dexscreener: { label: "DexScreener" }, coingecko: { label: "CoinGecko" },
-  defillama: { label: "DefiLlama" }, birdeye: { label: "Birdeye" },
-  manual: { label: "Куратор" }
+  dexscreener: { ru: "DexScreener", en: "DexScreener" }, coingecko: { ru: "CoinGecko", en: "CoinGecko" },
+  defillama: { ru: "DefiLlama", en: "DefiLlama" }, birdeye: { ru: "Birdeye", en: "Birdeye" },
+  manual: { ru: "Куратор", en: "Curator" }
 };
-const SORTS = { newest: "новые", active: "активность", interest: "интерес" };
-const ACCESS = { free: "Без ключа", key: "Нужен ключ", paid: "Платный · позже" };
-const SRC_STATUS = { live: "в ленте", soon: "скоро", planned: "в планах" };
+const SORTS = {
+  newest: { ru: "новые", en: "newest" }, active: { ru: "активность", en: "activity" },
+  interest: { ru: "интерес", en: "interest" }
+};
+const ACCESS = { free: { ru: "Без ключа", en: "No key" }, key: { ru: "Нужен ключ", en: "Key needed" }, paid: { ru: "Платный · позже", en: "Paid · later" } };
+const SRC_STATUS = { live: { ru: "в ленте", en: "in feed" }, soon: { ru: "скоро", en: "soon" }, planned: { ru: "в планах", en: "planned" } };
+const catLabel = (c) => (CATS[c] && CATS[c][lang]) || c;
+const stLabel = (s) => (STATUS[s] && STATUS[s][lang]) || s;
+const srcLabel = (s) => (SOURCES[s] && SOURCES[s][lang]) || s;
+const sortLabel = (s) => (SORTS[s] && SORTS[s][lang]) || s;
+const accessLabel = (a) => (ACCESS[a] && ACCESS[a][lang]) || a;
+const srcStatusLabel = (a) => (SRC_STATUS[a] && SRC_STATUS[a][lang]) || a;
 
 const ICONS = {
   star: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
@@ -1586,6 +1873,16 @@ function fmtMoney(n) {
   return "$" + Math.round(n);
 }
 function fmtAgeHours(h) {
+  if (lang === "en") {
+    if (h < 1) return "<1h";
+    if (h < 48) return Math.round(h) + "h";
+    const d = h / 24;
+    if (d < 7) return Math.round(d) + "d";
+    if (d < 30) return trimNum(d / 7, 1) + "w";
+    const m = d / 30.44;
+    if (m < 12) return trimNum(m, 1) + "mo";
+    return trimNum(m / 12, 1) + "y";
+  }
   if (h < 1) return "<1ч";
   if (h < 48) return Math.round(h) + "ч";
   const d = h / 24;
@@ -1597,11 +1894,11 @@ function fmtAgeHours(h) {
 }
 function timeAgo(ts) {
   const s = (Date.now() - ts) / 1000;
-  if (s < 60) return Math.max(1, Math.floor(s)) + "с назад";
-  if (s < 3600) return Math.floor(s / 60) + "м назад";
-  if (s < 86400) return Math.floor(s / 3600) + "ч назад";
-  if (s < 30 * 86400) return Math.floor(s / 86400) + "д назад";
-  return new Date(ts).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
+  if (s < 60) return t("justNow");
+  if (s < 3600) return Math.floor(s / 60) + (lang === "en" ? "m ago" : "м назад");
+  if (s < 86400) return Math.floor(s / 3600) + (lang === "en" ? "h ago" : "ч назад");
+  if (s < 30 * 86400) return Math.floor(s / 86400) + (lang === "en" ? "d ago" : "д назад");
+  return new Date(ts).toLocaleDateString(lang === "en" ? "en-US" : "ru-RU", { day: "numeric", month: "short", year: "numeric" });
 }
 function listedAt(p) { return p.token ? p.token.listedAt : (p.noToken ? p.noToken.announcedAt : NOW); }
 function interestOf(p) { return (p.interest || 0) + (stars.has(p.id) ? 1000 : 0); }
@@ -1634,10 +1931,20 @@ function qualityDetail(p) {
   if (p.token) {
     const liq = p.token.liquidity || 0;
     const r = liq > 0 ? (p.token.volume24h || 0) / liq : 0;
-    return `Качество ${trimNum(qualityOf(p), 1)}/5 · ликвидность ${fmtMoney(liq)} · оборот/ликвидность ${trimNum(r, 1)} · источник ${SOURCES[p.source].label} · соцсети ${[p.socials.twitter, p.socials.telegram, p.socials.website].filter(Boolean).length}/3`;
+    const soc = [p.socials.twitter, p.socials.telegram, p.socials.website].filter(Boolean).length;
+    return t("qdToken")
+      .replace("{q}", trimNum(qualityOf(p), 1))
+      .replace("{liq}", fmtMoney(liq))
+      .replace("{r}", trimNum(r, 1))
+      .replace("{src}", srcLabel(p.source))
+      .replace("{s}", String(soc));
   }
   const n = p.noToken || {};
-  return `Качество ${trimNum(qualityOf(p), 1)}/5 · стадия: ${n.stage || "—"}${n.raised ? " · собрано " + fmtMoney(n.raised) : ""} · кураторский выбор: ${p.curated ? "да" : "нет"}`;
+  return t("qdNo")
+    .replace("{q}", trimNum(qualityOf(p), 1))
+    .replace("{st}", n.stage || "—")
+    .replace("{raised}", n.raised ? t("qdRaised").replace("{x}", fmtMoney(n.raised)) : "")
+    .replace("{cur}", p.curated ? t("qdCurYes") : t("qdCurNo"));
 }
 function sinceAddPct(p) {
   if (p.token && p.baseline && p.baseline.mc && p.token.mc) {
@@ -1646,7 +1953,7 @@ function sinceAddPct(p) {
   return null;
 }
 function statusMove(p) {
-  const stMove = (p.baselineStatus && p.baselineStatus !== p.status) ? `→ ${STATUS[p.status].label}` : null;
+  const stMove = (p.baselineStatus && p.baselineStatus !== p.status) ? `→ ${stLabel(p.status)}` : null;
   const stageMove = (p.baselineStage && p.noToken && p.baselineStage !== p.noToken.stage) ? `→ ${p.noToken.stage}` : null;
   /* у проектов без токена статус и так виден в бейдже — показываем прогресс стадии */
   if (p.noToken) return stageMove || stMove;
@@ -1705,12 +2012,12 @@ function applyFilters(list) {
   return out.sort(sorters[state.sort] || sorters.newest);
 }
 function titleFor() {
-  if (state.onlyStarred) return "Интересное";
+  if (state.onlyStarred) return t("feedStarTitle");
   if (state.category === "rwa") return "RWA Early";
-  if (state.category !== "all") return CATS[state.category].label;
-  if (state.type === "launched" && state.ageDays === 1) return "Новые токены · 24ч";
-  if (state.type !== "all") return STATUS[state.type].label;
-  return "Все ранние";
+  if (state.category !== "all") return catLabel(state.category);
+  if (state.type === "launched" && state.ageDays === 1) return t("feedNewTitle");
+  if (state.type !== "all") return stLabel(state.type);
+  return t("feedAllTitle");
 }
 function activeChipId() {
   if (state.type === "launched" && state.ageDays === 1 && state.category === "all") return "new";
@@ -1728,8 +2035,8 @@ function avatarHtml(p, sm) {
   const hue = hashHue(p.id + p.name);
   const grad = `linear-gradient(135deg, hsl(${hue},62%,50%), hsl(${(hue + 45) % 360},68%,34%))`;
   const cls = sm ? "avatar sm" : "avatar";
-  if (p.logo && !sm) {
-    return `<div class="${cls}" style="background:${grad}"><img src="${esc(p.logo)}" alt="" loading="lazy" onerror="this.remove()"></div>`;
+  if (p.logo) {
+    return `<div class="${cls}" style="background:${grad}"><img src="${esc(p.logo)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()"></div>`;
   }
   return `<div class="${cls}" style="background:${grad}" aria-hidden="true">${esc(init)}</div>`;
 }
@@ -1744,10 +2051,10 @@ function qmeterHtml(p) {
 function socialsHtml(p) {
   const s = p.socials;
   let out = "";
-  if (s.twitter) out += `<a class="soc" href="${esc(s.twitter)}" target="_blank" rel="noopener" title="Открыть X / Twitter">${ICONS.x}</a>`;
-  if (s.telegram) out += `<a class="soc" href="${esc(s.telegram)}" target="_blank" rel="noopener" title="Открыть Telegram">${ICONS.send}</a>`;
-  if (s.website) out += `<a class="soc" href="${esc(s.website)}" target="_blank" rel="noopener" title="Открыть сайт">${ICONS.globe}</a>`;
-  return out || `<span class="soc-none">Нет соцсетей</span>`;
+  if (s.twitter) out += `<a class="soc" href="${esc(s.twitter)}" target="_blank" rel="noopener" title="X / Twitter">${ICONS.x}</a>`;
+  if (s.telegram) out += `<a class="soc" href="${esc(s.telegram)}" target="_blank" rel="noopener" title="Telegram">${ICONS.send}</a>`;
+  if (s.website) out += `<a class="soc" href="${esc(s.website)}" target="_blank" rel="noopener" title="${t("btnSite")}">${ICONS.globe}</a>`;
+  return out || `<span class="soc-none">${t("noSoc")}</span>`;
 }
 function pctSpan(v) {
   if (v == null || isNaN(v)) return `<span class="muted">—</span>`;
@@ -1757,19 +2064,19 @@ function pctSpan(v) {
 }
 
 function tokenMetrics(p) {
-  const t = p.token;
-  const chg = (t.chg24h != null)
-    ? `<span class="chg ${t.chg24h >= 0 ? "pos" : "neg"}">${t.chg24h >= 0 ? "+" : ""}${trimNum(t.chg24h, 1)}%</span>`
+  const t2 = p.token;
+  const chg = (t2.chg24h != null)
+    ? `<span class="chg ${t2.chg24h >= 0 ? "pos" : "neg"}">${t2.chg24h >= 0 ? "+" : ""}${trimNum(t2.chg24h, 1)}%</span>`
     : "";
   const since = sinceAddPct(p);
   const sinceHtml = (since != null)
-    ? ` <span class="chg ${since >= 0 ? "pos" : "neg"}" title="Изменение MC с момента добавления в ленту">${since >= 0 ? "▲" : "▼"}${trimNum(Math.abs(since), 0)}%</span>`
+    ? ` <span class="chg ${since >= 0 ? "pos" : "neg"}" title="${t("mSinceTitle")}">${since >= 0 ? "▲" : "▼"}${trimNum(Math.abs(since), 0)}%</span>`
     : "";
   return `
-    <div class="metric"><span class="m-label">MC · с добавления</span><span class="m-val">${fmtMoney(t.mc)}${sinceHtml}</span></div>
-    <div class="metric"><span class="m-label">Ликвидность</span><span class="m-val">${fmtMoney(t.liquidity)}</span></div>
-    <div class="metric"><span class="m-label">Объём 24ч</span><span class="m-val">${fmtMoney(t.volume24h)}${chg}</span></div>
-    <div class="metric"><span class="m-label">Возраст</span><span class="m-val">${fmtAgeHours((Date.now() - t.listedAt) / HOUR)}</span></div>`;
+    <div class="metric"><span class="m-label">${t("mMc")}</span><span class="m-val">${fmtMoney(t2.mc)}${sinceHtml}</span></div>
+    <div class="metric"><span class="m-label">${t("mLiq")}</span><span class="m-val">${fmtMoney(t2.liquidity)}</span></div>
+    <div class="metric"><span class="m-label">${t("mVol")}</span><span class="m-val">${fmtMoney(t2.volume24h)}${chg}</span></div>
+    <div class="metric"><span class="m-label">${t("mAge")}</span><span class="m-val">${fmtAgeHours((Date.now() - t2.listedAt) / HOUR)}</span></div>`;
 }
 function noTokenMetrics(p) {
   const n = p.noToken || {};
@@ -1778,10 +2085,10 @@ function noTokenMetrics(p) {
     ? `<span class="stage-move">${esc(p.baselineStage)} → ${esc(n.stage || "")}</span>`
     : esc(n.stage || "—");
   return `
-    <div class="metric"><span class="m-label">Анонс</span><span class="m-val">${n.announcedAt ? timeAgo(n.announcedAt) : "—"}</span></div>
-    <div class="metric"><span class="m-label">Стадия</span><span class="m-val small" title="${move ? "Прогресс с момента добавления" : ""}">${stageVal}</span></div>
-    <div class="metric"><span class="m-label">Собрано</span><span class="m-val">${n.raised ? fmtMoney(n.raised) : "—"}</span></div>
-    <div class="metric"><span class="m-label">Сеть</span><span class="m-val">${p.network ? esc(NETS[p.network] || p.network) : "TBD"}</span></div>`;
+    <div class="metric"><span class="m-label">${t("mInFeed")}</span><span class="m-val">${p.firstSeenAt ? timeAgo(p.firstSeenAt) : "—"}</span></div>
+    <div class="metric"><span class="m-label">${t("mStage")}</span><span class="m-val small" title="${move ? t("mStageTitle") : ""}">${stageVal}</span></div>
+    <div class="metric"><span class="m-label">${t("mRaised")}</span><span class="m-val">${n.raised ? fmtMoney(n.raised) : "—"}</span></div>
+    <div class="metric"><span class="m-label">${t("mNet")}</span><span class="m-val">${p.network ? esc(NETS[p.network] || p.network) : "TBD"}</span></div>`;
 }
 function cardHtml(p, i) {
   const delay = Math.min(i, 10) * 45;
@@ -1794,11 +2101,11 @@ function cardHtml(p, i) {
        </div>`
     : "";
   const actions = isToken
-    ? `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
-       <button class="btn" data-action="chart" title="Открыть график">${ICONS.chart}График</button>
-       <button class="btn" data-action="copy-ca" title="Скопировать CA">${ICONS.copy}CA</button>`
-    : `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
-       <button class="btn btn-primary" data-action="open-website" title="Открыть сайт">${ICONS.external}Сайт</button>`;
+    ? `<span class="src src-${p.source}"><i></i>${srcLabel(p.source)}</span>
+       <button class="btn" data-action="chart" title="${t("btnChart")}">${ICONS.chart}${t("btnChart")}</button>
+       <button class="btn" data-action="copy-ca" title="${t("tCa")}">${ICONS.copy}${t("btnCa")}</button>`
+    : `<span class="src src-${p.source}"><i></i>${srcLabel(p.source)}</span>
+       <button class="btn btn-primary" data-action="open-website" title="${t("btnSite")}">${ICONS.external}${t("btnSite")}</button>`;
   const shareLink = `${location.origin}${location.pathname}#${p.id}`;
   return `
   <article class="card" data-id="${esc(p.id)}" style="--d:${delay}ms">
@@ -1810,14 +2117,14 @@ function cardHtml(p, i) {
           ${p.symbol ? `<span class="ticker">${esc(p.symbol)}</span>` : ""}
           ${qmeterHtml(p)}
           <button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star"
-                  title="${stars.has(p.id) ? "Убрать из «Интересного»" : "Добавить в «Интересное»"}"
-                  aria-label="Отметить интересным">${ICONS.star}</button>
+                  title="${stars.has(p.id) ? t("tStarRm").replace("{n}", p.name) : t("tStarAdd").replace("{n}", p.name)}"
+                  aria-label="${t("starWord")}">${ICONS.star}</button>
         </div>
         <div class="card-badges">
-          <span class="badge cat-${p.category}">${CATS[p.category].label}</span>
-          <span class="badge st-${p.status}">${STATUS[p.status].label}</span>
+          <span class="badge cat-${p.category}">${catLabel(p.category)}</span>
+          <span class="badge st-${p.status}">${stLabel(p.status)}</span>
           ${p.network ? `<span class="badge net">${esc(NETS[p.network] || p.network)}</span>` : ""}
-          ${p.curated ? `<span class="badge curated" title="Кураторский выбор">${ICONS.sparkle}RWA Early</span>` : ""}
+          ${p.curated ? `<span class="badge curated" title="RWA Early">${ICONS.sparkle}RWA Early</span>` : ""}
         </div>
       </div>
     </div>
@@ -1828,8 +2135,8 @@ function cardHtml(p, i) {
       <div class="socials">${socialsHtml(p)}</div>
       <div class="card-actions">
         ${actions}
-        <button class="btn" data-action="share" data-link="${esc(shareLink)}" title="Ссылка на проект">${ICONS.share}</button>
-        <button class="btn btn-pick ${inDraft ? "on" : ""}" data-action="pick" title="${inDraft ? "Убрать из черновика поста" : "В черновик поста"}">${ICONS.post}Пост</button>
+        <button class="btn" data-action="share" data-link="${esc(shareLink)}" title="${t("btnShareA")}">${ICONS.share}</button>
+        <button class="btn btn-pick ${inDraft ? "on" : ""}" data-action="pick" title="${inDraft ? t("btnPostARm") : t("btnPostA")}">${ICONS.post}${t("btnPost")}</button>
       </div>
     </div>
   </article>`;
@@ -1841,8 +2148,8 @@ function cardHtml(p, i) {
 function renderFeed() {
   const list = applyFilters(ALL);
   feedTitle.textContent = titleFor();
-  feedCount.textContent = `Показано ${list.length} из ${ALL.length}`;
-  sortHint.textContent = `Сортировка: ${SORTS[state.sort]}`;
+  feedCount.textContent = t("feedCount").replace("{a}", String(list.length)).replace("{b}", String(ALL.length));
+  sortHint.textContent = t("sortHint").replace("{x}", sortLabel(state.sort));
   rwaBanner.hidden = state.category !== "rwa";
   feedEl.innerHTML = list.map(cardHtml).join("");
   feedEl.hidden = list.length === 0;
@@ -1865,11 +2172,11 @@ function renderTrack() {
   const avg = withBase.length ? withBase.reduce((s, p) => s + sinceAddPct(p), 0) / withBase.length : 0;
   const moved = ALL.filter((p) => statusMove(p)).length;
   $("trackStats").innerHTML = `
-    <span class="tstat"><b>${ALL.length}</b> в ленте</span>
-    <span class="tstat"><span class="dot" style="background:var(--emerald)"></span><b class="pos">${up}</b> в плюсе</span>
-    <span class="tstat"><span class="dot" style="background:var(--red)"></span><b class="neg">${down}</b> в минусе</span>
-    <span class="tstat">в среднем ${avg >= 0 ? "+" : "−"}${trimNum(Math.abs(avg), 0)}% с добавления</span>
-    <span class="tstat"><span class="dot" style="background:var(--sky)"></span><b>${moved}</b> изменили статус</span>`;
+    <span class="tstat"><b>${ALL.length}</b> ${t("statInFeed")}</span>
+    <span class="tstat"><span class="dot" style="background:var(--emerald)"></span><b class="pos">${up}</b> ${t("statUp")}</span>
+    <span class="tstat"><span class="dot" style="background:var(--red)"></span><b class="neg">${down}</b> ${t("statDown")}</span>
+    <span class="tstat">${t("statAvg").replace("{x}", (avg >= 0 ? "+" : "−") + trimNum(Math.abs(avg), 0) + "%")}</span>
+    <span class="tstat"><span class="dot" style="background:var(--sky)"></span><b>${moved}</b> ${t("statMoved")}</span>`;
 
   $("trackBody").innerHTML = list.map((p) => {
     const sa = sinceAddPct(p);
@@ -1880,7 +2187,7 @@ function renderTrack() {
     <tr data-id="${esc(p.id)}">
       <td><span class="t-name">${avatarHtml(p, true)}${esc(p.name)}${p.symbol ? `<span class="ticker">${esc(p.symbol)}</span>` : ""}</span></td>
       <td>${fmtAgeHours((Date.now() - p.firstSeenAt) / HOUR)}</td>
-      <td><span class="badge st-${p.status}">${STATUS[p.status].label}</span>
+      <td><span class="badge st-${p.status}">${stLabel(p.status)}</span>
           ${move ? `<span class="t-move">⚡ ${esc(move)}</span>` : ""}</td>
       <td>${mc}</td>
       <td>${p.token ? pctSpan(sa) : (move ? `<span class="t-move">⚡ ${esc(move)}</span>` : `<span class="muted">—</span>`)}</td>
@@ -1888,22 +2195,23 @@ function renderTrack() {
       <td>${pctSpan(c.d7)}</td>
       <td>${pctSpan(c.d30)}</td>
       <td>${qmeterHtml(p)}</td>
-      <td><button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star" title="Отметить интересным" aria-label="Отметить интересным" style="margin:0;width:24px;height:24px">${ICONS.star}</button></td>
+      <td><button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star" title="${t("starWord")}" aria-label="${t("starWord")}" style="margin:0;width:24px;height:24px">${ICONS.star}</button></td>
     </tr>`;
   }).join("");
 
-  $("trackNote").innerHTML = `Когда проект попадает в ленту, мы фиксируем его MC (или стадию). «Δ с добавления» — текущий MC против точки входа: так видно, что из показанного выросло, а что нет. ⚡ — сдвиг статуса: TGE, закрытый раунд, тестнет → mainnet и подобное.`;
+  $("trackNote").innerHTML = t("trackNote");
 }
 
 function renderSources() {
+  const gives = t("gives") || LANGS.ru.gives;
   $("srcGrid").innerHTML = Object.entries(API_SOURCES).map(([key, s]) => `
     <div class="src-card">
       <div class="row">
         <span class="nm">${esc(s.label)}</span>
-        <span class="access ${s.access}">${ACCESS[s.access] || s.access}</span>
+        <span class="access ${s.access}">${accessLabel(s.access)}</span>
       </div>
-      <span class="gv">${esc(s.gives)}</span>
-      <span class="src" style="color:var(--text-faint)"><i style="background:${s.status === "live" ? "#34D399" : s.status === "planned" ? "#5E6474" : "#38BDF8"}"></i>${SRC_STATUS[s.status] || s.status}</span>
+      <span class="gv">${esc(gives[key] || "")}</span>
+      <span class="src" style="color:var(--text-faint)"><i style="background:${s.status === "live" ? "#34D399" : s.status === "planned" ? "#5E6474" : "#38BDF8"}"></i>${srcStatusLabel(s.status)}</span>
     </div>`).join("");
 
   const groups = {};
@@ -1918,26 +2226,56 @@ function renderSources() {
 
 /* ---------- Пост: текст ---------- */
 function buildPostText() {
-  const list = draft.map((id) => ALL.find((p) => p.id === id)).filter(Boolean);
-  const date = new Date().toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
-  const lines = [`🗒 #РанниеПроекты — ${date}`, ""];
+  const list = draft.map((id) => effProject(id)).filter(Boolean);
+  const date = new Date().toLocaleDateString(lang === "en" ? "en-US" : "ru-RU", { day: "numeric", month: "long", year: "numeric" });
+  const lines = [`${t("ptHead")} — ${date}`, ""];
   list.forEach((p, i) => {
     lines.push(`${i + 1}) ${p.name}${p.symbol ? ` (${p.symbol})` : ""} — ${p.tagline}`);
     const head = p.token
-      ? `${CATS[p.category].label} · ${NETS[p.network] || "—"} · TGE ${fmtAgeHours((Date.now() - p.token.listedAt) / HOUR)} назад · MC ${fmtMoney(p.token.mc)}`
-      : `${CATS[p.category].label} · ${p.network ? NETS[p.network] : "сеть TBD"} · ${p.noToken ? p.noToken.stage : "—"}`;
+      ? `${catLabel(p.category)} · ${NETS[p.network] || "—"} · ${t("ptTge").replace("{x}", fmtAgeHours((Date.now() - p.token.listedAt) / HOUR))} · MC ${fmtMoney(p.token.mc)}`
+      : `${catLabel(p.category)} · ${p.network ? NETS[p.network] : t("ptNetTbd")} · ${p.noToken ? p.noToken.stage : "—"}`;
     lines.push(`   • ${head}`);
-    if (p.why) lines.push(`   • 👀 Почему интересно: ${p.why}`);
-    if (p.risk) lines.push(`   • ⚠️ Риск: ${p.risk}`);
+    if (p.why) lines.push(`   • 👀 ${t("ptWhy")}: ${p.why}`);
+    if (p.risk) lines.push(`   • ⚠️ ${t("ptRisk")}: ${p.risk}`);
     const link = p.token ? chartUrl(p) : (p.socials.website || p.socials.twitter);
     if (link) lines.push(`   • ${link}`);
     lines.push("");
   });
-  lines.push("—", "Источники: DexScreener · DefiLlama · CoinGecko · RWA Early", "Лента с историей: " + location.href.split("#")[0]);
+  lines.push("—", t("ptSrc"), t("ptFeed") + location.href.split("#")[0]);
   return lines.join("\n");
 }
 
-/* ---------- Пост: картинка (canvas, стиль карточки канала) ---------- */
+/* ---------- Пост: состав карточки (персональные названия и логотипы) ---------- */
+function compRowHtml(id) {
+  const p = effProject(id);
+  if (!p) return "";
+  const hue = hashHue(p.id + p.name);
+  const grad = `linear-gradient(135deg, hsl(${hue},62%,50%), hsl(${(hue + 45) % 360},68%,34%))`;
+  const o = cardOvr[id] || {};
+  const tile = p.logo
+    ? `<div class="comp-tile" style="background:${grad}"><img src="${esc(p.logo)}" alt="" onerror="this.remove()"></div>`
+    : `<div class="comp-tile" style="background:${grad}" aria-hidden="true">${esc(p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase())}</div>`;
+  return `
+  <div class="comp-row" data-id="${esc(id)}">
+    ${tile}
+    <div class="comp-fields">
+      <input data-f="name" value="${esc(p.name)}" placeholder="${t("compNamePh")}" aria-label="${t("compNamePh")}">
+      <input data-f="logo" value="${esc(o.logo != null ? o.logo : (p.logo || ""))}" placeholder="${t("compLogoPh")}" aria-label="${t("compLogoPh")}">
+    </div>
+    <button class="comp-del" data-id="${esc(id)}" title="${t("compDel")}" aria-label="${t("compDel")}">×</button>
+  </div>`;
+}
+function renderComp() {
+  $("compWrap").hidden = draft.length === 0;
+  $("compList").innerHTML = draft.map(compRowHtml).join("");
+  const count = draft.length;
+  $("postHeadCount").textContent = count;
+  const tabCount = $("postCount");
+  tabCount.hidden = count === 0;
+  tabCount.textContent = count;
+}
+
+/* ---------- Пост: картинка (canvas, стиль карточки канала; названия и логотипы — из состава) ---------- */
 const CARD_PINK = "#FF2E88", CARD_LIME = "#D7FF3D", CARD_BG = "#E9E2CF", CARD_INK = "#141414";
 let cardImgs = {};
 
@@ -1969,7 +2307,8 @@ function preloadLogos(projects) {
       if (!p.logo) { res(null); return; }
       const img = new Image();
       img.crossOrigin = "anonymous";
-      const done = (val) => { try { res(val); } catch (e) { res(null); } };
+      let settled = false;
+      const done = (val) => { if (!settled) { settled = true; try { res(val); } catch (e) { res(null); } } };
       img.onload = () => done(img);
       img.onerror = () => done(null);
       img.src = p.logo;
@@ -2064,7 +2403,7 @@ async function drawPostCard(projects) {
     ctx.beginPath(); ctx.ellipse(gx, gy, gr, gr * (i / 4), 0, 0, 7); ctx.stroke();
   }
 
-  /* сетка логотипов 4×N */
+  /* сетка логотипов 4×N (названия и логотипы — из состава) */
   const gridW = cols * tile + (cols - 1) * gapX;
   const x0 = (W - gridW) / 2;
   projects.slice(0, cols * 4).forEach((p, i) => {
@@ -2077,7 +2416,7 @@ async function drawPostCard(projects) {
     ctx.arcTo(x + tile, y, x + tile, y + tile, r);
     ctx.arcTo(x + tile, y + tile, x, y + tile, r);
     ctx.arcTo(x, y + tile, x, y, r);
-    ctx.arcTo(x, y, x + tile, y, r);
+    ctx.arcTo(x, y + tile, x, y, r);
     ctx.closePath(); ctx.fill();
     const pad = 18, inner = tile - pad * 2;
     const img = imgs[p.id];
@@ -2119,24 +2458,20 @@ async function drawPostCard(projects) {
 }
 
 function renderPost() {
-  $("postHeadCount").textContent = draft.length;
-  const pc = $("postCount");
-  pc.hidden = draft.length === 0;
-  pc.textContent = draft.length;
   const pre = $("postPreview");
   const canvas = $("postCanvas");
   const cap = $("canvasCap");
   if (draft.length === 0) {
     pre.classList.add("placeholder");
     pre.hidden = false;
-    pre.textContent = "Добавьте проекты из ленты (кнопка «Пост» на карточке) — пост соберётся здесь.";
+    pre.textContent = t("postEmpty");
     canvas.hidden = true; cap.hidden = true;
     return;
   }
   pre.classList.remove("placeholder");
   pre.textContent = buildPostText();
   canvas.hidden = false; cap.hidden = false;
-  drawPostCard(draft.map((id) => ALL.find((p) => p.id === id)).filter(Boolean)).catch(() => {});
+  drawPostCard(draft.map((id) => effProject(id)).filter(Boolean)).catch(() => {});
 }
 
 function render() {
@@ -2144,6 +2479,7 @@ function render() {
   if (state.view === "track") renderTrack();
   if (state.view === "sources") renderSources();
   if (state.view === "post") renderPost();
+  renderComp();
   syncControls();
 }
 function syncControls() {
@@ -2161,6 +2497,9 @@ function syncControls() {
   document.querySelectorAll(".soc-toggle").forEach((b) =>
     b.classList.toggle("active", state["req" + b.dataset.soc[0].toUpperCase() + b.dataset.soc.slice(1)])
   );
+  document.querySelectorAll(".lang-btn").forEach((b) =>
+    b.classList.toggle("active", b.dataset.lang === lang)
+  );
   const n =
     (state.category !== "all" ? 1 : 0) + (state.type !== "all" ? 1 : 0) +
     (state.network !== "all" ? 1 : 0) + (state.minLiq > 0 ? 1 : 0) +
@@ -2170,6 +2509,43 @@ function syncControls() {
   fc.hidden = n === 0;
   fc.textContent = n;
   $("starFilter").classList.toggle("on", state.onlyStarred);
+}
+
+/* ============================================================
+   ЯЗЫК: применение (статика, селекты, перечитываем все виды)
+   ============================================================ */
+const SELECT_DEFS = [
+  ["categorySel", { all: "catAll", rwa: "catRwa", defi: "catDefi", ai: "catAi", gaming: "catGaming", social: "catSocial", infrastructure: "catInfra", other: "catOther" }],
+  ["typeSel", { all: "typeAll", launched: "typeLaunched", "pre-token": "typePre", fundraising: "typeFund", announced: "typeAnn" }],
+  ["minLiqSel", { 0: "liqAll", 25000: "liq25", 100000: "liq100", 250000: "liq250", 1000000: "liq1M", 5000000: "liq5M" }],
+  ["qSel", { 0: "qAll", 3: "q3", 4: "q4" }],
+  ["ageSel", { 0: "ageAll", 1: "age1", 7: "age7", 30: "age30" }],
+  ["sortSel", { newest: "sortNewest", active: "sortActive", interest: "sortInterest" }],
+  ["networkSel", { all: "netAll", solana: "Solana", ethereum: "Ethereum", base: "Base", arbitrum: "Arbitrum", polygon: "Polygon", monad: "Monad" }],
+  ["trackSortSel", { sinceAdd: "tsortSinceAdd", added: "tsortAdded", d1: "tsortD1", quality: "tsortQ" }]
+];
+function rebuildSelects() {
+  for (const [id, map] of SELECT_DEFS) {
+    const sel = $(id);
+    const cur = sel.value;
+    sel.innerHTML = Object.entries(map).map(([v, key]) => `<option value="${v}">${t(key)}</option>`).join("");
+    if ([...sel.options].some((o) => o.value === cur)) sel.value = cur;
+  }
+}
+function applyLang(next) {
+  lang = next === "en" ? "en" : "ru";
+  try { localStorage.setItem("early.projects.lang", lang); } catch (e) {}
+  document.documentElement.lang = lang;
+  document.title = t("docTitle");
+  document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-html]").forEach((el) => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll("[data-i18n-ph]").forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.title = t(el.dataset.i18nTitle); });
+  document.querySelectorAll(".lang-btn").forEach((b) => b.classList.toggle("active", b.dataset.lang === lang));
+  rebuildSelects();
+  render();
+  updateLive();
+  updateLiveSources();
 }
 
 /* ============================================================
@@ -2202,7 +2578,7 @@ function shareLink(url, title) {
   if (navigator.share) {
     navigator.share({ title, url }).catch(() => {});
   } else {
-    copyText(url, "Ссылка скопирована");
+    copyText(url, t("tLink"));
   }
 }
 
@@ -2218,24 +2594,24 @@ function onCardAction(el) {
     case "star": {
       if (stars.has(p.id)) stars.delete(p.id); else stars.add(p.id);
       saveStars();
-      toast(stars.has(p.id) ? `${p.name} — в «Интересном»` : `${p.name} — из «Интересного»`);
+      toast(stars.has(p.id) ? t("tStarAdd").replace("{n}", p.name) : t("tStarRm").replace("{n}", p.name));
       render();
       break;
     }
     case "pick": {
       if (draft.includes(p.id)) {
         draft = draft.filter((id) => id !== p.id);
-        toast(`${p.name} — из черновика поста`);
+        toast(t("tPickRm").replace("{n}", p.name));
       } else {
         draft.push(p.id);
-        toast(`${p.name} — в черновик поста (${draft.length})`);
+        toast(t("tPickAdd").replace("{n}", p.name).replace("{c}", String(draft.length)));
       }
       saveDraft();
       render();
       break;
     }
     case "copy-ca":
-      if (p.token && p.token.ca) copyText(p.token.ca, "CA скопирован");
+      if (p.token && p.token.ca) copyText(p.token.ca, t("tCa"));
       break;
     case "share":
       shareLink(el.dataset.link || "", p.name);
@@ -2329,8 +2705,14 @@ function bindEvents() {
   $("starFilter").addEventListener("click", () => { state.onlyStarred = !state.onlyStarred; render(); });
 
   $("tabs").addEventListener("click", (e) => {
-    const t = e.target.closest(".tab");
-    if (t) setView(t.dataset.view);
+    const tb = e.target.closest(".tab");
+    if (tb) setView(tb.dataset.view);
+  });
+
+  /* язык */
+  document.querySelector(".lang-switch").addEventListener("click", (e) => {
+    const b = e.target.closest(".lang-btn");
+    if (b && b.dataset.lang !== lang) applyLang(b.dataset.lang);
   });
 
   $("filterToggle").addEventListener("click", () => {
@@ -2354,33 +2736,67 @@ function bindEvents() {
     if (el) onCardAction(el);
   });
 
+  /* состав карточки: названия и логотипы */
+  let compCanvasTimer = null;
+  $("compList").addEventListener("input", (e) => {
+    const input = e.target.closest("input[data-f]");
+    if (!input) return;
+    const row = input.closest(".comp-row");
+    const id = row && row.dataset.id;
+    if (!id) return;
+    cardOvr[id] = cardOvr[id] || {};
+    if (input.dataset.f === "name") cardOvr[id].name = input.value;
+    else cardOvr[id].logo = input.value;
+    saveOvr();
+    if (state.view === "post") {
+      const pre = $("postPreview");
+      if (draft.length) pre.textContent = buildPostText();
+      clearTimeout(compCanvasTimer);
+      compCanvasTimer = setTimeout(() => {
+        drawPostCard(draft.map((x) => effProject(x)).filter(Boolean)).catch(() => {});
+      }, 350);
+    }
+  });
+  $("compList").addEventListener("click", (e) => {
+    const del = e.target.closest(".comp-del");
+    if (!del) return;
+    const id = del.dataset.id;
+    const p = ALL.find((x) => x.id === id);
+    draft = draft.filter((x) => x !== id);
+    delete cardOvr[id];
+    saveDraft();
+    saveOvr();
+    render();
+    toast(t("tPickRm").replace("{n}", p ? p.name : id));
+  });
+
   /* шаринг страницы */
   $("sharePageBtn").addEventListener("click", () => {
-    shareLink(location.href, "RWA Early · Ранние проекты — YurichHub");
+    shareLink(location.href, t("shareTitle"));
   });
 
   /* пост */
   $("postCopyText").addEventListener("click", () => {
-    if (!draft.length) { toast("Черновик пуст — добавьте проекты из ленты"); return; }
-    copyText(buildPostText(), "Текст поста скопирован — вставьте в канал");
+    if (!draft.length) { toast(t("tEmpty")); return; }
+    copyText(buildPostText(), t("tCopyOk"));
   });
   $("postDownload").addEventListener("click", () => {
-    if (!draft.length) { toast("Черновик пуст — добавьте проекты из ленты"); return; }
+    if (!draft.length) { toast(t("tEmpty")); return; }
     const canvas = $("postCanvas");
-    if (!canvas || !canvas.toBlob) { toast("Картинка ещё собирается — попробуйте через секунду"); return; }
+    if (!canvas || !canvas.toBlob) { toast(t("tPngWait")); return; }
     canvas.toBlob((blob) => {
-      if (!blob) { toast("Не получилось сохранить картинку"); return; }
+      if (!blob) { toast(t("tPngFail")); return; }
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "rwa-early-" + new Date().toISOString().slice(0, 10) + ".png";
       document.body.appendChild(a);
       a.click();
       a.remove();
-      toast("PNG сохранён — прикрепите его к посту");
+      toast(t("tPngOk"));
     }, "image/png");
   });
   $("postShare").addEventListener("click", () => {
-    if (!draft.length) { toast("Черновик пуст — добавьте проекты из ленты"); return; }
+    if (!draft.length) { toast(t("tEmpty")); return; }
     const canvas = $("postCanvas");
     if (canvas && canvas.toBlob && navigator.share) {
       canvas.toBlob(async (blob) => {
@@ -2388,7 +2804,7 @@ function bindEvents() {
         try {
           await navigator.share({
             files: [new File([blob], "rwa-early.png", { type: "image/png" })],
-            title: "RWA Early · Ранние проекты",
+            title: t("shareTitle"),
             text: buildPostText().split("\n").slice(0, 4).join("\n")
           });
         } catch (e) {
@@ -2397,13 +2813,15 @@ function bindEvents() {
       }, "image/png");
       return;
     }
-    window.open("https://t.me/share/url?url=" + encodeURIComponent(location.href) + "&text=" + encodeURIComponent("RWA Early · Ранние проекты"), "_blank", "noopener");
+    window.open("https://t.me/share/url?url=" + encodeURIComponent(location.href) + "&text=" + encodeURIComponent(t("shareTitle")), "_blank", "noopener");
   });
   $("postClear").addEventListener("click", () => {
     draft = [];
+    cardOvr = {};
     saveDraft();
+    saveOvr();
     render();
-    toast("Черновик поста очищен");
+    toast(t("tCleared"));
   });
 
   /* обновление данных */
@@ -2426,7 +2844,7 @@ function updateLive() {
   const s = Math.floor((Date.now() - lastUpdated) / 1000);
   const el = $("liveText");
   if (!el) return;
-  el.textContent = s < 5 ? "Live · только что" : (s < 60 ? `Live · ${s}с назад` : `Live · ${Math.floor(s / 60)}м назад`);
+  el.textContent = s < 5 ? t("liveJust") : (s < 60 ? t("liveSecs").replace("{n}", String(s)) : t("liveMin").replace("{n}", String(Math.floor(s / 60))));
 }
 function updateLiveSources() {
   const el = $("liveSources");
@@ -2437,17 +2855,22 @@ function updateLiveSources() {
     lastLiveStatus.coingecko && "CoinGecko"
   ].filter(Boolean).join(" · ");
   el.textContent = live
-    ? `Live-данные: ${live} + кураторская база RWA Early. Не является инвестиционной рекомендацией.`
-    : "Live-источники сейчас недоступны — показана кураторская база. Не является инвестиционной рекомендацией.";
+    ? t("fineLive").replace("{src}", live)
+    : t("fineOff");
 }
 
 (async function boot() {
   bindEvents();
+  rebuildSelects();
+  applyLang(lang);
   try { ALL = await loadFeed(); } catch (e) { ALL = BASE_PROJECTS.map(normalizeProject); }
   render();
   updateLive();
   updateLiveSources();
   setInterval(updateLive, 1000);
+
+  /* автопоиск логотипов для проектов без них — тихо, в фоне */
+  fillLogos(ALL).then((changed) => { if (changed) render(); }).catch(() => {});
 
   /* глубокая ссылка #id — подсветка карточки */
   const h = location.hash.slice(1);
