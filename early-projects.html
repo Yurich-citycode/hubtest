@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0A0A0F">
-<meta name="description" content="Early Projects / RWA Early — curated, smart-filtered feed of early-stage crypto projects: RWA, DeFi, AI, Infrastructure, Gaming, Social. Mock data, API-ready structure.">
+<meta name="description" content="Early Projects / RWA Early — curated, smart-filtered feed of early-stage crypto projects: RWA, DeFi, AI, Infrastructure, Gaming, Social. Dynamics tracking, post generator, 18 data sources (mock now, API-ready).">
 <title>Early Projects · RWA Early — Early-Stage Crypto Scanner</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%2334D399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 6.5l6.2 9.5L16 25.5 9.8 16z' fill='white' opacity='.95'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +16,7 @@
    EARLY PROJECTS / RWA EARLY — single-file prototype
    Palette: graphite dark + violet (#8B5CF6) + emerald (#34D399)
    Mobile-first, clean & extensible.
+   Views: Feed / Track / Sources / Post
    ============================================================ */
 :root{
   --bg:        #0A0A0F;
@@ -59,7 +60,6 @@ button{font-family:inherit}
 ::-webkit-scrollbar-thumb{background:#262633;border-radius:99px;border:2px solid var(--bg)}
 ::-webkit-scrollbar-track{background:transparent}
 
-/* --- ambient background glow --- */
 .bg-glow{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
@@ -68,8 +68,9 @@ button{font-family:inherit}
     radial-gradient(900px 600px at 50% 118%, rgba(139,92,246,.06), transparent 60%),
     var(--bg);
 }
-
 .container{width:100%;max-width:1240px;margin:0 auto;padding:0 16px}
+.pos{color:var(--emerald)}
+.neg{color:var(--red)}
 
 /* ============================ HEADER ============================ */
 .site-header{
@@ -81,8 +82,9 @@ button{font-family:inherit}
 }
 .header-inner{display:flex;flex-direction:column;gap:10px;padding-top:12px;padding-bottom:12px}
 .hrow{display:flex;align-items:center;gap:10px}
+.hrow-1{flex-wrap:wrap}
+.hrow-1 .search-wrap{order:3;flex-basis:100%}
 
-/* row 1 — brand / live / refresh */
 .brand{display:flex;align-items:center;gap:9px;min-width:0}
 .brand-mark{
   width:29px;height:29px;border-radius:9px;flex-shrink:0;
@@ -132,7 +134,6 @@ button{font-family:inherit}
 .icon-btn.spin svg{animation:spin .6s cubic-bezier(.4,0,.2,1)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* search */
 .search-wrap{position:relative;display:flex;align-items:center;width:100%}
 .search-wrap .lead{position:absolute;left:11px;width:15px;height:15px;color:var(--text-faint);pointer-events:none}
 #searchInput{
@@ -156,7 +157,6 @@ button{font-family:inherit}
 #searchClear:hover{color:var(--text);background:rgba(255,255,255,.1)}
 #searchClear svg{width:11px;height:11px}
 
-/* row 3 — quick chips + network + filters */
 .hrow-3{gap:8px}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px;margin:-2px;flex:1;min-width:0}
 .chips::-webkit-scrollbar{display:none}
@@ -190,7 +190,6 @@ select:hover{color:var(--text);border-color:var(--border-2)}
 select:focus{outline:none;border-color:rgba(139,92,246,.55)}
 select option{background:var(--card);color:var(--text)}
 
-/* filter bar — bottom sheet on mobile, static strip on desktop */
 .filterbar{
   position:fixed;left:0;right:0;bottom:0;z-index:70;
   display:flex;flex-wrap:wrap;align-items:center;gap:8px;
@@ -267,16 +266,43 @@ body.sheet-open .backdrop{opacity:1;pointer-events:auto}
   .sheet-close,.backdrop,.filters-btn{display:none!important}
 }
 
-/* ============================ FEED ============================ */
+/* ============================ VIEWS / TABS ============================ */
+.tabs{
+  display:flex;gap:4px;margin:22px 0 16px;
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  position:relative;
+  font-size:13px;font-weight:600;color:var(--text-faint);
+  background:none;border:0;
+  padding:9px 14px;cursor:pointer;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:7px;
+  transition:color .15s;
+}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--text)}
+.tab.active::after{
+  content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;
+  background:var(--violet);border-radius:2px;
+}
+.tab-count{
+  min-width:17px;height:17px;padding:0 5px;border-radius:99px;
+  background:var(--violet);color:#fff;
+  font-size:10.5px;font-weight:700;
+  display:grid;place-items:center;
+}
+
 main{padding-bottom:30px}
 .feed-head{
   display:flex;align-items:baseline;justify-content:space-between;
-  gap:12px;margin:24px 0 14px;flex-wrap:wrap;
+  gap:12px;margin:0 0 14px;flex-wrap:wrap;
 }
 .feed-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 .feed-title h2{font-size:20px;font-weight:700;letter-spacing:-.015em}
 .feed-count{font-size:12.5px;color:var(--text-faint);font-variant-numeric:tabular-nums}
-.feed-actions{display:flex;align-items:center;gap:10px}
+.feed-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .sort-hint{font-size:12px;color:var(--text-faint)}
 .star-filter{
   display:inline-flex;align-items:center;gap:6px;
@@ -290,7 +316,6 @@ main{padding-bottom:30px}
 .star-filter.on{color:var(--amber);background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)}
 .star-filter.on svg{fill:currentColor}
 
-/* RWA rubric banner */
 .rwa-banner{
   display:flex;gap:12px;align-items:flex-start;
   border:1px solid rgba(52,211,153,.25);
@@ -303,11 +328,11 @@ main{padding-bottom:30px}
 .rwa-banner b{color:var(--emerald-text);font-weight:700}
 .rwa-banner p{font-size:12.5px;color:var(--text-dim);line-height:1.55}
 
-/* cards grid */
+/* ============================ CARDS ============================ */
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:14px}
 
 .card{
-  display:flex;flex-direction:column;gap:12px;
+  display:flex;flex-direction:column;gap:11px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
@@ -331,6 +356,7 @@ main{padding-bottom:30px}
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
   overflow:hidden;
 }
+.avatar.sm{width:26px;height:26px;border-radius:8px;font-size:10px}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .card-id{min-width:0;flex:1}
 .card-name-row{display:flex;align-items:center;gap:8px}
@@ -342,6 +368,17 @@ main{padding-bottom:30px}
   border:1px solid var(--border);
   padding:2px 7px;border-radius:6px;white-space:nowrap;
 }
+.qmeter{display:inline-flex;gap:2px;align-items:flex-end;cursor:help}
+.qmeter i{width:3.5px;border-radius:1px;background:rgba(255,255,255,.13);display:block}
+.qmeter i:nth-child(1){height:4px}
+.qmeter i:nth-child(2){height:6px}
+.qmeter i:nth-child(3){height:8px}
+.qmeter i:nth-child(4){height:10px}
+.qmeter i:nth-child(5){height:12px}
+.qmeter.q5 i.on,.qmeter.q4 i.on{background:var(--emerald)}
+.qmeter.q3 i.on{background:var(--violet)}
+.qmeter.q2 i.on{background:var(--amber)}
+.qmeter.q1 i.on{background:var(--text-faint)}
 .star{
   margin-left:auto;flex-shrink:0;
   display:grid;place-items:center;
@@ -382,6 +419,16 @@ main{padding-bottom:30px}
   min-height:36px;
 }
 
+.card-notes{display:flex;flex-direction:column;gap:5px}
+.note{
+  font-size:11.5px;line-height:1.45;color:var(--text-dim);
+  padding-left:8px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.note.why{border-left:2px solid rgba(139,92,246,.5)}
+.note.risk{border-left:2px solid rgba(248,113,113,.45)}
+.note b{color:var(--text);font-weight:600}
+
 .metrics{
   display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
   padding:10px 12px;
@@ -404,6 +451,7 @@ main{padding-bottom:30px}
 .m-val .chg{font-size:10.5px;font-weight:700;margin-left:5px}
 .m-val .chg.pos{color:var(--emerald)}
 .m-val .chg.neg{color:var(--red)}
+.stage-move{color:var(--emerald-text)}
 @media (max-width:479px){.metrics{grid-template-columns:repeat(2,1fr)}}
 
 .card-foot{
@@ -447,6 +495,7 @@ main{padding-bottom:30px}
 }
 .btn svg{width:13px;height:13px}
 .btn:hover{color:var(--text);border-color:var(--border-2);background:rgba(255,255,255,.04)}
+.btn.btn-pick.on{color:var(--violet-text);border-color:rgba(139,92,246,.5);background:var(--violet-soft)}
 .btn-primary{color:#fff;background:var(--violet);border-color:var(--violet)}
 .btn-primary:hover{background:#7C4DEF;color:#fff}
 
@@ -469,6 +518,117 @@ main{padding-bottom:30px}
 .empty-icon svg{width:24px;height:24px}
 .empty h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
 .empty p{font-size:13px;margin-bottom:18px}
+
+/* ============================ TRACK VIEW ============================ */
+.tstats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tstat{
+  display:flex;align-items:center;gap:7px;
+  font-size:12px;font-weight:600;color:var(--text-dim);
+  background:var(--card);border:1px solid var(--border);
+  border-radius:999px;padding:7px 13px;
+  font-variant-numeric:tabular-nums;
+}
+.tstat b{color:var(--text);font-weight:700}
+.tstat .dot{width:7px;height:7px;border-radius:50%}
+.track-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.track-head h2{font-size:20px;font-weight:700;letter-spacing:-.015em}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:820px}
+th{
+  text-align:left;font-size:10px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-faint);
+  padding:10px 12px;border-bottom:1px solid var(--border);
+  background:var(--card);white-space:nowrap;
+}
+td{
+  padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);
+  white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--text-dim);
+}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+.t-name{display:flex;align-items:center;gap:9px;color:var(--text);font-weight:600}
+.t-name .ticker{margin-left:2px}
+.t-move{color:var(--emerald-text);font-size:11.5px}
+.track-note{margin-top:12px;font-size:12px;color:var(--text-faint);line-height:1.6}
+
+/* ============================ SOURCES VIEW ============================ */
+.view-sec{margin-bottom:26px}
+.view-sec h3{font-size:14px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
+.view-sec .sec-sub{font-size:12.5px;color:var(--text-dim);margin:-6px 0 12px;line-height:1.55}
+.pipe{display:flex;flex-direction:column;gap:8px}
+.pipe-step{
+  display:flex;gap:12px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:12px 14px;
+}
+.pipe-num{
+  width:26px;height:26px;border-radius:8px;flex-shrink:0;
+  background:var(--violet-soft);color:var(--violet-text);
+  display:grid;place-items:center;font-weight:700;font-size:12px;
+}
+.pipe-step b{font-size:13px;font-weight:600;display:block}
+.pipe-step span{font-size:12px;color:var(--text-dim);line-height:1.5}
+.src-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.src-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:12px 14px;
+  display:flex;flex-direction:column;gap:7px;
+  transition:border-color .15s;
+}
+.src-card:hover{border-color:var(--border-2)}
+.src-card .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.src-card .nm{font-size:13px;font-weight:700}
+.src-card .gv{font-size:11.5px;color:var(--text-dim);line-height:1.5}
+.access{
+  font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 8px;border-radius:6px;white-space:nowrap;border:1px solid transparent;
+}
+.access.free{color:var(--emerald-text);background:var(--emerald-soft);border-color:rgba(52,211,153,.25)}
+.access.key{color:#FCD34D;background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.25)}
+.access.paid{color:#7DD3FC;background:rgba(56,189,248,.09);border-color:rgba(56,189,248,.22)}
+.wl-group{margin-bottom:14px}
+.wl-group h4{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);margin-bottom:8px}
+.wl-chips{display:flex;flex-wrap:wrap;gap:6px}
+a.wl{
+  font-size:12px;font-weight:500;color:var(--text-dim);
+  border:1px solid var(--border);border-radius:999px;
+  padding:5px 12px;transition:.15s;
+}
+a.wl:hover{color:var(--text);border-color:var(--violet);background:var(--violet-soft)}
+.wl-note{font-size:11.5px;color:var(--text-faint);margin-top:4px;line-height:1.5}
+
+/* ============================ POST VIEW ============================ */
+.post-grid{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:900px){.post-grid{grid-template-columns:1fr 1.2fr}}
+.panel{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;
+  display:flex;flex-direction:column;gap:12px;min-width:0;
+}
+.panel h3{font-size:14px;font-weight:700}
+.panel .sub{font-size:12px;color:var(--text-faint);line-height:1.5}
+.tg{
+  background:#10151C;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:13px;line-height:1.6;
+  white-space:pre-wrap;word-break:break-word;
+  max-height:520px;overflow-y:auto;
+  font-variant-numeric:tabular-nums;
+}
+.tg.placeholder{color:var(--text-faint);text-align:center;white-space:normal}
+.rules{display:flex;flex-direction:column;gap:7px}
+.rules li{
+  list-style:none;font-size:12px;color:var(--text-dim);line-height:1.5;
+  padding-left:22px;position:relative;
+}
+.rules li::before{
+  content:"";position:absolute;left:2px;top:6px;
+  width:8px;height:8px;border-radius:3px;
+  background:var(--violet-soft);border:1px solid rgba(139,92,246,.5);
+}
 
 /* footer */
 footer{
@@ -587,12 +747,18 @@ footer .fine{line-height:1.6}
         <option value="fundraising">Fundraising</option>
         <option value="announced">Just announced</option>
       </select>
-      <select id="minLiqSel" aria-label="Minimum liquidity">
+      <select id="minLiqSel" aria-label="Minimum liquidity" title="Absolute liquidity floor. Early tokens often trade at $25–150K — use the Quality score for a relative view.">
         <option value="0">Any liquidity</option>
+        <option value="25000">Liq ≥ $25K</option>
         <option value="100000">Liq ≥ $100K</option>
-        <option value="500000">Liq ≥ $500K</option>
+        <option value="250000">Liq ≥ $250K</option>
         <option value="1000000">Liq ≥ $1M</option>
         <option value="5000000">Liq ≥ $5M</option>
+      </select>
+      <select id="qSel" aria-label="Quality score" title="Relative quality score (0–5): liquidity tier + activity (vol/liq) + source strength + socials. Early tokens with $25–100K liquidity can still score 4+.">
+        <option value="0">Any quality</option>
+        <option value="3">Quality ≥ 3</option>
+        <option value="4">Quality ≥ 4</option>
       </select>
       <select id="ageSel" aria-label="Age">
         <option value="0">Any age</option>
@@ -616,37 +782,140 @@ footer .fine{line-height:1.6}
 </header>
 
 <main class="container">
-  <div class="feed-head">
-    <div class="feed-title">
-      <h2 id="feedTitle">All Early</h2>
-      <span class="feed-count" id="feedCount"></span>
-    </div>
-    <div class="feed-actions">
-      <span class="sort-hint" id="sortHint"></span>
-      <button class="star-filter" id="starFilter" title="Show only starred projects">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Interesting <span id="starCount">0</span>
-      </button>
-    </div>
+  <!-- tabs -->
+  <div class="tabs" id="tabs" role="tablist">
+    <button class="tab active" data-view="feed" role="tab">Feed</button>
+    <button class="tab" data-view="track" role="tab">Track</button>
+    <button class="tab" data-view="sources" role="tab">Sources</button>
+    <button class="tab" data-view="post" role="tab">Post<span class="tab-count" id="postCount" hidden>0</span></button>
   </div>
 
-  <div class="rwa-banner" id="rwaBanner" hidden>
-    <span class="rb-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>
-    </span>
-    <p><b>RWA Early</b> — tokenized real-world assets: treasuries, private credit, real estate, commodities &amp; funds. Curated picks are marked with the <b>RWA Early</b> badge.</p>
-  </div>
-
-  <section class="feed" id="feed" aria-live="polite"></section>
-
-  <div class="empty" id="empty" hidden>
-    <div class="empty-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+  <!-- ============================ FEED VIEW ============================ -->
+  <section id="view-feed">
+    <div class="feed-head">
+      <div class="feed-title">
+        <h2 id="feedTitle">All Early</h2>
+        <span class="feed-count" id="feedCount"></span>
+      </div>
+      <div class="feed-actions">
+        <span class="sort-hint" id="sortHint"></span>
+        <button class="star-filter" id="starFilter" title="Show only starred projects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Interesting <span id="starCount">0</span>
+        </button>
+      </div>
     </div>
-    <h3>No projects match your filters</h3>
-    <p>Try widening the age window, lowering the liquidity floor or clearing the category.</p>
-    <button class="btn btn-primary" id="emptyReset">Reset filters</button>
-  </div>
+
+    <div class="rwa-banner" id="rwaBanner" hidden>
+      <span class="rb-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>
+      </span>
+      <p><b>RWA Early</b> — tokenized real-world assets: treasuries, private credit, real estate, commodities &amp; funds. Curated picks are marked with the <b>RWA Early</b> badge.</p>
+    </div>
+
+    <div class="feed" id="feed" aria-live="polite"></div>
+
+    <div class="empty" id="empty" hidden>
+      <div class="empty-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+      </div>
+      <h3>No projects match your filters</h3>
+      <p>Try widening the age window, lowering the liquidity floor or clearing the category.</p>
+      <button class="btn btn-primary" id="emptyReset">Reset filters</button>
+    </div>
+  </section>
+
+  <!-- ============================ TRACK VIEW ============================ -->
+  <section id="view-track" hidden>
+    <div class="track-head">
+      <h2>Track · dynamics</h2>
+      <select id="trackSortSel" aria-label="Track sort">
+        <option value="sinceAdd">Δ since added</option>
+        <option value="added">Newest added</option>
+        <option value="d1">Δ 24h</option>
+        <option value="quality">Quality</option>
+      </select>
+    </div>
+    <div class="tstats" id="trackStats"></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Project</th><th>Added</th><th>Status</th><th>MC</th>
+            <th>Δ since added</th><th>24h</th><th>7d</th><th>30d</th><th>Q</th><th>★</th>
+          </tr>
+        </thead>
+        <tbody id="trackBody"></tbody>
+      </table>
+    </div>
+    <p class="track-note" id="trackNote"></p>
+  </section>
+
+  <!-- ============================ SOURCES VIEW ============================ -->
+  <section id="view-sources" hidden>
+    <div class="view-sec">
+      <h3>How projects get into the feed</h3>
+      <p class="sec-sub">A 7-step pipeline. APIs find the fresh; curation decides what matters. Every card shows its source.</p>
+      <div class="pipe">
+        <div class="pipe-step"><span class="pipe-num">1</span><div><b>Fresh tokens &amp; pairs</b><span>DexScreener, GeckoTerminal, Helius webhooks — new pairs, liquidity, volume, age. Absolute liquidity floor is optional; early tokens often start at $25–100K.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">2</span><div><b>Protocols with TVL &amp; categories</b><span>DefiLlama — the core of the RWA rubric: real TVL, category tags, serious projects first.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">3</span><div><b>New listings, socials, descriptions</b><span>CoinGecko, CoinMarketCap, Messari — cross-check: if it's already on CoinGecko, it's not brand new.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">4</span><div><b>Solana depth</b><span>Birdeye, Jupiter, Helius, Moralis — most early activity is on Solana, so this layer is critical for the channel.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA registries</b><span>RWA.xyz, Tokenized — public pages (parsing), tokenized assets and issuers list.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">6</span><div><b>Curated layer</b><span>Manual adds: your picks, a colleague's list, X watchlist below. Marked with the <b>RWA Early / Curated</b> badge — this is what a scanner can't do.</span></div></div>
+        <div class="pipe-step"><span class="pipe-num">7</span><div><b>Quality score → feed</b><span>Relative score 0–5: liquidity tier + activity (vol/liq) + source strength + socials. A young token with $86K liquidity and 5× vol/liq scores higher than a dead $500K pool.</span></div></div>
+      </div>
+    </div>
+
+    <div class="view-sec">
+      <h3>Data sources</h3>
+      <p class="sec-sub">All open-access sources wired in the data layer (<code>API_SOURCES</code>). Free ones can go live now; key-required and paid ones come later without touching the UI.</p>
+      <div class="src-grid" id="srcGrid"></div>
+    </div>
+
+    <div class="view-sec">
+      <h3>X / Twitter watchlist</h3>
+      <p class="sec-sub">Manual radar for now — the X API is paid and comes in the next stage. Until then: scan this list once a day (≈15 min) and feed the curated layer.</p>
+      <div id="watchlistEl"></div>
+      <p class="wl-note">List is curated — verify handles before relying on them. Editable in <code>X_WATCHLIST</code> at the top of the script.</p>
+    </div>
+  </section>
+
+  <!-- ============================ POST VIEW ============================ -->
+  <section id="view-post" hidden>
+    <div class="post-grid">
+      <div class="panel">
+        <h3>Post template</h3>
+        <p class="sub">Every project in the daily post follows this shape. «Почему интересно» и «Риск» — обязательные: это твоя интерпретация, а не копия описания.</p>
+        <div class="tg">🗒 #EarlyProjects — {дата}
+
+1) {Название} ({тикер}) — {суть, 1 строка}
+   • {Категория} · {сеть} · {статус/возраст} · {MC или раунд}
+   • 👀 Почему интересно: {твоя строка}
+   • ⚠️ Риск: {1 строка}
+   • {ссылка на чарт / сайт}
+
+—
+Источники: DexScreener · DefiLlama · CoinGecko · RWA Early
+Лента с историей: {ссылка на страницу}</div>
+        <ul class="rules">
+          <li>Не больше 7 проектов в посте — качество &gt; количество.</li>
+          <li>Проект попадает, если подтверждён 2 независимыми источниками ИЛИ имеет жёсткий сигнал (дата TGE, закрытый раунд, реальная активность).</li>
+          <li>Краевые случаи (мем под видом RWA) — не попадают. Жанровый фильтр = качество рубрики.</li>
+          <li>Один пост в день, одно и то же время — привычка подписчика.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Draft post · <span id="postHeadCount">0</span></h3>
+        <p class="sub">Add projects from the Feed (button <b>＋ Post</b> on each card) — the post assembles here in Telegram format. Copy and paste it straight into the channel.</p>
+        <div class="tg placeholder" id="postPreview">Select projects in the feed (＋ Post on a card) — the post will be assembled here.</div>
+        <div class="card-actions" style="justify-content:flex-start">
+          <button class="btn btn-primary" id="postCopy">Copy post</button>
+          <button class="btn" id="postClear">Clear</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer>
     <div class="src-list" aria-label="Data sources">
@@ -655,8 +924,9 @@ footer .fine{line-height:1.6}
       <span class="src src-defillama"><i></i>DefiLlama</span>
       <span class="src src-birdeye"><i></i>Birdeye / Jupiter</span>
       <span class="src src-manual"><i></i>Manual curation</span>
+      <span class="src" style="color:var(--text-faint)">+ 13 more → Sources tab</span>
     </div>
-    <p class="fine">Prototype · mock data · API-ready structure — adapters for DexScreener, CoinGecko, DefiLlama, Birdeye and manual curation are stubbed in the data layer. Not financial advice.</p>
+    <p class="fine">Prototype · mock data · API-ready structure — 18 sources in <code>API_SOURCES</code>, quality scoring, dynamics tracking and a post generator included. Not financial advice.</p>
   </footer>
 </main>
 
@@ -667,65 +937,104 @@ footer .fine{line-height:1.6}
 <script>
 "use strict";
 /* ============================================================
-   1. DATA SOURCES — API-ready configuration
+   1. DATA SOURCES — API-ready configuration (18 sources)
    ------------------------------------------------------------
-   Each source exposes endpoints as functions returning full
-   URLs so the future fetcher can call them directly.
+   access: "free" | "key" (free tier + key) | "paid" (later stage)
+   Wire a source: set USE_MOCKS=false, implement adapter.fetch(),
+   map the payload through a normalizer into the Project schema.
    ============================================================ */
 const API_SOURCES = {
-  dexscreener: {
-    label: "DexScreener",
+  dexscreener:  { label: "DexScreener",  access: "free", status: "stub",
+    gives: "Fresh pairs: liquidity, volume, price change, pair age, search.",
     baseUrl: "https://api.dexscreener.com",
     endpoints: {
       latestPairs: () => "https://api.dexscreener.com/latest/dex/pairs",
       search: (q) => `https://api.dexscreener.com/search?query=${encodeURIComponent(q)}`,
       tokenProfiles: () => "https://api.dexscreener.com/token-profiles/latest/v1"
-    },
-    notes: "Fresh token pairs: liquidity, volume, price change, age. No key required."
-  },
-  coingecko: {
-    label: "CoinGecko",
+    } },
+  geckoterminal:{ label: "GeckoTerminal", access: "free", status: "stub",
+    gives: "New pools, volume, liquidity, price — no key, generous limits.",
+    baseUrl: "https://api.geckoterminal.com",
+    endpoints: {
+      newPools: (net) => `https://api.geckoterminal.com/api/v2/networks/${net}/new_pools`
+    } },
+  coingecko:    { label: "CoinGecko", access: "free", status: "stub",
+    gives: "New coins, categories, descriptions, socials. Free tier is rate-limited.",
     baseUrl: "https://api.coingecko.com/api/v3",
     endpoints: {
       markets: (vs = "usd", per = 25) => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs}&order=market_cap_desc&per_page=${per}`,
       newCoins: (vs = "usd") => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs}&new=true`,
       categories: () => "https://api.coingecko.com/api/v3/coins/categories/list"
-    },
-    notes: "New coins, categories, descriptions, socials. Free tier is rate-limited."
-  },
-  defillama: {
-    label: "DefiLlama",
+    } },
+  defillama:    { label: "DefiLlama", access: "free", status: "stub",
+    gives: "Protocols with TVL and categories — the core of the RWA rubric.",
     baseUrl: "https://api.llama.fi",
     endpoints: {
       protocols: () => "https://api.llama.fi/protocols",
       categories: () => "https://api.llama.fi/categories"
-    },
-    notes: "Protocols with TVL and categories — the 'serious' DeFi/RWA projects. No key."
-  },
-  birdeye: {
-    label: "Birdeye",
+    } },
+  birdeye:      { label: "Birdeye", access: "key", status: "stub",
+    gives: "Solana depth: liquidity, volume, pairs. Header x-api-key.",
     baseUrl: "https://public-api.birdeye.so",
-    endpoints: {
-      tokens: (chain = "solana") => `https://public-api.birdeye.so/defi/v2/tokens?chain=${chain}&sort=liquidity`
-    },
-    notes: "Solana depth: liquidity, volume, pairs. Requires API key (x-api-key header)."
-  },
-  jupiter: {
-    label: "Jupiter",
+    endpoints: { tokens: (chain = "solana") => `https://public-api.birdeye.so/defi/v2/tokens?chain=${chain}&sort=liquidity` } },
+  jupiter:      { label: "Jupiter", access: "free", status: "stub",
+    gives: "Solana token metadata, quotes & swap (lite tier, no key).",
     baseUrl: "https://lite-api.jup.ag",
-    endpoints: {
-      token: (symbol) => `https://lite-api.jup.ag/tokens/v2/${encodeURIComponent(symbol)}`
-    },
-    notes: "Solana token metadata, quotes & swap. No key for lite tier."
-  },
-  twitter: {
-    label: "X / Twitter",
-    endpoints: {},
-    notes: "Planned: fresh-announcement radar via X API (OAuth2) or a scraper. Feeds 'manual curation'."
-  }
+    endpoints: { token: (symbol) => `https://lite-api.jup.ag/tokens/v2/${encodeURIComponent(symbol)}` } },
+  helius:       { label: "Helius", access: "key", status: "stub",
+    gives: "Solana webhooks: new tokens, new pools — push-based, ideal for a 'fresh' radar. Free dev tier.",
+    baseUrl: "https://api.helius.xyz",
+    endpoints: { tokenMetadata: (addr) => `https://api.helius.xyz/v0/tokens/${addr}` } },
+  moralis:      { label: "Moralis", access: "key", status: "stub",
+    gives: "Multi-chain tokens, prices, streams. Free tier + key.",
+    baseUrl: "https://deep-index.moralis.io",
+    endpoints: { tokens: () => "https://deep-index.moralis.io/api/v2.1/tokens" } },
+  covalent:     { label: "Covalent", access: "key", status: "stub",
+    gives: "Token contracts, holders, balances. Free tier + key.",
+    baseUrl: "https://api.covalenthq.com",
+    endpoints: { tokens: (chain) => `https://api.covalenthq.com/v1/${chain}/tokens/` } },
+  cryptocompare:{ label: "CryptoCompare", access: "key", status: "stub",
+    gives: "Prices, socials, sentiment. Free tier + key.",
+    baseUrl: "https://min-api.cryptocompare.com",
+    endpoints: { datas: () => "https://min-api.cryptocompare.com/data/v2/pubs/coins/full" } },
+  cmc:          { label: "CoinMarketCap", access: "key", status: "stub",
+    gives: "New listings, categories, socials. Free key, strict limits.",
+    baseUrl: "https://pro-api.coinmarketcap.com",
+    endpoints: { latest: () => "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listing/latest" } },
+  messari:      { label: "Messari", access: "free", status: "stub",
+    gives: "Project data, categories, socials, reports.",
+    baseUrl: "https://data.messari.io/api/v1",
+    endpoints: { assets: () => "https://data.messari.io/api/v1/assets" } },
+  dune:         { label: "Dune", access: "key", status: "paid",
+    gives: "Custom analytics (holders, unique wallets). Free tier + key, paid for scale.",
+    baseUrl: "https://api.dune.com",
+    endpoints: { execute: () => "https://api.dune.com/api/v1/query/{id}/execute" } },
+  polymarket:   { label: "Polymarket", access: "free", status: "stub",
+    gives: "Prediction markets — context for projects like tryimoo.",
+    baseUrl: "https://gamma-api.polymarket.com",
+    endpoints: { markets: () => "https://gamma-api.polymarket.com/markets" } },
+  rwa_xyz:      { label: "RWA.xyz", access: "free", status: "parse",
+    gives: "Tokenized assets registry — public page, parse or manual. Direct RWA rubric fuel.",
+    baseUrl: "https://rwa.xyz",
+    endpoints: { home: () => "https://rwa.xyz/" } },
+  tokenized:    { label: "Tokenized", access: "free", status: "parse",
+    gives: "Tokenized real-world assets list — public page, parse or manual.",
+    baseUrl: "https://www.tokenized.com",
+    endpoints: { home: () => "https://www.tokenized.com/" } },
+  twitter:      { label: "X / Twitter", access: "paid", status: "planned",
+    gives: "Fresh-announcement radar (OAuth2). Next stage: X_WATCHLIST below + API.",
+    baseUrl: "https://api.x.com",
+    endpoints: {} }
 };
 
-/* Minimal fetch helper for when adapters get wired. */
+/* Curated X radar (manual for now). Edit freely. */
+const X_WATCHLIST = [
+  { group: "RWA protocols", handles: ["ondo_finance", "Goldfinch", "MapleFinance", "Centrifuge", "clearpool_io", "realio", "OpenEden"] },
+  { group: "Radar & data", handles: ["rwa_xyz", "tokenized_com", "DefiLlama", "DexScreener", "geckoterminal", "coingecko"] },
+  { group: "Solana", handles: ["JupiterExchange", "birdeye", "HeliusDev"] },
+  { group: "Scouts & analysts", handles: ["0xMert_", "Ansem", "DefiIgnas", "CryptoHayes"] }
+];
+
 async function http(url, headers = {}) {
   const res = await fetch(url, { headers });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
@@ -735,15 +1044,18 @@ async function http(url, headers = {}) {
 /* ============================================================
    2. PROJECT SCHEMA + NORMALIZERS
    ------------------------------------------------------------
-   The UI renders ONE shape only:
    {
      id, name, symbol?, category, status, network?, tagline, source,
      token:   { ca, mc, liquidity, volume24h, chg24h, listedAt } | null,
      noToken: { announcedAt, stage, raised } | null,
      socials: { twitter?, telegram?, website? },
-     tags: string[], interest: number, curated: boolean, logo?: string
+     tags[], interest, curated, logo?,
+     why, risk,                       // curation lines (post material)
+     firstSeenAt,                     // when it entered the feed
+     baseline: { mc } | null,         // MC at first add (dynamics)
+     baselineStatus, baselineStage,   // status/stage at first add
+     changes: { d1, d7, d30 } | null  // short-term deltas (mock now)
    }
-   Every adapter (API or mock) must map into this schema.
    ============================================================ */
 function normalizeProject(p) {
   return {
@@ -765,7 +1077,14 @@ function normalizeProject(p) {
     tags: p.tags || [],
     interest: p.interest || 0,
     curated: !!p.curated,
-    logo: p.logo || null
+    logo: p.logo || null,
+    why: p.why || "",
+    risk: p.risk || "",
+    firstSeenAt: p.firstSeenAt || Date.now(),
+    baseline: p.baseline || null,
+    baselineStatus: p.baselineStatus || null,
+    baselineStage: p.baselineStage || null,
+    changes: p.changes || null
   };
 }
 
@@ -787,7 +1106,9 @@ function normalizeDexscreenerPair(pair) {
       chg24h: (pair.priceChange && pair.priceChange.h24) || null,
       listedAt: pair.pairCreatedAt || Date.now()
     },
-    socials: {}, tags: [], interest: 0
+    socials: {}, tags: [], interest: 0,
+    firstSeenAt: Date.now(),
+    baseline: pair.marketCap ? { mc: pair.marketCap } : null
   });
 }
 
@@ -806,56 +1127,35 @@ function normalizeDefiLlamaProtocol(proto) {
     network: (proto.chain || "").toLowerCase() || null,
     source: "defillama",
     tagline: `${proto.category || "Protocol"} · TVL ${proto.tvl ? "$" + Math.round(proto.tvl).toLocaleString() : "n/a"}.`,
-    token: proto.chain && proto.coingeckoId ? { ca: null, mc: null, liquidity: null, volume24h: null, chg24h: null, listedAt: Date.now() } : null,
+    token: proto.chain ? { ca: null, mc: null, liquidity: null, volume24h: null, chg24h: null, listedAt: Date.now() } : null,
     noToken: proto.tvl ? { announcedAt: Date.now(), stage: `TVL $${Math.round(proto.tvl).toLocaleString()}`, raised: null } : null,
     socials: { twitter: (proto.twitter && `https://x.com/${proto.twitter}`) || null, website: proto.url || null, telegram: null },
-    tags: [proto.category || ""]
+    tags: [proto.category || ""],
+    firstSeenAt: Date.now(),
+    baselineStatus: "launched"
   });
 }
 
 /* ============================================================
    3. ADAPTERS (stubs) + FEED LOADER
-   ------------------------------------------------------------
-   Wire a real source by:
-     1) set USE_MOCKS = false
-     2) implement fetch() below, calling API_SOURCES.<name>.endpoints
-     3) map the payload through the normalizers above
    ============================================================ */
 const USE_MOCKS = true;
 
 const adapters = {
-  dexscreener: {
-    status: "stub", // -> "live" once wired
-    fetch: async () => { /*
-      const pairs = await http(API_SOURCES.dexscreener.endpoints.latestPairs());
-      return pairs.map(normalizeDexscreenerPair).filter(Boolean);
-    */ throw new Error("DexScreener adapter is not wired yet"); }
-  },
-  coingecko: {
-    status: "stub",
-    fetch: async () => { /*
-      const coins = await http(API_SOURCES.coingecko.endpoints.newCoins());
-      return coins.map(normalizeCoinGeckoCoin).filter(Boolean);
-    */ throw new Error("CoinGecko adapter is not wired yet"); }
-  },
-  defillama: {
-    status: "stub",
-    fetch: async () => { /*
-      const protocols = await http(API_SOURCES.defillama.endpoints.protocols());
-      return protocols.map(normalizeDefiLlamaProtocol).filter(Boolean);
-    */ throw new Error("DefiLlama adapter is not wired yet"); }
-  },
-  birdeye: {
-    status: "stub", // requires API key header
-    fetch: async () => { throw new Error("Birdeye adapter is not wired yet (needs API key)"); }
-  },
-  manual: {
-    status: "live",
-    fetch: async () => CURATED_PROJECTS // manual / curated entries (RWA Early)
-  }
+  dexscreener: { status: "stub", fetch: async () => { /*
+    const pairs = await http(API_SOURCES.dexscreener.endpoints.latestPairs());
+    return pairs.map(normalizeDexscreenerPair).filter(Boolean);
+  */ throw new Error("DexScreener adapter is not wired yet"); } },
+  geckoterminal: { status: "stub", fetch: async () => { throw new Error("GeckoTerminal adapter is not wired yet"); } },
+  coingecko: { status: "stub", fetch: async () => { throw new Error("CoinGecko adapter is not wired yet"); } },
+  defillama: { status: "stub", fetch: async () => { /*
+    const protocols = await http(API_SOURCES.defillama.endpoints.protocols());
+    return protocols.map(normalizeDefiLlamaProtocol).filter(Boolean);
+  */ throw new Error("DefiLlama adapter is not wired yet"); } },
+  birdeye: { status: "stub", fetch: async () => { throw new Error("Birdeye adapter is not wired yet (needs API key)"); } },
+  manual: { status: "live", fetch: async () => CURATED_PROJECTS }
 };
 
-/* Merge + dedupe across sources. */
 async function loadFeed() {
   if (USE_MOCKS) return MOCK_PROJECTS.map(normalizeProject);
   const settled = await Promise.allSettled(
@@ -867,156 +1167,251 @@ async function loadFeed() {
 }
 
 /* ============================================================
-   4. MOCK DATA (already in Project schema)
+   4. MOCK DATA (Project schema)
    ------------------------------------------------------------
-   Clearly mock metrics — replace via adapters above.
+   firstSeen = days ago the project entered the feed.
+   baseline.mc = MC at that moment -> "Δ since added".
    ============================================================ */
 const NOW = Date.now();
 const HOUR = 3600e3;
-const tok = (o) => ({
-  ca: o.ca, mc: o.mc, liquidity: o.liq, volume24h: o.vol,
-  chg24h: o.chg != null ? o.chg : null, listedAt: NOW - o.ageH * HOUR
-});
+const DAY = 86400e3;
+const tok = (o) => ({ ca: o.ca, mc: o.mc, liquidity: o.liq, volume24h: o.vol, chg24h: o.chg != null ? o.chg : null, listedAt: NOW - o.ageH * HOUR });
 const notok = (o) => ({ announcedAt: NOW - o.agoH * HOUR, stage: o.stage, raised: o.raised || null });
+const P = (o) => ({
+  id: o.id, name: o.name, symbol: o.symbol || null, category: o.category, status: o.status,
+  network: o.network || null, source: o.source, tagline: o.tagline,
+  token: o.token || null, noToken: o.noToken || null, socials: o.socials || {},
+  tags: o.tags || [], interest: o.interest || 0, curated: !!o.curated,
+  why: o.why || "", risk: o.risk || "",
+  firstSeenAt: NOW - (o.seenD ?? 1) * DAY,
+  baseline: o.baseline || null,
+  baselineStatus: o.baseStatus || null,
+  baselineStage: o.baseStage || null,
+  changes: o.changes || null
+});
 
 const MOCK_PROJECTS = [
   /* ---------- RWA Early ---------- */
-  { id: "ondo", name: "Ondo Finance", symbol: "ONDO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
+  P({ id: "ondo", name: "Ondo Finance", symbol: "ONDO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
     tagline: "Tokenized US Treasuries & on-chain funds (USDY, OUSG).",
     token: tok({ ca: "0x793f2350085bc8c5e9f447211c57a64315a3f19e", mc: 1420000000, liq: 62400000, vol: 84100000, chg: 1.8, ageH: 9800 }),
     socials: { twitter: "https://x.com/ondo_finance", telegram: "https://t.me/ondofinance", website: "https://ondo.finance" },
-    tags: ["Treasuries", "Funds"], interest: 4200, curated: true },
+    tags: ["Treasuries", "Funds"], interest: 4200, curated: true,
+    why: "Крупнейший RWA в treasuries — бенчмарк категории.",
+    risk: "Огромный MC, раннего окна входа давно нет; конкуренция банковских фондов.",
+    seenD: 45, baseline: { mc: 1050000000 }, changes: { d1: 1.8, d7: 6.2, d30: 14.5 } }),
 
-  { id: "goldfinch", name: "Goldfinch", symbol: "GFI", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
+  P({ id: "goldfinch", name: "Goldfinch", symbol: "GFI", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
     tagline: "Permissionless credit market — lending directly to real-world borrowers.",
     token: tok({ ca: "0x20c00f6c69bdf7513a39f8a539d83f0d8f0a1122", mc: 184000000, liq: 12400000, vol: 3100000, chg: -2.4, ageH: 7900 }),
     socials: { twitter: "https://x.com/Goldfinch", telegram: "https://t.me/goldfinch", website: "https://goldfinch.com" },
-    tags: ["Credit", "Institutional"], interest: 1600, curated: true },
+    tags: ["Credit", "Institutional"], interest: 1600, curated: true,
+    why: "Кредит без залога в классическом смысле — прямой ончейн-канал институционалов.",
+    risk: "Риск дефолтов заёмщиков, портфель непрозрачен для ритейла.",
+    seenD: 30, baseline: { mc: 210000000 }, changes: { d1: -2.4, d7: -8.1, d30: -4.2 } }),
 
-  { id: "maple", name: "Maple Finance", symbol: "MPL", category: "rwa", status: "launched", network: "arbitrum", source: "defillama",
+  P({ id: "maple", name: "Maple Finance", symbol: "MPL", category: "rwa", status: "launched", network: "arbitrum", source: "defillama",
     tagline: "Institutional credit protocol — RWAs as on-chain collateral.",
     token: tok({ ca: "0xa3fbe42984753d2c1a5e6f8b9c0d1e2f3a4b5c6d", mc: 96000000, liq: 8200000, vol: 2400000, chg: 0.6, ageH: 6200 }),
     socials: { twitter: "https://x.com/MapleFinance", telegram: "https://t.me/maple_finance", website: "https://usemaple.com" },
-    tags: ["Credit", "Institutional"], interest: 1200 },
+    tags: ["Credit", "Institutional"], interest: 1200,
+    why: "Институциональный кредит с ончейн-аналитикой — из первых серьёзных RWA-игроков.",
+    risk: "Риск кредитного цикла, высокая чувствительность к ставкам.",
+    seenD: 60, baseline: { mc: 70000000 }, changes: { d1: 0.6, d7: 4.4, d30: 21.0 } }),
 
-  { id: "backed", name: "Backed Finance", symbol: "BKD", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
+  P({ id: "backed", name: "Backed Finance", symbol: "BKD", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
     tagline: "Tokenized commodities, currencies & real-world assets (BAC).",
     token: tok({ ca: "0x500c0d1e2f3a4b5c6d7e8f90a1b2c3d4e5f60718", mc: 68000000, liq: 4600000, vol: 940000, chg: 3.1, ageH: 5400 }),
     socials: { twitter: "https://x.com/BackedFinance", website: "https://backed.fi" },
-    tags: ["Commodities", "BAC"], interest: 700 },
+    tags: ["Commodities", "BAC"], interest: 700,
+    why: "Коммодити и FX как ончейн-активы — редкая и недооценённая ниша RWA.",
+    risk: "Зависимость от кастодиана (структура BAC), умеренная ликвидность.",
+    seenD: 90, baseline: { mc: 92000000 }, changes: { d1: 3.1, d7: -12.0, d30: -30.0 } }),
 
-  { id: "centrifuge", name: "Centrifuge", symbol: "CFG", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
+  P({ id: "centrifuge", name: "Centrifuge", symbol: "CFG", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
     tagline: "DeFi credit marketplace for off-balance-sheet real-world assets.",
     token: tok({ ca: "0x3a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d", mc: 520000000, liq: 21000000, vol: 5600000, chg: -0.8, ageH: 8900 }),
     socials: { twitter: "https://x.com/Centrifuge", telegram: "https://t.me/centrifuge", website: "https://centrifuge.ch" },
-    tags: ["Credit", "Syndicates"], interest: 2100 },
+    tags: ["Credit", "Syndicates"], interest: 2100,
+    why: "Ветеран RWA-кредита с реальным портфелем активов за 7 лет.",
+    risk: "Сложная структура, зрелый токен — без раннего мультипликатора.",
+    seenD: 60, baseline: { mc: 480000000 }, changes: { d1: -0.8, d7: 2.2, d30: 9.0 } }),
 
-  { id: "clearpool", name: "Clearpool", symbol: "CLP", category: "rwa", status: "launched", network: "polygon", source: "defillama",
+  P({ id: "clearpool", name: "Clearpool", symbol: "CLP", category: "rwa", status: "launched", network: "polygon", source: "defillama",
     tagline: "Institutional private-credit yield, fully on-chain and permissionless.",
     token: tok({ ca: "0x1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e", mc: 42000000, liq: 2100000, vol: 620000, chg: 4.2, ageH: 4300 }),
     socials: { twitter: "https://x.com/clearpool_io", website: "https://clearpool.io" },
-    tags: ["Credit", "Institutional"], interest: 500 },
+    tags: ["Credit", "Institutional"], interest: 500,
+    why: "Институциональный приват-кредит с регулируемыми контрагентами — чистая RWA-механика.",
+    risk: "Ранняя стадия, маленький рынок, концентрация контрагентов.",
+    seenD: 40, baseline: { mc: 30000000 }, changes: { d1: 4.2, d7: 9.5, d30: 26.0 } }),
 
-  { id: "realio", name: "Realio", symbol: "RIO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
+  P({ id: "realio", name: "Realio", symbol: "RIO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
     tagline: "Real-estate tokenization — REITs and rental yield on-chain.",
     token: tok({ ca: "0x9c8b7a6051423f2e1d0c9b8a7061524332211200", mc: 214000000, liq: 9400000, vol: 1700000, chg: 1.2, ageH: 8100 }),
     socials: { twitter: "https://x.com/realio", telegram: "https://t.me/realio", website: "https://realio.finance" },
-    tags: ["Real Estate", "REITs"], interest: 1400 },
+    tags: ["Real Estate", "REITs"], interest: 1400,
+    why: "Недвижимость с арендным доходом ончейн — классика RWA с реальными активами.",
+    risk: "Токенизация CRE медленная и юридически сложная; регуляторика.",
+    seenD: 45, baseline: { mc: 190000000 }, changes: { d1: 1.2, d7: 3.8, d30: 11.0 } }),
 
-  { id: "helios", name: "Helios Treasuries", symbol: null, category: "rwa", status: "pre-token", network: "solana", source: "dexscreener",
+  P({ id: "helios", name: "Helios Treasuries", symbol: null, category: "rwa", status: "pre-token", network: "solana", source: "dexscreener",
     tagline: "T-bill yield vault on Solana — TGE next week.",
     token: tok({ ca: "He11osTreasuryVaultXx9k2mP4qR7tY3wZ6aBcD5eF8g", mc: 12000000, liq: 840000, vol: 1100000, chg: 12.4, ageH: 30 }),
     socials: { twitter: "https://x.com/helios_treasury", telegram: "https://t.me/helios_treasury" },
-    tags: ["Treasuries", "Vault"], interest: 320 },
+    tags: ["Treasuries", "Vault"], interest: 320,
+    why: "T-bill доходность на Solana — ожидаемый RWA-продукт для Solana-аудитории.",
+    risk: "Pre-token: TGE ещё впереди, вход только через пре-рынок.",
+    seenD: 1.4, baseline: { mc: 4200000 }, baseStatus: "announced", changes: { d1: 12.4, d7: null, d30: null } }),
 
-  { id: "aurum", name: "Aurum Yield", symbol: null, category: "rwa", status: "fundraising", network: null, source: "manual",
+  P({ id: "aurum", name: "Aurum Yield", symbol: null, category: "rwa", status: "fundraising", network: null, source: "manual",
     tagline: "Gold-backed tokenized yield — vault launch Q1 2026.",
     noToken: notok({ agoH: 70, stage: "Seed · $4.0M raised", raised: 4000000 }),
     socials: { twitter: "https://x.com/aurumyield", website: "https://aurumyield.io" },
-    tags: ["Gold", "Yield"], interest: 180, curated: true },
+    tags: ["Gold", "Yield"], interest: 180, curated: true,
+    why: "Золото + доходность: продукт-хит под крипто-аудиторию, редкое сочетание в RWA.",
+    risk: "Продакшн ещё не запущен, кастодия золота — существенный риск, команда небольшая.",
+    seenD: 3, baseStage: "Seed · raising", baseStatus: "announced" }),
 
-  { id: "meridian", name: "Meridian Estates", symbol: null, category: "rwa", status: "announced", network: null, source: "manual",
+  P({ id: "meridian", name: "Meridian Estates", symbol: null, category: "rwa", status: "announced", network: null, source: "manual",
     tagline: "Fractional tokenized commercial real estate — waitlist open.",
     noToken: notok({ agoH: 18, stage: "Pre-launch · waitlist open" }),
     socials: { twitter: "https://x.com/meridian_est", telegram: "https://t.me/meridian_estates" },
-    tags: ["Real Estate", "Fractional"], interest: 90, curated: true },
+    tags: ["Real Estate", "Fractional"], interest: 90, curated: true,
+    why: "Фракционный CRE — огромный рынок с почти нулевым ончейн-предложением.",
+    risk: "Только вотчлист: ни продукта, ни токена, команда непроверена.",
+    seenD: 1, baseStage: "Pre-launch · waitlist open" }),
 
   /* ---------- DeFi ---------- */
-  { id: "velora", name: "Velora", symbol: "VEL", category: "defi", status: "launched", network: "base", source: "dexscreener",
+  P({ id: "velora", name: "Velora", symbol: "VEL", category: "defi", status: "launched", network: "base", source: "dexscreener",
     tagline: "Perpetuals DEX with an on-chain risk engine.",
     token: tok({ ca: "0x4f5e6d7c8b9a0f1e2d3c4b5a6978876655443322", mc: 38400000, liq: 2100000, vol: 14600000, chg: 21.3, ageH: 20 }),
     socials: { twitter: "https://x.com/velora_dex", telegram: "https://t.me/velora_dex", website: "https://velora.finance" },
-    tags: ["Perps", "Derivatives"], interest: 860 },
+    tags: ["Perps", "Derivatives"], interest: 860,
+    why: "Объём $14.6M при ликвидности $2.1M — реальный спрос на Base, а не паблиш-хайп.",
+    risk: "Токену меньше суток, высокая волатильность, perps — сложный продукт.",
+    seenD: 0.9, baseline: { mc: 22000000 }, changes: { d1: 21.3, d7: null, d30: null } }),
 
-  { id: "quanta", name: "Quanta Finance", symbol: "QFT", category: "defi", status: "launched", network: "arbitrum", source: "defillama",
+  P({ id: "quanta", name: "Quanta Finance", symbol: "QFT", category: "defi", status: "launched", network: "arbitrum", source: "defillama",
     tagline: "Cross-margin CDP and yield-bearing stablecoin.",
     token: tok({ ca: "0x7e8f9a0b1c2d3e4f5061728394a5b6c7d8e9f0a1", mc: 121000000, liq: 9800000, vol: 1900000, chg: -1.1, ageH: 3100 }),
     socials: { twitter: "https://x.com/QuantaFinance", telegram: "https://t.me/quanta_finance", website: "https://quantafinance.io" },
-    tags: ["CDP", "Stablecoin"], interest: 950 },
+    tags: ["CDP", "Stablecoin"], interest: 950,
+    why: "Кросс-маржинальный CDP — эффективнее использование обеспечения.",
+    risk: "Риск depeg стаб-монеты, конкуренция с устоявшимися CDP.",
+    seenD: 90, baseline: { mc: 105000000 }, changes: { d1: -1.1, d7: 2.9, d30: 8.4 } }),
 
-  { id: "nimbus", name: "Nimbus Lend", symbol: "NIMB", category: "defi", status: "pre-token", network: "solana", source: "dexscreener",
+  P({ id: "nimbus", name: "Nimbus Lend", symbol: "NIMB", category: "defi", status: "pre-token", network: "solana", source: "dexscreener",
     tagline: "Money market with algorithmic rates — TGE in 2 weeks.",
     token: tok({ ca: "NimbusLendPreTokenXz5vT8uY1wE4rQ7dF3gH6jK9mL", mc: 8600000, liq: 620000, vol: 940000, chg: 6.2, ageH: 18 }),
     socials: { twitter: "https://x.com/nimbus_lend", telegram: "https://t.me/nimbuslend" },
-    tags: ["Lending", "Money Mkt"], interest: 210 },
+    tags: ["Lending", "Money Mkt"], interest: 210,
+    why: "Money market на Solana с алгоритмическими ставками — догоняющий с современным стеком.",
+    risk: "Pre-token, продукт в работе, тонкая ликвидность.",
+    seenD: 2, baseline: { mc: 3100000 }, baseStatus: "announced", changes: { d1: 6.2, d7: null, d30: null } }),
+
+  P({ id: "kite", name: "Kite Swap", symbol: "KITE", category: "defi", status: "launched", network: "solana", source: "dexscreener",
+    tagline: "Intent-based DEX router on Solana — first 48 hours live.",
+    token: tok({ ca: "KiteSwapIntentRouterXa3qW6eR9tY2uI5oP8aSd0fGh", mc: 7200000, liq: 86000, vol: 420000, chg: 34.2, ageH: 11 }),
+    socials: { twitter: "https://x.com/kite_swap", telegram: "https://t.me/kite_swap" },
+    tags: ["DEX", "Routing"], interest: 260,
+    why: "Vol/liq = 4.9 — самая горячая молодая пара Solana за неделю; при этом ликвидность всего $86K.",
+    risk: "Ликвидность $86K — легко манипулируема, проекту 11 часов.",
+    seenD: 0.5, baseline: { mc: 4100000 }, changes: { d1: 34.2, d7: null, d30: null } }),
 
   /* ---------- AI ---------- */
-  { id: "mindforge", name: "Mindforge", symbol: "MIND", category: "ai", status: "launched", network: "solana", source: "dexscreener",
+  P({ id: "mindforge", name: "Mindforge", symbol: "MIND", category: "ai", status: "launched", network: "solana", source: "dexscreener",
     tagline: "Staked-GPU inference network for AI agents.",
     token: tok({ ca: "MindForgeAIInferenceXb2nM5qW8eR1tY4uI7oP0aSd", mc: 84000000, liq: 5200000, vol: 22300000, chg: 8.7, ageH: 96 }),
     socials: { twitter: "https://x.com/mindforge_ai", telegram: "https://t.me/mindforge", website: "https://mindforge.ai" },
-    tags: ["Inference", "GPU"], interest: 1100 },
+    tags: ["Inference", "GPU"], interest: 1100,
+    why: "Сеть инференса со стейком GPU — пересечение AI и crypto с реальными вычислениями.",
+    risk: "GPU-рынок перегрет, технический риск исполнения.",
+    seenD: 4, baseline: { mc: 48000000 }, changes: { d1: 8.7, d7: 32.0, d30: null } }),
 
-  { id: "synaptix", name: "Synaptix", symbol: "SYN", category: "ai", status: "launched", network: "base", source: "dexscreener",
+  P({ id: "synaptix", name: "Synaptix", symbol: "SYN", category: "ai", status: "launched", network: "base", source: "dexscreener",
     tagline: "Decentralized training market for open models.",
     token: tok({ ca: "0x2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f", mc: 27000000, liq: 1800000, vol: 4400000, chg: 15.2, ageH: 14 }),
     socials: { twitter: "https://x.com/synaptixhq", telegram: "https://t.me/synaptix", website: "https://synaptix.xyz" },
-    tags: ["Training", "Models"], interest: 430 },
+    tags: ["Training", "Models"], interest: 430,
+    why: "Маркет трейнинга открытых моделей — ниша без явного лидера.",
+    risk: "Молодой проект, маленькое комьюнити, 14 часов после TGE.",
+    seenD: 0.7, baseline: { mc: 9500000 }, changes: { d1: 15.2, d7: null, d30: null } }),
 
-  { id: "neura", name: "Neura Labs", symbol: null, category: "ai", status: "fundraising", network: null, source: "manual",
+  P({ id: "neura", name: "Neura Labs", symbol: null, category: "ai", status: "fundraising", network: null, source: "manual",
     tagline: "Privacy-preserving inference layer for enterprise AI.",
     noToken: notok({ agoH: 120, stage: "Series A · raising $12M", raised: 12000000 }),
     socials: { twitter: "https://x.com/neuralabs_ai", website: "https://neuralabs.ai" },
-    tags: ["Privacy", "Enterprise"], interest: 260 },
+    tags: ["Privacy", "Enterprise"], interest: 260,
+    why: "Приватный инференс для enterprise — B2B-рынок: меньше хайпа, больше денег.",
+    risk: "Фандинг в процессе, продукт закрыт, проверка только по командам.",
+    seenD: 5, baseStage: "Announced", baseStatus: "announced" }),
 
   /* ---------- Infrastructure ---------- */
-  { id: "lattice", name: "Lattice", symbol: "LATT", category: "infrastructure", status: "launched", network: "ethereum", source: "defillama",
+  P({ id: "lattice", name: "Lattice", symbol: "LATT", category: "infrastructure", status: "launched", network: "ethereum", source: "defillama",
     tagline: "Cross-chain settlement & execution layer.",
     token: tok({ ca: "0x5a6b7c8d9e0f1a2b3c4d5e6f7081920314253647", mc: 208000000, liq: 11000000, vol: 2800000, chg: 0.4, ageH: 4100 }),
     socials: { twitter: "https://x.com/LatticeLayer", telegram: "https://t.me/lattice_layer", website: "https://lattice.xyz" },
-    tags: ["Settlement", "Cross-chain"], interest: 880 },
+    tags: ["Settlement", "Cross-chain"], interest: 880,
+    why: "Сеттлмент-слой — инфраструктура, на которую встаёт всё остальное.",
+    risk: "Зрелый токен с низкой волатильностью, конкуренция institutional-решений.",
+    seenD: 120, baseline: { mc: 240000000 }, changes: { d1: 0.4, d7: -2.1, d30: -9.0 } }),
 
-  { id: "relay", name: "Relay Node", symbol: "RLY", category: "infrastructure", status: "launched", network: "solana", source: "birdeye",
+  P({ id: "relay", name: "Relay Node", symbol: "RLY", category: "infrastructure", status: "launched", network: "solana", source: "birdeye",
     tagline: "Real-time oracle & data-feed infrastructure.",
     token: tok({ ca: "RelayNodeOracleDataXq9sD2fG5hJ8kL1zX4cV7bN3m", mc: 46000000, liq: 2400000, vol: 6100000, chg: -3.4, ageH: 130 }),
     socials: { twitter: "https://x.com/relay_node", telegram: "https://t.me/relaynode", website: "https://relaynode.io" },
-    tags: ["Oracle", "Data"], interest: 540 },
+    tags: ["Oracle", "Data"], interest: 540,
+    why: "Оракул с real-time фидом на Solana — высокий порог входа, сетевые эффекты.",
+    risk: "Оракулы — капиталозатратный бизнес, риск концентрации потребителей.",
+    seenD: 5.5, baseline: { mc: 38000000 }, changes: { d1: -3.4, d7: 12.0, d30: null } }),
+
+  P({ id: "fathom", name: "Fathom", symbol: "FATH", category: "infrastructure", status: "launched", network: "base", source: "dexscreener",
+    tagline: "Inference-billing infrastructure for AI agents on Base.",
+    token: tok({ ca: "0x6f708192031425364758697a8b9c0d1e2f3a4b5c", mc: 22000000, liq: 120000, vol: 90000, chg: 2.1, ageH: 72 }),
+    socials: { twitter: "https://x.com/fathom_inf", telegram: "https://t.me/fathom_inf", website: "https://fathom.xyz" },
+    tags: ["AI Infra", "Payments"], interest: 150,
+    why: "Платёжная инфраструктура для AI-агентов на Base — тихо, но стабильный рост.",
+    risk: "Низкая активность, команда публично не раскрыта, liquidity $120K.",
+    seenD: 3, baseline: { mc: 19000000 }, changes: { d1: 2.1, d7: 9.4, d30: null } }),
 
   /* ---------- Gaming ---------- */
-  { id: "pixelforge", name: "Pixelforge", symbol: "PIXF", category: "gaming", status: "pre-token", network: "solana", source: "dexscreener",
+  P({ id: "pixelforge", name: "Pixelforge", symbol: "PIXF", category: "gaming", status: "pre-token", network: "solana", source: "dexscreener",
     tagline: "On-chain RPG — TGE and mainnet in 2 weeks.",
     token: tok({ ca: "PixelforgeGamePreTokXh6jK9lM2nB5vC8xZ1qW4eR7t", mc: 9500000, liq: 620000, vol: 1200000, chg: 9.8, ageH: 40 }),
     socials: { twitter: "https://x.com/pixelforge", telegram: "https://t.me/pixelforge" },
-    tags: ["RPG", "GameFi"], interest: 350 },
+    tags: ["RPG", "GameFi"], interest: 350,
+    why: "RPG с TGE через 2 недели — классический web3-gaming цикл, есть раннее окно.",
+    risk: "GameFi: удержание почти всегда ниже заявленного.",
+    seenD: 2, baseline: { mc: 5200000 }, changes: { d1: 9.8, d7: null, d30: null } }),
 
-  { id: "vanta", name: "Vanta Studios", symbol: null, category: "gaming", status: "announced", network: null, source: "manual",
+  P({ id: "vanta", name: "Vanta Studios", symbol: null, category: "gaming", status: "announced", network: null, source: "manual",
     tagline: "Web3 sports simulator — creator revenue share.",
     noToken: notok({ agoH: 50, stage: "Alpha · closed beta" }),
     socials: { twitter: "https://x.com/vantastudios", telegram: "https://t.me/vanta_studios" },
-    tags: ["Sports", "Creators"], interest: 120 },
+    tags: ["Sports", "Creators"], interest: 120,
+    why: "Спортивный сим с долей для креаторов — продуктовая, а не финансовая гипотеза.",
+    risk: "Альфа, игроков нет, команда не подтверждена публично.",
+    seenD: 2, baseStage: "Announced", baseStatus: "announced" }),
 
   /* ---------- Social ---------- */
-  { id: "echo", name: "Echo", symbol: "ECHO", category: "social", status: "launched", network: "base", source: "dexscreener",
+  P({ id: "echo", name: "Echo", symbol: "ECHO", category: "social", status: "launched", network: "base", source: "dexscreener",
     tagline: "Creator economy — on-chain tips, channels & revenue.",
     token: tok({ ca: "0x8d9e0f1a2b3c4d5e6f708192031425364758697a", mc: 15200000, liq: 780000, vol: 3300000, chg: 11.5, ageH: 21 }),
     socials: { twitter: "https://x.com/echo_protocol", telegram: "https://t.me/echo_protocol", website: "https://echo.social" },
-    tags: ["Creators", "Tips"], interest: 300 },
+    tags: ["Creators", "Tips"], interest: 300,
+    why: "Creator economy с ончейн-выплатами — сильный нарратив этого цикла.",
+    risk: "Тонкая ликвидность, конкуренция с крупными social-протоколами.",
+    seenD: 1, baseline: { mc: 8400000 }, changes: { d1: 11.5, d7: null, d30: null } }),
 
-  { id: "drift", name: "Drift Social", symbol: null, category: "social", status: "announced", network: null, source: "manual",
+  P({ id: "drift", name: "Drift Social", symbol: null, category: "social", status: "announced", network: null, source: "manual",
     tagline: "Decentralized newsfeed with staked moderation — testnet live.",
     noToken: notok({ agoH: 26, stage: "Testnet live" }),
     socials: { twitter: "https://x.com/driftsocial", website: "https://drift.social" },
-    tags: ["Newsfeed", "Staking"], interest: 140 }
+    tags: ["Newsfeed", "Staking"], interest: 140,
+    why: "Модерация со стейком — модель, уже доказанная в DePIN-проектах.",
+    risk: "Тестнет: проверить пока нечего, продуктовых метрик нет.",
+    seenD: 1.5, baseStage: "Announced" })
 ];
 
 const CURATED_PROJECTS = []; // future: hand-picked RWA Early entries (live in 'manual' adapter)
@@ -1030,18 +1425,25 @@ const state = {
   type: "all",
   network: "all",
   minLiq: 0,
+  minQ: 0,
   ageDays: 0,
   reqTwitter: false,
   reqTelegram: false,
   reqWebsite: false,
   sort: "newest",
-  onlyStarred: false
+  onlyStarred: false,
+  view: "feed",
+  trackSort: "sinceAdd"
 };
 
 const STAR_KEY = "early.projects.stars.v1";
+const DRAFT_KEY = "early.projects.draft.v1";
 let stars = new Set();
-try { stars = new Set(JSON.parse(localStorage.getItem(STAR_KEY) || "[]")); } catch (e) { /* private mode */ }
+let draft = [];
+try { stars = new Set(JSON.parse(localStorage.getItem(STAR_KEY) || "[]")); } catch (e) {}
+try { draft = JSON.parse(localStorage.getItem(DRAFT_KEY) || "[]"); if (!Array.isArray(draft)) draft = []; } catch (e) {}
 function saveStars() { try { localStorage.setItem(STAR_KEY, JSON.stringify([...stars])); } catch (e) {} }
+function saveDraft() { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(draft)); } catch (e) {} }
 
 let ALL = [];
 const $ = (id) => document.getElementById(id);
@@ -1050,7 +1452,6 @@ const feedEl = $("feed"), emptyEl = $("empty"), feedTitle = $("feedTitle"),
       rwaBanner = $("rwaBanner"), toastEl = $("toast"),
       searchInput = $("searchInput"), searchClear = $("searchClear");
 
-/* metadata */
 const CATS = {
   rwa: { label: "RWA" }, defi: { label: "DeFi" }, ai: { label: "AI" },
   gaming: { label: "Gaming" }, social: { label: "Social" },
@@ -1060,15 +1461,16 @@ const STATUS = {
   launched: { label: "Launched" }, "pre-token": { label: "Pre-Token" },
   fundraising: { label: "Fundraising" }, announced: { label: "Announced" }
 };
-const NETS = { solana: "Solana", ethereum: "Ethereum", base: "Base", arbitrum: "Arbitrum", polygon: "Polygon", bsc: "BSC" };
+const NETS = { solana: "Solana", ethereum: "Ethereum", base: "Base", arbitrum: "Arbitrum", polygon: "Polygon", bsc: "BSC", monad: "Monad" };
 const SOURCES = {
   dexscreener: { label: "DexScreener" }, coingecko: { label: "CoinGecko" },
   defillama: { label: "DefiLlama" }, birdeye: { label: "Birdeye" },
   manual: { label: "Curated" }
 };
 const SORTS = { newest: "Newest", active: "Most Active", interest: "Highest Interest" };
+const TRACK_SORTS = { sinceAdd: "Δ since added", added: "Newest added", d1: "Δ 24h", quality: "Quality" };
+const ACCESS = { free: "Free", key: "Free + key", paid: "Paid · later" };
 
-/* icons */
 const ICONS = {
   star: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
   sparkle: '<svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>',
@@ -1078,11 +1480,12 @@ const ICONS = {
   chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
   external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
-  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  post: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>'
 };
 
 /* ============================================================
-   6. FORMATTERS
+   6. FORMATTERS + QUALITY SCORE
    ============================================================ */
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => (
   { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
@@ -1122,13 +1525,61 @@ function listedAt(p) { return p.token ? p.token.listedAt : (p.noToken ? p.noToke
 function interestOf(p) { return (p.interest || 0) + (stars.has(p.id) ? 1000 : 0); }
 function hashHue(s) { let h = 7; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
 
+/* Relative quality score (0–5). Early tokens with $25–100K liquidity
+   score high if they're active + well-sourced + socially verified. */
+function qualityOf(p) {
+  const soc = [p.socials.twitter, p.socials.telegram, p.socials.website].filter(Boolean).length;
+  if (p.token) {
+    const liq = p.token.liquidity || 0;
+    const vol = p.token.volume24h || 0;
+    let q = 0;
+    q += liq >= 500000 ? 2 : liq >= 150000 ? 1.5 : liq >= 50000 ? 1 : liq >= 15000 ? 0.5 : 0.25;
+    const r = liq > 0 ? vol / liq : 0;
+    q += r >= 3 ? 1.5 : r >= 1 ? 1 : r >= 0.3 ? 0.5 : 0;
+    q += { coingecko: 1, defillama: 1, dexscreener: 0.75, birdeye: 0.6, manual: 0.5 }[p.source] || 0.4;
+    q += soc === 3 ? 1 : soc === 2 ? 0.7 : soc === 1 ? 0.35 : 0.1;
+    return Math.min(5, q);
+  }
+  const n = p.noToken || {};
+  let q = 1.5;
+  q += n.raised >= 5e6 ? 1.5 : n.raised >= 1e6 ? 1 : n.raised > 0 ? 0.5 : 0;
+  q += soc === 3 ? 1 : soc === 2 ? 0.7 : soc === 1 ? 0.35 : 0;
+  if (n.stage) q += 0.5;
+  if (p.curated) q += 0.5;
+  return Math.min(5, Math.max(1, q));
+}
+function qualityDetail(p) {
+  if (p.token) {
+    const liq = p.token.liquidity || 0;
+    const r = liq > 0 ? (p.token.volume24h || 0) / liq : 0;
+    return `Quality ${trimNum(qualityOf(p), 1)}/5 · liquidity ${fmtMoney(liq)} · vol/liq ${trimNum(r, 1)} · source ${SOURCES[p.source].label} · socials ${[p.socials.twitter, p.socials.telegram, p.socials.website].filter(Boolean).length}/3`;
+  }
+  const n = p.noToken || {};
+  return `Quality ${trimNum(qualityOf(p), 1)}/5 · stage: ${n.stage || "—"}${n.raised ? " · raised " + fmtMoney(n.raised) : ""} · curated: ${p.curated ? "yes" : "no"}`;
+}
+
+function sinceAddPct(p) {
+  if (p.token && p.baseline && p.baseline.mc && p.token.mc) {
+    return (p.token.mc / p.baseline.mc - 1) * 100;
+  }
+  return null;
+}
+function statusMove(p) {
+  if (p.baselineStatus && p.baselineStatus !== p.status) {
+    return `→ ${STATUS[p.status].label}`;
+  }
+  if (p.baselineStage && p.noToken && p.baselineStage !== p.noToken.stage) {
+    return `→ ${p.noToken.stage}`;
+  }
+  return null;
+}
+
 /* chart link per source (works with mock data too) */
 function chartUrl(p) {
   if (!p.token) return null;
   const t = p.token;
   if (p.source === "dexscreener" || p.source === "birdeye") {
-    const chain = p.network || "ethereum";
-    return `https://dexscreener.com/${chain}/${t.ca}`;
+    return `https://dexscreener.com/${p.network || "ethereum"}/${t.ca}`;
   }
   if (p.source === "coingecko") return `https://www.coingecko.com/en/coins/${p.id}`;
   if (p.source === "defillama") return `https://defillama.com/protocol/${p.id}`;
@@ -1146,6 +1597,7 @@ function applyFilters(list) {
     if (state.type !== "all" && p.status !== state.type) return false;
     if (state.network !== "all" && p.network !== state.network) return false;
     if (state.minLiq > 0 && (!p.token || (p.token.liquidity || 0) < state.minLiq)) return false;
+    if (state.minQ > 0 && qualityOf(p) < state.minQ) return false;
     if (state.ageDays > 0 && Date.now() - listedAt(p) > state.ageDays * 86400e3) return false;
     if (state.reqTwitter && !p.socials.twitter) return false;
     if (state.reqTelegram && !p.socials.telegram) return false;
@@ -1185,16 +1637,26 @@ function activeChipId() {
 }
 
 /* ============================================================
-   8. RENDER
+   8. RENDER — shared bits
    ============================================================ */
-function avatarHtml(p) {
+function avatarHtml(p, sm) {
   const init = p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
   const hue = hashHue(p.id + p.name);
   const grad = `linear-gradient(135deg, hsl(${hue},62%,50%), hsl(${(hue + 45) % 360},68%,34%))`;
-  if (p.logo) {
-    return `<div class="avatar" style="background:${grad}"><img src="${esc(p.logo)}" alt="" loading="lazy" onerror="this.remove()"></div>`;
+  const cls = sm ? "avatar sm" : "avatar";
+  if (p.logo && !sm) {
+    return `<div class="${cls}" style="background:${grad}"><img src="${esc(p.logo)}" alt="" loading="lazy" onerror="this.remove()"></div>`;
   }
-  return `<div class="avatar" style="background:${grad}" aria-hidden="true">${esc(init)}</div>`;
+  return `<div class="${cls}" style="background:${grad}" aria-hidden="true">${esc(init)}</div>`;
+}
+
+function qmeterHtml(p) {
+  const q = qualityOf(p);
+  const filled = Math.round(q);
+  const cls = "qmeter q" + Math.max(1, Math.min(5, filled));
+  let seg = "";
+  for (let i = 1; i <= 5; i++) seg += `<i class="${i <= filled ? "on" : ""}"></i>`;
+  return `<span class="${cls}" title="${esc(qualityDetail(p))}">${seg}</span>`;
 }
 
 function socialsHtml(p) {
@@ -1206,24 +1668,38 @@ function socialsHtml(p) {
   return out || `<span class="soc-none">No socials</span>`;
 }
 
+function pctSpan(v) {
+  if (v == null) return `<span class="muted">—</span>`;
+  const cls = v >= 0 ? "pos" : "neg";
+  const arrow = v >= 0 ? "▲" : "▼";
+  return `<span class="${cls}">${arrow} ${trimNum(Math.abs(v), 1)}%</span>`;
+}
+
 function tokenMetrics(p) {
   const t = p.token;
   const chg = (t.chg24h != null)
     ? `<span class="chg ${t.chg24h >= 0 ? "pos" : "neg"}">${t.chg24h >= 0 ? "+" : ""}${trimNum(t.chg24h, 1)}%</span>`
     : "";
-  const age = fmtAgeHours((Date.now() - t.listedAt) / HOUR);
+  const since = sinceAddPct(p);
+  const sinceHtml = (since != null)
+    ? ` <span class="chg ${since >= 0 ? "pos" : "neg"}" title="MC change since added to feed">${since >= 0 ? "▲" : "▼"}${trimNum(Math.abs(since), 0)}%</span>`
+    : "";
   return `
-    <div class="metric"><span class="m-label">MC</span><span class="m-val">${fmtMoney(t.mc)}</span></div>
+    <div class="metric"><span class="m-label">MC · since add</span><span class="m-val" title="MC and Δ since added to feed">${fmtMoney(t.mc)}${sinceHtml}</span></div>
     <div class="metric"><span class="m-label">Liquidity</span><span class="m-val">${fmtMoney(t.liquidity)}</span></div>
     <div class="metric"><span class="m-label">Vol 24h</span><span class="m-val">${fmtMoney(t.volume24h)}${chg}</span></div>
-    <div class="metric"><span class="m-label">Age</span><span class="m-val">${age}</span></div>`;
+    <div class="metric"><span class="m-label">Age</span><span class="m-val">${fmtAgeHours((Date.now() - t.listedAt) / HOUR)}</span></div>`;
 }
 
 function noTokenMetrics(p) {
   const n = p.noToken || {};
+  const move = statusMove(p);
+  const stageVal = move
+    ? `<span class="stage-move">${esc(p.baselineStage)} → ${esc(n.stage || "")}</span>`
+    : esc(n.stage || "—");
   return `
     <div class="metric"><span class="m-label">Announced</span><span class="m-val">${n.announcedAt ? timeAgo(n.announcedAt) : "—"}</span></div>
-    <div class="metric"><span class="m-label">Stage</span><span class="m-val small">${esc(n.stage || "—")}</span></div>
+    <div class="metric"><span class="m-label">Stage</span><span class="m-val small" title="${move ? "Progress since added" : ""}">${stageVal}</span></div>
     <div class="metric"><span class="m-label">Raised</span><span class="m-val">${n.raised ? fmtMoney(n.raised) : "—"}</span></div>
     <div class="metric"><span class="m-label">Chain</span><span class="m-val">${p.network ? esc(NETS[p.network] || p.network) : "TBD"}</span></div>`;
 }
@@ -1231,13 +1707,19 @@ function noTokenMetrics(p) {
 function cardHtml(p, i) {
   const delay = Math.min(i, 10) * 45;
   const isToken = !!p.token;
+  const inDraft = draft.includes(p.id);
+  const notes = (p.why || p.risk)
+    ? `<div class="card-notes">
+        ${p.why ? `<p class="note why"><b>👀</b> ${esc(p.why)}</p>` : ""}
+        ${p.risk ? `<p class="note risk"><b>⚠️</b> ${esc(p.risk)}</p>` : ""}
+       </div>`
+    : "";
   const actions = isToken
     ? `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
        <button class="btn" data-action="chart" title="Open chart">${ICONS.chart}Chart</button>
-       <button class="btn" data-action="copy-ca" title="Copy contract address">${ICONS.copy}Copy CA</button>`
+       <button class="btn" data-action="copy-ca" title="Copy contract address">${ICONS.copy}CA</button>`
     : `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
-       <button class="btn btn-primary" data-action="open-website" title="Open website">${ICONS.external}Website</button>
-       <button class="btn" data-action="copy-link" title="Copy link">${ICONS.copy}Copy link</button>`;
+       <button class="btn btn-primary" data-action="open-website" title="Open website">${ICONS.external}Site</button>`;
   return `
   <article class="card" data-id="${esc(p.id)}" style="--d:${delay}ms">
     <div class="card-top">
@@ -1246,6 +1728,7 @@ function cardHtml(p, i) {
         <div class="card-name-row">
           <h3 class="card-name" title="${esc(p.name)}">${esc(p.name)}</h3>
           ${p.symbol ? `<span class="ticker">${esc(p.symbol)}</span>` : ""}
+          ${qmeterHtml(p)}
           <button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star"
                   title="${stars.has(p.id) ? "Remove from Interesting" : "Mark as Interesting"}"
                   aria-label="Mark as Interesting">${ICONS.star}</button>
@@ -1259,15 +1742,22 @@ function cardHtml(p, i) {
       </div>
     </div>
     <p class="card-desc">${esc(p.tagline)}</p>
+    ${notes}
     <div class="metrics">${isToken ? tokenMetrics(p) : noTokenMetrics(p)}</div>
     <div class="card-foot">
       <div class="socials">${socialsHtml(p)}</div>
-      <div class="card-actions">${actions}</div>
+      <div class="card-actions">
+        ${actions}
+        <button class="btn btn-pick ${inDraft ? "on" : ""}" data-action="pick" title="${inDraft ? "Remove from post draft" : "Add to post draft"}">${ICONS.post}Post</button>
+      </div>
     </div>
   </article>`;
 }
 
-function render() {
+/* ============================================================
+   9. RENDER — views
+   ============================================================ */
+function renderFeed() {
   const list = applyFilters(ALL);
   feedTitle.textContent = titleFor();
   feedCount.textContent = `Showing ${list.length} of ${ALL.length} projects`;
@@ -1277,6 +1767,122 @@ function render() {
   feedEl.hidden = list.length === 0;
   emptyEl.hidden = list.length > 0;
   $("starCount").textContent = stars.size;
+}
+
+function renderTrack() {
+  const sorters = {
+    sinceAdd: (a, b) => ((sinceAddPct(b) ?? -1e9) - (sinceAddPct(a) ?? -1e9)),
+    added: (a, b) => b.firstSeenAt - a.firstSeenAt,
+    d1: (a, b) => (((b.changes && b.changes.d1) ?? -1e9) - ((a.changes && a.changes.d1) ?? -1e9)),
+    quality: (a, b) => qualityOf(b) - qualityOf(a)
+  };
+  const list = [...ALL].sort(sorters[state.trackSort] || sorters.sinceAdd);
+
+  /* stats */
+  const withBase = ALL.filter((p) => sinceAddPct(p) != null);
+  const up = withBase.filter((p) => sinceAddPct(p) > 0).length;
+  const down = withBase.length - up;
+  const avg = withBase.length ? withBase.reduce((s, p) => s + sinceAddPct(p), 0) / withBase.length : 0;
+  const moved = ALL.filter((p) => statusMove(p)).length;
+  $("trackStats").innerHTML = `
+    <span class="tstat"><b>${ALL.length}</b> tracked</span>
+    <span class="tstat"><span class="dot" style="background:var(--emerald)"></span><b class="pos">${up}</b> up</span>
+    <span class="tstat"><span class="dot" style="background:var(--red)"></span><b class="neg">${down}</b> down</span>
+    <span class="tstat">avg ${avg >= 0 ? "+" : "−"}${trimNum(Math.abs(avg), 0)}% since added</span>
+    <span class="tstat"><span class="dot" style="background:var(--sky)"></span><b>${moved}</b> status moved</span>`;
+
+  /* rows */
+  $("trackBody").innerHTML = list.map((p) => {
+    const sa = sinceAddPct(p);
+    const move = statusMove(p);
+    const c = p.changes || {};
+    const mc = p.token ? fmtMoney(p.token.mc) : "—";
+    return `
+    <tr data-id="${esc(p.id)}">
+      <td><span class="t-name">${avatarHtml(p, true)}${esc(p.name)}${p.symbol ? `<span class="ticker">${esc(p.symbol)}</span>` : ""}</span></td>
+      <td>${fmtAgeHours((Date.now() - p.firstSeenAt) / HOUR)}</td>
+      <td><span class="badge st-${p.status}">${STATUS[p.status].label}</span>
+          ${move ? `<span class="t-move">⚡ ${esc(move)}</span>` : ""}</td>
+      <td>${mc}</td>
+      <td>${p.token ? pctSpan(sa) : (move ? `<span class="t-move">⚡ ${esc(move)}</span>` : `<span class="muted">—</span>`)}</td>
+      <td>${pctSpan(c.d1 != null ? c.d1 : null)}</td>
+      <td>${pctSpan(c.d7)}</td>
+      <td>${pctSpan(c.d30)}</td>
+      <td>${qmeterHtml(p)}</td>
+      <td><button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star" title="Mark as Interesting" aria-label="Mark as Interesting" style="margin:0;width:24px;height:24px">${ICONS.star}</button></td>
+    </tr>`;
+  }).join("");
+
+  $("trackNote").innerHTML = p_note();
+  function p_note() {
+    return `<b>How it works:</b> when a project enters the feed we save its MC (or stage) as a baseline. «Δ since added» = current MC vs that baseline — so the table answers «what I showed you grew, and what didn't». Short-term columns (24h/7d/30d) are mock now and will come from DexScreener/Birdeye history. Status moved = TGE, round closed, testnet→mainnet etc.`;
+  }
+}
+
+function renderSources() {
+  /* source cards */
+  $("srcGrid").innerHTML = Object.entries(API_SOURCES).map(([key, s]) => `
+    <div class="src-card">
+      <div class="row">
+        <span class="nm">${esc(s.label)}</span>
+        <span class="access ${s.access}">${ACCESS[s.access] || s.access}</span>
+      </div>
+      <span class="gv">${esc(s.gives)}</span>
+      <span class="src" style="color:var(--text-faint)"><i style="background:${s.status === "stub" ? "#38BDF8" : s.status === "live" ? "#34D399" : s.status === "parse" ? "#FBBF24" : "#5E6474"}"></i>${esc(s.status)}${s.baseUrl ? ` · ${esc(new URL(s.baseUrl).hostname)}` : ""}</span>
+    </div>`).join("");
+
+  /* X watchlist */
+  $("watchlistEl").innerHTML = X_WATCHLIST.map((g) => `
+    <div class="wl-group">
+      <h4>${esc(g.group)}</h4>
+      <div class="wl-chips">${g.handles.map((h) => `<a class="wl" href="https://x.com/${encodeURIComponent(h)}" target="_blank" rel="noopener">@${esc(h)}</a>`).join("")}</div>
+    </div>`).join("");
+}
+
+/* ---- post generator ---- */
+function shortLink(u) {
+  const s = String(u).replace(/^https?:\/\//, "");
+  return s.length > 46 ? s.slice(0, 42) + "…" : s;
+}
+function buildPostText() {
+  const list = draft.map((id) => ALL.find((p) => p.id === id)).filter(Boolean);
+  const date = new Date().toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+  const lines = [`🗒 #EarlyProjects — ${date}`, ""];
+  list.forEach((p, i) => {
+    lines.push(`${i + 1}) ${p.name}${p.symbol ? ` (${p.symbol})` : ""} — ${p.tagline}`);
+    const head = p.token
+      ? `${CATS[p.category].label} · ${NETS[p.network] || "—"} · ${fmtAgeHours((Date.now() - p.token.listedAt) / HOUR)} to TGE · MC ${fmtMoney(p.token.mc)}`
+      : `${CATS[p.category].label} · ${p.network ? NETS[p.network] : "сеть TBD"} · ${p.noToken ? p.noToken.stage : "—"}`;
+    lines.push(`   • ${head}`);
+    if (p.why) lines.push(`   • 👀 Почему интересно: ${p.why}`);
+    if (p.risk) lines.push(`   • ⚠️ Риск: ${p.risk}`);
+    const link = p.token ? chartUrl(p) : (p.socials.website || p.socials.twitter);
+    if (link) lines.push(`   • ${link}`);
+    lines.push("");
+  });
+  lines.push("—", "Источники: DexScreener · DefiLlama · CoinGecko · RWA Early (куратор)", "Лента с историей: early-projects.html");
+  return lines.join("\n");
+}
+function renderPost() {
+  $("postHeadCount").textContent = draft.length;
+  const pc = $("postCount");
+  pc.hidden = draft.length === 0;
+  pc.textContent = draft.length;
+  const pre = $("postPreview");
+  if (draft.length === 0) {
+    pre.classList.add("placeholder");
+    pre.textContent = "Select projects in the feed (＋ Post on a card) — the post will be assembled here.";
+  } else {
+    pre.classList.remove("placeholder");
+    pre.textContent = buildPostText();
+  }
+}
+
+function render() {
+  renderFeed();
+  if (state.view === "track") renderTrack();
+  if (state.view === "sources") renderSources();
+  if (state.view === "post") renderPost();
   syncControls();
 }
 
@@ -1287,17 +1893,19 @@ function syncControls() {
   $("categorySel").value = state.category;
   $("typeSel").value = state.type;
   $("minLiqSel").value = String(state.minLiq);
+  $("qSel").value = String(state.minQ);
   $("ageSel").value = String(state.ageDays);
   $("sortSel").value = state.sort;
   $("networkSel").value = state.network;
+  $("trackSortSel").value = state.trackSort;
   document.querySelectorAll(".soc-toggle").forEach((b) =>
     b.classList.toggle("active", state["req" + b.dataset.soc[0].toUpperCase() + b.dataset.soc.slice(1)])
   );
   const n =
     (state.category !== "all" ? 1 : 0) + (state.type !== "all" ? 1 : 0) +
     (state.network !== "all" ? 1 : 0) + (state.minLiq > 0 ? 1 : 0) +
-    (state.ageDays > 0 ? 1 : 0) + (state.reqTwitter ? 1 : 0) +
-    (state.reqTelegram ? 1 : 0) + (state.reqWebsite ? 1 : 0);
+    (state.minQ > 0 ? 1 : 0) + (state.ageDays > 0 ? 1 : 0) +
+    (state.reqTwitter ? 1 : 0) + (state.reqTelegram ? 1 : 0) + (state.reqWebsite ? 1 : 0);
   const fc = $("filterCount");
   fc.hidden = n === 0;
   fc.textContent = n;
@@ -1305,7 +1913,7 @@ function syncControls() {
 }
 
 /* ============================================================
-   9. TOAST + CLIPBOARD
+   10. TOAST + CLIPBOARD + VIEWS
    ============================================================ */
 let toastTimer = null;
 function toast(msg) {
@@ -1331,9 +1939,16 @@ async function copyText(text, msg) {
   toast(msg);
 }
 
-/* ============================================================
-   10. EVENTS
-   ============================================================ */
+function setView(v) {
+  state.view = v;
+  document.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b.dataset.view === v));
+  ["feed", "track", "sources", "post"].forEach((x) => {
+    const el = $("view-" + x);
+    if (el) el.hidden = x !== v;
+  });
+  render();
+}
+
 function setChip(id) {
   state.category = "all";
   state.type = "all";
@@ -1346,7 +1961,7 @@ function setChip(id) {
 function resetFilters() {
   Object.assign(state, {
     query: "", category: "all", type: "all", network: "all",
-    minLiq: 0, ageDays: 0, reqTwitter: false, reqTelegram: false,
+    minLiq: 0, minQ: 0, ageDays: 0, reqTwitter: false, reqTelegram: false,
     reqWebsite: false, sort: "newest", onlyStarred: false
   });
   searchInput.value = "";
@@ -1356,8 +1971,54 @@ function resetFilters() {
   $("backdrop").hidden = true;
 }
 
+/* ============================================================
+   11. EVENTS
+   ============================================================ */
+function onCardAction(el, scopeEl) {
+  const host = el.closest("[data-id]");
+  if (!host) return;
+  const p = ALL.find((x) => x.id === host.dataset.id);
+  if (!p) return;
+  switch (el.dataset.action) {
+    case "star": {
+      if (stars.has(p.id)) stars.delete(p.id); else stars.add(p.id);
+      saveStars();
+      toast(stars.has(p.id) ? `${p.name} added to Interesting` : `${p.name} removed from Interesting`);
+      render();
+      break;
+    }
+    case "pick": {
+      if (draft.includes(p.id)) {
+        draft = draft.filter((id) => id !== p.id);
+        toast(`${p.name} removed from post draft`);
+      } else {
+        draft.push(p.id);
+        toast(`${p.name} added to post draft (${draft.length})`);
+      }
+      saveDraft();
+      render();
+      break;
+    }
+    case "copy-ca":
+      if (p.token && p.token.ca) copyText(p.token.ca, "Contract address copied");
+      break;
+    case "copy-link":
+      copyText(p.socials.website || p.socials.twitter || p.socials.telegram || "", "Link copied");
+      break;
+    case "chart": {
+      const u = chartUrl(p);
+      if (u) window.open(u, "_blank", "noopener");
+      break;
+    }
+    case "open-website": {
+      const u = p.socials.website;
+      if (u) window.open(u, "_blank", "noopener");
+      break;
+    }
+  }
+}
+
 function bindEvents() {
-  /* search */
   let qTimer = null;
   searchInput.addEventListener("input", () => {
     clearTimeout(qTimer);
@@ -1375,21 +2036,20 @@ function bindEvents() {
     render();
   });
 
-  /* quick chips */
   $("chips").addEventListener("click", (e) => {
     const chip = e.target.closest(".chip");
     if (chip) setChip(chip.dataset.chip);
   });
 
-  /* panel selects */
   $("categorySel").addEventListener("change", (e) => { state.category = e.target.value; render(); });
   $("typeSel").addEventListener("change", (e) => { state.type = e.target.value; render(); });
   $("minLiqSel").addEventListener("change", (e) => { state.minLiq = Number(e.target.value); render(); });
+  $("qSel").addEventListener("change", (e) => { state.minQ = Number(e.target.value); render(); });
   $("ageSel").addEventListener("change", (e) => { state.ageDays = Number(e.target.value); render(); });
   $("sortSel").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
   $("networkSel").addEventListener("change", (e) => { state.network = e.target.value; render(); });
+  $("trackSortSel").addEventListener("change", (e) => { state.trackSort = e.target.value; if (state.view === "track") render(); });
 
-  /* social toggles */
   document.querySelectorAll(".soc-toggle").forEach((b) => {
     b.addEventListener("click", () => {
       const key = "req" + b.dataset.soc[0].toUpperCase() + b.dataset.soc.slice(1);
@@ -1398,14 +2058,18 @@ function bindEvents() {
     });
   });
 
-  /* reset */
   $("resetBtn").addEventListener("click", resetFilters);
   $("emptyReset").addEventListener("click", resetFilters);
 
-  /* interesting (star) filter */
   $("starFilter").addEventListener("click", () => {
     state.onlyStarred = !state.onlyStarred;
     render();
+  });
+
+  /* tabs */
+  $("tabs").addEventListener("click", (e) => {
+    const t = e.target.closest(".tab");
+    if (t) setView(t.dataset.view);
   });
 
   /* mobile filter sheet */
@@ -1421,42 +2085,26 @@ function bindEvents() {
   $("backdrop").addEventListener("click", closeSheet);
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
 
-  /* card actions (delegated) */
+  /* card + table actions (delegated) */
   feedEl.addEventListener("click", (e) => {
     const el = e.target.closest("[data-action]");
-    if (!el) return;
-    const card = el.closest(".card");
-    if (!card) return;
-    const p = ALL.find((x) => x.id === card.dataset.id);
-    if (!p) return;
-    switch (el.dataset.action) {
-      case "star": {
-        if (stars.has(p.id)) stars.delete(p.id); else stars.add(p.id);
-        saveStars();
-        if (state.onlyStarred && !stars.has(p.id)) { render(); break; }
-        el.classList.toggle("on", stars.has(p.id));
-        el.title = stars.has(p.id) ? "Remove from Interesting" : "Mark as Interesting";
-        $("starCount").textContent = stars.size;
-        toast(stars.has(p.id) ? `${p.name} added to Interesting` : `${p.name} removed from Interesting`);
-        break;
-      }
-      case "copy-ca":
-        if (p.token && p.token.ca) copyText(p.token.ca, "Contract address copied");
-        break;
-      case "copy-link":
-        copyText(p.socials.website || p.socials.twitter || p.socials.telegram || "", "Link copied");
-        break;
-      case "chart": {
-        const u = chartUrl(p);
-        if (u) window.open(u, "_blank", "noopener");
-        break;
-      }
-      case "open-website": {
-        const u = p.socials.website;
-        if (u) window.open(u, "_blank", "noopener");
-        break;
-      }
-    }
+    if (el) onCardAction(el);
+  });
+  $("trackBody").addEventListener("click", (e) => {
+    const el = e.target.closest("[data-action]");
+    if (el) onCardAction(el);
+  });
+
+  /* post actions */
+  $("postCopy").addEventListener("click", () => {
+    if (!draft.length) { toast("Draft is empty — add projects from the feed first"); return; }
+    copyText(buildPostText(), "Post copied — paste it into the channel");
+  });
+  $("postClear").addEventListener("click", () => {
+    draft = [];
+    saveDraft();
+    render();
+    toast("Post draft cleared");
   });
 
   /* refresh (simulated poll until adapters go live) */
@@ -1472,7 +2120,7 @@ function bindEvents() {
 }
 
 /* ============================================================
-   11. LIVE INDICATOR + BOOT
+   12. LIVE INDICATOR + BOOT
    ============================================================ */
 let lastUpdated = Date.now();
 function updateLive() {
