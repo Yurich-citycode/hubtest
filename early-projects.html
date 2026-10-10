@@ -588,19 +588,11 @@ a.wl:hover{color:var(--text);border-color:var(--violet);background:var(--violet-
 .src-link svg{width:11px;height:11px;flex-shrink:0}
 .src-link span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* каталог источников */
-.cat-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.cat-count{font-size:12px;font-weight:600;color:var(--text-faint)}
-.cat-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
-.cat-toolbar .search-wrap{flex:1 1 220px;max-width:360px}
-.cat-toolbar select{flex:1;min-width:150px;max-width:260px}
-.src-catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:10px}
-.cat-title{
-  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--text-faint);margin:16px 0 8px;display:flex;align-items:center;gap:8px;
-}
-.cat-title:first-child{margin-top:0}
-.cat-title .n{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;padding:1px 7px;font-size:9.5px}
+.src-cats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.src-cats .chip{flex:0 0 auto}
+.nm-link{display:inline-grid;place-items:center;color:var(--text-faint);margin-left:5px;text-decoration:none;vertical-align:middle}
+.nm-link:hover{color:var(--violet-text)}
+.nm-link svg{width:10px;height:10px}
 
 /* footer */
 footer{
@@ -911,29 +903,21 @@ footer .fine{line-height:1.6}
     </div>
 
     <div class="view-sec">
-      <h3 data-i18n="srcLiveTitle">Сейчас работает</h3>
-      <p class="sec-sub" data-i18n="srcSub">Все данные, которыми живёт лента, — в одном месте. Часть работает сразу, часть — по бесплатному ключу: пришлёте (Birdeye, Helius, Moralis, CMC) — включим в работу.</p>
-      <div class="src-grid" id="liveSrcGrid"></div>
-    </div>
-
-    <div class="view-sec">
-      <div class="cat-head">
-        <h3 data-i18n="srcAllTitle">Все источники</h3>
-        <span class="cat-count" id="srcCount"></span>
+      <h3 data-i18n="srcTitle">Источники данных</h3>
+      <p class="sec-sub" data-i18n="srcSub">Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.</p>
+      <div class="src-cats" id="srcCats" aria-label="Категории источников">
+        <button class="chip active" data-srccat="all" data-i18n="srcChAll">Все</button>
+        <button class="chip" data-srccat="pairs" data-i18n="srcChPairs">Пары</button>
+        <button class="chip" data-srccat="tokens" data-i18n="srcChTokens">Токены</button>
+        <button class="chip" data-srccat="chain" data-i18n="srcChChain">Ончейн</button>
+        <button class="chip" data-srccat="protocols" data-i18n="srcChProtocols">DeFi</button>
+        <button class="chip" data-srccat="rwa" data-i18n="srcChRwa">RWA</button>
+        <button class="chip" data-srccat="calendar" data-i18n="srcChCalendar">Листинги</button>
+        <button class="chip" data-srccat="sentiment" data-i18n="srcChSentiment">Сентимент</button>
+        <button class="chip" data-srccat="news" data-i18n="srcChNews">Новости</button>
+        <button class="chip" data-srccat="scouts" data-i18n="srcChScouts">Скауты</button>
       </div>
-      <p class="sec-sub" data-i18n="srcAllSub">Каждый источник — со своей прямой ссылкой. Нашли полезное — заходите туда напрямую, а мы соединяем это всё в одну ленту.</p>
-      <div class="cat-toolbar">
-        <div class="search-wrap">
-          <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <input id="srcSearch" type="search" placeholder="Поиск по источникам…" data-i18n-ph="srcSearchPh" autocomplete="off" aria-label="Поиск по источникам">
-        </div>
-        <select id="srcCatSel" aria-label="Категория источников"></select>
-        <button class="btn" id="srcCopy">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          <span data-i18n="srcCopy">Скопировать список</span>
-        </button>
-      </div>
-      <div class="src-catalog" id="srcCatalog"></div>
+      <div class="src-grid" id="srcGrid"></div>
     </div>
 
     <div class="view-sec">
@@ -1049,7 +1033,7 @@ const LANGS = {
       + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка и отбор</b><span>Каждому ставим оценку 0–5: ликвидность, активность торгов, надёжность источника, соцсети. Живой токен с $86K попадает в ленту, мёртвый пул на $500K — нет.</span></div></div>'
       + '</div>',
     srcTitle: "Источники данных",
-    srcSub: "Все данные, которыми живёт лента, — в одном месте. Часть работает сразу, часть — по бесплатному ключу: пришлёте (Birdeye, Helius, Moralis, CMC) — включим в работу.",
+    srcSub: "Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.",
     radarTitle: "X-радар",
     radarSub: "Этих аккаунтов мы смотрим каждый день руками — так ловим то, что ещё не нашёл ни один сканер.",
     wlNote: "Список живой: добавляем новых по мере выхода интересных проектов.",
@@ -1064,6 +1048,8 @@ const LANGS = {
     srcCatPairs: "Свежие пары и пулы", srcCatTokens: "Токены и котировки", srcCatChain: "Ончейн и аналитика",
     srcCatProtocols: "Протоколы и DeFi", srcCatRwa: "RWA-реестры", srcCatCalendar: "Листинги и события",
     srcCatSentiment: "Сентимент и соцсети", srcCatNews: "Новости и сигналы", srcCatScouts: "X-скауты",
+    srcChAll: "Все", srcChPairs: "Пары", srcChTokens: "Токены", srcChChain: "Ончейн", srcChProtocols: "DeFi",
+    srcChRwa: "RWA", srcChCalendar: "Листинги", srcChSentiment: "Сентимент", srcChNews: "Новости", srcChScouts: "Скауты",
     postTitle: "Черновик поста",
     postSub: "Нажимайте «Пост» на карточках — здесь соберутся текст и картинка в стиле канала. Названия и логотипы можно поменять прямо в составе — картинка обновится сама.",
     compTitle: "Состав карточки",
@@ -1171,7 +1157,7 @@ const LANGS = {
       + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Scoring &amp; selection</b><span>Every project gets a 0–5 score: liquidity, trading activity, source reliability, socials. A live token at $86K makes the feed; a dead pool at $500K does not.</span></div></div>'
       + '</div>',
     srcTitle: "Data sources",
-    srcSub: "All the data behind the feed — in one place. Some of it works out of the box, some needs a free key: send one (Birdeye, Helius, Moralis, CMC) and we'll switch it on.",
+    srcSub: "Open sources feeding the feed. The ones marked \"key needed\" have free plans — send a key (Birdeye, Helius, Moralis, CMC) and they will start working.",
     radarTitle: "X Radar",
     radarSub: "We check these accounts by hand every day — that's how we catch what no scanner has found yet.",
     wlNote: "The list grows: we add new accounts as interesting projects show up.",
@@ -1186,6 +1172,8 @@ const LANGS = {
     srcCatPairs: "Fresh pairs & pools", srcCatTokens: "Tokens & quotes", srcCatChain: "On-chain & analytics",
     srcCatProtocols: "Protocols & DeFi", srcCatRwa: "RWA registries", srcCatCalendar: "Listings & events",
     srcCatSentiment: "Sentiment & socials", srcCatNews: "News & signals", srcCatScouts: "X scouts",
+    srcChAll: "All", srcChPairs: "Pairs", srcChTokens: "Tokens", srcChChain: "On-chain", srcChProtocols: "DeFi",
+    srcChRwa: "RWA", srcChCalendar: "Listings", srcChSentiment: "Sentiment", srcChNews: "News", srcChScouts: "Scouts",
     postTitle: "Post draft",
     postSub: "Tap \"Post\" on cards — the text and a channel-style image are assembled here. You can rename items and swap logos in the composition below — the image updates on its own.",
     compTitle: "Card composition",
@@ -1310,7 +1298,7 @@ const SRC_CATALOG = [
   ["pairs","DEXGuru","https://dexguru.com","free","Статы новых пар по сетям.","New pair stats across chains."],
   ["pairs","The Graph","https://thegraph.com","free","Запросы по пулам и токенам напрямую из блокчейна.","Query pools and tokens straight from the chain."],
   ["pairs","Bitquery","https://bitquery.io","key","Свои запросы к данным всех сетей.","Custom queries across all chains."],
-  ["pairs","Moralis","https://moralis.io","key","Новые токены и пулы через API.","New tokens and pools via API."],
+  ["pairs","Moralis","https://moralis.io","key","Свежие токены и пулы по всем сетям.","Fresh tokens and pools across all chains."],
   ["pairs","Helius","https://helius.dev","key","Каждый новый токен Solana — в момент рождения.","Every new Solana token the moment it is born."],
   ["pairs","Alchemy","https://www.alchemy.com","key","Сигналы о новых токенах и пулах Ethereum.","New token and pool signals on Ethereum."],
   ["pairs","QuickNode","https://www.quicknode.com","key","Новые адреса и пулы по всем сетям.","New addresses and pools across chains."],
@@ -1337,7 +1325,7 @@ const SRC_CATALOG = [
   ["tokens","LunarCrush","https://lunarcrush.io","key","Соц-репутация проектов: кто о них говорит.","Project social reputation: who is talking."],
   ["chain","Etherscan","https://etherscan.io","free","Вся активность Ethereum: контракты, владельцы.","All Ethereum activity: contracts, holders."],
   ["chain","Blockscout","https://blockscout.com","free","Эксплореры для десятков сетей.","Explorers for dozens of chains."],
-  ["chain","Otterscan","https://otterscan.io","free","Ethereum без API-ключа.","Ethereum without an API key."],
+  ["chain","Otterscan","https://otterscan.io","free","Просмотр Ethereum — без ключа.","Ethereum explorer — no key needed."],
   ["chain","Solscan","https://solscan.io","free","Вся активность Solana.","All Solana activity."],
   ["chain","Nansen","https://nansen.ai","paid","Умные деньги: что покупают лучшие кошельки.","Smart money: what the best wallets buy."],
   ["chain","Arkham","https://www.arkham.com","free","Следы кошельков: кто за адресом стоит.","Wallet trails: who stands behind an address."],
@@ -2448,56 +2436,36 @@ function renderTrack() {
 
 function renderSources() {
   const gives = t("gives") || LANGS.ru.gives;
-  $("liveSrcGrid").innerHTML = ["dexscreener", "defillama", "coingecko"].map((key) => {
+  const liveKeys = ["dexscreener", "defillama", "coingecko"];
+  const liveItems = liveKeys.map((key) => {
     const src = API_SOURCES[key];
-    return `
+    const cat = SRC_CATALOG.find((it) => it[1].toLowerCase() === src.label.toLowerCase());
+    return { name: src.label, url: cat ? cat[2] : null, access: src.access, desc: gives[key] || "", status: "live", cat: cat ? cat[0] : "" };
+  });
+  const liveNames = new Set(liveKeys.map((k) => API_SOURCES[k].label.toLowerCase()));
+  const items = [
+    ...liveItems,
+    ...SRC_CATALOG.filter((it) => !liveNames.has(it[1].toLowerCase())).map((it) => ({
+      name: it[1], url: it[2], access: it[3],
+      desc: lang === "en" ? it[5] : it[4],
+      status: it[1] === "X (Twitter)" ? "planned" : "soon",
+      cat: it[0]
+    }))
+  ];
+  const dot = { live: "#34D399", soon: "#38BDF8", planned: "#5E6474" };
+  const shown = items.filter((it) => state.srcCat === "all" || it.status === "live" || it.cat === state.srcCat);
+  $("srcGrid").innerHTML = shown.map((it) => `
     <div class="src-card">
       <div class="row">
-        <span class="nm">${esc(src.label)}</span>
-        <span class="access ${src.access}">${accessLabel(src.access)}</span>
+        <span class="nm">${esc(it.name)}${it.url ? `<a class="nm-link" href="${esc(it.url)}" target="_blank" rel="noopener" title="${it.url.replace(/^https:\/\//, "")}">${ICONS.external}</a>` : ""}</span>
+        <span class="access ${it.access}">${accessLabel(it.access)}</span>
       </div>
-      <span class="gv">${esc(gives[key] || "")}</span>
-      <span class="src" style="color:var(--text-faint)"><i style="background:#34D399"></i>${srcStatusLabel(src.status)}</span>
-    </div>`;
-  }).join("");
-
-  /* каталог: фильтр + группировка */
-  const q = state.srcQuery.trim().toLowerCase();
-  const items = SRC_CATALOG.filter((it) => {
-    if (state.srcCat !== "all" && it[0] !== state.srcCat) return false;
-    if (q && !(it[1] + " " + it[4] + " " + it[5]).toLowerCase().includes(q)) return false;
-    return true;
-  });
-  const nSrc = SRC_CATALOG.length, nr = nSrc % 100, nd = nSrc % 10;
-  const wordSrc = lang === "en" ? "sources"
-    : (nr >= 11 && nr <= 14 ? "источников" : nd === 1 ? "источник" : nd >= 2 && nd <= 4 ? "источника" : "источников");
-  $("srcCount").textContent = nSrc + " " + wordSrc;
-  const sel = $("srcCatSel");
-  const cur = sel.value;
-  let opts = `<option value="all">${t("srcCatAll")}</option>`;
-  for (const c of Object.keys(SRC_CATS)) opts += `<option value="${c}">${SRC_CATS[c][lang]}</option>`;
-  sel.innerHTML = opts;
-  if ([...sel.options].some((o) => o.value === cur)) sel.value = cur;
-
-  let out = "";
-  for (const c of Object.keys(SRC_CATS)) {
-    const inCat = items.filter((it) => it[0] === c);
-    if (!inCat.length) continue;
-    out += `<div class="cat-title">${esc(SRC_CATS[c][lang])} <span class="n">${inCat.length}</span></div><div class="src-catalog">`;
-    for (const it of inCat) {
-      out += `
-      <div class="src-card">
-        <div class="row">
-          <span class="nm">${esc(it[1])}</span>
-          <span class="access ${it[3]}">${accessLabel(it[3])}</span>
-        </div>
-        <span class="gv">${esc(lang === "en" ? it[5] : it[4])}</span>
-        <a class="src-link" href="${esc(it[2])}" target="_blank" rel="noopener"><span>${esc(it[2].replace(/^https:\/\//, ""))}</span>${ICONS.external}</a>
-      </div>`;
-    }
-    out += "</div>";
-  }
-  $("srcCatalog").innerHTML = out || `<div class="empty" style="grid-column:1/-1"><h3>${t("emptyTitle")}</h3><p>${t("emptyText")}</p></div>`;
+      <span class="gv">${esc(it.desc)}</span>
+      <span class="src" style="color:var(--text-faint)"><i style="background:${dot[it.status]}"></i>${srcStatusLabel(it.status)}</span>
+    </div>`).join("");
+  document.querySelectorAll("#srcCats .chip").forEach((b) =>
+    b.classList.toggle("active", b.dataset.srccat === state.srcCat)
+  );
 
   /* X-радар */
   const groups = {};
@@ -2561,25 +2529,40 @@ function renderComp() {
   tabCount.textContent = count;
 }
 
-/* ---------- Пост: картинка (canvas, фирменный стиль YurichHub) ---------- */
-const C_BG = "#0C0E08", C_PANEL = "#12140B", C_LINE = "#262B1D", C_TAG = "#343A2B",
-      C_WHITE = "#F2F3F7", C_PINK = "#F25690", C_GOLD = "#C9A24B", C_LIME = "#C6F232",
-      C_GRAY = "#7A7F70", C_LABEL = "#8A8F84", C_ACCENTS = [C_LIME, C_PINK, C_GOLD, C_WHITE];
+/* ---------- Пост: картинка (canvas — фирменная обложка RWA Early) ---------- */
+const P_PAPER = "#E9E2CF", P_INK = "#141414", P_PINK = "#F52E7E",
+      P_LIME = "#C6F232", P_GRAY = "#8B8B84", P_TILE = "#101014";
 let cardImgs = {};
 
 function seededRand(seed) {
   let s = seed >>> 0;
   return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
 }
-function roughPoly(ctx, pts, seed) {
+function roughPoly(ctx, pts, seed, close = true) {
   const rnd = seededRand(seed);
   ctx.beginPath();
   pts.forEach(([x, y], i) => {
     const jx = x + (rnd() - 0.5) * 10, jy = y + (rnd() - 0.5) * 10;
     i ? ctx.lineTo(jx, jy) : ctx.moveTo(jx, jy);
   });
-  ctx.closePath();
-  ctx.fill();
+  if (close) ctx.closePath();
+}
+function grain(ctx, x, y, w, h, n, seed, dark = 0.05, light = 0.06, size = 1.6) {
+  const rnd = seededRand(seed);
+  for (let i = 0; i < n; i++) {
+    ctx.fillStyle = rnd() < 0.5 ? "rgba(0,0,0," + (dark * (0.4 + rnd())) + ")" : "rgba(255,255,255," + (light * (0.4 + rnd())) + ")";
+    ctx.fillRect(x + rnd() * w, y + rnd() * h, size * (0.5 + rnd()), size * (0.5 + rnd()));
+  }
+}
+function paperSpeck(ctx, x, y, w, h, n, seed) {
+  /* зерно поверх букв: точки цвета бумаги */
+  const rnd = seededRand(seed);
+  ctx.fillStyle = P_PAPER;
+  for (let i = 0; i < n; i++) {
+    ctx.globalAlpha = 0.25 + rnd() * 0.5;
+    ctx.fillRect(x + rnd() * w, y + rnd() * h, 1.2 + rnd() * 2, 1.2 + rnd() * 2);
+  }
+  ctx.globalAlpha = 1;
 }
 function truncateText(ctx, text, maxW) {
   if (ctx.measureText(text).width <= maxW) return text;
@@ -2587,17 +2570,27 @@ function truncateText(ctx, text, maxW) {
   while (t.length && ctx.measureText(t + "…").width > maxW) t = t.slice(0, -1);
   return t + "…";
 }
-function ls(ctx, v) { try { ctx.letterSpacing = v; } catch (e) {} }
-function spacedText(ctx, text, x, y, sp, align) {
-  /* ручная разрядка для широкой поддержки */
-  const prevAlign = ctx.textAlign;
-  ctx.textAlign = align || "left";
-  const widths = [...text].map((ch) => ctx.measureText(ch).width);
-  const total = widths.reduce((a, b) => a + b, 0) + sp * Math.max(0, text.length - 1);
-  let cx = align === "right" ? x - total : x;
-  ctx.textAlign = "left";
-  [...text].forEach((ch, i) => { ctx.fillText(ch, cx, y); cx += widths[i] + sp; });
-  ctx.textAlign = prevAlign;
+function bigWord(ctx, text, x, baseline, size, spacing) {
+  let cx = x;
+  for (const ch of text) {
+    ctx.fillText(ch, cx, baseline);
+    cx += ctx.measureText(ch).width + spacing;
+  }
+}
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+function pinkUnderline(ctx, x1, y1, x2, y2, w) {
+  ctx.strokeStyle = P_PINK; ctx.lineWidth = w; ctx.lineCap = "round";
+  ctx.beginPath(); ctx.moveTo(x1, y1);
+  ctx.quadraticCurveTo((x1 + x2) / 2, (y1 + y2) / 2 + 9, x2, y2);
+  ctx.stroke();
 }
 
 function preloadLogos(projects) {
@@ -2622,14 +2615,10 @@ function preloadLogos(projects) {
   });
 }
 
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.arcTo(x + w, y, x + w, y + h, r);
-  ctx.arcTo(x + w, y + h, x, y + h, r);
-  ctx.arcTo(x, y + h, x, y, r);
-  ctx.arcTo(x, y, x + w, y, r);
-  ctx.closePath();
+/* горный хребет: одна функция для силуэта и розовой полосы */
+function ridgeY(x, rnd) {
+  const base = 1812 + Math.sin(x * 0.011) * 26 + Math.sin(x * 0.031 + 2) * 18;
+  return base + (rnd() - 0.5) * 34;
 }
 
 async function drawPostCard(projects) {
@@ -2637,140 +2626,187 @@ async function drawPostCard(projects) {
   if (!canvas || !canvas.getContext) return;
   try {
     if (document.fonts && document.fonts.load) {
-      await document.fonts.load("400 168px Anton");
-      await document.fonts.load("400 54px Anton");
-      await document.fonts.load("400 46px Anton");
-      await document.fonts.load("600 22px Inter");
+      await document.fonts.load("400 330px Anton");
+      await document.fonts.load("800 58px Inter");
+      await document.fonts.load("700 54px Inter");
+      await document.fonts.load("700 37px Inter");
+      await document.fonts.load("500 50px Inter");
     }
   } catch (e) {}
   const imgs = await preloadLogos(projects).catch(() => ({}));
   cardImgs = imgs;
 
-  const W = 1600, M = 70, gapX = 24, gapY = 24, cols = 4, tileH = 190;
-  const shown = projects.slice(0, cols * 3);
-  const rows = Math.max(1, Math.ceil(shown.length / cols));
-  const gridTop = 620;
-  const H = gridTop + rows * (tileH + gapY) - gapY + 190;
+  const W = 1400, H = 1980;
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
-  const now = new Date();
-  const dateStr = String(now.getDate()).padStart(2, "0") + "." + String(now.getMonth() + 1).padStart(2, "0") + "." + now.getFullYear();
 
-  /* фон + мягкие световые пятна, как на фирменных карточках */
-  ctx.fillStyle = C_BG; ctx.fillRect(0, 0, W, H);
-  let grd = ctx.createRadialGradient(1080, 140, 60, 1080, 140, 620);
-  grd.addColorStop(0, "#171B0E"); grd.addColorStop(1, "rgba(23,27,14,0)");
-  ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
-  grd = ctx.createRadialGradient(1520, H - 40, 60, 1520, H - 40, 520);
-  grd.addColorStop(0, "#151809"); grd.addColorStop(1, "rgba(21,24,9,0)");
-  ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
+  /* бумага + пятна */
+  ctx.fillStyle = P_PAPER; ctx.fillRect(0, 0, W, H);
+  let g = ctx.createRadialGradient(380, 520, 60, 380, 520, 700);
+  g.addColorStop(0, "rgba(120,110,80,.05)"); g.addColorStop(1, "rgba(120,110,80,0)");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  g = ctx.createRadialGradient(1150, 1200, 60, 1150, 1200, 800);
+  g.addColorStop(0, "rgba(120,110,80,.04)"); g.addColorStop(1, "rgba(120,110,80,0)");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
-  /* верх слева: рамка-тег с лаймовым квадратом */
-  ctx.font = "600 22px Inter, sans-serif";
-  const tagTxt = "ДНЕВНОЙ ВЫПУСК";
-  const tagW = ctx.measureText(tagTxt).width + 22 * (tagTxt.length - 1) + 11 + 26 + 28;
-  ctx.strokeStyle = C_TAG; ctx.lineWidth = 1.5;
-  ctx.strokeRect(M, 78, tagW, 46);
-  ctx.fillStyle = C_LIME; ctx.fillRect(M + 16, 96, 11, 11);
-  ctx.fillStyle = C_WHITE;
-  spacedText(ctx, tagTxt, M + 40, 108, 4, "left");
+  /* верхний левый уголок: розовая фактурная клякса + лаймовый фрагмент */
+  ctx.fillStyle = P_PINK;
+  roughPoly(ctx, [[-20, -20], [128, -10], [100, 52], [146, 82], [64, 98], [-12, 74]], 11); ctx.fill();
+  grain(ctx, -20, -20, 180, 130, 900, 12, 0.12, 0.1);
+  ctx.fillStyle = P_PINK;
+  [[158, 44, 7], [182, 96, 5], [128, 126, 6]].forEach(([x, y, r]) => { ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); });
+  ctx.fillStyle = P_LIME;
+  ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(26, 0); ctx.lineTo(0, 26); ctx.closePath(); ctx.fill();
 
-  /* верх справа: дата */
-  ctx.font = "600 22px Inter, sans-serif";
-  ctx.fillStyle = C_GRAY;
-  spacedText(ctx, dateStr, W - M, 108, 3, "right");
+  /* три квадрата: чёрный, розовый, лаймовый */
+  ctx.fillStyle = P_INK; ctx.fillRect(88, 104, 54, 20);
+  ctx.fillStyle = P_PINK; ctx.fillRect(156, 104, 54, 20);
+  ctx.fillStyle = P_LIME; ctx.fillRect(224, 104, 54, 20);
 
-  /* заголовок: АНТОН, белый с розовым сдвигом + розовая строка */
-  ctx.font = "400 168px Anton, 'Arial Black', sans-serif";
-  ctx.fillStyle = C_PINK;
-  ctx.fillText("РАННИЕ", M + 9, 342);
-  ctx.fillStyle = C_WHITE;
-  ctx.fillText("РАННИЕ", M, 332);
-  ctx.fillStyle = C_PINK;
-  ctx.fillText("ПРОЕКТЫ", M, 500);
+  /* плюс слева от заголовка */
+  ctx.fillStyle = P_INK;
+  ctx.fillRect(26, 196, 46, 10);
+  ctx.fillRect(43, 179, 10, 46);
 
-  /* подзаголовок: золотой, с разрядкой */
-  ctx.font = "400 54px Anton, 'Arial Black', sans-serif";
-  ctx.fillStyle = C_GOLD;
-  ctx.fillText("СВЕЖИЕ ВЫБОРЫ КАЖДОГО ДНЯ", M + 4, 584);
+  /* РWA / Early — большой АНТОН с зерном */
+  ctx.font = "400 330px Anton, 'Arial Black', sans-serif";
+  ctx.fillStyle = P_INK;
+  bigWord(ctx, "RWA", 85, 352, 330, 42);
+  paperSpeck(ctx, 80, 130, 700, 235, 2600, 21);
+  ctx.fillStyle = P_PINK;
+  bigWord(ctx, "Early", 78, 628, 330, 16);
+  paperSpeck(ctx, 72, 400, 800, 245, 2900, 22);
+  pinkUnderline(ctx, 92, 662, 806, 646, 14);
+  grain(ctx, 92, 636, 716, 40, 260, 23, 0, 0);
+  ctx.fillStyle = P_PINK;
+  [[816, 652, 5], [86, 668, 4]].forEach(([x, y, r]) => { ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); });
 
-  /* плитки проектов: как статы на фирменных карточках */
-  const tileW = (W - 2 * M - (cols - 1) * gapX) / cols;
+  /* подзаголовок */
+  ctx.font = "700 54px Inter, sans-serif";
+  ctx.fillStyle = P_GRAY;
+  ctx.fillText("Ранние проекты", 88, 714);
+
+  /* сетка точек справа */
+  ctx.fillStyle = P_INK;
+  for (let r = 0; r < 5; r++) for (let c = 0; c < 10; c++) {
+    ctx.beginPath(); ctx.arc(882 + c * 36, 104 + r * 34, 5, 0, 7); ctx.fill();
+  }
+
+  /* розовый фактурный блок под прицелом */
+  ctx.fillStyle = P_PINK;
+  roughPoly(ctx, [[1148, 132], [1410, 118], [1410, 362], [1162, 352]], 31); ctx.fill();
+  grain(ctx, 1148, 118, 260, 246, 2400, 32, 0.16, 0.05);
+
+  /* прицел */
+  ctx.strokeStyle = P_LIME; ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.arc(1185, 245, 64, 0, 7); ctx.stroke();
+  ctx.beginPath(); ctx.arc(1185, 245, 30, 0, 7); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(1185, 245 - 86); ctx.lineTo(1185, 245 - 44);
+  ctx.moveTo(1185, 245 + 44); ctx.lineTo(1185, 245 + 86);
+  ctx.moveTo(1185 - 86, 245); ctx.lineTo(1185 - 44, 245);
+  ctx.moveTo(1185 + 44, 245); ctx.lineTo(1185 + 86, 245);
+  ctx.stroke();
+  ctx.strokeStyle = P_INK; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(985, 245); ctx.lineTo(1121, 245); ctx.stroke();
+
+  /* плитки проектов: 4×2, как в оригинале */
+  const shown = projects.slice(0, 8);
+  const tile = 259, gap = 50;
+  const x0 = 106, y1 = 686, y2 = 1043;
   shown.forEach((p, i) => {
-    const col = i % cols, row = Math.floor(i / cols);
-    const x = M + col * (tileW + gapX), y = gridTop + row * (tileH + gapY);
-    const acc = C_ACCENTS[i % C_ACCENTS.length];
-    ctx.fillStyle = C_PANEL;
-    roundRect(ctx, x, y, tileW, tileH, 4); ctx.fill();
-    ctx.strokeStyle = C_LINE; ctx.lineWidth = 1.5; ctx.stroke();
-    ctx.fillStyle = acc;
-    ctx.fillRect(x, y, 5, tileH);
-
-    /* логотип справа */
-    const ls2 = 84, lx = x + tileW - ls2 - 24, ly = y + (tileH - ls2) / 2;
+    const col = i % 4, row = Math.floor(i / 4);
+    const x = x0 + col * (tile + gap), y = row === 0 ? y1 : y2;
+    ctx.fillStyle = P_TILE;
+    roundRect(ctx, x, y, tile, tile, 34); ctx.fill();
+    grain(ctx, x, y, tile, tile, 700, 40 + i, 0.28, 0.05, 1.4);
+    /* логотип */
     const img = imgs[p.id];
     if (img) {
-      ctx.save();
-      roundRect(ctx, lx, ly, ls2, ls2, 14); ctx.clip();
-      const sc = Math.min(ls2 / img.width, ls2 / img.height);
+      const box = tile * 0.62;
+      const sc = Math.min(box / img.width, box / img.height);
       const w = img.width * sc, h = img.height * sc;
-      try { ctx.drawImage(img, lx + (ls2 - w) / 2, ly + (ls2 - h) / 2, w, h); } catch (e) {}
-      ctx.restore();
+      try { ctx.drawImage(img, x + (tile - w) / 2, y + (tile - h) / 2, w, h); } catch (e) {}
     } else {
-      ctx.fillStyle = "#1A1D12";
-      roundRect(ctx, lx, ly, ls2, ls2, 14); ctx.fill();
-      ctx.strokeStyle = C_LINE; ctx.lineWidth = 1.5; ctx.stroke();
-      ctx.fillStyle = acc;
-      ctx.font = "400 40px Anton, 'Arial Black', sans-serif";
+      ctx.fillStyle = "#F2F3F7";
+      ctx.font = "400 92px Anton, 'Arial Black', sans-serif";
       ctx.textAlign = "center";
       const init = p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
-      ctx.fillText(init, lx + ls2 / 2, ly + ls2 / 2 + 14);
+      ctx.fillText(init, x + tile / 2, y + tile / 2 + 32);
       ctx.textAlign = "left";
     }
-
-    /* название: АНТОН белое */
-    ctx.fillStyle = C_WHITE;
-    ctx.font = "400 46px Anton, 'Arial Black', sans-serif";
-    const name = truncateText(ctx, p.name.toUpperCase(), tileW - 52);
-    ctx.fillText(name, x + 26, y + 66);
-    /* подпись: категория · сеть */
-    ctx.font = "600 20px Inter, sans-serif";
-    ctx.fillStyle = C_LABEL;
-    const meta = [catLabel(p.category), p.network ? (NETS[p.network] || p.network) : null].filter(Boolean).join(" · ").toUpperCase();
-    spacedText(ctx, truncateText(ctx, meta, tileW - 52), x + 26, y + 106, 2.5, "left");
-    /* третья строка: MC или стадия */
-    const third = p.token && p.token.mc
-      ? "MC " + fmtMoney(p.token.mc)
-      : (p.noToken && p.noToken.stage ? p.noToken.stage : "");
-    if (third) {
-      ctx.font = "600 19px Inter, sans-serif";
-      ctx.fillStyle = acc;
-      ctx.fillText(truncateText(ctx, third.toUpperCase(), tileW - 52), x + 26, y + 144);
-    }
+    /* название под плиткой */
+    ctx.font = "700 37px Inter, sans-serif";
+    ctx.fillStyle = P_INK;
+    ctx.textAlign = "center";
+    ctx.fillText(truncateText(ctx, p.name, tile), x + tile / 2, y + tile + 58);
+    ctx.textAlign = "left";
   });
 
-  /* футер: линия, YURICHHUB слева, дата + RWA EARLY справа */
-  const fy = H - 118;
-  ctx.strokeStyle = C_LINE; ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(M, fy); ctx.lineTo(W - M, fy); ctx.stroke();
-  ctx.font = "400 40px Anton, 'Arial Black', sans-serif";
-  ctx.fillStyle = C_WHITE;
-  ctx.fillText("YURICH", M, H - 52);
-  const yw = ctx.measureText("YURICH").width;
-  ctx.fillStyle = C_LIME;
-  ctx.fillText("HUB", M + yw, H - 52);
-  ctx.font = "600 20px Inter, sans-serif";
-  ctx.fillStyle = C_GRAY;
-  spacedText(ctx, "RWA EARLY // ДНЕВНОЙ ВЫПУСК", M, H - 24, 3, "left");
-  ctx.textAlign = "right";
-  ctx.fillStyle = C_GRAY;
-  ctx.font = "600 20px Inter, sans-serif";
-  ctx.fillText(dateStr, W - M, H - 62);
-  ctx.fillStyle = C_LIME;
-  ctx.font = "400 40px Anton, 'Arial Black', sans-serif";
-  ctx.fillText("RWA EARLY", W - M, H - 22);
-  ctx.textAlign = "left";
+  /* — by YuRichRWA */
+  ctx.fillStyle = P_INK; ctx.fillRect(88, 1512, 136, 4);
+  ctx.font = "500 50px Inter, sans-serif";
+  ctx.fillStyle = P_GRAY;
+  ctx.fillText("by", 246, 1528);
+  ctx.font = "800 58px Inter, sans-serif";
+  ctx.fillStyle = P_INK;
+  ctx.fillText("YuRichRWA", 340, 1532);
+  pinkUnderline(ctx, 344, 1556, 758, 1548, 10);
+
+  /* глобус справа внизу */
+  ctx.strokeStyle = "rgba(95,95,90,.5)"; ctx.lineWidth = 2;
+  const gx = 1120, gy = 1860, gr = 280;
+  ctx.beginPath(); ctx.arc(gx, gy, gr, 0, 7); ctx.stroke();
+  for (let i = 1; i < 4; i++) {
+    ctx.beginPath(); ctx.ellipse(gx, gy, gr * (i / 4), gr, 0, 0, 7); ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(gx, gy, gr, gr * (i / 4), 0, 0, 7); ctx.stroke();
+  }
+
+  /* низ слева: розовые штрихи, точки, линия, лаймовая полоса */
+  ctx.fillStyle = P_PINK;
+  for (let i = 0; i < 6; i++) {
+    const hx = 84 + i * 22, hy = 1606;
+    ctx.beginPath();
+    ctx.moveTo(hx, hy); ctx.lineTo(hx + 86, hy);
+    ctx.lineTo(hx + 68, hy + 14); ctx.lineTo(hx - 18, hy + 14);
+    ctx.closePath(); ctx.fill();
+  }
+  ctx.fillStyle = P_INK;
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 5; c++) {
+    ctx.beginPath(); ctx.arc(84 + c * 30, 1730 + r * 30, 4, 0, 7); ctx.fill();
+  }
+  ctx.fillRect(84, 1784, 246, 3);
+
+  /* горный хребет с фактурой */
+  const rndR = seededRand(777);
+  ctx.fillStyle = P_INK;
+  ctx.beginPath();
+  ctx.moveTo(0, H); ctx.lineTo(0, ridgeY(0, rndR));
+  for (let x = 0; x <= W; x += 35) ctx.lineTo(x, ridgeY(x, rndR));
+  ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+  grain(ctx, 0, 1760, W, H - 1760, 2600, 78, 0, 0.05, 1.8);
+  /* розовая полоса по гребню */
+  ctx.fillStyle = P_PINK;
+  ctx.beginPath();
+  const rndP = seededRand(779);
+  for (let x = 420; x <= 1020; x += 30) {
+    const y = ridgeY(x + 40, rndR) - 6;
+    x === 420 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  for (let x = 1020; x >= 420; x -= 30) ctx.lineTo(x, ridgeY(x + 40, rndR) + 18);
+  ctx.closePath(); ctx.fill();
+  grain(ctx, 420, 1740, 620, 90, 900, 80, 0.14, 0);
+  /* уголки справа внизу */
+  ctx.fillStyle = P_LIME;
+  roughPoly(ctx, [[1316, 1806], [1410, 1800], [1410, 1878], [1322, 1884]], 81); ctx.fill();
+  ctx.fillStyle = P_PINK;
+  roughPoly(ctx, [[1218, 1862], [1348, 1856], [1352, 1924], [1214, 1930]], 82); ctx.fill();
+  ctx.fillStyle = P_LIME;
+  roughPoly(ctx, [[-10, 1822], [152, 1816], [148, 1842], [-10, 1848]], 83); ctx.fill();
+
+  /* финальное зерно по всей обложке */
+  grain(ctx, 0, 0, W, H, 4200, 99, 0.03, 0.03, 1.5);
 }
 
 function renderPost() {
@@ -3052,25 +3088,12 @@ function bindEvents() {
     if (el) onCardAction(el);
   });
 
-  /* каталог источников */
-  $("srcSearch").addEventListener("input", (e) => {
-    state.srcQuery = e.target.value;
+  /* источники: фильтр по категориям */
+  $("srcCats").addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    state.srcCat = chip.dataset.srccat;
     if (state.view === "sources") renderSources();
-  });
-  $("srcCatSel").addEventListener("change", (e) => {
-    state.srcCat = e.target.value;
-    if (state.view === "sources") renderSources();
-  });
-  $("srcCopy").addEventListener("click", () => {
-    const lines = [];
-    for (const c of Object.keys(SRC_CATS)) {
-      const inCat = SRC_CATALOG.filter((it) => it[0] === c && (state.srcCat === "all" || state.srcCat === c));
-      if (!inCat.length) continue;
-      lines.push(SRC_CATS[c][lang].toUpperCase() + " (" + inCat.length + ")");
-      for (const it of inCat) lines.push("- " + it[1] + " — " + (lang === "en" ? it[5] : it[4]) + "\n  " + it[2]);
-      lines.push("");
-    }
-    copyText(lines.join("\n"), t("srcCopied"));
   });
 
   /* состав карточки: названия и логотипы */
