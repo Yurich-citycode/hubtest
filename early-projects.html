@@ -9,7 +9,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%2334D399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 6.5l6.2 9.5L16 25.5 9.8 16z' fill='white' opacity='.95'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Anton&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -583,6 +583,25 @@ a.wl:hover{color:var(--text);border-color:var(--violet);background:var(--violet-
 }
 .comp-del:hover{color:var(--red);background:rgba(248,113,113,.08)}
 
+.src-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--violet-text);text-decoration:none;margin-top:2px;min-width:0}
+.src-link:hover{text-decoration:underline}
+.src-link svg{width:11px;height:11px;flex-shrink:0}
+.src-link span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* каталог источников */
+.cat-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.cat-count{font-size:12px;font-weight:600;color:var(--text-faint)}
+.cat-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.cat-toolbar .search-wrap{flex:1 1 220px;max-width:360px}
+.cat-toolbar select{flex:1;min-width:150px;max-width:260px}
+.src-catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:10px}
+.cat-title{
+  font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--text-faint);margin:16px 0 8px;display:flex;align-items:center;gap:8px;
+}
+.cat-title:first-child{margin-top:0}
+.cat-title .n{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;padding:1px 7px;font-size:9.5px}
+
 /* footer */
 footer{
   margin-top:38px;padding-top:18px;border-top:1px solid var(--border);
@@ -611,6 +630,69 @@ footer .fine{line-height:1.6}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast svg{width:15px;height:15px;color:var(--emerald);flex-shrink:0}
 
+/* ============================ МОБИЛЬНАЯ СВЁРТКА ============================ */
+@media (max-width:760px){
+  .container{padding:0 12px}
+  .header-inner{padding-top:10px;padding-bottom:10px;gap:8px}
+  .hrow-1{gap:8px}
+  .brand-tag{display:none}
+  .hrow-3{flex-wrap:wrap;gap:8px}
+  .hrow-3 .chips{flex:1 1 100%;order:1}
+  .hrow-3-right{width:100%;order:2;justify-content:space-between}
+  .hrow-3-right select{flex:1;min-width:0}
+  .tabs{margin:16px 0 12px}
+  .tab{padding:8px 10px;font-size:12.5px}
+  .feed{gap:10px}
+  .feed-head{flex-wrap:wrap;gap:8px}
+  .feed-actions{width:100%;justify-content:space-between}
+  .sort-hint{font-size:11px}
+  .star-filter{font-size:11.5px;padding:5px 10px}
+  .rwa-banner{padding:11px 13px}
+  .rwa-banner p{font-size:11.5px}
+  .tstats{gap:6px}
+  .tstat{font-size:11px;padding:6px 10px;gap:5px}
+  .table-wrap{border-radius:10px}
+  table{min-width:680px;font-size:11.5px}
+  th{padding:8px 9px;font-size:9px}
+  td{padding:9px}
+  .tg{padding:12px 13px;font-size:12.5px}
+  .panel{padding:13px}
+  .comp-fields input{font-size:13px}
+  .view-sec .sec-sub{font-size:12px}
+  footer{font-size:11.5px}
+  .empty{padding:48px 16px}
+}
+@media (max-width:520px){
+  .live-pill span{display:none}
+  .live-pill{padding:6px 8px}
+  .icon-btn{width:34px;height:34px}
+  .icon-btn svg{width:15px;height:15px}
+  .card{padding:12px;gap:9px}
+  .card-top{gap:9px}
+  .avatar{width:36px;height:36px;border-radius:10px;font-size:12px}
+  .card-name{font-size:14px}
+  .ticker{font-size:9.5px;padding:2px 5px}
+  .qmeter i{width:3px}
+  .card-badges{gap:4px}
+  .badge{font-size:10px;padding:2px 7px}
+  .metrics{padding:8px 9px;gap:6px}
+  .m-label{font-size:8.5px}
+  .m-val{font-size:12px}
+  .card-desc{font-size:11.5px;min-height:33px}
+  .note{font-size:11px}
+  .card-foot{flex-direction:column;align-items:stretch;gap:8px}
+  .card-actions{justify-content:flex-end}
+  .btn{padding:6px 9px;font-size:11.5px;gap:5px}
+  .btn svg{width:12px;height:12px}
+  .soc{width:28px;height:28px}
+  .src{font-size:9px;gap:4px}
+  .pipe-step{padding:10px 12px;gap:10px}
+  .pipe-step span{font-size:11.5px}
+  .src-card{padding:10px 12px}
+  .canvas-cap{font-size:11px}
+  .track-head h2{font-size:17px}
+  .view-sec h3{font-size:13.5px}
+}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
@@ -814,31 +896,51 @@ footer .fine{line-height:1.6}
   <section id="view-sources" hidden>
     <div class="view-sec">
       <h3 data-i18n="pipeTitle">Откуда берутся проекты</h3>
-      <p class="sec-sub" data-i18n="pipeSub">Лента собирается по шагам: автоисточники находят свежее, куратор решает, что важно. У каждой карточки в ленте — отметка, откуда проект.</p>
+      <p class="sec-sub" data-i18n="pipeSub">Каждый день мы делаем одно и то же: сканеры находят новое, мы проверяем руками и оставляем в ленте только то, что интересно. Откуда пришёл проект — указано в его карточке.</p>
       <div data-i18n-html="pipeline">
         <div class="pipe">
-          <div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>DexScreener — новые пары с ликвидностью, объёмом и возрастом. Ранние токены часто стартуют с $25–100K ликвидности, поэтому порог — мягкий, а главное — оценка качества.</span></div></div>
-          <div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с TVL и категориями</b><span>DefiLlama — ядро рубрики RWA: настоящие TVL, категории, серьёзные проекты.</span></div></div>
-          <div class="pipe-step"><span class="pipe-num">3</span><div><b>Листинги, логотипы, описания</b><span>CoinGecko — кросс-проверка: если проект уже там, он не «вчера появился». Отсюда же реальные логотипы и цифры.</span></div></div>
-          <div class="pipe-step"><span class="pipe-num">4</span><div><b>Глубина по Solana</b><span>Birdeye, Jupiter, Helius — большая часть ранней активности живёт на Solana. Нужен бесплатный ключ — пришлёте, и подключим.</span></div></div>
-          <div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые страницы с токенизированными активами и эмитентами. Прямое топливо рубрики.</span></div></div>
-          <div class="pipe-step"><span class="pipe-num">6</span><div><b>Кураторский слой</b><span>Ручные вхождения: выборы автора, список коллеги, X-радар ниже. Отмечаются бейджем <b>RWA Early</b> — это то, что сканер не делает.</span></div></div>
-          <div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка качества → лента</b><span>Относительный балл 0–5: тир ликвидности + активность (объём/ликвидность) + сила источника + соцсети. Горячий молодой токен на $86K получает выше, чем мёртвый пул на $500K.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>Сканеры вылавливают новые пары с ликвидностью и объёмом. Ранние токены стартуют с $25–100K, поэтому главное — не порог, а живость: активные торги и нормальный источник.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с реальными деньгами</b><span>DefiLlama показывает, где лежат настоящие деньги и в какой категории проект. Ядро рубрики RWA.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">3</span><div><b>Проверка и логотипы</b><span>CoinGecko — если проект уже там, это не токен «на один день». Отсюда же реальные логотипы и цифры.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">4</span><div><b>Solana — отдельно</b><span>Половина новых токенов рождается на Solana, поэтому по ней смотрим глубже: Birdeye, Jupiter, Helius. Нужен бесплатный ключ — пришлёте, включим.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые списки токенизированных активов и эмитентов.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">6</span><div><b>Наш слой</b><span>Выборы автора, списки коллег, X-радар. Отмечено бейджем <b>RWA Early</b> — то, что сканер не придумает.</span></div></div>
+          <div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка и отбор</b><span>Каждому ставим оценку 0–5: ликвидность, активность торгов, надёжность источника, соцсети. Живой токен с $86K попадает в ленту, мёртвый пул на $500K — нет.</span></div></div>
         </div>
       </div>
     </div>
 
     <div class="view-sec">
-      <h3 data-i18n="srcTitle">Источники данных</h3>
-      <p class="sec-sub" data-i18n="srcSub">Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.</p>
-      <div class="src-grid" id="srcGrid"></div>
+      <h3 data-i18n="srcLiveTitle">Сейчас работает</h3>
+      <p class="sec-sub" data-i18n="srcSub">Все данные, которыми живёт лента, — в одном месте. Часть работает сразу, часть — по бесплатному ключу: пришлёте (Birdeye, Helius, Moralis, CMC) — включим в работу.</p>
+      <div class="src-grid" id="liveSrcGrid"></div>
+    </div>
+
+    <div class="view-sec">
+      <div class="cat-head">
+        <h3 data-i18n="srcAllTitle">Все источники</h3>
+        <span class="cat-count" id="srcCount"></span>
+      </div>
+      <p class="sec-sub" data-i18n="srcAllSub">Каждый источник — со своей прямой ссылкой. Нашли полезное — заходите туда напрямую, а мы соединяем это всё в одну ленту.</p>
+      <div class="cat-toolbar">
+        <div class="search-wrap">
+          <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="srcSearch" type="search" placeholder="Поиск по источникам…" data-i18n-ph="srcSearchPh" autocomplete="off" aria-label="Поиск по источникам">
+        </div>
+        <select id="srcCatSel" aria-label="Категория источников"></select>
+        <button class="btn" id="srcCopy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span data-i18n="srcCopy">Скопировать список</span>
+        </button>
+      </div>
+      <div class="src-catalog" id="srcCatalog"></div>
     </div>
 
     <div class="view-sec">
       <h3 data-i18n="radarTitle">X-радар</h3>
-      <p class="sec-sub" data-i18n="radarSub">Список аккаунтов для ежедневного ручного обзора (≈15 минут). Автоматизация — на следующем этапе.</p>
+      <p class="sec-sub" data-i18n="radarSub">Этих аккаунтов мы смотрим каждый день руками — так ловим то, что ещё не нашёл ни один сканер.</p>
       <div id="watchlistEl"></div>
-      <p class="wl-note" data-i18n="wlNote">Список курируемый — перед использованием проверьте аккаунты.</p>
+      <p class="wl-note" data-i18n="wlNote">Список живой: добавляем новых по мере выхода интересных проектов.</p>
     </div>
   </section>
 
@@ -920,37 +1022,48 @@ const LANGS = {
     emptyReset: "Сбросить фильтры",
     mMc: "MC · с добавления", mLiq: "Ликвидность", mVol: "Объём 24ч", mAge: "Возраст",
     mInFeed: "В ленте", mStage: "Стадия", mRaised: "Собрано", mNet: "Сеть",
-    mSinceTitle: "Изменение MC с момента добавления в ленту",
+    mSinceTitle: "Как изменилась капитализация с момента добавления в ленту",
     mStageTitle: "Прогресс с момента добавления",
     noSoc: "Нет соцсетей",
     siteWord: "Сайт",
     btnChart: "График", btnCa: "CA", btnSite: "Сайт", btnPost: "Пост",
     btnShareA: "Ссылка на проект", btnPostA: "В черновик поста", btnPostARm: "Убрать из черновика поста",
-    qdToken: "Качество {q}/5 · ликвидность {liq} · оборот/ликвидность {r} · источник {src} · соцсети {s}/3",
-    qdNo: "Качество {q}/5 · стадия: {st}{raised} · кураторский выбор: {cur}",
+    qdToken: "Оценка {q}/5: ликвидность {liq} · активность торгов {r} · источник — {src} · соцсети {s} из 3",
+    qdNo: "Оценка {q}/5 · стадия: {st}{raised} · наш выбор: {cur}",
     qdRaised: " · собрано {x}", qdCurYes: "да", qdCurNo: "нет",
     thProject: "Проект", thAdded: "Добавлен", thStatus: "Статус",
     thSince: "Δ с добавления", thD1: "24ч", thD7: "7д", thD30: "30д",
     tsortSinceAdd: "Δ с добавления", tsortAdded: "Новые в ленте", tsortD1: "Δ 24 часа", tsortQ: "Качество",
     statInFeed: "в ленте", statUp: "в плюсе", statDown: "в минусе",
     statAvg: "в среднем {x} с добавления", statMoved: "изменили статус",
-    trackNote: "Когда проект попадает в ленту, мы фиксируем его MC (или стадию). «Δ с добавления» — текущий MC против точки входа: так видно, что из показанного выросло, а что нет. ⚡ — сдвиг статуса: TGE, закрытый раунд, тестнет → mainnet и подобное.",
+    trackNote: "Каждый проект запоминаем в момент добавления: сколько стоил и на какой стадии был. «Δ с добавления» — как изменился с того момента: видно, что выросло, а что нет. ⚡ — проект сдвинулся: запустил токен, закрыл раунд, вышел в основную сеть.",
     pipeTitle: "Откуда берутся проекты",
-    pipeSub: "Лента собирается по шагам: автоисточники находят свежее, куратор решает, что важно. У каждой карточки в ленте — отметка, откуда проект.",
+    pipeSub: "Каждый день мы делаем одно и то же: сканеры находят новое, мы проверяем руками и оставляем в ленте только то, что интересно. Откуда пришёл проект — указано в его карточке.",
     pipeline: '<div class="pipe">'
-      + '<div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>DexScreener — новые пары с ликвидностью, объёмом и возрастом. Ранние токены часто стартуют с $25–100K ликвидности, поэтому порог — мягкий, а главное — оценка качества.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с TVL и категориями</b><span>DefiLlama — ядро рубрики RWA: настоящие TVL, категории, серьёзные проекты.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">3</span><div><b>Листинги, логотипы, описания</b><span>CoinGecko — кросс-проверка: если проект уже там, он не «вчера появился». Отсюда же реальные логотипы и цифры.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">4</span><div><b>Глубина по Solana</b><span>Birdeye, Jupiter, Helius — большая часть ранней активности живёт на Solana. Нужен бесплатный ключ — пришлёте, и подключим.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые страницы с токенизированными активами и эмитентами. Прямое топливо рубрики.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">6</span><div><b>Кураторский слой</b><span>Ручные вхождения: выборы автора, список коллеги, X-радар ниже. Отмечаются бейджем <b>RWA Early</b> — это то, что сканер не делает.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка качества → лента</b><span>Относительный балл 0–5: тир ликвидности + активность (объём/ликвидность) + сила источника + соцсети. Горячий молодой токен на $86K получает выше, чем мёртвый пул на $500K.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">1</span><div><b>Свежие токены и пары</b><span>Сканеры вылавливают новые пары с ликвидностью и объёмом. Ранние токены стартуют с $25–100K, поэтому главное — не порог, а живость: активные торги и нормальный источник.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">2</span><div><b>Протоколы с реальными деньгами</b><span>DefiLlama показывает, где лежат настоящие деньги и в какой категории проект. Ядро рубрики RWA.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">3</span><div><b>Проверка и логотипы</b><span>CoinGecko — если проект уже там, это не токен «на один день». Отсюда же реальные логотипы и цифры.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">4</span><div><b>Solana — отдельно</b><span>Половина новых токенов рождается на Solana, поэтому по ней смотрим глубже: Birdeye, Jupiter, Helius. Нужен бесплатный ключ — пришлёте, включим.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA-реестры</b><span>RWA.xyz и Tokenized — открытые списки токенизированных активов и эмитентов.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">6</span><div><b>Наш слой</b><span>Выборы автора, списки коллег, X-радар. Отмечено бейджем <b>RWA Early</b> — то, что сканер не придумает.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Оценка и отбор</b><span>Каждому ставим оценку 0–5: ликвидность, активность торгов, надёжность источника, соцсети. Живой токен с $86K попадает в ленту, мёртвый пул на $500K — нет.</span></div></div>'
       + '</div>',
     srcTitle: "Источники данных",
-    srcSub: "Открытые источники, которые питают ленту. К источникам с пометкой «нужен ключ» есть бесплатные тарифы — пришлите ключ (Birdeye, Helius, Moralis, CMC), и они начнут работать.",
+    srcSub: "Все данные, которыми живёт лента, — в одном месте. Часть работает сразу, часть — по бесплатному ключу: пришлёте (Birdeye, Helius, Moralis, CMC) — включим в работу.",
     radarTitle: "X-радар",
-    radarSub: "Список аккаунтов для ежедневного ручного обзора (≈15 минут). Автоматизация — на следующем этапе.",
-    wlNote: "Список курируемый — перед использованием проверьте аккаунты.",
+    radarSub: "Этих аккаунтов мы смотрим каждый день руками — так ловим то, что ещё не нашёл ни один сканер.",
+    wlNote: "Список живой: добавляем новых по мере выхода интересных проектов.",
+    srcLiveTitle: "Сейчас работает",
+    srcAllTitle: "Все источники",
+    srcAllSub: "Каждый источник — со своей прямой ссылкой. Нашли полезное — заходите туда напрямую, а мы соединяем это всё в одну ленту.",
+    srcSearchPh: "Поиск по источникам…",
+    srcCopy: "Скопировать список",
+    srcCopied: "Список источников скопирован",
+    srcCount: "{n} источников",
+    srcCatAll: "Все категории",
+    srcCatPairs: "Свежие пары и пулы", srcCatTokens: "Токены и котировки", srcCatChain: "Ончейн и аналитика",
+    srcCatProtocols: "Протоколы и DeFi", srcCatRwa: "RWA-реестры", srcCatCalendar: "Листинги и события",
+    srcCatSentiment: "Сентимент и соцсети", srcCatNews: "Новости и сигналы", srcCatScouts: "X-скауты",
     postTitle: "Черновик поста",
     postSub: "Нажимайте «Пост» на карточках — здесь соберутся текст и картинка в стиле канала. Названия и логотипы можно поменять прямо в составе — картинка обновится сама.",
     compTitle: "Состав карточки",
@@ -964,11 +1077,11 @@ const LANGS = {
     ptWhy: "Почему интересно", ptRisk: "Риск",
     ptSrc: "Источники: DexScreener · DefiLlama · CoinGecko · RWA Early",
     ptFeed: "Лента с историей: ",
-    dsTagFresh: "Свежая пара на {chain} · ликвидность {liq}",
-    dsWhy: "Свежая пара из открытого источника.",
-    dsRisk: "Очень свежий токен — проверьте контракт, ликвидность и концентрацию.",
-    dlWhy: "Серьёзный протокол с реальным TVL из открытого источника.",
-    dlRisk: "Категория «протоколы» — проверяйте экономику и команду перед входом.",
+    dsTagFresh: "Новая пара на {chain} · ликвидность {liq}",
+    dsWhy: "Новая пара, найденная в открытом источнике.",
+    dsRisk: "Токен только что появился — проверяйте контракт, ликвидность и владельцев.",
+    dlWhy: "Протокол с реальными вложениями, найден в открытом источнике.",
+    dlRisk: "Перед входом смотрите, что за команда и откуда у протокола доход.",
     tStarAdd: "{n} — в «Интересном»", tStarRm: "{n} — из «Интересного»",
     tPickAdd: "{n} — в черновик поста ({c})", tPickRm: "{n} — из черновика поста",
     tCa: "CA скопирован", tLink: "Ссылка скопирована",
@@ -979,27 +1092,27 @@ const LANGS = {
     tPngWait: "Картинка ещё собирается — попробуйте через секунду",
     tCleared: "Черновик поста очищен",
     footSub: "RWA Early · Ранние проекты",
-    fineLive: "Live-данные: {src} + кураторская база RWA Early. Не является инвестиционной рекомендацией.",
-    fineOff: "Live-источники сейчас недоступны — показана кураторская база. Не является инвестиционной рекомендацией.",
+    fineLive: "Данные в реальном времени: {src} + наша база RWA Early. Не является инвестиционной рекомендацией.",
+    fineOff: "Живые источники сейчас не отвечают — показываем проверенную базу. Не является инвестиционной рекомендацией.",
     shareTitle: "RWA Early · Ранние проекты — YurichHub",
     gives: {
-      dexscreener: "Свежие пары: ликвидность, объём, возраст пары, логотипы и соцсети из профиля проекта.",
-      defillama: "Протоколы с TVL и категориями — ядро рубрики RWA.",
-      coingecko: "Реальные цифры, категории, описания, логотипы и соцсети.",
-      geckoterminal: "Новые пулы по сетям: объёмы и ликвидность без ключа.",
-      birdeye: "Глубина по Solana: ликвидность, объёмы, пары.",
-      jupiter: "Метаданные токенов Solana, котировки и свопы.",
-      helius: "Пуш-уведомления о новых токенах и пулах на Solana — автоматический радар свежести.",
+      dexscreener: "Свежие пары по всем сетям: ликвидность, объём, возраст, логотипы и соцсети.",
+      defillama: "Протоколы с реальными вложениями и категориями — основа рубрики RWA.",
+      coingecko: "Проверка: если проект уже там — он не «на один день». Отсюда же логотипы и цифры.",
+      geckoterminal: "Новые пулы по всем сетям — без ключа.",
+      birdeye: "Новые токены и пары Solana: ликвидность и объёмы.",
+      jupiter: "Котировки и данные токенов Solana.",
+      helius: "Сигналы о каждом новом токене Solana в момент появления.",
       moralis: "Токены, цены и потоки по всем сетям.",
-      covalent: "Контракты, холдеры, балансы токенов.",
-      cryptocompare: "Цены, соцсети, сентимент.",
-      cmc: "Свежие листинги, категории, соцсети.",
-      messari: "Данные по проектам, категории, отчёты.",
-      dune: "Своя аналитика: холдеры, уникальные кошельки.",
-      polymarket: "Рынки предсказаний — контекст для таких проектов, как tryimoo.",
-      rwa_xyz: "Реестр токенизированных активов — прямое топливо рубрики.",
-      tokenized: "Список токенизированных реальных активов.",
-      twitter: "Радар свежих анонсов. Сейчас — ручной обход по X-радару ниже."
+      covalent: "Контракты, владельцы, балансы токенов.",
+      cryptocompare: "Цены и реакция соцсетей.",
+      cmc: "Свежие листинги и категории.",
+      messari: "Данные и отчёты по проектам.",
+      dune: "Свои подсчёты: владельцы, кошельки, потоки.",
+      polymarket: "Рынки предсказаний — движение токена видно ещё до запуска.",
+      rwa_xyz: "Реестр токенизированных активов — то, на чём стоит рубрика.",
+      tokenized: "Открытый список токенизированных реальных активов.",
+      twitter: "Свежие анонсы из первых рук. Кого именно смотрим — в X-радаре ниже."
     }
   },
   en: {
@@ -1031,37 +1144,48 @@ const LANGS = {
     emptyReset: "Reset filters",
     mMc: "MC · since added", mLiq: "Liquidity", mVol: "Volume 24h", mAge: "Age",
     mInFeed: "In feed", mStage: "Stage", mRaised: "Raised", mNet: "Chain",
-    mSinceTitle: "MC change since added to the feed",
+    mSinceTitle: "How market cap has changed since it was added to the feed",
     mStageTitle: "Progress since added",
     noSoc: "No socials",
     siteWord: "Site",
     btnChart: "Chart", btnCa: "CA", btnSite: "Website", btnPost: "Post",
     btnShareA: "Link to project", btnPostA: "Add to post draft", btnPostARm: "Remove from post draft",
-    qdToken: "Quality {q}/5 · liquidity {liq} · volume/liquidity {r} · source {src} · socials {s}/3",
-    qdNo: "Quality {q}/5 · stage: {st}{raised} · curated pick: {cur}",
+    qdToken: "Score {q}/5: liquidity {liq} · trading activity {r} · source — {src} · socials {s} of 3",
+    qdNo: "Score {q}/5 · stage: {st}{raised} · our pick: {cur}",
     qdRaised: " · raised {x}", qdCurYes: "yes", qdCurNo: "no",
     thProject: "Project", thAdded: "Added", thStatus: "Status",
     thSince: "Δ since added", thD1: "24h", thD7: "7d", thD30: "30d",
     tsortSinceAdd: "Δ since added", tsortAdded: "New in feed", tsortD1: "Δ 24h", tsortQ: "Quality",
     statInFeed: "in feed", statUp: "up", statDown: "down",
     statAvg: "avg {x} since added", statMoved: "changed status",
-    trackNote: "When a project enters the feed, we record its MC (or stage). \"Δ since added\" is the current MC versus the entry point: it shows what grew and what didn't. ⚡ — a status shift: TGE, closed round, testnet → mainnet, and similar.",
+    trackNote: "Every project is remembered at the moment it joins the feed: how much it cost and what stage it was at. \"Δ since added\" shows how it has moved since then. ⚡ — the project leveled up: token launch, closed round, mainnet launch.",
     pipeTitle: "Where projects come from",
-    pipeSub: "The feed is built in steps: automatic sources find what's fresh, the curator decides what matters. Every card in the feed is marked with its source.",
+    pipeSub: "Every day we do the same thing: scanners find what's new, we check it by hand and keep only what's interesting in the feed. Where a project came from is marked on its card.",
     pipeline: '<div class="pipe">'
-      + '<div class="pipe-step"><span class="pipe-num">1</span><div><b>Fresh tokens &amp; pairs</b><span>DexScreener — new pairs with liquidity, volume and age. Early tokens often start with $25–100K of liquidity, so the bar is soft and the real filter is the quality score.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">2</span><div><b>Protocols with TVL &amp; categories</b><span>DefiLlama — the core of the RWA rubric: real TVL, categories, serious projects.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">3</span><div><b>Listings, logos, descriptions</b><span>CoinGecko — cross-check: if a project is already there, it is not brand new. Also where real logos and numbers come from.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">4</span><div><b>Solana depth</b><span>Birdeye, Jupiter, Helius — most early activity lives on Solana. They need a free key — send it and we will plug them in.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA registries</b><span>RWA.xyz and Tokenized — open pages with tokenized assets and issuers. Direct fuel for the rubric.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">6</span><div><b>Curator layer</b><span>Manual picks: the author&#39;s choices, a peer&#39;s list, the X radar below. Marked with the <b>RWA Early</b> badge — the part a scanner cannot do.</span></div></div>'
-      + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Quality score → feed</b><span>A relative 0–5 score: liquidity tier + activity (volume/liquidity) + source strength + socials. A hot young token at $86K outscores a dead pool at $500K.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">1</span><div><b>Fresh tokens &amp; pairs</b><span>Scanners catch new pairs with liquidity and volume. Early tokens start at $25–100K, so what matters is not the bar but aliveness: active trading and a decent source.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">2</span><div><b>Protocols with real money</b><span>DefiLlama shows where real money sits and what category the project is in. The core of the RWA rubric.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">3</span><div><b>Cross-check &amp; logos</b><span>CoinGecko — if a project is already there, it is not a one-day token. Real logos and numbers come from here.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">4</span><div><b>Solana — separately</b><span>Half of all new tokens are born on Solana, so we look deeper there: Birdeye, Jupiter, Helius. They need a free key — send it and we will switch them on.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">5</span><div><b>RWA registries</b><span>RWA.xyz and Tokenized — open lists of tokenized assets and issuers.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">6</span><div><b>Our layer</b><span>The author&#39;s picks, peers&#39; lists, the X radar. Marked with the <b>RWA Early</b> badge — the part a scanner cannot invent.</span></div></div>'
+      + '<div class="pipe-step"><span class="pipe-num">7</span><div><b>Scoring &amp; selection</b><span>Every project gets a 0–5 score: liquidity, trading activity, source reliability, socials. A live token at $86K makes the feed; a dead pool at $500K does not.</span></div></div>'
       + '</div>',
     srcTitle: "Data sources",
-    srcSub: "Open sources feeding the feed. The ones marked \"key needed\" have free plans — send a key (Birdeye, Helius, Moralis, CMC) and they will start working.",
+    srcSub: "All the data behind the feed — in one place. Some of it works out of the box, some needs a free key: send one (Birdeye, Helius, Moralis, CMC) and we'll switch it on.",
     radarTitle: "X Radar",
-    radarSub: "Accounts for a daily manual sweep (≈15 minutes). Automation — next step.",
-    wlNote: "The list is curated — verify accounts before using it.",
+    radarSub: "We check these accounts by hand every day — that's how we catch what no scanner has found yet.",
+    wlNote: "The list grows: we add new accounts as interesting projects show up.",
+    srcLiveTitle: "Working now",
+    srcAllTitle: "All sources",
+    srcAllSub: "Every source has its own direct link. Found something useful — go straight there; we stitch all of it into one feed.",
+    srcSearchPh: "Search sources…",
+    srcCopy: "Copy the list",
+    srcCopied: "Source list copied",
+    srcCount: "{n} sources",
+    srcCatAll: "All categories",
+    srcCatPairs: "Fresh pairs & pools", srcCatTokens: "Tokens & quotes", srcCatChain: "On-chain & analytics",
+    srcCatProtocols: "Protocols & DeFi", srcCatRwa: "RWA registries", srcCatCalendar: "Listings & events",
+    srcCatSentiment: "Sentiment & socials", srcCatNews: "News & signals", srcCatScouts: "X scouts",
     postTitle: "Post draft",
     postSub: "Tap \"Post\" on cards — the text and a channel-style image are assembled here. You can rename items and swap logos in the composition below — the image updates on its own.",
     compTitle: "Card composition",
@@ -1075,11 +1199,11 @@ const LANGS = {
     ptWhy: "Why it's interesting", ptRisk: "Risk",
     ptSrc: "Sources: DexScreener · DefiLlama · CoinGecko · RWA Early",
     ptFeed: "Full feed: ",
-    dsTagFresh: "Fresh pair on {chain} · liquidity {liq}",
-    dsWhy: "Fresh pair from an open source.",
-    dsRisk: "Very fresh token — check the contract, liquidity and concentration.",
-    dlWhy: "A serious protocol with real TVL from an open source.",
-    dlRisk: "Protocol category — check the economics and the team before entering.",
+    dsTagFresh: "New pair on {chain} · liquidity {liq}",
+    dsWhy: "New pair found in an open source.",
+    dsRisk: "The token just appeared — check the contract, liquidity and the holders.",
+    dlWhy: "A protocol with real money in it, found in an open source.",
+    dlRisk: "Before entering, look at the team and where the protocol's revenue comes from.",
     tStarAdd: "{n} — added to watchlist", tStarRm: "{n} — removed from watchlist",
     tPickAdd: "{n} — added to post draft ({c})", tPickRm: "{n} — removed from post draft",
     tCa: "CA copied", tLink: "Link copied",
@@ -1090,27 +1214,27 @@ const LANGS = {
     tPngWait: "The image is still rendering — try again in a second",
     tCleared: "Post draft cleared",
     footSub: "RWA Early · Early Projects",
-    fineLive: "Live data: {src} + RWA Early curated base. Not investment advice.",
-    fineOff: "Live sources are unavailable right now — showing the curated base. Not investment advice.",
+    fineLive: "Real-time data: {src} + our RWA Early base. Not investment advice.",
+    fineOff: "Live sources are not answering right now — showing the checked base. Not investment advice.",
     shareTitle: "RWA Early · Early Projects — YurichHub",
     gives: {
-      dexscreener: "Fresh pairs: liquidity, volume, pair age, logos and socials from the project profile.",
-      defillama: "Protocols with TVL and categories — the core of the RWA rubric.",
-      coingecko: "Real numbers, categories, descriptions, logos and socials.",
-      geckoterminal: "New pools across chains: volumes and liquidity, no key.",
-      birdeye: "Solana depth: liquidity, volumes, pairs.",
-      jupiter: "Solana token metadata, quotes and swaps.",
-      helius: "Push alerts on new Solana tokens and pools — an automatic freshness radar.",
+      dexscreener: "Fresh pairs across all chains: liquidity, volume, age, logos and socials.",
+      defillama: "Protocols with real money in them, by category — the core of the RWA rubric.",
+      coingecko: "The cross-check: if a project is already there, it is not a one-day token. Logos and numbers come from here.",
+      geckoterminal: "New pools across all chains — no key needed.",
+      birdeye: "New Solana tokens and pairs: liquidity and volumes.",
+      jupiter: "Quotes and token data for Solana.",
+      helius: "Signals on every new Solana token the moment it appears.",
       moralis: "Tokens, prices and flows across all chains.",
-      covalent: "Contracts, holders, token balances.",
-      cryptocompare: "Prices, socials, sentiment.",
-      cmc: "Fresh listings, categories, socials.",
-      messari: "Project data, categories, reports.",
-      dune: "Custom analytics: holders, unique wallets.",
-      polymarket: "Prediction markets — context for projects like tryimoo.",
-      rwa_xyz: "Tokenized asset registry — direct fuel for the rubric.",
-      tokenized: "List of tokenized real-world assets.",
-      twitter: "Radar for fresh announcements. For now — manual sweep via the X radar below."
+      covalent: "Contracts, holders, balances.",
+      cryptocompare: "Prices and social reaction.",
+      cmc: "Fresh listings and categories.",
+      messari: "Project data and reports.",
+      dune: "Our own counts: holders, wallets, flows.",
+      polymarket: "Prediction markets — how a token will move is visible before launch.",
+      rwa_xyz: "The tokenized asset registry — the foundation of the rubric.",
+      tokenized: "An open list of tokenized real-world assets.",
+      twitter: "Fresh announcements first-hand. Exactly who we watch — in the X radar below."
     }
   }
 };
@@ -1158,7 +1282,126 @@ const X_WATCHLIST = [
   { group: "RWA-протоколы", handles: ["ondo_finance", "Goldfinch", "MapleFinance", "Centrifuge", "clearpool_io", "realio", "Spiko_finance"] },
   { group: "Радары и данные", handles: ["rwa_xyz", "tokenized_com", "DefiLlama", "DexScreener", "geckoterminal", "coingecko"] },
   { group: "Solana", handles: ["JupiterExchange", "birdeye", "HeliusDev", "formation_so", "hare_xyz"] },
-  { group: "Скауты и аналитики", handles: ["0xMert_", "Ansem", "DefiIgnas", "CryptoHayes", "PavelYuRichRWA"] }
+  { group: "Скауты и аналитики", handles: ["0xMert_", "Ansem", "DefiIgnas", "CryptoHayes", "PavelYuRichRWA", "frontrunvc", "ustyianskyi"] }
+];
+
+/* ============================================================
+   КАТАЛОГ ИСТОЧНИКОВ — всё, чем живёт лента, в одном месте
+   [категория, название, ссылка, доступ, описание-RU, описание-EN]
+   ============================================================ */
+const SRC_CATS = {
+  pairs: { ru: "Свежие пары и пулы", en: "Fresh pairs & pools" },
+  tokens: { ru: "Токены и котировки", en: "Tokens & quotes" },
+  chain: { ru: "Ончейн и аналитика", en: "On-chain & analytics" },
+  protocols: { ru: "Протоколы и DeFi", en: "Protocols & DeFi" },
+  rwa: { ru: "RWA-реестры", en: "RWA registries" },
+  calendar: { ru: "Листинги и события", en: "Listings & events" },
+  sentiment: { ru: "Сентимент и соцсети", en: "Sentiment & socials" },
+  news: { ru: "Новости и сигналы", en: "News & signals" },
+  scouts: { ru: "X-скауты", en: "X scouts" }
+};
+const SRC_CATALOG = [
+  ["pairs","DexScreener","https://dexscreener.com","free","Новые пары по всем сетям: ликвидность, объём, возраст.","New pairs across all chains: liquidity, volume, age."],
+  ["pairs","GeckoTerminal","https://www.geckoterminal.com","free","Новые пулы и токены по сетям — без ключа.","New pools and tokens across chains — no key."],
+  ["pairs","DEXTools","https://www.dextools.io","free","Оценка токенов, алерты, графики.","Token scoring, alerts, charts."],
+  ["pairs","Jupiter","https://jup.ag","free","Котировки и новые токены Solana.","Quotes and new Solana tokens."],
+  ["pairs","Birdeye","https://birdeye.so","key","Радар новых токенов Solana.","New Solana token radar."],
+  ["pairs","GMGN","https://gmgn.ai","free","Новые пары и действия умных кошельков.","New pairs and smart-wallet moves."],
+  ["pairs","DEXGuru","https://dexguru.com","free","Статы новых пар по сетям.","New pair stats across chains."],
+  ["pairs","The Graph","https://thegraph.com","free","Запросы по пулам и токенам напрямую из блокчейна.","Query pools and tokens straight from the chain."],
+  ["pairs","Bitquery","https://bitquery.io","key","Свои запросы к данным всех сетей.","Custom queries across all chains."],
+  ["pairs","Moralis","https://moralis.io","key","Новые токены и пулы через API.","New tokens and pools via API."],
+  ["pairs","Helius","https://helius.dev","key","Каждый новый токен Solana — в момент рождения.","Every new Solana token the moment it is born."],
+  ["pairs","Alchemy","https://www.alchemy.com","key","Сигналы о новых токенах и пулах Ethereum.","New token and pool signals on Ethereum."],
+  ["pairs","QuickNode","https://www.quicknode.com","key","Новые адреса и пулы по всем сетям.","New addresses and pools across chains."],
+  ["pairs","Ankr","https://www.ankr.com","key","Оптовые данные по токенам и пулам.","Bulk token and pool data."],
+  ["pairs","GetBlock","https://getblock.io","key","Стриминг новых событий по сетям.","Streaming new events across chains."],
+  ["pairs","Triton","https://triton.one","key","Solana в реальном времени: пулы, токены, сигналы.","Real-time Solana: pools, tokens, signals."],
+  ["pairs","SolanaBeach","https://solanabeach.io","free","Пулы и токены Solana с историей.","Solana pools and tokens with history."],
+  ["pairs","SolFM","https://solana.fm","free","Данные Solana для людей: пары, пулы, владельцы.","Solana data for humans: pairs, pools, holders."],
+  ["pairs","Solana Compass","https://solana.compass","free","Трекер пулов Raydium и других DEX.","Pool tracker for Raydium and other DEXes."],
+  ["pairs","Bubblemaps","https://bubblemaps.io","free","Карты владельцев: видно, сконцентрирован ли токен.","Holder maps: see if a token is concentrated."],
+  ["pairs","DeBank","https://debank.com","free","Кошельки, портфели, новые позиции.","Wallets, portfolios, fresh positions."],
+  ["pairs","Zapper","https://zapper.xyz","free","Портфели и новые позиции по всем сетям.","Portfolios and fresh positions across chains."],
+  ["pairs","SolSniper","https://solsniper.com","free","Новые пары Solana и кто в них входит первым.","New Solana pairs and who gets in first."],
+  ["pairs","Amphor","https://amphor.io","key","Данные DEX Solana: пулы, объёмы, сигналы.","Solana DEX data: pools, volumes, signals."],
+  ["tokens","CoinGecko","https://www.coingecko.com","free","Цифры, категории, описания, логотипы.","Numbers, categories, descriptions, logos."],
+  ["tokens","CoinMarketCap","https://coinmarketcap.com","key","Цены, категории, новые листинги.","Prices, categories, new listings."],
+  ["tokens","CoinPaprika","https://coinpaprika.com","free","Альтернативная база токенов — без ограничений.","An alternative token database — no limits."],
+  ["tokens","Messari","https://messari.io","free","Профили проектов, категории, отчёты.","Project profiles, categories, reports."],
+  ["tokens","CryptoCompare","https://cryptocompare.com","key","Цены и реакция соцсетей.","Prices and social reaction."],
+  ["tokens","Cryptorank","https://cryptorank.io","key","Календарь TGE, раунды, листинги.","TGE calendar, rounds, listings."],
+  ["tokens","LiveCoinTracker","https://livecointracker.com","free","Огромная база токенов с историей.","A huge token database with history."],
+  ["tokens","CoinStats","https://coinstats.app","free","Трекеры портфелей и новых монет.","Portfolio and new-coin trackers."],
+  ["tokens","Token Terminal","https://tokenterminal.com","free","Фундаментал: выручки и метрики протоколов.","Fundamentals: protocol revenue and metrics."],
+  ["tokens","LunarCrush","https://lunarcrush.io","key","Соц-репутация проектов: кто о них говорит.","Project social reputation: who is talking."],
+  ["chain","Etherscan","https://etherscan.io","free","Вся активность Ethereum: контракты, владельцы.","All Ethereum activity: contracts, holders."],
+  ["chain","Blockscout","https://blockscout.com","free","Эксплореры для десятков сетей.","Explorers for dozens of chains."],
+  ["chain","Otterscan","https://otterscan.io","free","Ethereum без API-ключа.","Ethereum without an API key."],
+  ["chain","Solscan","https://solscan.io","free","Вся активность Solana.","All Solana activity."],
+  ["chain","Nansen","https://nansen.ai","paid","Умные деньги: что покупают лучшие кошельки.","Smart money: what the best wallets buy."],
+  ["chain","Arkham","https://www.arkham.com","free","Следы кошельков: кто за адресом стоит.","Wallet trails: who stands behind an address."],
+  ["chain","Cielo","https://cielo.finance","free","Аналитика Solana: пулы, киты, новые токены.","Solana analytics: pools, whales, new tokens."],
+  ["chain","Dune","https://dune.com","key","Свои графики по любому блокчейну.","Your own charts on any chain."],
+  ["chain","Flipside","https://www.flipsidecrypto.com","free","Запросы по данным без установки.","Data queries without any setup."],
+  ["chain","Covalent","https://covalent.co","key","Контракты и балансы по всем сетям.","Contracts and balances across chains."],
+  ["chain","Substreams","https://substreams.io","free","Свои пайплайны данных с блокчейна.","Your own data pipelines from the chain."],
+  ["chain","Goldsky","https://goldsky.com","key","Готовые индексы по любому протоколу.","Ready-made indexes for any protocol."],
+  ["chain","CryptoQuant","https://cryptoquant.com","paid","Макро-сигналы: запасы бирж, потоки.","Macro signals: exchange reserves, flows."],
+  ["chain","Glassnode","https://glassnode.com","paid","Долгосрочные ончейн-метрики.","Long-term on-chain metrics."],
+  ["protocols","DefiLlama","https://defillama.com","free","Где лежат деньги: TVL по всем протоколам.","Where the money sits: TVL for all protocols."],
+  ["protocols","TVL.fi","https://tvl.fi","free","TVL и доходность по протоколам.","TVL and yields for protocols."],
+  ["protocols","DappRadar","https://dappradar.com","free","Активность приложений по сетям.","App activity across chains."],
+  ["protocols","CoinGlass","https://www.coinglass.com","free","Ликвидации, фандинг, позиции фьючей.","Liquidations, funding, futures positions."],
+  ["protocols","DefiLlama Yields","https://defillama.com/yields","free","Готовые пулы с доходностью.","Ready pools with yields."],
+  ["rwa","RWA.xyz","https://rwa.xyz","free","Главный реестр токенизированных активов.","The main tokenized asset registry."],
+  ["rwa","Tokenized","https://tokenized.com","free","Список токенизированных активов и эмитентов.","List of tokenized assets and issuers."],
+  ["rwa","Securitize","https://www.securitize.com","free","BUIDL и другие продукты: данные по выпускам.","BUIDL and other products: issuance data."],
+  ["rwa","Ondo Markets","https://ondo.finance","free","USDY, OUSG: объёмы и держатели.","USDY, OUSG: volumes and holders."],
+  ["rwa","Backed","https://backed.finance","free","Токенизированные акции и ETF.","Tokenized stocks and ETFs."],
+  ["rwa","Franklin BUIDL","https://www.franklintempleton.com","free","Крупнейший токенизированный фонд казначейства.","The largest tokenized treasury fund."],
+  ["rwa","Superstate","https://superstate.xyz","free","USYC: данные по выпуску.","USYC: issuance data."],
+  ["rwa","Polymesh","https://polymesh.com","free","Институциональная инфраструктура RWA.","Institutional RWA infrastructure."],
+  ["rwa","Tokeny","https://tokeny.io","free","Выпуски токенизированных активов.","Tokenized asset issuances."],
+  ["rwa","Chainlink","https://chain.link","free","Токенизированные акции PTR.","Tokenized stocks, PTR."],
+  ["rwa","Mantra","https://mantra-dao.com","free","Сеть под RWA-выпуски.","A chain for RWA issuances."],
+  ["rwa","Maple","https://maple.finance","free","Крипто-кредит институционалам: TVL, выдачи.","Institutional crypto credit: TVL, loans."],
+  ["rwa","Centrifuge","https://centrifuge.com","free","Приват-кредит: портфели, выдача.","Private credit: portfolios, lending."],
+  ["rwa","Goldfinch","https://goldfinch.com","free","Необеспеченный кредит: выдачи, доходность.","Unsecured credit: lending, yields."],
+  ["rwa","Clearpool","https://clearpool.io","free","Кредит для институционалов: пулы.","Institutional credit: pools."],
+  ["rwa","Spiko","https://spiko.finance","free","Кредит под crypto-обеспечение: портфели.","Crypto-collateral credit: portfolios."],
+  ["rwa","Realio","https://realio.org","free","Токенизированная недвижимость.","Tokenized real estate."],
+  ["calendar","TokenUnlocks","https://tokenunlocks.com","free","Когда разлоки токенов: давление видно заранее.","Token unlocks: pressure visible in advance."],
+  ["calendar","Airdrops.io","https://airdrops.io","free","Активные эирдропы по проектам.","Active airdrops by project."],
+  ["calendar","AirDropAlert","https://airdropalert.com","free","Эирдропы и TGE с датами.","Airdrops and TGEs with dates."],
+  ["calendar","Preseed","https://preseed.so","free","Pre-seed раунды: самые ранние деньги.","Pre-seed rounds: the earliest money."],
+  ["calendar","Binance Announcements","https://www.binance.org/en/news","free","Когда крупные биржи листят новое.","When big exchanges list something new."],
+  ["calendar","Coinbase News","https://www.coinbase.com/news","free","Листинги и новые пары от Coinbase.","Listings and new pairs from Coinbase."],
+  ["calendar","CMC Calendar","https://coinmarketcap.com/calendar","free","Календарь TGE и анонсов.","TGE and announcement calendar."],
+  ["sentiment","Santiment","https://santiment.ai","key","Репутация и разговоры вокруг проекта.","Reputation and chatter around a project."],
+  ["sentiment","Farcaster","https://farcaster.xyz","free","Ранние разговоры про новые проекты.","Early chatter about new projects."],
+  ["sentiment","Lens","https://lens.org","free","Децентрализованная соцсеть: кто с кем.","Decentralized social: who is with whom."],
+  ["sentiment","X (Twitter)","https://x.com","free","Родина всех анонсов. Смотрим по X-радару.","Where all announcements are born. We watch via the X radar."],
+  ["sentiment","Telegram","https://telegram.org","free","Каналы и сигнальные группы.","Channels and signal groups."],
+  ["news","Whale Alert","https://t.me/whale_alert","free","Крупные переводы: киты двигают токены.","Big transfers: whales move tokens."],
+  ["news","Lookonchain","https://t.me/lookonchain","free","Разборы сделок и кошельков.","Trades and wallet breakdowns."],
+  ["news","Tree of Alpha","https://t.me/treeofalpha","free","Свежие алфы и новые проекты.","Fresh alpha and new projects."],
+  ["news","The Block","https://www.theblock.co","free","Быстрые новости и данные.","Fast news and data."],
+  ["news","CoinDesk","https://www.coindesk.com","free","Новости и разборы.","News and analysis."],
+  ["news","Cointelegraph","https://cointelegraph.com","free","Поток новостей по всем сетям.","News flow across all chains."],
+  ["news","Decrypt","https://decrypt.co","free","Разборы и новости.","Analysis and news."],
+  ["news","Bankless","https://bankless.com","free","Глубокие разборы децентрализации.","Deep dives into decentralization."],
+  ["news","The Defiant","https://www.thedefiant.io","free","DeFi-новости и данные.","DeFi news and data."],
+  ["news","Messari News","https://messari.io/news","free","Новостной поток и отчёты.","News flow and reports."],
+  ["scouts","frontrunvc","https://x.com/frontrunvc","free","Скаут новых проектов из первых рук.","First-hand scout of new projects."],
+  ["scouts","ustyianskyi","https://x.com/ustyianskyi","free","Ежедневные списки ранних проектов.","Daily lists of early projects."],
+  ["scouts","0xMert_","https://x.com/0xMert_","free","Алфа по DeFi и новым монетам.","Alpha on DeFi and new coins."],
+  ["scouts","Ansem","https://x.com/Ansem","free","Разборы протоколов и ончейна.","Protocol and on-chain breakdowns."],
+  ["scouts","DefiIgnas","https://x.com/DefiIgnas","free","Сигналы по DeFi-рынку.","DeFi market signals."],
+  ["scouts","CryptoHayes","https://x.com/CryptoHayes","free","Макро-взгляд на крипторынок.","Macro view on the crypto market."],
+  ["scouts","emil_io","https://x.com/emil_io","free","Solana: что нового в экосистеме.","Solana: what is new in the ecosystem."],
+  ["scouts","0xSisyphus","https://x.com/0xSisyphus","free","Данные и графики по рынку.","Market data and charts."],
+  ["scouts","zabolotniyD","https://x.com/zabolotniyD","free","Ранние RWA-проекты и списки.","Early RWA projects and lists."]
 ];
 
 function fetchJSON(url, timeoutMs = 9000) {
@@ -1778,7 +2021,8 @@ const state = {
   minLiq: 0, minQ: 0, ageDays: 0,
   reqTwitter: false, reqTelegram: false, reqWebsite: false,
   sort: "newest", onlyStarred: false,
-  view: "feed", trackSort: "sinceAdd"
+  view: "feed", trackSort: "sinceAdd",
+  srcQuery: "", srcCat: "all"
 };
 
 const STAR_KEY = "early.projects.stars.v1";
@@ -2204,16 +2448,58 @@ function renderTrack() {
 
 function renderSources() {
   const gives = t("gives") || LANGS.ru.gives;
-  $("srcGrid").innerHTML = Object.entries(API_SOURCES).map(([key, s]) => `
+  $("liveSrcGrid").innerHTML = ["dexscreener", "defillama", "coingecko"].map((key) => {
+    const src = API_SOURCES[key];
+    return `
     <div class="src-card">
       <div class="row">
-        <span class="nm">${esc(s.label)}</span>
-        <span class="access ${s.access}">${accessLabel(s.access)}</span>
+        <span class="nm">${esc(src.label)}</span>
+        <span class="access ${src.access}">${accessLabel(src.access)}</span>
       </div>
       <span class="gv">${esc(gives[key] || "")}</span>
-      <span class="src" style="color:var(--text-faint)"><i style="background:${s.status === "live" ? "#34D399" : s.status === "planned" ? "#5E6474" : "#38BDF8"}"></i>${srcStatusLabel(s.status)}</span>
-    </div>`).join("");
+      <span class="src" style="color:var(--text-faint)"><i style="background:#34D399"></i>${srcStatusLabel(src.status)}</span>
+    </div>`;
+  }).join("");
 
+  /* каталог: фильтр + группировка */
+  const q = state.srcQuery.trim().toLowerCase();
+  const items = SRC_CATALOG.filter((it) => {
+    if (state.srcCat !== "all" && it[0] !== state.srcCat) return false;
+    if (q && !(it[1] + " " + it[4] + " " + it[5]).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const nSrc = SRC_CATALOG.length, nr = nSrc % 100, nd = nSrc % 10;
+  const wordSrc = lang === "en" ? "sources"
+    : (nr >= 11 && nr <= 14 ? "источников" : nd === 1 ? "источник" : nd >= 2 && nd <= 4 ? "источника" : "источников");
+  $("srcCount").textContent = nSrc + " " + wordSrc;
+  const sel = $("srcCatSel");
+  const cur = sel.value;
+  let opts = `<option value="all">${t("srcCatAll")}</option>`;
+  for (const c of Object.keys(SRC_CATS)) opts += `<option value="${c}">${SRC_CATS[c][lang]}</option>`;
+  sel.innerHTML = opts;
+  if ([...sel.options].some((o) => o.value === cur)) sel.value = cur;
+
+  let out = "";
+  for (const c of Object.keys(SRC_CATS)) {
+    const inCat = items.filter((it) => it[0] === c);
+    if (!inCat.length) continue;
+    out += `<div class="cat-title">${esc(SRC_CATS[c][lang])} <span class="n">${inCat.length}</span></div><div class="src-catalog">`;
+    for (const it of inCat) {
+      out += `
+      <div class="src-card">
+        <div class="row">
+          <span class="nm">${esc(it[1])}</span>
+          <span class="access ${it[3]}">${accessLabel(it[3])}</span>
+        </div>
+        <span class="gv">${esc(lang === "en" ? it[5] : it[4])}</span>
+        <a class="src-link" href="${esc(it[2])}" target="_blank" rel="noopener"><span>${esc(it[2].replace(/^https:\/\//, ""))}</span>${ICONS.external}</a>
+      </div>`;
+    }
+    out += "</div>";
+  }
+  $("srcCatalog").innerHTML = out || `<div class="empty" style="grid-column:1/-1"><h3>${t("emptyTitle")}</h3><p>${t("emptyText")}</p></div>`;
+
+  /* X-радар */
   const groups = {};
   for (const g of X_WATCHLIST) (groups[g.group] = groups[g.group] || []).push(...g.handles);
   const uniq = (arr) => [...new Set(arr)];
@@ -2275,8 +2561,10 @@ function renderComp() {
   tabCount.textContent = count;
 }
 
-/* ---------- Пост: картинка (canvas, стиль карточки канала; названия и логотипы — из состава) ---------- */
-const CARD_PINK = "#FF2E88", CARD_LIME = "#D7FF3D", CARD_BG = "#E9E2CF", CARD_INK = "#141414";
+/* ---------- Пост: картинка (canvas, фирменный стиль YurichHub) ---------- */
+const C_BG = "#0C0E08", C_PANEL = "#12140B", C_LINE = "#262B1D", C_TAG = "#343A2B",
+      C_WHITE = "#F2F3F7", C_PINK = "#F25690", C_GOLD = "#C9A24B", C_LIME = "#C6F232",
+      C_GRAY = "#7A7F70", C_LABEL = "#8A8F84", C_ACCENTS = [C_LIME, C_PINK, C_GOLD, C_WHITE];
 let cardImgs = {};
 
 function seededRand(seed) {
@@ -2298,6 +2586,18 @@ function truncateText(ctx, text, maxW) {
   let t = text;
   while (t.length && ctx.measureText(t + "…").width > maxW) t = t.slice(0, -1);
   return t + "…";
+}
+function ls(ctx, v) { try { ctx.letterSpacing = v; } catch (e) {} }
+function spacedText(ctx, text, x, y, sp, align) {
+  /* ручная разрядка для широкой поддержки */
+  const prevAlign = ctx.textAlign;
+  ctx.textAlign = align || "left";
+  const widths = [...text].map((ch) => ctx.measureText(ch).width);
+  const total = widths.reduce((a, b) => a + b, 0) + sp * Math.max(0, text.length - 1);
+  let cx = align === "right" ? x - total : x;
+  ctx.textAlign = "left";
+  [...text].forEach((ch, i) => { ctx.fillText(ch, cx, y); cx += widths[i] + sp; });
+  ctx.textAlign = prevAlign;
 }
 
 function preloadLogos(projects) {
@@ -2322,139 +2622,155 @@ function preloadLogos(projects) {
   });
 }
 
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
 async function drawPostCard(projects) {
   const canvas = $("postCanvas");
   if (!canvas || !canvas.getContext) return;
-  try { if (document.fonts && document.fonts.load) { await document.fonts.load("800 120px Inter"); await document.fonts.load("700 26px Inter"); } } catch (e) {}
+  try {
+    if (document.fonts && document.fonts.load) {
+      await document.fonts.load("400 168px Anton");
+      await document.fonts.load("400 54px Anton");
+      await document.fonts.load("400 46px Anton");
+      await document.fonts.load("600 22px Inter");
+    }
+  } catch (e) {}
   const imgs = await preloadLogos(projects).catch(() => ({}));
   cardImgs = imgs;
 
-  const W = 1600, tile = 170, gapX = 48, gapY = 62, cols = 4;
-  const rows = Math.max(1, Math.ceil(projects.length / cols));
-  const gridTop = 336;
-  const H = Math.max(900, gridTop + rows * (tile + gapY) + 150);
+  const W = 1600, M = 70, gapX = 24, gapY = 24, cols = 4, tileH = 190;
+  const shown = projects.slice(0, cols * 3);
+  const rows = Math.max(1, Math.ceil(shown.length / cols));
+  const gridTop = 620;
+  const H = gridTop + rows * (tileH + gapY) - gapY + 190;
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
+  const now = new Date();
+  const dateStr = String(now.getDate()).padStart(2, "0") + "." + String(now.getMonth() + 1).padStart(2, "0") + "." + now.getFullYear();
 
-  /* фон + шум бумаги */
-  ctx.fillStyle = CARD_BG; ctx.fillRect(0, 0, W, H);
-  const rnd = seededRand(20261010);
-  for (let i = 0; i < 4200; i++) {
-    ctx.fillStyle = rnd() < 0.5 ? "rgba(0,0,0,.05)" : "rgba(255,255,255,.07)";
-    ctx.fillRect(rnd() * W, rnd() * H, 1.6, 1.6);
-  }
+  /* фон + мягкие световые пятна, как на фирменных карточках */
+  ctx.fillStyle = C_BG; ctx.fillRect(0, 0, W, H);
+  let grd = ctx.createRadialGradient(1080, 140, 60, 1080, 140, 620);
+  grd.addColorStop(0, "#171B0E"); grd.addColorStop(1, "rgba(23,27,14,0)");
+  ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
+  grd = ctx.createRadialGradient(1520, H - 40, 60, 1520, H - 40, 520);
+  grd.addColorStop(0, "#151809"); grd.addColorStop(1, "rgba(21,24,9,0)");
+  ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
 
-  /* верх слева: засечки + RWA / Early */
-  ctx.fillStyle = CARD_INK; ctx.fillRect(70, 66, 26, 10);
-  ctx.fillStyle = CARD_PINK; ctx.fillRect(104, 66, 26, 10);
-  ctx.fillStyle = CARD_LIME; ctx.fillRect(138, 66, 26, 10);
-  ctx.fillStyle = CARD_INK;
-  ctx.font = "900 132px Inter, 'Arial Black', sans-serif";
-  ctx.fillText("RWA", 56, 208);
-  ctx.fillStyle = CARD_PINK;
-  ctx.fillText("Early", 52, 330);
-  ctx.strokeStyle = CARD_PINK; ctx.lineWidth = 10; ctx.lineCap = "round";
-  ctx.beginPath(); ctx.moveTo(58, 352);
-  ctx.quadraticCurveTo(220, 344, 408, 350); ctx.stroke();
-  ctx.fillStyle = "#8A8578";
-  ctx.font = "600 30px Inter, sans-serif";
-  ctx.fillText("Ранние проекты", 62, 404);
+  /* верх слева: рамка-тег с лаймовым квадратом */
+  ctx.font = "600 22px Inter, sans-serif";
+  const tagTxt = "ДНЕВНОЙ ВЫПУСК";
+  const tagW = ctx.measureText(tagTxt).width + 22 * (tagTxt.length - 1) + 11 + 26 + 28;
+  ctx.strokeStyle = C_TAG; ctx.lineWidth = 1.5;
+  ctx.strokeRect(M, 78, tagW, 46);
+  ctx.fillStyle = C_LIME; ctx.fillRect(M + 16, 96, 11, 11);
+  ctx.fillStyle = C_WHITE;
+  spacedText(ctx, tagTxt, M + 40, 108, 4, "left");
 
-  /* верх справа: точки + прицел + розовый блок */
-  ctx.fillStyle = "rgba(20,20,20,.75)";
-  for (let r = 0; r < 5; r++) for (let c = 0; c < 10; c++) {
-    ctx.beginPath(); ctx.arc(1150 + c * 15, 70 + r * 15, 2.4, 0, 7); ctx.fill();
-  }
-  ctx.strokeStyle = CARD_LIME; ctx.lineWidth = 4;
-  ctx.beginPath(); ctx.arc(1430, 168, 42, 0, 7); ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(1430, 168 - 60); ctx.lineTo(1430, 168 - 24);
-  ctx.moveTo(1430, 168 + 24); ctx.lineTo(1430, 168 + 60);
-  ctx.moveTo(1430 - 60, 168); ctx.lineTo(1430 - 24, 168);
-  ctx.moveTo(1430 + 24, 168); ctx.lineTo(1430 + 60, 168);
-  ctx.stroke();
-  ctx.fillStyle = CARD_PINK;
-  roughPoly(ctx, [[W - 240, -20], [W + 20, -20], [W + 20, 128], [W - 150, 112], [W - 216, 70]], 77);
+  /* верх справа: дата */
+  ctx.font = "600 22px Inter, sans-serif";
+  ctx.fillStyle = C_GRAY;
+  spacedText(ctx, dateStr, W - M, 108, 3, "right");
 
-  /* левый край: розовая рваная полоса + чёрные мазки */
-  ctx.fillStyle = CARD_PINK;
-  roughPoly(ctx, [[-10, 300], [34, 316], [26, 470], [40, 620], [22, 760], [-10, 780]], 91);
-  ctx.strokeStyle = "rgba(20,20,20,.8)"; ctx.lineWidth = 5; ctx.lineCap = "round";
-  for (let i = 0; i < 4; i++) {
-    ctx.beginPath();
-    ctx.moveTo(14 + i * 8, 800 + i * 6);
-    ctx.lineTo(60 + i * 10, 790 + i * 12);
-    ctx.stroke();
-  }
+  /* заголовок: АНТОН, белый с розовым сдвигом + розовая строка */
+  ctx.font = "400 168px Anton, 'Arial Black', sans-serif";
+  ctx.fillStyle = C_PINK;
+  ctx.fillText("РАННИЕ", M + 9, 342);
+  ctx.fillStyle = C_WHITE;
+  ctx.fillText("РАННИЕ", M, 332);
+  ctx.fillStyle = C_PINK;
+  ctx.fillText("ПРОЕКТЫ", M, 500);
 
-  /* низ: розовая полоса с рваным верхом + чёрный угол */
-  ctx.fillStyle = CARD_PINK;
-  roughPoly(ctx, [[-10, H - 34], [200, H - 40], [520, H - 30], [900, H - 42], [1300, H - 30], [W + 10, H - 38], [W + 10, H + 10], [-10, H + 10]], 33);
-  ctx.fillStyle = "rgba(20,20,20,.85)";
-  roughPoly(ctx, [[-10, H - 34], [120, H - 38], [230, H - 26], [260, H + 10], [-10, H + 10]], 44);
+  /* подзаголовок: золотой, с разрядкой */
+  ctx.font = "400 54px Anton, 'Arial Black', sans-serif";
+  ctx.fillStyle = C_GOLD;
+  ctx.fillText("СВЕЖИЕ ВЫБОРЫ КАЖДОГО ДНЯ", M + 4, 584);
 
-  /* глобус справа внизу */
-  ctx.strokeStyle = "rgba(20,20,20,.22)"; ctx.lineWidth = 1.6;
-  const gx = 1450, gy = H - 190, gr = 150;
-  ctx.beginPath(); ctx.arc(gx, gy, gr, 0, 7); ctx.stroke();
-  for (let i = 1; i < 4; i++) {
-    ctx.beginPath(); ctx.ellipse(gx, gy, gr * (i / 4), gr, 0, 0, 7); ctx.stroke();
-    ctx.beginPath(); ctx.ellipse(gx, gy, gr, gr * (i / 4), 0, 0, 7); ctx.stroke();
-  }
-
-  /* сетка логотипов 4×N (названия и логотипы — из состава) */
-  const gridW = cols * tile + (cols - 1) * gapX;
-  const x0 = (W - gridW) / 2;
-  projects.slice(0, cols * 4).forEach((p, i) => {
+  /* плитки проектов: как статы на фирменных карточках */
+  const tileW = (W - 2 * M - (cols - 1) * gapX) / cols;
+  shown.forEach((p, i) => {
     const col = i % cols, row = Math.floor(i / cols);
-    const x = x0 + col * (tile + gapX), y = gridTop + row * (tile + gapY);
-    ctx.fillStyle = "#101014";
-    ctx.beginPath();
-    const r = 30;
-    ctx.moveTo(x + r, y);
-    ctx.arcTo(x + tile, y, x + tile, y + tile, r);
-    ctx.arcTo(x + tile, y + tile, x, y + tile, r);
-    ctx.arcTo(x, y + tile, x, y, r);
-    ctx.arcTo(x, y + tile, x, y, r);
-    ctx.closePath(); ctx.fill();
-    const pad = 18, inner = tile - pad * 2;
+    const x = M + col * (tileW + gapX), y = gridTop + row * (tileH + gapY);
+    const acc = C_ACCENTS[i % C_ACCENTS.length];
+    ctx.fillStyle = C_PANEL;
+    roundRect(ctx, x, y, tileW, tileH, 4); ctx.fill();
+    ctx.strokeStyle = C_LINE; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = acc;
+    ctx.fillRect(x, y, 5, tileH);
+
+    /* логотип справа */
+    const ls2 = 84, lx = x + tileW - ls2 - 24, ly = y + (tileH - ls2) / 2;
     const img = imgs[p.id];
     if (img) {
-      const sc = Math.min(inner / img.width, inner / img.height);
+      ctx.save();
+      roundRect(ctx, lx, ly, ls2, ls2, 14); ctx.clip();
+      const sc = Math.min(ls2 / img.width, ls2 / img.height);
       const w = img.width * sc, h = img.height * sc;
-      try { ctx.drawImage(img, x + (tile - w) / 2, y + (tile - h) / 2, w, h); } catch (e) {}
+      try { ctx.drawImage(img, lx + (ls2 - w) / 2, ly + (ls2 - h) / 2, w, h); } catch (e) {}
+      ctx.restore();
     } else {
-      ctx.fillStyle = "#F2F3F7";
-      ctx.font = "800 56px Inter, 'Arial Black', sans-serif";
+      ctx.fillStyle = "#1A1D12";
+      roundRect(ctx, lx, ly, ls2, ls2, 14); ctx.fill();
+      ctx.strokeStyle = C_LINE; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = acc;
+      ctx.font = "400 40px Anton, 'Arial Black', sans-serif";
       ctx.textAlign = "center";
       const init = p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
-      ctx.fillText(init, x + tile / 2, y + tile / 2 + 20);
+      ctx.fillText(init, lx + ls2 / 2, ly + ls2 / 2 + 14);
       ctx.textAlign = "left";
     }
-    ctx.fillStyle = CARD_INK;
-    ctx.font = "700 26px Inter, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText(truncateText(ctx, p.name, tile + gapX - 8), x + tile / 2, y + tile + 40);
-    ctx.textAlign = "left";
+
+    /* название: АНТОН белое */
+    ctx.fillStyle = C_WHITE;
+    ctx.font = "400 46px Anton, 'Arial Black', sans-serif";
+    const name = truncateText(ctx, p.name.toUpperCase(), tileW - 52);
+    ctx.fillText(name, x + 26, y + 66);
+    /* подпись: категория · сеть */
+    ctx.font = "600 20px Inter, sans-serif";
+    ctx.fillStyle = C_LABEL;
+    const meta = [catLabel(p.category), p.network ? (NETS[p.network] || p.network) : null].filter(Boolean).join(" · ").toUpperCase();
+    spacedText(ctx, truncateText(ctx, meta, tileW - 52), x + 26, y + 106, 2.5, "left");
+    /* третья строка: MC или стадия */
+    const third = p.token && p.token.mc
+      ? "MC " + fmtMoney(p.token.mc)
+      : (p.noToken && p.noToken.stage ? p.noToken.stage : "");
+    if (third) {
+      ctx.font = "600 19px Inter, sans-serif";
+      ctx.fillStyle = acc;
+      ctx.fillText(truncateText(ctx, third.toUpperCase(), tileW - 52), x + 26, y + 144);
+    }
   });
 
-  /* подпись автора */
-  const sy = H - 78;
-  ctx.fillStyle = "#4A463C";
-  ctx.font = "600 30px Inter, sans-serif";
-  ctx.fillText("—", 62, sy);
-  ctx.fillText("by ", 84, sy);
-  const byW = ctx.measureText("by ").width;
-  ctx.fillStyle = CARD_INK;
-  ctx.font = "800 34px Inter, 'Arial Black', sans-serif";
-  ctx.fillText("YuRichRWA", 84 + byW, sy);
-  ctx.strokeStyle = CARD_PINK; ctx.lineWidth = 6; ctx.lineCap = "round";
-  ctx.beginPath();
-  const uw = ctx.measureText("YuRichRWA").width;
-  ctx.moveTo(86 + byW, sy + 16);
-  ctx.quadraticCurveTo(86 + byW + uw / 2, sy + 26, 86 + byW + uw, sy + 14);
-  ctx.stroke();
+  /* футер: линия, YURICHHUB слева, дата + RWA EARLY справа */
+  const fy = H - 118;
+  ctx.strokeStyle = C_LINE; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(M, fy); ctx.lineTo(W - M, fy); ctx.stroke();
+  ctx.font = "400 40px Anton, 'Arial Black', sans-serif";
+  ctx.fillStyle = C_WHITE;
+  ctx.fillText("YURICH", M, H - 52);
+  const yw = ctx.measureText("YURICH").width;
+  ctx.fillStyle = C_LIME;
+  ctx.fillText("HUB", M + yw, H - 52);
+  ctx.font = "600 20px Inter, sans-serif";
+  ctx.fillStyle = C_GRAY;
+  spacedText(ctx, "RWA EARLY // ДНЕВНОЙ ВЫПУСК", M, H - 24, 3, "left");
+  ctx.textAlign = "right";
+  ctx.fillStyle = C_GRAY;
+  ctx.font = "600 20px Inter, sans-serif";
+  ctx.fillText(dateStr, W - M, H - 62);
+  ctx.fillStyle = C_LIME;
+  ctx.font = "400 40px Anton, 'Arial Black', sans-serif";
+  ctx.fillText("RWA EARLY", W - M, H - 22);
+  ctx.textAlign = "left";
 }
 
 function renderPost() {
@@ -2734,6 +3050,27 @@ function bindEvents() {
   $("trackBody").addEventListener("click", (e) => {
     const el = e.target.closest("[data-action]");
     if (el) onCardAction(el);
+  });
+
+  /* каталог источников */
+  $("srcSearch").addEventListener("input", (e) => {
+    state.srcQuery = e.target.value;
+    if (state.view === "sources") renderSources();
+  });
+  $("srcCatSel").addEventListener("change", (e) => {
+    state.srcCat = e.target.value;
+    if (state.view === "sources") renderSources();
+  });
+  $("srcCopy").addEventListener("click", () => {
+    const lines = [];
+    for (const c of Object.keys(SRC_CATS)) {
+      const inCat = SRC_CATALOG.filter((it) => it[0] === c && (state.srcCat === "all" || state.srcCat === c));
+      if (!inCat.length) continue;
+      lines.push(SRC_CATS[c][lang].toUpperCase() + " (" + inCat.length + ")");
+      for (const it of inCat) lines.push("- " + it[1] + " — " + (lang === "en" ? it[5] : it[4]) + "\n  " + it[2]);
+      lines.push("");
+    }
+    copyText(lines.join("\n"), t("srcCopied"));
   });
 
   /* состав карточки: названия и логотипы */
