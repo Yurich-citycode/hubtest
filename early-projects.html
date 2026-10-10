@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0A0A0F">
+<meta name="description" content="Early Projects / RWA Early — curated, smart-filtered feed of early-stage crypto projects: RWA, DeFi, AI, Infrastructure, Gaming, Social. Mock data, API-ready structure.">
+<title>Early Projects · RWA Early — Early-Stage Crypto Scanner</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%238B5CF6'/%3E%3Cstop offset='1' stop-color='%2334D399'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M16 6.5l6.2 9.5L16 25.5 9.8 16z' fill='white' opacity='.95'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   EARLY PROJECTS / RWA EARLY — single-file prototype
+   Palette: graphite dark + violet (#8B5CF6) + emerald (#34D399)
+   Mobile-first, clean & extensible.
+   ============================================================ */
+:root{
+  --bg:        #0A0A0F;
+  --bg-2:      #0D0D12;
+  --card:      #14141C;
+  --card-2:    #171722;
+  --border:    rgba(255,255,255,.07);
+  --border-2:  rgba(255,255,255,.14);
+  --text:      #F2F3F7;
+  --text-dim:  #9CA1B3;
+  --text-faint:#5E6474;
+  --violet:    #8B5CF6;
+  --violet-soft: rgba(139,92,246,.13);
+  --violet-text:#C4B5FD;
+  --emerald:   #34D399;
+  --emerald-soft: rgba(52,211,153,.10);
+  --emerald-text:#6EE7B7;
+  --amber:     #FBBF24;
+  --sky:       #38BDF8;
+  --red:       #F87171;
+  --radius:    14px;
+  --font:      "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:14px;
+  line-height:1.5;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(139,92,246,.35)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:6px}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#262633;border-radius:99px;border:2px solid var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
+
+/* --- ambient background glow --- */
+.bg-glow{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(640px 420px at 12% -6%, rgba(139,92,246,.16), transparent 62%),
+    radial-gradient(760px 520px at 108% 12%, rgba(52,211,153,.08), transparent 60%),
+    radial-gradient(900px 600px at 50% 118%, rgba(139,92,246,.06), transparent 60%),
+    var(--bg);
+}
+
+.container{width:100%;max-width:1240px;margin:0 auto;padding:0 16px}
+
+/* ============================ HEADER ============================ */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,10,15,.82);
+  backdrop-filter:blur(16px) saturate(1.3);
+  -webkit-backdrop-filter:blur(16px) saturate(1.3);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{display:flex;flex-direction:column;gap:10px;padding-top:12px;padding-bottom:12px}
+.hrow{display:flex;align-items:center;gap:10px}
+
+/* row 1 — brand / live / refresh */
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.brand-mark{
+  width:29px;height:29px;border-radius:9px;flex-shrink:0;
+  background:linear-gradient(135deg,#8B5CF6,#34D399);
+  display:grid;place-items:center;
+  box-shadow:0 2px 14px rgba(139,92,246,.45);
+}
+.brand-mark svg{width:14px;height:14px;color:#fff}
+.brand-name{font-size:15px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.brand-tag{
+  font-size:9.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--emerald-text);
+  border:1px solid rgba(52,211,153,.35);
+  background:rgba(52,211,153,.08);
+  padding:2.5px 8px;border-radius:999px;white-space:nowrap;
+}
+.hrow-1 .hrow-1-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+.live-pill{
+  display:flex;align-items:center;gap:7px;
+  font-size:11.5px;font-weight:600;color:var(--text-dim);
+  border:1px solid var(--border);
+  background:rgba(52,211,153,.05);
+  padding:6px 11px;border-radius:999px;white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+.live-dot{
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  background:var(--emerald);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(52,211,153,.45)}
+  70%{box-shadow:0 0 0 7px rgba(52,211,153,0)}
+  100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}
+}
+
+.icon-btn{
+  width:34px;height:34px;flex-shrink:0;
+  display:grid;place-items:center;
+  border-radius:10px;border:1px solid var(--border);
+  background:var(--card);color:var(--text-dim);
+  cursor:pointer;transition:color .15s,border-color .15s,background .15s;
+}
+.icon-btn:hover{color:var(--text);border-color:var(--border-2)}
+.icon-btn svg{width:15px;height:15px}
+.icon-btn.spin svg{animation:spin .6s cubic-bezier(.4,0,.2,1)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* search */
+.search-wrap{position:relative;display:flex;align-items:center;width:100%}
+.search-wrap .lead{position:absolute;left:11px;width:15px;height:15px;color:var(--text-faint);pointer-events:none}
+#searchInput{
+  width:100%;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:11px;
+  color:var(--text);
+  font-family:inherit;font-size:13px;
+  padding:9px 36px 9px 34px;
+  transition:border-color .15s, box-shadow .15s;
+}
+#searchInput::placeholder{color:var(--text-faint)}
+#searchInput:focus{outline:none;border-color:rgba(139,92,246,.55);box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+#searchClear{
+  position:absolute;right:6px;width:24px;height:24px;
+  border-radius:7px;border:0;
+  background:rgba(255,255,255,.06);color:var(--text-dim);
+  display:grid;place-items:center;cursor:pointer;transition:.15s;
+}
+#searchClear:hover{color:var(--text);background:rgba(255,255,255,.1)}
+#searchClear svg{width:11px;height:11px}
+
+/* row 3 — quick chips + network + filters */
+.hrow-3{gap:8px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px;margin:-2px;flex:1;min-width:0}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex-shrink:0;white-space:nowrap;
+  font-size:12.5px;font-weight:600;
+  color:var(--text-dim);
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:6px 13px;cursor:pointer;
+  transition:color .15s,background .15s,border-color .15s;
+}
+.chip:hover{color:var(--text);border-color:var(--border-2)}
+.chip.active{color:var(--violet-text);background:var(--violet-soft);border-color:rgba(139,92,246,.45)}
+.chip-rwa.active{color:var(--emerald-text);background:var(--emerald-soft);border-color:rgba(52,211,153,.45)}
+.hrow-3-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+/* ============================ CONTROLS ============================ */
+select{
+  appearance:none;-webkit-appearance:none;
+  background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238b90a0' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+  border:1px solid var(--border);
+  border-radius:9px;
+  color:var(--text-dim);
+  font-family:inherit;font-size:12.5px;font-weight:500;
+  padding:7px 28px 7px 11px;
+  cursor:pointer;transition:border-color .15s,color .15s;
+}
+select:hover{color:var(--text);border-color:var(--border-2)}
+select:focus{outline:none;border-color:rgba(139,92,246,.55)}
+select option{background:var(--card);color:var(--text)}
+
+/* filter bar — bottom sheet on mobile, static strip on desktop */
+.filterbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  background:rgba(13,13,20,.97);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  border-radius:18px 18px 0 0;
+  padding:14px 16px calc(14px + env(safe-area-inset-bottom));
+  transform:translateY(105%);
+  transition:transform .32s cubic-bezier(.2,.7,.3,1);
+}
+body.sheet-open .filterbar{transform:translateY(0)}
+.backdrop{
+  position:fixed;inset:0;z-index:60;
+  background:rgba(0,0,0,.55);
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+body.sheet-open .backdrop{opacity:1;pointer-events:auto}
+.sheet-close{
+  position:absolute;top:10px;right:12px;
+  width:28px;height:28px;border-radius:8px;border:0;
+  background:rgba(255,255,255,.05);color:var(--text-dim);
+  display:grid;place-items:center;cursor:pointer;
+}
+.sheet-close svg{width:12px;height:12px}
+
+.filters-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:600;color:var(--text-dim);
+  background:var(--card);border:1px solid var(--border);
+  border-radius:999px;padding:7px 13px;cursor:pointer;transition:.15s;
+  white-space:nowrap;
+}
+.filters-btn:hover{color:var(--text);border-color:var(--border-2)}
+.filters-btn svg{width:13px;height:13px}
+.fcount{
+  min-width:17px;height:17px;padding:0 5px;border-radius:99px;
+  background:var(--violet);color:#fff;
+  font-size:10.5px;font-weight:700;
+  display:grid;place-items:center;
+}
+
+.soc-toggles{display:flex;gap:5px}
+.soc-toggle{
+  font-size:11.5px;font-weight:600;
+  color:var(--text-faint);
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:8px;padding:6px 9px;cursor:pointer;transition:.15s;
+}
+.soc-toggle:hover{color:var(--text)}
+.soc-toggle.active{color:var(--violet-text);background:var(--violet-soft);border-color:rgba(139,92,246,.45)}
+
+.reset-btn{
+  margin-left:auto;
+  font-size:12px;font-weight:600;color:var(--text-faint);
+  background:transparent;border:1px solid transparent;border-radius:8px;
+  padding:6px 10px;cursor:pointer;transition:.15s;
+  white-space:nowrap;
+}
+.reset-btn:hover{color:var(--red);background:rgba(248,113,113,.07)}
+
+@media (min-width:720px){
+  .container{padding:0 20px}
+  .hrow-1 .search-wrap{order:0;flex:1 1 auto;flex-basis:auto;max-width:440px;margin:0 6px}
+  .filterbar{
+    position:static;transform:none;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:10px;margin-top:2px;
+  }
+  .sheet-close,.backdrop,.filters-btn{display:none!important}
+}
+
+/* ============================ FEED ============================ */
+main{padding-bottom:30px}
+.feed-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:12px;margin:24px 0 14px;flex-wrap:wrap;
+}
+.feed-title{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.feed-title h2{font-size:20px;font-weight:700;letter-spacing:-.015em}
+.feed-count{font-size:12.5px;color:var(--text-faint);font-variant-numeric:tabular-nums}
+.feed-actions{display:flex;align-items:center;gap:10px}
+.sort-hint{font-size:12px;color:var(--text-faint)}
+.star-filter{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;color:var(--text-faint);
+  background:transparent;border:1px solid var(--border);
+  border-radius:999px;padding:6px 12px;cursor:pointer;transition:.15s;
+  font-variant-numeric:tabular-nums;
+}
+.star-filter:hover{color:var(--text);border-color:var(--border-2)}
+.star-filter svg{width:12px;height:12px}
+.star-filter.on{color:var(--amber);background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.4)}
+.star-filter.on svg{fill:currentColor}
+
+/* RWA rubric banner */
+.rwa-banner{
+  display:flex;gap:12px;align-items:flex-start;
+  border:1px solid rgba(52,211,153,.25);
+  background:linear-gradient(135deg, rgba(52,211,153,.09), rgba(139,92,246,.05) 70%);
+  border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:14px;
+}
+.rwa-banner .rb-icon{flex-shrink:0;margin-top:1px;color:var(--emerald-text)}
+.rwa-banner .rb-icon svg{width:17px;height:17px}
+.rwa-banner b{color:var(--emerald-text);font-weight:700}
+.rwa-banner p{font-size:12.5px;color:var(--text-dim);line-height:1.55}
+
+/* cards grid */
+.feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:14px}
+
+.card{
+  display:flex;flex-direction:column;gap:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+  animation:cardIn .45s cubic-bezier(.2,.7,.3,1) both;
+  animation-delay:var(--d,0ms);
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card:hover{
+  border-color:rgba(139,92,246,.38);
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(0,0,0,.38), 0 0 0 1px rgba(139,92,246,.07);
+}
+
+.card-top{display:flex;gap:11px;align-items:flex-start}
+.avatar{
+  width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  display:grid;place-items:center;
+  font-size:13.5px;font-weight:700;color:#fff;letter-spacing:.02em;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+  overflow:hidden;
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.card-id{min-width:0;flex:1}
+.card-name-row{display:flex;align-items:center;gap:8px}
+.card-name{font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ticker{
+  font-size:10.5px;font-weight:700;letter-spacing:.05em;
+  color:var(--text-faint);
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  padding:2px 7px;border-radius:6px;white-space:nowrap;
+}
+.star{
+  margin-left:auto;flex-shrink:0;
+  display:grid;place-items:center;
+  width:28px;height:28px;border-radius:8px;
+  border:0;background:transparent;color:var(--text-faint);
+  cursor:pointer;transition:.15s;
+}
+.star:hover{color:var(--amber);background:rgba(251,191,36,.08)}
+.star svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.star.on{color:var(--amber)}
+.star.on svg{fill:currentColor}
+.card-badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+
+.badge{
+  font-size:10.5px;font-weight:600;letter-spacing:.02em;
+  padding:3px 8px;border-radius:6px;
+  border:1px solid transparent;white-space:nowrap;
+}
+.badge.curated{display:inline-flex;align-items:center;gap:4px}
+.badge.curated svg{width:9px;height:9px;fill:currentColor}
+.cat-rwa{color:var(--emerald-text);background:var(--emerald-soft);border-color:rgba(52,211,153,.25)}
+.cat-defi{color:#7DD3FC;background:rgba(56,189,248,.10);border-color:rgba(56,189,248,.22)}
+.cat-ai{color:var(--violet-text);background:var(--violet-soft);border-color:rgba(139,92,246,.25)}
+.cat-gaming{color:#F9A8D4;background:rgba(244,114,182,.10);border-color:rgba(244,114,182,.22)}
+.cat-social{color:#67E8F9;background:rgba(103,232,249,.09);border-color:rgba(103,232,249,.2)}
+.cat-infrastructure{color:#FDBA74;background:rgba(251,146,60,.10);border-color:rgba(251,146,60,.22)}
+.cat-other{color:var(--text-dim);background:rgba(255,255,255,.05);border-color:var(--border)}
+.st-launched{color:var(--emerald-text);background:var(--emerald-soft);border-color:rgba(52,211,153,.25)}
+.st-pre-token{color:var(--violet-text);background:var(--violet-soft);border-color:rgba(139,92,246,.28)}
+.st-fundraising{color:#FCD34D;background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.25)}
+.st-announced{color:#7DD3FC;background:rgba(56,189,248,.09);border-color:rgba(56,189,248,.22)}
+.net{color:var(--text-dim);background:rgba(255,255,255,.04);border-color:var(--border)}
+.curated{color:var(--emerald-text);background:transparent;border-color:rgba(52,211,153,.45)}
+
+.card-desc{
+  font-size:12.5px;color:var(--text-dim);line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  min-height:36px;
+}
+
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+  padding:10px 12px;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.045);
+  border-radius:10px;
+}
+.metric{min-width:0}
+.m-label{
+  display:block;font-size:9.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.09em;
+  color:var(--text-faint);margin-bottom:2px;
+}
+.m-val{
+  display:block;font-size:13px;font-weight:650;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.m-val.small{font-size:11.5px;font-weight:500;white-space:normal;line-height:1.3}
+.m-val .chg{font-size:10.5px;font-weight:700;margin-left:5px}
+.m-val .chg.pos{color:var(--emerald)}
+.m-val .chg.neg{color:var(--red)}
+@media (max-width:479px){.metrics{grid-template-columns:repeat(2,1fr)}}
+
+.card-foot{
+  margin-top:auto;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;flex-wrap:wrap;
+}
+.socials{display:flex;gap:6px}
+.soc{
+  width:30px;height:30px;
+  display:grid;place-items:center;
+  border-radius:8px;border:1px solid var(--border);
+  color:var(--text-dim);transition:.15s;
+}
+.soc:hover{color:#fff;border-color:var(--violet);background:var(--violet-soft)}
+.soc svg{width:13.5px;height:13.5px}
+.soc-none{font-size:11px;color:var(--text-faint)}
+.card-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+.src{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-faint);white-space:nowrap;
+}
+.src i{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+.src-dexscreener{color:#38BDF8}.src-dexscreener i{background:#38BDF8}
+.src-coingecko{color:#4ADE80}.src-coingecko i{background:#4ADE80}
+.src-defillama{color:#FB923C}.src-defillama i{background:#FB923C}
+.src-birdeye{color:#A78BFA}.src-birdeye i{background:#A78BFA}
+.src-manual{color:#FBBF24}.src-manual i{background:#FBBF24}
+
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;
+  color:var(--text-dim);
+  background:transparent;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:6px 10px;cursor:pointer;
+  transition:.15s;white-space:nowrap;
+}
+.btn svg{width:13px;height:13px}
+.btn:hover{color:var(--text);border-color:var(--border-2);background:rgba(255,255,255,.04)}
+.btn-primary{color:#fff;background:var(--violet);border-color:var(--violet)}
+.btn-primary:hover{background:#7C4DEF;color:#fff}
+
+/* empty state */
+.empty{
+  text-align:center;
+  border:1px dashed var(--border-2);
+  border-radius:16px;
+  padding:72px 20px;margin:8px 0 10px;
+  color:var(--text-dim);
+}
+.empty-icon{
+  width:54px;height:54px;margin:0 auto 16px;
+  display:grid;place-items:center;
+  border-radius:16px;
+  background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.25);
+  color:var(--violet-text);
+}
+.empty-icon svg{width:24px;height:24px}
+.empty h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+.empty p{font-size:13px;margin-bottom:18px}
+
+/* footer */
+footer{
+  margin-top:38px;padding-top:18px;
+  border-top:1px solid var(--border);
+  color:var(--text-faint);font-size:12px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.src-list{display:flex;flex-wrap:wrap;gap:6px 16px}
+footer .fine{line-height:1.6}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:26px;z-index:100;
+  transform:translate(-50%,16px);
+  display:flex;align-items:center;gap:9px;
+  background:#1B1B26;
+  border:1px solid var(--border-2);
+  color:var(--text);
+  font-size:13px;font-weight:500;
+  padding:11px 16px;border-radius:12px;
+  box-shadow:0 12px 34px rgba(0,0,0,.45);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+  max-width:calc(100vw - 40px);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast svg{width:15px;height:15px;color:var(--emerald);flex-shrink:0}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<!-- ============================ STICKY HEADER ============================ -->
+<header class="site-header">
+  <div class="container header-inner">
+
+    <div class="hrow hrow-1">
+      <a class="brand" href="#" aria-label="Early Projects — home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.7 6.5 6.5 2.7-6.5 2.7-2.7 6.5-2.7-6.5L2.8 12l6.5-2.7z"/></svg>
+        </span>
+        <span class="brand-name">Early Projects</span>
+        <span class="brand-tag">RWA Early</span>
+      </a>
+
+      <div class="search-wrap">
+        <svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="searchInput" type="search" placeholder="Search projects, tickers, CA…" autocomplete="off" aria-label="Search projects">
+        <button id="searchClear" hidden aria-label="Clear search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="hrow-1-right">
+        <div class="live-pill" title="Data refresh indicator">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span id="liveText">Live · just now</span>
+        </div>
+        <button class="icon-btn" id="refreshBtn" title="Refresh feed" aria-label="Refresh feed">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="hrow hrow-3">
+      <nav class="chips" id="chips" aria-label="Quick filters">
+        <button class="chip active" data-chip="all">All</button>
+        <button class="chip chip-rwa" data-chip="rwa">RWA</button>
+        <button class="chip" data-chip="defi">DeFi</button>
+        <button class="chip" data-chip="ai">AI</button>
+        <button class="chip" data-chip="infrastructure">Infrastructure</button>
+        <button class="chip" data-chip="new">New Tokens</button>
+        <button class="chip" data-chip="pretoken">Pre-Token</button>
+      </nav>
+      <div class="hrow-3-right">
+        <select id="networkSel" aria-label="Network">
+          <option value="all">All networks</option>
+          <option value="solana">Solana</option>
+          <option value="ethereum">Ethereum</option>
+          <option value="base">Base</option>
+          <option value="arbitrum">Arbitrum</option>
+          <option value="polygon">Polygon</option>
+        </select>
+        <button class="filters-btn" id="filterToggle" aria-label="Open filters">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          Filters
+          <span class="fcount" id="filterCount" hidden>0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- advanced filters (static strip on desktop, bottom sheet on mobile) -->
+    <div class="filterbar" id="filterbar">
+      <button class="sheet-close" id="sheetClose" aria-label="Close filters">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <select id="categorySel" aria-label="Category">
+        <option value="all">All categories</option>
+        <option value="rwa">RWA</option>
+        <option value="defi">DeFi</option>
+        <option value="ai">AI</option>
+        <option value="gaming">Gaming</option>
+        <option value="social">Social</option>
+        <option value="infrastructure">Infrastructure</option>
+        <option value="other">Other</option>
+      </select>
+      <select id="typeSel" aria-label="Type">
+        <option value="all">All types</option>
+        <option value="launched">Token launched</option>
+        <option value="pre-token">Pre-Token</option>
+        <option value="fundraising">Fundraising</option>
+        <option value="announced">Just announced</option>
+      </select>
+      <select id="minLiqSel" aria-label="Minimum liquidity">
+        <option value="0">Any liquidity</option>
+        <option value="100000">Liq ≥ $100K</option>
+        <option value="500000">Liq ≥ $500K</option>
+        <option value="1000000">Liq ≥ $1M</option>
+        <option value="5000000">Liq ≥ $5M</option>
+      </select>
+      <select id="ageSel" aria-label="Age">
+        <option value="0">Any age</option>
+        <option value="1">Last 24h</option>
+        <option value="7">Last 7 days</option>
+        <option value="30">Last 30 days</option>
+      </select>
+      <div class="soc-toggles" role="group" aria-label="Require social links">
+        <button class="soc-toggle" data-soc="twitter" title="Only with X / Twitter">X</button>
+        <button class="soc-toggle" data-soc="telegram" title="Only with Telegram">TG</button>
+        <button class="soc-toggle" data-soc="website" title="Only with Website">Web</button>
+      </div>
+      <select id="sortSel" aria-label="Sort">
+        <option value="newest">Newest</option>
+        <option value="active">Most Active · 24h Vol</option>
+        <option value="interest">Highest Interest</option>
+      </select>
+      <button class="reset-btn" id="resetBtn">Reset</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="feed-head">
+    <div class="feed-title">
+      <h2 id="feedTitle">All Early</h2>
+      <span class="feed-count" id="feedCount"></span>
+    </div>
+    <div class="feed-actions">
+      <span class="sort-hint" id="sortHint"></span>
+      <button class="star-filter" id="starFilter" title="Show only starred projects">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Interesting <span id="starCount">0</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="rwa-banner" id="rwaBanner" hidden>
+    <span class="rb-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>
+    </span>
+    <p><b>RWA Early</b> — tokenized real-world assets: treasuries, private credit, real estate, commodities &amp; funds. Curated picks are marked with the <b>RWA Early</b> badge.</p>
+  </div>
+
+  <section class="feed" id="feed" aria-live="polite"></section>
+
+  <div class="empty" id="empty" hidden>
+    <div class="empty-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+    </div>
+    <h3>No projects match your filters</h3>
+    <p>Try widening the age window, lowering the liquidity floor or clearing the category.</p>
+    <button class="btn btn-primary" id="emptyReset">Reset filters</button>
+  </div>
+
+  <footer>
+    <div class="src-list" aria-label="Data sources">
+      <span class="src src-dexscreener"><i></i>DexScreener</span>
+      <span class="src src-coingecko"><i></i>CoinGecko</span>
+      <span class="src src-defillama"><i></i>DefiLlama</span>
+      <span class="src src-birdeye"><i></i>Birdeye / Jupiter</span>
+      <span class="src src-manual"><i></i>Manual curation</span>
+    </div>
+    <p class="fine">Prototype · mock data · API-ready structure — adapters for DexScreener, CoinGecko, DefiLlama, Birdeye and manual curation are stubbed in the data layer. Not financial advice.</p>
+  </footer>
+</main>
+
+<div class="backdrop" id="backdrop" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="text-align:center;padding:40px;color:#9CA1B3">Early Projects requires JavaScript.</p></noscript>
+
+<script>
+"use strict";
+/* ============================================================
+   1. DATA SOURCES — API-ready configuration
+   ------------------------------------------------------------
+   Each source exposes endpoints as functions returning full
+   URLs so the future fetcher can call them directly.
+   ============================================================ */
+const API_SOURCES = {
+  dexscreener: {
+    label: "DexScreener",
+    baseUrl: "https://api.dexscreener.com",
+    endpoints: {
+      latestPairs: () => "https://api.dexscreener.com/latest/dex/pairs",
+      search: (q) => `https://api.dexscreener.com/search?query=${encodeURIComponent(q)}`,
+      tokenProfiles: () => "https://api.dexscreener.com/token-profiles/latest/v1"
+    },
+    notes: "Fresh token pairs: liquidity, volume, price change, age. No key required."
+  },
+  coingecko: {
+    label: "CoinGecko",
+    baseUrl: "https://api.coingecko.com/api/v3",
+    endpoints: {
+      markets: (vs = "usd", per = 25) => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs}&order=market_cap_desc&per_page=${per}`,
+      newCoins: (vs = "usd") => `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${vs}&new=true`,
+      categories: () => "https://api.coingecko.com/api/v3/coins/categories/list"
+    },
+    notes: "New coins, categories, descriptions, socials. Free tier is rate-limited."
+  },
+  defillama: {
+    label: "DefiLlama",
+    baseUrl: "https://api.llama.fi",
+    endpoints: {
+      protocols: () => "https://api.llama.fi/protocols",
+      categories: () => "https://api.llama.fi/categories"
+    },
+    notes: "Protocols with TVL and categories — the 'serious' DeFi/RWA projects. No key."
+  },
+  birdeye: {
+    label: "Birdeye",
+    baseUrl: "https://public-api.birdeye.so",
+    endpoints: {
+      tokens: (chain = "solana") => `https://public-api.birdeye.so/defi/v2/tokens?chain=${chain}&sort=liquidity`
+    },
+    notes: "Solana depth: liquidity, volume, pairs. Requires API key (x-api-key header)."
+  },
+  jupiter: {
+    label: "Jupiter",
+    baseUrl: "https://lite-api.jup.ag",
+    endpoints: {
+      token: (symbol) => `https://lite-api.jup.ag/tokens/v2/${encodeURIComponent(symbol)}`
+    },
+    notes: "Solana token metadata, quotes & swap. No key for lite tier."
+  },
+  twitter: {
+    label: "X / Twitter",
+    endpoints: {},
+    notes: "Planned: fresh-announcement radar via X API (OAuth2) or a scraper. Feeds 'manual curation'."
+  }
+};
+
+/* Minimal fetch helper for when adapters get wired. */
+async function http(url, headers = {}) {
+  const res = await fetch(url, { headers });
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  return res.json();
+}
+
+/* ============================================================
+   2. PROJECT SCHEMA + NORMALIZERS
+   ------------------------------------------------------------
+   The UI renders ONE shape only:
+   {
+     id, name, symbol?, category, status, network?, tagline, source,
+     token:   { ca, mc, liquidity, volume24h, chg24h, listedAt } | null,
+     noToken: { announcedAt, stage, raised } | null,
+     socials: { twitter?, telegram?, website? },
+     tags: string[], interest: number, curated: boolean, logo?: string
+   }
+   Every adapter (API or mock) must map into this schema.
+   ============================================================ */
+function normalizeProject(p) {
+  return {
+    id: p.id,
+    name: p.name,
+    symbol: p.symbol || null,
+    category: p.category || "other",
+    status: p.status || "announced",
+    network: p.network || null,
+    tagline: p.tagline || "",
+    source: p.source || "manual",
+    token: p.token || null,
+    noToken: p.noToken || null,
+    socials: {
+      twitter: (p.socials && p.socials.twitter) || null,
+      telegram: (p.socials && p.socials.telegram) || null,
+      website: (p.socials && p.socials.website) || null
+    },
+    tags: p.tags || [],
+    interest: p.interest || 0,
+    curated: !!p.curated,
+    logo: p.logo || null
+  };
+}
+
+/* Example normalizers — ready to use once adapters are enabled. */
+function normalizeDexscreenerPair(pair) {
+  const t = pair && pair.baseToken;
+  if (!t) return null;
+  return normalizeProject({
+    id: `ds-${pair.chainId}-${t.address}`,
+    name: t.name, symbol: t.symbol,
+    category: "other", status: "launched",
+    network: pair.chainId, source: "dexscreener",
+    tagline: `New pair on ${pair.chainId}.`,
+    token: {
+      ca: t.address,
+      mc: pair.marketCap || pair.fullyDilutedValuation || null,
+      liquidity: (pair.liquidity && pair.liquidity.usd) || null,
+      volume24h: (pair.volume && pair.volume.h24) || null,
+      chg24h: (pair.priceChange && pair.priceChange.h24) || null,
+      listedAt: pair.pairCreatedAt || Date.now()
+    },
+    socials: {}, tags: [], interest: 0
+  });
+}
+
+function normalizeDefiLlamaProtocol(proto) {
+  if (!proto || !proto.name) return null;
+  const catMap = {
+    "RWA": "rwa", "Lending": "defi", "CDP": "defi", "Yield": "defi", "Stablecoins": "defi",
+    "DEXs": "defi", "Options": "defi", "Liquid Staking": "defi",
+    "Oracle": "infrastructure", "Bridges": "infrastructure", "Cross-chain": "infrastructure", "Infrastructure": "infrastructure"
+  };
+  return normalizeProject({
+    id: `dl-${proto.slug || proto.name.toLowerCase()}`,
+    name: proto.name, symbol: proto.symbol || null,
+    category: catMap[proto.category] || "other",
+    status: "launched",
+    network: (proto.chain || "").toLowerCase() || null,
+    source: "defillama",
+    tagline: `${proto.category || "Protocol"} · TVL ${proto.tvl ? "$" + Math.round(proto.tvl).toLocaleString() : "n/a"}.`,
+    token: proto.chain && proto.coingeckoId ? { ca: null, mc: null, liquidity: null, volume24h: null, chg24h: null, listedAt: Date.now() } : null,
+    noToken: proto.tvl ? { announcedAt: Date.now(), stage: `TVL $${Math.round(proto.tvl).toLocaleString()}`, raised: null } : null,
+    socials: { twitter: (proto.twitter && `https://x.com/${proto.twitter}`) || null, website: proto.url || null, telegram: null },
+    tags: [proto.category || ""]
+  });
+}
+
+/* ============================================================
+   3. ADAPTERS (stubs) + FEED LOADER
+   ------------------------------------------------------------
+   Wire a real source by:
+     1) set USE_MOCKS = false
+     2) implement fetch() below, calling API_SOURCES.<name>.endpoints
+     3) map the payload through the normalizers above
+   ============================================================ */
+const USE_MOCKS = true;
+
+const adapters = {
+  dexscreener: {
+    status: "stub", // -> "live" once wired
+    fetch: async () => { /*
+      const pairs = await http(API_SOURCES.dexscreener.endpoints.latestPairs());
+      return pairs.map(normalizeDexscreenerPair).filter(Boolean);
+    */ throw new Error("DexScreener adapter is not wired yet"); }
+  },
+  coingecko: {
+    status: "stub",
+    fetch: async () => { /*
+      const coins = await http(API_SOURCES.coingecko.endpoints.newCoins());
+      return coins.map(normalizeCoinGeckoCoin).filter(Boolean);
+    */ throw new Error("CoinGecko adapter is not wired yet"); }
+  },
+  defillama: {
+    status: "stub",
+    fetch: async () => { /*
+      const protocols = await http(API_SOURCES.defillama.endpoints.protocols());
+      return protocols.map(normalizeDefiLlamaProtocol).filter(Boolean);
+    */ throw new Error("DefiLlama adapter is not wired yet"); }
+  },
+  birdeye: {
+    status: "stub", // requires API key header
+    fetch: async () => { throw new Error("Birdeye adapter is not wired yet (needs API key)"); }
+  },
+  manual: {
+    status: "live",
+    fetch: async () => CURATED_PROJECTS // manual / curated entries (RWA Early)
+  }
+};
+
+/* Merge + dedupe across sources. */
+async function loadFeed() {
+  if (USE_MOCKS) return MOCK_PROJECTS.map(normalizeProject);
+  const settled = await Promise.allSettled(
+    Object.values(adapters).filter(a => a.status === "live").map(a => a.fetch())
+  );
+  const merged = settled.filter(s => s.status === "fulfilled").flatMap(s => s.value);
+  const seen = new Set();
+  return merged.filter(p => (seen.has(p.id) ? false : (seen.add(p.id), true)));
+}
+
+/* ============================================================
+   4. MOCK DATA (already in Project schema)
+   ------------------------------------------------------------
+   Clearly mock metrics — replace via adapters above.
+   ============================================================ */
+const NOW = Date.now();
+const HOUR = 3600e3;
+const tok = (o) => ({
+  ca: o.ca, mc: o.mc, liquidity: o.liq, volume24h: o.vol,
+  chg24h: o.chg != null ? o.chg : null, listedAt: NOW - o.ageH * HOUR
+});
+const notok = (o) => ({ announcedAt: NOW - o.agoH * HOUR, stage: o.stage, raised: o.raised || null });
+
+const MOCK_PROJECTS = [
+  /* ---------- RWA Early ---------- */
+  { id: "ondo", name: "Ondo Finance", symbol: "ONDO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
+    tagline: "Tokenized US Treasuries & on-chain funds (USDY, OUSG).",
+    token: tok({ ca: "0x793f2350085bc8c5e9f447211c57a64315a3f19e", mc: 1420000000, liq: 62400000, vol: 84100000, chg: 1.8, ageH: 9800 }),
+    socials: { twitter: "https://x.com/ondo_finance", telegram: "https://t.me/ondofinance", website: "https://ondo.finance" },
+    tags: ["Treasuries", "Funds"], interest: 4200, curated: true },
+
+  { id: "goldfinch", name: "Goldfinch", symbol: "GFI", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
+    tagline: "Permissionless credit market — lending directly to real-world borrowers.",
+    token: tok({ ca: "0x20c00f6c69bdf7513a39f8a539d83f0d8f0a1122", mc: 184000000, liq: 12400000, vol: 3100000, chg: -2.4, ageH: 7900 }),
+    socials: { twitter: "https://x.com/Goldfinch", telegram: "https://t.me/goldfinch", website: "https://goldfinch.com" },
+    tags: ["Credit", "Institutional"], interest: 1600, curated: true },
+
+  { id: "maple", name: "Maple Finance", symbol: "MPL", category: "rwa", status: "launched", network: "arbitrum", source: "defillama",
+    tagline: "Institutional credit protocol — RWAs as on-chain collateral.",
+    token: tok({ ca: "0xa3fbe42984753d2c1a5e6f8b9c0d1e2f3a4b5c6d", mc: 96000000, liq: 8200000, vol: 2400000, chg: 0.6, ageH: 6200 }),
+    socials: { twitter: "https://x.com/MapleFinance", telegram: "https://t.me/maple_finance", website: "https://usemaple.com" },
+    tags: ["Credit", "Institutional"], interest: 1200 },
+
+  { id: "backed", name: "Backed Finance", symbol: "BKD", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
+    tagline: "Tokenized commodities, currencies & real-world assets (BAC).",
+    token: tok({ ca: "0x500c0d1e2f3a4b5c6d7e8f90a1b2c3d4e5f60718", mc: 68000000, liq: 4600000, vol: 940000, chg: 3.1, ageH: 5400 }),
+    socials: { twitter: "https://x.com/BackedFinance", website: "https://backed.fi" },
+    tags: ["Commodities", "BAC"], interest: 700 },
+
+  { id: "centrifuge", name: "Centrifuge", symbol: "CFG", category: "rwa", status: "launched", network: "ethereum", source: "defillama",
+    tagline: "DeFi credit marketplace for off-balance-sheet real-world assets.",
+    token: tok({ ca: "0x3a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d", mc: 520000000, liq: 21000000, vol: 5600000, chg: -0.8, ageH: 8900 }),
+    socials: { twitter: "https://x.com/Centrifuge", telegram: "https://t.me/centrifuge", website: "https://centrifuge.ch" },
+    tags: ["Credit", "Syndicates"], interest: 2100 },
+
+  { id: "clearpool", name: "Clearpool", symbol: "CLP", category: "rwa", status: "launched", network: "polygon", source: "defillama",
+    tagline: "Institutional private-credit yield, fully on-chain and permissionless.",
+    token: tok({ ca: "0x1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e", mc: 42000000, liq: 2100000, vol: 620000, chg: 4.2, ageH: 4300 }),
+    socials: { twitter: "https://x.com/clearpool_io", website: "https://clearpool.io" },
+    tags: ["Credit", "Institutional"], interest: 500 },
+
+  { id: "realio", name: "Realio", symbol: "RIO", category: "rwa", status: "launched", network: "ethereum", source: "coingecko",
+    tagline: "Real-estate tokenization — REITs and rental yield on-chain.",
+    token: tok({ ca: "0x9c8b7a6051423f2e1d0c9b8a7061524332211200", mc: 214000000, liq: 9400000, vol: 1700000, chg: 1.2, ageH: 8100 }),
+    socials: { twitter: "https://x.com/realio", telegram: "https://t.me/realio", website: "https://realio.finance" },
+    tags: ["Real Estate", "REITs"], interest: 1400 },
+
+  { id: "helios", name: "Helios Treasuries", symbol: null, category: "rwa", status: "pre-token", network: "solana", source: "dexscreener",
+    tagline: "T-bill yield vault on Solana — TGE next week.",
+    token: tok({ ca: "He11osTreasuryVaultXx9k2mP4qR7tY3wZ6aBcD5eF8g", mc: 12000000, liq: 840000, vol: 1100000, chg: 12.4, ageH: 30 }),
+    socials: { twitter: "https://x.com/helios_treasury", telegram: "https://t.me/helios_treasury" },
+    tags: ["Treasuries", "Vault"], interest: 320 },
+
+  { id: "aurum", name: "Aurum Yield", symbol: null, category: "rwa", status: "fundraising", network: null, source: "manual",
+    tagline: "Gold-backed tokenized yield — vault launch Q1 2026.",
+    noToken: notok({ agoH: 70, stage: "Seed · $4.0M raised", raised: 4000000 }),
+    socials: { twitter: "https://x.com/aurumyield", website: "https://aurumyield.io" },
+    tags: ["Gold", "Yield"], interest: 180, curated: true },
+
+  { id: "meridian", name: "Meridian Estates", symbol: null, category: "rwa", status: "announced", network: null, source: "manual",
+    tagline: "Fractional tokenized commercial real estate — waitlist open.",
+    noToken: notok({ agoH: 18, stage: "Pre-launch · waitlist open" }),
+    socials: { twitter: "https://x.com/meridian_est", telegram: "https://t.me/meridian_estates" },
+    tags: ["Real Estate", "Fractional"], interest: 90, curated: true },
+
+  /* ---------- DeFi ---------- */
+  { id: "velora", name: "Velora", symbol: "VEL", category: "defi", status: "launched", network: "base", source: "dexscreener",
+    tagline: "Perpetuals DEX with an on-chain risk engine.",
+    token: tok({ ca: "0x4f5e6d7c8b9a0f1e2d3c4b5a6978876655443322", mc: 38400000, liq: 2100000, vol: 14600000, chg: 21.3, ageH: 20 }),
+    socials: { twitter: "https://x.com/velora_dex", telegram: "https://t.me/velora_dex", website: "https://velora.finance" },
+    tags: ["Perps", "Derivatives"], interest: 860 },
+
+  { id: "quanta", name: "Quanta Finance", symbol: "QFT", category: "defi", status: "launched", network: "arbitrum", source: "defillama",
+    tagline: "Cross-margin CDP and yield-bearing stablecoin.",
+    token: tok({ ca: "0x7e8f9a0b1c2d3e4f5061728394a5b6c7d8e9f0a1", mc: 121000000, liq: 9800000, vol: 1900000, chg: -1.1, ageH: 3100 }),
+    socials: { twitter: "https://x.com/QuantaFinance", telegram: "https://t.me/quanta_finance", website: "https://quantafinance.io" },
+    tags: ["CDP", "Stablecoin"], interest: 950 },
+
+  { id: "nimbus", name: "Nimbus Lend", symbol: "NIMB", category: "defi", status: "pre-token", network: "solana", source: "dexscreener",
+    tagline: "Money market with algorithmic rates — TGE in 2 weeks.",
+    token: tok({ ca: "NimbusLendPreTokenXz5vT8uY1wE4rQ7dF3gH6jK9mL", mc: 8600000, liq: 620000, vol: 940000, chg: 6.2, ageH: 18 }),
+    socials: { twitter: "https://x.com/nimbus_lend", telegram: "https://t.me/nimbuslend" },
+    tags: ["Lending", "Money Mkt"], interest: 210 },
+
+  /* ---------- AI ---------- */
+  { id: "mindforge", name: "Mindforge", symbol: "MIND", category: "ai", status: "launched", network: "solana", source: "dexscreener",
+    tagline: "Staked-GPU inference network for AI agents.",
+    token: tok({ ca: "MindForgeAIInferenceXb2nM5qW8eR1tY4uI7oP0aSd", mc: 84000000, liq: 5200000, vol: 22300000, chg: 8.7, ageH: 96 }),
+    socials: { twitter: "https://x.com/mindforge_ai", telegram: "https://t.me/mindforge", website: "https://mindforge.ai" },
+    tags: ["Inference", "GPU"], interest: 1100 },
+
+  { id: "synaptix", name: "Synaptix", symbol: "SYN", category: "ai", status: "launched", network: "base", source: "dexscreener",
+    tagline: "Decentralized training market for open models.",
+    token: tok({ ca: "0x2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f", mc: 27000000, liq: 1800000, vol: 4400000, chg: 15.2, ageH: 14 }),
+    socials: { twitter: "https://x.com/synaptixhq", telegram: "https://t.me/synaptix", website: "https://synaptix.xyz" },
+    tags: ["Training", "Models"], interest: 430 },
+
+  { id: "neura", name: "Neura Labs", symbol: null, category: "ai", status: "fundraising", network: null, source: "manual",
+    tagline: "Privacy-preserving inference layer for enterprise AI.",
+    noToken: notok({ agoH: 120, stage: "Series A · raising $12M", raised: 12000000 }),
+    socials: { twitter: "https://x.com/neuralabs_ai", website: "https://neuralabs.ai" },
+    tags: ["Privacy", "Enterprise"], interest: 260 },
+
+  /* ---------- Infrastructure ---------- */
+  { id: "lattice", name: "Lattice", symbol: "LATT", category: "infrastructure", status: "launched", network: "ethereum", source: "defillama",
+    tagline: "Cross-chain settlement & execution layer.",
+    token: tok({ ca: "0x5a6b7c8d9e0f1a2b3c4d5e6f7081920314253647", mc: 208000000, liq: 11000000, vol: 2800000, chg: 0.4, ageH: 4100 }),
+    socials: { twitter: "https://x.com/LatticeLayer", telegram: "https://t.me/lattice_layer", website: "https://lattice.xyz" },
+    tags: ["Settlement", "Cross-chain"], interest: 880 },
+
+  { id: "relay", name: "Relay Node", symbol: "RLY", category: "infrastructure", status: "launched", network: "solana", source: "birdeye",
+    tagline: "Real-time oracle & data-feed infrastructure.",
+    token: tok({ ca: "RelayNodeOracleDataXq9sD2fG5hJ8kL1zX4cV7bN3m", mc: 46000000, liq: 2400000, vol: 6100000, chg: -3.4, ageH: 130 }),
+    socials: { twitter: "https://x.com/relay_node", telegram: "https://t.me/relaynode", website: "https://relaynode.io" },
+    tags: ["Oracle", "Data"], interest: 540 },
+
+  /* ---------- Gaming ---------- */
+  { id: "pixelforge", name: "Pixelforge", symbol: "PIXF", category: "gaming", status: "pre-token", network: "solana", source: "dexscreener",
+    tagline: "On-chain RPG — TGE and mainnet in 2 weeks.",
+    token: tok({ ca: "PixelforgeGamePreTokXh6jK9lM2nB5vC8xZ1qW4eR7t", mc: 9500000, liq: 620000, vol: 1200000, chg: 9.8, ageH: 40 }),
+    socials: { twitter: "https://x.com/pixelforge", telegram: "https://t.me/pixelforge" },
+    tags: ["RPG", "GameFi"], interest: 350 },
+
+  { id: "vanta", name: "Vanta Studios", symbol: null, category: "gaming", status: "announced", network: null, source: "manual",
+    tagline: "Web3 sports simulator — creator revenue share.",
+    noToken: notok({ agoH: 50, stage: "Alpha · closed beta" }),
+    socials: { twitter: "https://x.com/vantastudios", telegram: "https://t.me/vanta_studios" },
+    tags: ["Sports", "Creators"], interest: 120 },
+
+  /* ---------- Social ---------- */
+  { id: "echo", name: "Echo", symbol: "ECHO", category: "social", status: "launched", network: "base", source: "dexscreener",
+    tagline: "Creator economy — on-chain tips, channels & revenue.",
+    token: tok({ ca: "0x8d9e0f1a2b3c4d5e6f708192031425364758697a", mc: 15200000, liq: 780000, vol: 3300000, chg: 11.5, ageH: 21 }),
+    socials: { twitter: "https://x.com/echo_protocol", telegram: "https://t.me/echo_protocol", website: "https://echo.social" },
+    tags: ["Creators", "Tips"], interest: 300 },
+
+  { id: "drift", name: "Drift Social", symbol: null, category: "social", status: "announced", network: null, source: "manual",
+    tagline: "Decentralized newsfeed with staked moderation — testnet live.",
+    noToken: notok({ agoH: 26, stage: "Testnet live" }),
+    socials: { twitter: "https://x.com/driftsocial", website: "https://drift.social" },
+    tags: ["Newsfeed", "Staking"], interest: 140 }
+];
+
+const CURATED_PROJECTS = []; // future: hand-picked RWA Early entries (live in 'manual' adapter)
+
+/* ============================================================
+   5. STATE + REFS
+   ============================================================ */
+const state = {
+  query: "",
+  category: "all",
+  type: "all",
+  network: "all",
+  minLiq: 0,
+  ageDays: 0,
+  reqTwitter: false,
+  reqTelegram: false,
+  reqWebsite: false,
+  sort: "newest",
+  onlyStarred: false
+};
+
+const STAR_KEY = "early.projects.stars.v1";
+let stars = new Set();
+try { stars = new Set(JSON.parse(localStorage.getItem(STAR_KEY) || "[]")); } catch (e) { /* private mode */ }
+function saveStars() { try { localStorage.setItem(STAR_KEY, JSON.stringify([...stars])); } catch (e) {} }
+
+let ALL = [];
+const $ = (id) => document.getElementById(id);
+const feedEl = $("feed"), emptyEl = $("empty"), feedTitle = $("feedTitle"),
+      feedCount = $("feedCount"), sortHint = $("sortHint"),
+      rwaBanner = $("rwaBanner"), toastEl = $("toast"),
+      searchInput = $("searchInput"), searchClear = $("searchClear");
+
+/* metadata */
+const CATS = {
+  rwa: { label: "RWA" }, defi: { label: "DeFi" }, ai: { label: "AI" },
+  gaming: { label: "Gaming" }, social: { label: "Social" },
+  infrastructure: { label: "Infrastructure" }, other: { label: "Other" }
+};
+const STATUS = {
+  launched: { label: "Launched" }, "pre-token": { label: "Pre-Token" },
+  fundraising: { label: "Fundraising" }, announced: { label: "Announced" }
+};
+const NETS = { solana: "Solana", ethereum: "Ethereum", base: "Base", arbitrum: "Arbitrum", polygon: "Polygon", bsc: "BSC" };
+const SOURCES = {
+  dexscreener: { label: "DexScreener" }, coingecko: { label: "CoinGecko" },
+  defillama: { label: "DefiLlama" }, birdeye: { label: "Birdeye" },
+  manual: { label: "Curated" }
+};
+const SORTS = { newest: "Newest", active: "Most Active", interest: "Highest Interest" };
+
+/* icons */
+const ICONS = {
+  star: '<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  sparkle: '<svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>',
+  send: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>',
+  globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+};
+
+/* ============================================================
+   6. FORMATTERS
+   ============================================================ */
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => (
+  { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+));
+function trimNum(v, d) {
+  let s = v.toFixed(d);
+  if (s.includes(".")) s = s.replace(/0+$/, "").replace(/\.$/, "");
+  return s;
+}
+function fmtMoney(n) {
+  if (n == null || isNaN(n)) return "—";
+  const a = Math.abs(n);
+  if (a >= 1e9) return "$" + trimNum(n / 1e9, 2) + "B";
+  if (a >= 1e6) return "$" + trimNum(n / 1e6, 2) + "M";
+  if (a >= 1e3) return "$" + trimNum(n / 1e3, 1) + "K";
+  return "$" + Math.round(n);
+}
+function fmtAgeHours(h) {
+  if (h < 1) return "<1h";
+  if (h < 48) return Math.round(h) + "h";
+  const d = h / 24;
+  if (d < 7) return Math.round(d) + "d";
+  if (d < 30) return trimNum(d / 7, 1) + "w";
+  const m = d / 30.44;
+  if (m < 12) return trimNum(m, 1) + "mo";
+  return trimNum(m / 12, 1) + "y";
+}
+function timeAgo(ts) {
+  const s = (Date.now() - ts) / 1000;
+  if (s < 60) return Math.max(1, Math.floor(s)) + "s ago";
+  if (s < 3600) return Math.floor(s / 60) + "m ago";
+  if (s < 86400) return Math.floor(s / 3600) + "h ago";
+  if (s < 30 * 86400) return Math.floor(s / 86400) + "d ago";
+  return new Date(ts).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+function listedAt(p) { return p.token ? p.token.listedAt : (p.noToken ? p.noToken.announcedAt : NOW); }
+function interestOf(p) { return (p.interest || 0) + (stars.has(p.id) ? 1000 : 0); }
+function hashHue(s) { let h = 7; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
+
+/* chart link per source (works with mock data too) */
+function chartUrl(p) {
+  if (!p.token) return null;
+  const t = p.token;
+  if (p.source === "dexscreener" || p.source === "birdeye") {
+    const chain = p.network || "ethereum";
+    return `https://dexscreener.com/${chain}/${t.ca}`;
+  }
+  if (p.source === "coingecko") return `https://www.coingecko.com/en/coins/${p.id}`;
+  if (p.source === "defillama") return `https://defillama.com/protocol/${p.id}`;
+  return null;
+}
+
+/* ============================================================
+   7. FILTER + SORT
+   ============================================================ */
+function applyFilters(list) {
+  const q = state.query.trim().toLowerCase();
+  const out = list.filter((p) => {
+    if (state.onlyStarred && !stars.has(p.id)) return false;
+    if (state.category !== "all" && p.category !== state.category) return false;
+    if (state.type !== "all" && p.status !== state.type) return false;
+    if (state.network !== "all" && p.network !== state.network) return false;
+    if (state.minLiq > 0 && (!p.token || (p.token.liquidity || 0) < state.minLiq)) return false;
+    if (state.ageDays > 0 && Date.now() - listedAt(p) > state.ageDays * 86400e3) return false;
+    if (state.reqTwitter && !p.socials.twitter) return false;
+    if (state.reqTelegram && !p.socials.telegram) return false;
+    if (state.reqWebsite && !p.socials.website) return false;
+    if (q) {
+      const hay = [p.name, p.symbol, p.tagline, (p.tags || []).join(" "), (p.token && p.token.ca) || ""]
+        .join(" ").toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  const sorters = {
+    newest: (a, b) => listedAt(b) - listedAt(a),
+    active: (a, b) => ((b.token && b.token.volume24h) || 0) - ((a.token && a.token.volume24h) || 0),
+    interest: (a, b) =>
+      (interestOf(b) - interestOf(a)) ||
+      (((b.token && b.token.volume24h) || 0) - ((a.token && a.token.volume24h) || 0))
+  };
+  return out.sort(sorters[state.sort] || sorters.newest);
+}
+
+function titleFor() {
+  if (state.onlyStarred) return "Interesting";
+  if (state.category === "rwa") return "RWA Early";
+  if (state.category !== "all") return CATS[state.category].label;
+  if (state.type === "launched" && state.ageDays === 1) return "New Tokens · 24h";
+  if (state.type !== "all") return STATUS[state.type].label;
+  return "All Early";
+}
+
+function activeChipId() {
+  if (state.type === "launched" && state.ageDays === 1 && state.category === "all") return "new";
+  if (state.type === "pre-token" && state.category === "all" && state.ageDays === 0) return "pretoken";
+  if (state.category !== "all") return state.category;
+  if (state.type !== "all") return "";
+  return "all";
+}
+
+/* ============================================================
+   8. RENDER
+   ============================================================ */
+function avatarHtml(p) {
+  const init = p.name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+  const hue = hashHue(p.id + p.name);
+  const grad = `linear-gradient(135deg, hsl(${hue},62%,50%), hsl(${(hue + 45) % 360},68%,34%))`;
+  if (p.logo) {
+    return `<div class="avatar" style="background:${grad}"><img src="${esc(p.logo)}" alt="" loading="lazy" onerror="this.remove()"></div>`;
+  }
+  return `<div class="avatar" style="background:${grad}" aria-hidden="true">${esc(init)}</div>`;
+}
+
+function socialsHtml(p) {
+  const s = p.socials;
+  let out = "";
+  if (s.twitter) out += `<a class="soc" href="${esc(s.twitter)}" target="_blank" rel="noopener" title="Open X / Twitter">${ICONS.x}</a>`;
+  if (s.telegram) out += `<a class="soc" href="${esc(s.telegram)}" target="_blank" rel="noopener" title="Open Telegram">${ICONS.send}</a>`;
+  if (s.website) out += `<a class="soc" href="${esc(s.website)}" target="_blank" rel="noopener" title="Open website">${ICONS.globe}</a>`;
+  return out || `<span class="soc-none">No socials</span>`;
+}
+
+function tokenMetrics(p) {
+  const t = p.token;
+  const chg = (t.chg24h != null)
+    ? `<span class="chg ${t.chg24h >= 0 ? "pos" : "neg"}">${t.chg24h >= 0 ? "+" : ""}${trimNum(t.chg24h, 1)}%</span>`
+    : "";
+  const age = fmtAgeHours((Date.now() - t.listedAt) / HOUR);
+  return `
+    <div class="metric"><span class="m-label">MC</span><span class="m-val">${fmtMoney(t.mc)}</span></div>
+    <div class="metric"><span class="m-label">Liquidity</span><span class="m-val">${fmtMoney(t.liquidity)}</span></div>
+    <div class="metric"><span class="m-label">Vol 24h</span><span class="m-val">${fmtMoney(t.volume24h)}${chg}</span></div>
+    <div class="metric"><span class="m-label">Age</span><span class="m-val">${age}</span></div>`;
+}
+
+function noTokenMetrics(p) {
+  const n = p.noToken || {};
+  return `
+    <div class="metric"><span class="m-label">Announced</span><span class="m-val">${n.announcedAt ? timeAgo(n.announcedAt) : "—"}</span></div>
+    <div class="metric"><span class="m-label">Stage</span><span class="m-val small">${esc(n.stage || "—")}</span></div>
+    <div class="metric"><span class="m-label">Raised</span><span class="m-val">${n.raised ? fmtMoney(n.raised) : "—"}</span></div>
+    <div class="metric"><span class="m-label">Chain</span><span class="m-val">${p.network ? esc(NETS[p.network] || p.network) : "TBD"}</span></div>`;
+}
+
+function cardHtml(p, i) {
+  const delay = Math.min(i, 10) * 45;
+  const isToken = !!p.token;
+  const actions = isToken
+    ? `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
+       <button class="btn" data-action="chart" title="Open chart">${ICONS.chart}Chart</button>
+       <button class="btn" data-action="copy-ca" title="Copy contract address">${ICONS.copy}Copy CA</button>`
+    : `<span class="src src-${p.source}"><i></i>${SOURCES[p.source].label}</span>
+       <button class="btn btn-primary" data-action="open-website" title="Open website">${ICONS.external}Website</button>
+       <button class="btn" data-action="copy-link" title="Copy link">${ICONS.copy}Copy link</button>`;
+  return `
+  <article class="card" data-id="${esc(p.id)}" style="--d:${delay}ms">
+    <div class="card-top">
+      ${avatarHtml(p)}
+      <div class="card-id">
+        <div class="card-name-row">
+          <h3 class="card-name" title="${esc(p.name)}">${esc(p.name)}</h3>
+          ${p.symbol ? `<span class="ticker">${esc(p.symbol)}</span>` : ""}
+          <button class="star ${stars.has(p.id) ? "on" : ""}" data-action="star"
+                  title="${stars.has(p.id) ? "Remove from Interesting" : "Mark as Interesting"}"
+                  aria-label="Mark as Interesting">${ICONS.star}</button>
+        </div>
+        <div class="card-badges">
+          <span class="badge cat-${p.category}">${CATS[p.category].label}</span>
+          <span class="badge st-${p.status}">${STATUS[p.status].label}</span>
+          ${p.network ? `<span class="badge net">${esc(NETS[p.network] || p.network)}</span>` : ""}
+          ${p.curated ? `<span class="badge curated" title="Curated pick">${ICONS.sparkle}RWA Early</span>` : ""}
+        </div>
+      </div>
+    </div>
+    <p class="card-desc">${esc(p.tagline)}</p>
+    <div class="metrics">${isToken ? tokenMetrics(p) : noTokenMetrics(p)}</div>
+    <div class="card-foot">
+      <div class="socials">${socialsHtml(p)}</div>
+      <div class="card-actions">${actions}</div>
+    </div>
+  </article>`;
+}
+
+function render() {
+  const list = applyFilters(ALL);
+  feedTitle.textContent = titleFor();
+  feedCount.textContent = `Showing ${list.length} of ${ALL.length} projects`;
+  sortHint.textContent = `Sorted by ${SORTS[state.sort]}`;
+  rwaBanner.hidden = state.category !== "rwa";
+  feedEl.innerHTML = list.map(cardHtml).join("");
+  feedEl.hidden = list.length === 0;
+  emptyEl.hidden = list.length > 0;
+  $("starCount").textContent = stars.size;
+  syncControls();
+}
+
+function syncControls() {
+  document.querySelectorAll("#chips .chip").forEach((b) =>
+    b.classList.toggle("active", b.dataset.chip === activeChipId())
+  );
+  $("categorySel").value = state.category;
+  $("typeSel").value = state.type;
+  $("minLiqSel").value = String(state.minLiq);
+  $("ageSel").value = String(state.ageDays);
+  $("sortSel").value = state.sort;
+  $("networkSel").value = state.network;
+  document.querySelectorAll(".soc-toggle").forEach((b) =>
+    b.classList.toggle("active", state["req" + b.dataset.soc[0].toUpperCase() + b.dataset.soc.slice(1)])
+  );
+  const n =
+    (state.category !== "all" ? 1 : 0) + (state.type !== "all" ? 1 : 0) +
+    (state.network !== "all" ? 1 : 0) + (state.minLiq > 0 ? 1 : 0) +
+    (state.ageDays > 0 ? 1 : 0) + (state.reqTwitter ? 1 : 0) +
+    (state.reqTelegram ? 1 : 0) + (state.reqWebsite ? 1 : 0);
+  const fc = $("filterCount");
+  fc.hidden = n === 0;
+  fc.textContent = n;
+  $("starFilter").classList.toggle("on", state.onlyStarred);
+}
+
+/* ============================================================
+   9. TOAST + CLIPBOARD
+   ============================================================ */
+let toastTimer = null;
+function toast(msg) {
+  toastEl.innerHTML = `${ICONS.check}<span>${esc(msg)}</span>`;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
+}
+async function copyText(text, msg) {
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e2) {}
+    ta.remove();
+  }
+  toast(msg);
+}
+
+/* ============================================================
+   10. EVENTS
+   ============================================================ */
+function setChip(id) {
+  state.category = "all";
+  state.type = "all";
+  state.ageDays = 0;
+  if (id === "rwa" || id === "defi" || id === "ai" || id === "infrastructure") state.category = id;
+  if (id === "new") { state.type = "launched"; state.ageDays = 1; }
+  if (id === "pretoken") state.type = "pre-token";
+  render();
+}
+function resetFilters() {
+  Object.assign(state, {
+    query: "", category: "all", type: "all", network: "all",
+    minLiq: 0, ageDays: 0, reqTwitter: false, reqTelegram: false,
+    reqWebsite: false, sort: "newest", onlyStarred: false
+  });
+  searchInput.value = "";
+  searchClear.hidden = true;
+  render();
+  document.body.classList.remove("sheet-open");
+  $("backdrop").hidden = true;
+}
+
+function bindEvents() {
+  /* search */
+  let qTimer = null;
+  searchInput.addEventListener("input", () => {
+    clearTimeout(qTimer);
+    qTimer = setTimeout(() => {
+      state.query = searchInput.value;
+      searchClear.hidden = !state.query;
+      render();
+    }, 120);
+  });
+  searchClear.addEventListener("click", () => {
+    searchInput.value = "";
+    state.query = "";
+    searchClear.hidden = true;
+    searchInput.focus();
+    render();
+  });
+
+  /* quick chips */
+  $("chips").addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (chip) setChip(chip.dataset.chip);
+  });
+
+  /* panel selects */
+  $("categorySel").addEventListener("change", (e) => { state.category = e.target.value; render(); });
+  $("typeSel").addEventListener("change", (e) => { state.type = e.target.value; render(); });
+  $("minLiqSel").addEventListener("change", (e) => { state.minLiq = Number(e.target.value); render(); });
+  $("ageSel").addEventListener("change", (e) => { state.ageDays = Number(e.target.value); render(); });
+  $("sortSel").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
+  $("networkSel").addEventListener("change", (e) => { state.network = e.target.value; render(); });
+
+  /* social toggles */
+  document.querySelectorAll(".soc-toggle").forEach((b) => {
+    b.addEventListener("click", () => {
+      const key = "req" + b.dataset.soc[0].toUpperCase() + b.dataset.soc.slice(1);
+      state[key] = !state[key];
+      render();
+    });
+  });
+
+  /* reset */
+  $("resetBtn").addEventListener("click", resetFilters);
+  $("emptyReset").addEventListener("click", resetFilters);
+
+  /* interesting (star) filter */
+  $("starFilter").addEventListener("click", () => {
+    state.onlyStarred = !state.onlyStarred;
+    render();
+  });
+
+  /* mobile filter sheet */
+  $("filterToggle").addEventListener("click", () => {
+    document.body.classList.add("sheet-open");
+    $("backdrop").hidden = false;
+  });
+  const closeSheet = () => {
+    document.body.classList.remove("sheet-open");
+    $("backdrop").hidden = true;
+  };
+  $("sheetClose").addEventListener("click", closeSheet);
+  $("backdrop").addEventListener("click", closeSheet);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeSheet(); });
+
+  /* card actions (delegated) */
+  feedEl.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-action]");
+    if (!el) return;
+    const card = el.closest(".card");
+    if (!card) return;
+    const p = ALL.find((x) => x.id === card.dataset.id);
+    if (!p) return;
+    switch (el.dataset.action) {
+      case "star": {
+        if (stars.has(p.id)) stars.delete(p.id); else stars.add(p.id);
+        saveStars();
+        if (state.onlyStarred && !stars.has(p.id)) { render(); break; }
+        el.classList.toggle("on", stars.has(p.id));
+        el.title = stars.has(p.id) ? "Remove from Interesting" : "Mark as Interesting";
+        $("starCount").textContent = stars.size;
+        toast(stars.has(p.id) ? `${p.name} added to Interesting` : `${p.name} removed from Interesting`);
+        break;
+      }
+      case "copy-ca":
+        if (p.token && p.token.ca) copyText(p.token.ca, "Contract address copied");
+        break;
+      case "copy-link":
+        copyText(p.socials.website || p.socials.twitter || p.socials.telegram || "", "Link copied");
+        break;
+      case "chart": {
+        const u = chartUrl(p);
+        if (u) window.open(u, "_blank", "noopener");
+        break;
+      }
+      case "open-website": {
+        const u = p.socials.website;
+        if (u) window.open(u, "_blank", "noopener");
+        break;
+      }
+    }
+  });
+
+  /* refresh (simulated poll until adapters go live) */
+  $("refreshBtn").addEventListener("click", async () => {
+    const btn = $("refreshBtn");
+    btn.classList.add("spin");
+    try { ALL = await loadFeed(); } catch (e) { /* keep current data */ }
+    lastUpdated = Date.now();
+    render();
+    updateLive();
+    setTimeout(() => btn.classList.remove("spin"), 650);
+  });
+}
+
+/* ============================================================
+   11. LIVE INDICATOR + BOOT
+   ============================================================ */
+let lastUpdated = Date.now();
+function updateLive() {
+  const s = Math.floor((Date.now() - lastUpdated) / 1000);
+  const el = $("liveText");
+  if (!el) return;
+  el.textContent = s < 5 ? "Live · just now" : (s < 60 ? `Live · ${s}s ago` : `Live · ${Math.floor(s / 60)}m ago`);
+}
+
+(async function boot() {
+  bindEvents();
+  try { ALL = await loadFeed(); } catch (e) { ALL = MOCK_PROJECTS.map(normalizeProject); }
+  render();
+  updateLive();
+  setInterval(updateLive, 1000);
+})();
+</script>
+</body>
+</html>
