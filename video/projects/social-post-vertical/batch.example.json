@@ -1,0 +1,40 @@
+{
+  "rows": [
+    {
+      "output": "cfa-ne-token.mp4",
+      "title": "НЕ ТОКЕН",
+      "subtitle": "СБОРКА ВЫПУСКА ЦФА ДО ПЛОЩАДКИ",
+      "body": "Инвестор покупает не бизнес. Он покупает право получить деньги.",
+      "source": "YURICHHUB // ЦФА",
+      "rubric": "СБОРКА ВЫПУСКА // НЕ ОПЕРАТОР",
+      "series": "ЦФА",
+      "stat1v": "80 000", "stat1l": "РАЗБОР, РУБ.", "stat1c": "#E8377E",
+      "stat2v": "0", "stat2l": "ДЕНЕГ НА МОЙ СЧЁТ", "stat2c": "#D7FF3D",
+      "stat3v": "259-ФЗ", "stat3l": "ЗАПИСЬ У ОПЕРАТОРА ЦБ", "stat3c": "#C8A24A"
+    },
+    {
+      "output": "rwa-snachala-aktiv.mp4",
+      "title": "СНАЧАЛА|АКТИВ",
+      "subtitle": "CRIMEA RWA: ОБЪЕКТ, СТРУКТУРА, ТОКЕН",
+      "body": "Город остаётся городом. Владение становится цифровым.",
+      "source": "YURICHHUB // CRIMEA RWA",
+      "rubric": "03 ВЛАДЕНИЕ // СНАЧАЛА АКТИВ",
+      "series": "YURICH RWA",
+      "stat1v": "А", "stat1l": "ОБЪЕКТ", "stat1c": "#C98A4E",
+      "stat2v": "Б", "stat2l": "СТРУКТУРА", "stat2c": "#C8A24A",
+      "stat3v": "В", "stat3l": "ТОКЕН", "stat3c": "#D7FF3D"
+    },
+    {
+      "output": "course-bez-signalov.mp4",
+      "title": "БЕЗ|СИГНАЛОВ",
+      "subtitle": "КУРС YURICH RWA: ШЕСТЬ МОДУЛЕЙ",
+      "body": "Трейдинг живёт в канале, не здесь. Здесь язык рынка.",
+      "source": "YURICHHUB // КУРС",
+      "rubric": "КУРС // БЕЗ СИГНАЛОВ",
+      "series": "YURICH RWA",
+      "stat1v": "06", "stat1l": "МОДУЛЕЙ", "stat1c": "#E8377E",
+      "stat2v": "57", "stat2l": "ТЕРМИНОВ В СЛОВАРЕ", "stat2c": "#D7FF3D",
+      "stat3v": "t.me/YuRichRWA", "stat3l": "КАНАЛ", "stat3c": "#C8A24A"
+    }
+  ]
+}
