@@ -48,9 +48,22 @@ bash bin/hf.sh snapshot  projects/yurichhub-intro --at 1.6,3.9,10.2
 # рендер
 bash bin/hf.sh render projects/yurichhub-intro -o renders/yurichhub-intro-1080p.mp4 --fps 30 --quality looks
 
-# превью-студия (кликабельный редактор) — открывается на порту 3002
-bash bin/hf.sh preview projects/yurichhub-intro --port 3002
+# превью-студия (кликабельный редактор) — слушает 127.0.0.1:3002
+bash bin/hf.sh preview projects/yurichhub-intro --port 3002 --foreground --no-open
 ```
+
+### Живое превью в браузере
+
+`hyperframes preview` слушает только `127.0.0.1`, а браузеру нужен адрес на `0.0.0.0`. Поэтому
+студия выставляется наружу маленьким прокси (он же прокидывает WebSocket-обновления кадра):
+
+```bash
+# в одном процессе — студия, в другом — прокси
+node bin/preview-proxy.mjs --port 3100 --target 3002
+```
+
+Порт `3100` показывается как живое превью, внутри всё работает как обычно: правки в HTML
+перезагружаются сами, а таймлайн можно крутить мышью.
 
 Внутри самих проектов можно короче: `cd projects/yurichhub-intro && npx hyperframes render .` —
 но тогда окружение надо поднимать руками (`source ../../bin/env.sh`).
