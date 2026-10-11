@@ -2,7 +2,7 @@
 
 Сайт-хаб: Севастополь AI, City Code, Crimea RWA — плюс курс по RWA, глоссарий терминов и офер ЦФА.
 
-Открывается здесь: [yurich-citycode.github.io/hubtest](https://yurich-citycode.github.io/hubtest/)
+Открывается здесь: [yurich-citycode.github.io/YuRichHUB](https://yurich-citycode.github.io/YuRichHUB/)
 
 ## Страницы
 
