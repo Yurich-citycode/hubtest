@@ -27,6 +27,12 @@
 
 `book/` — «RWA мы объясняем»: главы в markdown, сборка PDF — `book/build_pdf.py`.
 
+## Видео
+
+`video/` — студия видео в каноне бренда: HyperFrames (HTML → MP4) и Remotion (React → MP4),
+62 скилла из пяти открытых репозиториев и готовые ролики в `video/renders/`. Всё рендерится
+локально, без облаков. Установка — `cd video && bash setup.sh`, разбор репозиториев — `video/STUDY.md`.
+
 ## Разное
 
 - `rwa-series-posts.md` — серия постов про RWA с текстами и обложками

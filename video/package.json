@@ -1,0 +1,27 @@
+{
+  "name": "yurichhub-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Видео-студия YurichHub на HyperFrames. См. README.md",
+  "type": "module",
+  "scripts": {
+    "setup": "bash setup.sh",
+    "doctor": "node bin/doctor.mjs",
+    "provision": "node bin/provision.mjs",
+    "hf": "bash bin/hf.sh",
+    "lint": "bash bin/hf.sh lint projects/yurichhub-intro",
+    "render": "bash bin/hf.sh render projects/yurichhub-intro",
+    "preview": "bash bin/hf.sh preview projects/yurichhub-intro"
+  },
+  "dependencies": {
+    "gsap": "^3.14.2",
+    "hyperframes": "^0.8.147"
+  },
+  "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^2.1.2",
+    "@sparticuz/chromium": "^153.0.0",
+    "puppeteer-core": "^25.10.0"
+  },
+  "license": "UNLICENSED"
+}
