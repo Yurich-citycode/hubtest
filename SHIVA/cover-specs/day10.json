@@ -1,0 +1,35 @@
+{
+  "lang": "ru",
+  "module": "shiva",
+  "layout": "poster",
+  "format": "x",
+  "title": "НАНДИ",
+  "subtitle": "БЫК ЭТО ТРАНСПОРТ, А НЕ ЦЕЛЬ",
+  "body": "StonkFun: $1,5 млн протокольной выручки за сутки на 34-й день.",
+  "source": "SHIVA // ПЕПЕЛ И ПЁС",
+  "date": "10.2026",
+  "glitch": true,
+  "series": "SHIVA",
+  "stats": [
+    {
+      "value": "$1,5",
+      "label": "МЛН ВЫРУЧКИ ЗА ДЕНЬ",
+      "color": "gold"
+    },
+    {
+      "value": "34",
+      "label": "ДНЯ ПОСЛЕ ЗАПУСКА",
+      "color": "lime"
+    },
+    {
+      "value": "60",
+      "label": "% В BUYBACK",
+      "color": "ink"
+    },
+    {
+      "value": "06.09",
+      "label": "ДАТА РЕКОРДА",
+      "color": "pink"
+    }
+  ]
+}

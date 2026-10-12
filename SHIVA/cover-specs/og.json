@@ -1,0 +1,35 @@
+{
+  "lang": "ru",
+  "module": "shiva",
+  "layout": "poster",
+  "format": "x",
+  "title": "ПЕПЕЛ И ПЁС",
+  "subtitle": "SHIVA × SHIB · 14 ГЛАВ · ОДИН КОТЁЛ",
+  "body": "1% с каждого перевода идёт в общий котёл и возвращается холдерам шиба-ину.",
+  "source": "SHIVA // SHIVAINU ON STONKFUN",
+  "date": "10.2026",
+  "glitch": true,
+  "series": "SHIVA",
+  "stats": [
+    {
+      "value": "1%",
+      "label": "ПЕПЛА",
+      "color": "lime"
+    },
+    {
+      "value": "97,5",
+      "label": "% ХОЛДЕРАМ",
+      "color": "gold"
+    },
+    {
+      "value": "$20",
+      "label": "ПОРОГ",
+      "color": "pink"
+    },
+    {
+      "value": "85",
+      "label": "SOL ДО RAYDIUM",
+      "color": "ink"
+    }
+  ]
+}

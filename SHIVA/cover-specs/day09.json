@@ -1,0 +1,35 @@
+{
+  "lang": "ru",
+  "module": "shiva",
+  "layout": "poster",
+  "format": "x",
+  "title": "ЗМЕЯ",
+  "subtitle": "ОНА НЕ ДУШИТ ТОГО, КТО НЕ ДЁРГАЕТСЯ",
+  "body": "Микро-капа на кривой. Лимитки, маленький размер, никаких иллюзий.",
+  "source": "SHIVA // ПЕПЕЛ И ПЁС",
+  "date": "10.2026",
+  "glitch": true,
+  "series": "SHIVA",
+  "stats": [
+    {
+      "value": "$7 729",
+      "label": "КАПИТАЛИЗАЦИЯ",
+      "color": "lime"
+    },
+    {
+      "value": "$391",
+      "label": "ОБЪЁМ ЗА СУТКИ",
+      "color": "pink"
+    },
+    {
+      "value": "38",
+      "label": "ХОЛДЕРОВ",
+      "color": "ink"
+    },
+    {
+      "value": "5,01",
+      "label": "% У ТОП-1",
+      "color": "gold"
+    }
+  ]
+}

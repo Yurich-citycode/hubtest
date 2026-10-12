@@ -1,0 +1,35 @@
+{
+  "lang": "ru",
+  "module": "shiva",
+  "layout": "poster",
+  "format": "x",
+  "title": "85 SOL",
+  "subtitle": "СТУПЕНЬ, А НЕ КАЛЕНДАРЬ",
+  "body": "Кривая набирает порог — пара уходит в пул Raydium автоматически.",
+  "source": "SHIVA // ПЕПЕЛ И ПЁС",
+  "date": "10.2026",
+  "glitch": true,
+  "series": "SHIVA",
+  "stats": [
+    {
+      "value": "85",
+      "label": "SOL · ПОРОГ КРИВОЙ",
+      "color": "gold"
+    },
+    {
+      "value": "1",
+      "label": "ПУЛ RAYDIUM",
+      "color": "lime"
+    },
+    {
+      "value": "0",
+      "label": "ОБЕЩАННЫХ ДАТ",
+      "color": "pink"
+    },
+    {
+      "value": "24/7",
+      "label": "КРИВАЯ РАБОТАЕТ",
+      "color": "ink"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "lang": "ru",
+  "module": "shiva",
+  "layout": "poster",
+  "format": "x",
+  "title": "ПОРОГ",
+  "subtitle": "$20 НА КОШЕЛЬКЕ И ТЫ ВНУТРИ",
+  "body": "Доля пропорциональна балансу. Не билет, не тир, не снапшот.",
+  "source": "SHIVA // ПЕПЕЛ И ПЁС",
+  "date": "10.2026",
+  "glitch": true,
+  "series": "SHIVA",
+  "stats": [
+    {
+      "value": "$20",
+      "label": "ПОРОГ ВХОДА",
+      "color": "gold"
+    },
+    {
+      "value": "100",
+      "label": "% ПО БАЛАНСУ",
+      "color": "lime"
+    },
+    {
+      "value": "0",
+      "label": "ВАЙТЛИСТОВ",
+      "color": "pink"
+    },
+    {
+      "value": "0",
+      "label": "СНАПШОТОВ",
+      "color": "ink"
+    }
+  ]
+}
