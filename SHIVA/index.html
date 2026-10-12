@@ -3,335 +3,214 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SHIVA — Пепел и Пёс</title>
-<meta name="description" content="Интерактивный путь SHIVA: задания, ритуалы, ачивки и мини-книга «Пепел и Пёс». SHIVA в паре с канонической SHIB на Solana.">
+<title>SHIVA — спокойствие имеет механику</title>
+<meta name="description" content="История Шивы и Шибы стала системой: 1% движения SHIVA превращается в SHIB, наполняет общую чашу и автоматически распределяется между подходящими холдерами.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="SHIVA — Пепел и Пёс">
-<meta property="og:description" content="Рынок кричит. Шива не двигается. Пройди путь, выполни задания и прочитай историю в 14 главах.">
+<meta property="og:title" content="SHIVA — спокойствие имеет механику">
+<meta property="og:description" content="Пепел, спутник и общая чаша. Пойми механику, проверь риски и прочитай историю.">
 <meta property="og:url" content="https://yurich-citycode.github.io/YuRichHUB/SHIVA/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@ShivaSolGod">
-<meta name="theme-color" content="#080b0e">
+<meta name="theme-color" content="#0a090b">
 <link rel="canonical" href="https://yurich-citycode.github.io/YuRichHUB/SHIVA/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --night:#080b0e;--night2:#0e1418;--panel:#11181d;--panel2:#151e24;
-  --ash:#d6d0c5;--muted:#89949a;--line:rgba(214,208,197,.14);
-  --fire:#f08b3e;--gold:#d9af55;--blue:#79c8d8;--shib:#f5a623;
-  --display:Impact,'Arial Narrow',sans-serif;--text:Inter,system-ui,-apple-system,'Segoe UI',sans-serif;
+ --night:#0a090b;--night2:#121014;--paper:#ded6ca;--muted:#8f8781;--line:rgba(222,214,202,.15);
+ --ember:#c85f38;--saffron:#e5a84c;--blue:#68c8cf;--violet:#322039;--shib:#f2a72b;
+ --serif:'Cormorant Garamond',Georgia,serif;--mono:'IBM Plex Mono','Courier New',monospace;
 }
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--night);color:var(--ash);font-family:var(--text)}
-html{scroll-behavior:smooth}body{overflow-x:hidden}button,a,input{font:inherit}button,a{touch-action:manipulation}
-button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-::selection{background:var(--gold);color:var(--night)}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.17;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E")}
-.bg{position:fixed;inset:0;overflow:hidden;pointer-events:none}.orb{position:absolute;border-radius:50%;filter:blur(2px)}
-.orb.a{width:65vw;height:65vw;left:-30vw;top:-30vw;background:radial-gradient(circle,rgba(217,175,85,.09),transparent 68%)}
-.orb.b{width:58vw;height:58vw;right:-25vw;bottom:-28vw;background:radial-gradient(circle,rgba(121,200,216,.08),transparent 70%)}
-.stars{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(214,208,197,.28) 0 1px,transparent 1.5px);background-size:67px 67px;mask-image:linear-gradient(to bottom,black,transparent 80%);opacity:.23}
-.wrap{width:min(1120px,calc(100% - 40px));margin:auto}.hidden{display:none!important}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--night)}body{margin:0;background:var(--night);color:var(--paper);font:500 18px/1.5 var(--serif);overflow-x:hidden}
+a{color:inherit}button,input{font:inherit}button,a{touch-action:manipulation}button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:4px}::selection{background:var(--saffron);color:var(--night)}
+.noise{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.14;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E")}.ash-canvas{position:fixed;inset:0;pointer-events:none;z-index:3;opacity:.52}.page{position:relative;z-index:5}.wrap{width:min(1180px,calc(100% - 38px));margin:auto}.mono{font:500 10px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.skip{position:fixed;z-index:200;left:12px;top:10px;padding:10px 13px;background:var(--blue);color:var(--night);font:600 10px var(--mono);transform:translateY(-160%)}.skip:focus{transform:none}
 
-/* welcome */
-.welcome{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(8,11,14,.97);padding:22px}
-.welcome-card{width:min(780px,100%);text-align:center;position:relative}.welcome-skip{position:fixed;right:18px;top:18px;border:1px solid var(--line);background:transparent;color:var(--muted);padding:10px 13px;cursor:pointer;text-transform:uppercase;font-size:10px;font-weight:900;letter-spacing:.1em}.welcome-skip:hover{color:var(--gold);border-color:var(--gold)}.sigil{width:150px;margin:0 auto 24px;display:block;filter:drop-shadow(0 0 35px rgba(217,175,85,.14))}
-.eyebrow{font-size:11px;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);font-weight:800}
-.welcome h1,.hero h1{font-family:var(--display);text-transform:uppercase;letter-spacing:.01em;line-height:.88;margin:18px 0;font-weight:900}
-.welcome h1{font-size:clamp(62px,13vw,142px)}.welcome p{font-size:clamp(17px,2vw,22px);line-height:1.55;color:#b9c0c1;max-width:650px;margin:0 auto 28px}
-.intentions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:24px 0}.intent{border:1px solid var(--line);background:transparent;color:var(--ash);padding:12px 18px;cursor:pointer;text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:.12em}
-.intent:hover,.intent.on{background:var(--gold);border-color:var(--gold);color:var(--night)}
+/* navigation */
+.topbar{position:fixed;z-index:80;left:0;right:0;top:0;height:66px;border-bottom:1px solid transparent;transition:.3s;background:linear-gradient(rgba(10,9,11,.8),transparent);display:flex;align-items:center}.topbar.scrolled{background:rgba(10,9,11,.88);border-color:var(--line);backdrop-filter:blur(16px)}.nav{width:min(1260px,calc(100% - 28px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}.wordmark{text-decoration:none;font:600 23px var(--serif);letter-spacing:.08em}.wordmark b{color:var(--saffron);font-weight:600}.nav-path{display:flex;align-items:center;gap:25px}.nav-path a{text-decoration:none;font:500 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.nav-path a:hover{color:var(--paper)}.nav-actions{display:flex;align-items:center;gap:8px}.lang{width:42px;height:36px;border:1px solid var(--line);background:rgba(10,9,11,.6);color:var(--paper);font:600 10px var(--mono);cursor:pointer}.book-top{border:1px solid var(--saffron);padding:9px 13px;text-decoration:none;font:600 9px var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--saffron)}
 
-/* buttons */
-.btn{border:1px solid var(--gold);background:var(--gold);color:var(--night);padding:13px 20px;display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;cursor:pointer;text-transform:uppercase;font-size:12px;font-weight:900;letter-spacing:.11em;box-shadow:5px 5px 0 rgba(240,139,62,.36);transition:.16s transform,.16s box-shadow,.16s background}
-.btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 rgba(240,139,62,.32)}.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(240,139,62,.32)}
-.btn.ghost{background:transparent;color:var(--ash);border-color:var(--line);box-shadow:none}.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}.btn.fire{background:var(--fire);border-color:var(--fire)}.btn.blue{background:var(--blue);border-color:var(--blue)}.btn.small{padding:9px 13px;font-size:10px}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+/* shared */
+.section{position:relative;padding:clamp(100px,13vw,180px) 0}.eyebrow{font:500 10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--saffron)}.display{font:600 clamp(60px,10vw,132px)/.82 var(--serif);letter-spacing:-.055em;margin:15px 0 28px}.display em{font-weight:500;color:var(--saffron)}.lead{font-size:clamp(21px,2.35vw,30px);line-height:1.48;color:#bdb5ae;max-width:760px}.rule{height:1px;background:var(--line)}.button{border:1px solid var(--saffron);background:var(--saffron);color:var(--night);padding:13px 18px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;font:600 10px var(--mono);letter-spacing:.11em;text-transform:uppercase;transition:.2s transform,.2s background}.button:hover{transform:translateY(-3px)}.button.ghost{background:transparent;color:var(--paper);border-color:var(--line)}.button.ghost:hover{border-color:var(--saffron);color:var(--saffron)}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}.reveal{opacity:0;transform:translateY(25px);transition:.8s opacity,.8s transform}.reveal.in{opacity:1;transform:none}
 
-/* shell */
-.app{min-height:100svh;position:relative}.topbar{height:74px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:20;border-bottom:1px solid var(--line)}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ash);font-family:var(--display);font-size:24px;letter-spacing:.05em}.logo span{color:var(--gold)}.logo svg{width:23px}
-.top-progress{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.mini-bar{width:90px;height:5px;background:var(--line)}.mini-bar i{display:block;height:100%;width:0;background:var(--gold);transition:.4s width}
-.views{min-height:calc(100svh - 146px)}.view{display:none;animation:viewIn .45s ease both;padding:54px 0 80px}.view.active{display:block}@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.bottomnav{position:fixed;z-index:30;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;background:rgba(14,20,24,.94);border:1px solid var(--line);backdrop-filter:blur(18px);padding:5px;box-shadow:0 20px 70px rgba(0,0,0,.45)}
-.navbtn{border:0;background:transparent;color:var(--muted);padding:10px 17px;cursor:pointer;font-size:10px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}.navbtn.on{background:var(--gold);color:var(--night)}
+/* opening */
+.opening{min-height:100svh;display:grid;align-items:end;overflow:hidden;background:radial-gradient(circle at 72% 34%,rgba(229,168,76,.13),transparent 27%),radial-gradient(circle at 15% 72%,rgba(104,200,207,.08),transparent 28%),linear-gradient(145deg,#0a090b,#171019 62%,#0a1113)}.opening:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 49.8%,rgba(222,214,202,.08) 50%,transparent 50.2%)}.hero{position:relative;z-index:4;padding:150px 0 max(72px,9vh);display:grid;grid-template-columns:1.05fr .95fr;align-items:end;gap:50px}.hero h1{font:600 clamp(72px,12.6vw,166px)/.75 var(--serif);letter-spacing:-.065em;margin:18px 0 32px}.hero h1 span{display:block;color:var(--saffron);font-style:italic;font-weight:500}.hero-copy{font-size:clamp(20px,2vw,27px);line-height:1.5;color:#c1b8b1;max-width:650px}.hero-copy b{color:var(--paper);font-weight:600}.hero-art{position:relative;height:min(74vh,760px);min-height:500px;display:grid;place-items:center}.halo{position:absolute;width:min(520px,43vw);aspect-ratio:1;border-radius:50%;border:1px solid rgba(229,168,76,.24);box-shadow:0 0 120px rgba(229,168,76,.05),inset 0 0 80px rgba(229,168,76,.04)}.halo:before,.halo:after{content:"";position:absolute;inset:10%;border:1px solid rgba(222,214,202,.08);transform:rotate(45deg)}.halo:after{inset:28%;border-color:rgba(104,200,207,.16)}.trident{width:min(360px,73vw);position:relative;z-index:2;filter:drop-shadow(0 0 30px rgba(229,168,76,.12))}.trident .pulse{animation:pulse 3s ease-in-out infinite;transform-origin:center}@keyframes pulse{50%{opacity:.32}}.hero-foot{position:absolute;left:19px;bottom:25px;writing-mode:vertical-rl;font:500 8px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:#716a67}.scroll-mark{position:absolute;right:28px;bottom:28px;width:1px;height:82px;background:linear-gradient(var(--saffron),transparent)}
 
-/* home */
-.hero{display:grid;grid-template-columns:1.1fr .9fr;min-height:calc(100svh - 200px);align-items:center;gap:50px}.hero h1{font-size:clamp(68px,11vw,150px)}.hero h1 em{display:block;color:var(--gold);font-style:normal}.hero-copy{font-size:clamp(17px,1.9vw,22px);line-height:1.55;color:#b9c0c1;max-width:600px}.hero-copy b{color:var(--ash)}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.visual{position:relative;min-height:520px;display:grid;place-items:center}.moon{position:absolute;width:min(430px,85vw);aspect-ratio:1;border-radius:50%;border:1px solid rgba(217,175,85,.25);background:radial-gradient(circle at 42% 36%,rgba(217,175,85,.11),rgba(14,20,24,.2) 57%,transparent 58%);box-shadow:inset 0 0 70px rgba(217,175,85,.05),0 0 110px rgba(217,175,85,.04)}
-.trident{width:min(280px,64vw);position:relative;z-index:2;filter:drop-shadow(0 0 28px rgba(217,175,85,.14));animation:float 5s ease-in-out infinite}@keyframes float{50%{transform:translateY(-10px)}}
-.dog-mark{position:absolute;right:5%;bottom:12%;z-index:3;font-family:var(--display);font-size:14px;letter-spacing:.18em;color:var(--shib);text-transform:uppercase;border:1px solid rgba(245,166,35,.35);padding:8px 11px;transform:rotate(-3deg)}
-.promise{border-top:1px solid var(--line);padding-top:18px;margin-top:28px;display:flex;gap:20px;flex-wrap:wrap}.promise span{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:800}.promise b{color:var(--ash)}
+/* premise */
+.premise{background:#0c0b0d}.premise-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(50px,10vw,150px);align-items:start}.sticky{position:sticky;top:110px}.premise-copy{font-size:clamp(28px,4.5vw,60px);line-height:1.14;letter-spacing:-.025em}.premise-copy p{margin:0 0 1em}.premise-copy p:nth-child(2){color:#9d9590;margin-left:12%}.premise-copy p:nth-child(3){color:var(--blue);margin-left:24%}.three-s{margin-top:90px;border-top:1px solid var(--line)}.s-line{display:grid;grid-template-columns:150px 1fr auto;gap:24px;align-items:baseline;padding:23px 0;border-bottom:1px solid var(--line);text-decoration:none}.s-line strong{font:600 clamp(28px,4vw,53px)/1 var(--serif)}.s-line span{color:var(--muted);font-size:17px}.s-line i{font:500 10px var(--mono);font-style:normal;color:var(--saffron)}.s-line:hover strong{color:var(--saffron)}
 
-/* generic */
-.screen-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:32px}.screen-head h2{font-family:var(--display);font-size:clamp(48px,8vw,92px);line-height:.9;margin:8px 0;text-transform:uppercase}.screen-head p{color:var(--muted);max-width:520px;line-height:1.55}.day-stamp{font-family:var(--display);font-size:64px;color:var(--gold);line-height:1;text-align:right}.day-stamp small{display:block;font-family:var(--text);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:8px}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.card{background:linear-gradient(145deg,rgba(21,30,36,.96),rgba(14,20,24,.96));border:1px solid var(--line);padding:24px;position:relative;overflow:hidden}.card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold)}.card.fire:before{background:var(--fire)}.card.blue:before{background:var(--blue)}.card.shib:before{background:var(--shib)}.card h3{margin:0 0 8px;text-transform:uppercase;font-family:var(--display);font-size:30px;letter-spacing:.03em}.card p{color:#aeb7b9;line-height:1.55;margin:0 0 18px}.span7{grid-column:span 7}.span5{grid-column:span 5}.span12{grid-column:1/-1}
+/* mechanism */
+.mechanism{background:linear-gradient(180deg,#111015,#17101b 62%,#0e1517)}.mechanism-head{max-width:990px}.cycle-layout{display:grid;grid-template-columns:.88fr 1.12fr;gap:clamp(35px,7vw,90px);margin-top:90px;align-items:center}.flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}.flow li{position:relative;padding:23px 0 23px 70px;border-bottom:1px solid var(--line);opacity:.34;transition:.35s opacity,.35s transform}.flow li:before{content:attr(data-no);position:absolute;left:2px;top:23px;font:600 34px/1 var(--serif);color:var(--muted)}.flow li strong{display:block;font:600 clamp(25px,3.2vw,39px)/1 var(--serif);margin-bottom:5px}.flow li span{color:var(--muted);font-size:15px;line-height:1.5}.flow li.active{opacity:1;transform:translateX(9px)}.flow li.active:before{color:var(--saffron)}.flow li.done{opacity:.75}.flow li.done:after{content:"✓";position:absolute;right:0;top:25px;color:var(--blue);font:600 12px var(--mono)}.cycle-side{text-align:center}.cycle-visual{position:relative;width:min(590px,100%);aspect-ratio:1.04;margin:auto}.cycle-visual svg{width:100%;height:100%;overflow:visible}.orbit-dash{stroke-dasharray:5 13;animation:orbit 24s linear infinite;transform-origin:350px 300px}@keyframes orbit{to{transform:rotate(360deg)}}.moving-token{opacity:0}.cycle-visual.stage-1 .moving-token{opacity:1;animation:tokenMove 1.2s ease both}@keyframes tokenMove{0%{transform:translate(-170px,-70px)}100%{transform:translate(0,0)}}.swap-flare{opacity:0;transform-origin:center}.cycle-visual.stage-2 .swap-flare{opacity:1;animation:flare .8s ease both}@keyframes flare{50%{transform:scale(1.7);opacity:.85}to{transform:scale(1);opacity:.25}}.bowl-liquid{transform:scaleY(.05);transform-origin:center bottom;transition:1s transform ease;opacity:.9}.cycle-visual.stage-3 .bowl-liquid,.cycle-visual.stage-4 .bowl-liquid{transform:scaleY(1)}.reward-streams{opacity:0;transition:.6s opacity}.cycle-visual.stage-4 .reward-streams{opacity:1}.cycle-status{min-height:46px;margin:4px auto 15px;color:var(--blue);font:500 10px/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase}.cycle-note{max-width:520px;margin:18px auto 0;color:var(--muted);font:400 11px/1.65 var(--mono)}
 
-/* mission */
-.mission-name{font-family:var(--display);font-size:clamp(36px,5vw,60px);line-height:1;text-transform:uppercase;margin:14px 0;color:var(--ash)}.mission-why{font-size:15px;color:var(--muted);max-width:55ch}.mission-done{display:none;color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:11px;margin-top:15px}.card.done .mission-done{display:block}.card.done .mission-btn{display:none}
-.still{display:grid;place-items:center;text-align:center}.timer{width:150px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;position:relative;margin:4px auto 18px;background:conic-gradient(var(--blue) var(--p,0%),var(--line) 0)}.timer:after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--panel)}.timer strong{position:relative;z-index:2;font-family:var(--display);font-size:48px;color:var(--ash)}
-.ash-form{display:flex;gap:8px}.ash-form input{min-width:0;flex:1;background:#0a0f12;border:1px solid var(--line);color:var(--ash);padding:12px 13px}.ash-place{height:78px;position:relative;display:grid;place-items:center;color:var(--muted);font-size:13px;border:1px dashed var(--line);margin-top:14px;overflow:hidden}.particle{position:absolute;width:5px;height:5px;background:var(--fire);border-radius:50%;animation:burn 1.3s ease-out forwards}@keyframes burn{to{transform:translate(var(--dx),-85px) scale(0);opacity:0}}
-.mantra{font-family:Georgia,serif;font-size:25px;line-height:1.35;color:var(--ash);min-height:96px;display:flex;align-items:center}.action-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+/* benefit */
+.benefit{background:var(--paper);color:#181519}.benefit .eyebrow{color:#8e4b30}.benefit .display em{color:#9d502e}.benefit-intro{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:end}.benefit-intro .lead{color:#534d49}.ledger{margin-top:85px;border-top:1px solid rgba(24,21,25,.2)}.ledger-row{display:grid;grid-template-columns:120px 1fr minmax(220px,.55fr);gap:25px;align-items:center;padding:28px 0;border-bottom:1px solid rgba(24,21,25,.2)}.ledger-no{font:500 10px var(--mono);letter-spacing:.12em;color:#776e69}.ledger-row strong{font:600 clamp(34px,5vw,65px)/.92 var(--serif);letter-spacing:-.03em}.ledger-row p{margin:0;color:#5d5652;font-size:16px}.honest{margin:70px 0 0 auto;width:min(760px,100%);border-left:3px solid #9d502e;padding:8px 0 8px 28px}.honest h3{font:600 clamp(35px,5vw,62px)/1 var(--serif);margin:0 0 13px}.honest p{font-size:19px;color:#504a46;margin:0;line-height:1.55}
 
-/* bowl */
-.bowl-intro{text-align:center;max-width:760px;margin:0 auto 40px}.bowl-intro h2{font-family:var(--display);font-size:clamp(55px,9vw,110px);margin:8px 0;text-transform:uppercase;line-height:.9}.bowl-intro p{font-size:clamp(17px,2vw,21px);line-height:1.6;color:#b7c0c2}.bowl-intro strong{color:var(--shib)}
-.bowl-scene{max-width:900px;margin:auto;position:relative}.bowl-art{width:min(430px,85vw);margin:auto;display:block}.liquid{transform-origin:center bottom;transform:scaleY(0);transition:1.1s transform ease;opacity:.9}.bowl-scene.poured .liquid{transform:scaleY(1)}
-.flow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}.flow-step{border:1px solid var(--line);background:var(--panel);padding:16px;opacity:.38;transform:translateY(7px);transition:.35s}.flow-step.on{opacity:1;transform:none;border-color:rgba(245,166,35,.45)}.flow-step b{display:block;color:var(--shib);font-family:var(--display);font-size:28px;margin-bottom:5px}.flow-step span{font-size:13px;color:#aeb7b9;line-height:1.45}.truth{margin:28px auto 0;max-width:760px;border-left:3px solid var(--blue);padding:4px 0 4px 18px;color:#b7c0c2;line-height:1.6}.truth b{color:var(--ash)}.official{max-width:760px;margin:24px auto 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+/* pause */
+.discipline{background:radial-gradient(circle at 20% 40%,rgba(104,200,207,.08),transparent 30%),#0a0d0f}.discipline-layout{display:grid;grid-template-columns:1fr .9fr;gap:clamp(50px,9vw,130px);align-items:center}.pause-wrap{text-align:center}.pause-ring{--p:0%;width:min(330px,72vw);aspect-ratio:1;border-radius:50%;margin:auto;display:grid;place-items:center;padding:38px;background:conic-gradient(var(--blue) var(--p),rgba(222,214,202,.1) 0);position:relative}.pause-ring:before{content:"";position:absolute;inset:8px;border-radius:50%;background:#0b1012}.pause-inside{position:relative;z-index:2}.pause-number{font:600 96px/.8 var(--serif);color:var(--paper)}.pause-prompt{min-height:65px;margin-top:16px;color:#aaa39d;font-size:16px;line-height:1.4}.pause-wrap .button{margin-top:24px}.checklist{margin-top:50px;border-top:1px solid var(--line)}.check{display:flex;gap:17px;padding:18px 0;border-bottom:1px solid var(--line);color:#aaa29d}.check b{color:var(--saffron);font:500 12px var(--mono)}
 
-/* achievements */
-.badge-head{display:flex;align-items:center;gap:20px}.big-progress{font-family:var(--display);font-size:72px;color:var(--gold);line-height:1}.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.badge{min-height:205px;border:1px solid var(--line);background:var(--panel);padding:20px;display:flex;flex-direction:column;position:relative;filter:grayscale(1);opacity:.38;transition:.35s}.badge.unlocked{filter:none;opacity:1;border-color:rgba(217,175,85,.36);box-shadow:inset 0 0 50px rgba(217,175,85,.03)}.badge-icon{width:58px;height:58px;border:1px solid var(--line);display:grid;place-items:center;font-size:26px;color:var(--gold);margin-bottom:24px}.badge h3{font-family:var(--display);text-transform:uppercase;font-size:24px;margin:auto 0 5px}.badge p{font-size:12px;color:var(--muted);line-height:1.45;margin:0}.badge-state{position:absolute;right:12px;top:12px;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:900}.badge.unlocked .badge-state{color:var(--gold)}.fine{font-size:12px;color:var(--muted);line-height:1.55;margin-top:22px}
+/* book */
+.book-section{background:linear-gradient(145deg,#171014,#27151b 55%,#101719);overflow:hidden}.book-section:before{content:"ПЕПЕЛ";position:absolute;right:-2vw;top:8%;font:600 23vw/.7 var(--serif);color:rgba(222,214,202,.025);pointer-events:none}.book-layout{display:grid;grid-template-columns:1.12fr .88fr;gap:70px;align-items:end;position:relative}.book-quote{font:italic 500 clamp(31px,4.7vw,62px)/1.18 var(--serif);color:#ddd3cb;margin:0}.editions{border-top:1px solid var(--line)}.edition{display:flex;justify-content:space-between;align-items:center;gap:25px;padding:22px 0;border-bottom:1px solid var(--line);text-decoration:none}.edition strong{font:600 35px var(--serif)}.edition span{font:500 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--saffron)}.edition:hover strong{color:var(--saffron)}
 
-/* overlays */
-.toast{position:fixed;z-index:200;left:50%;bottom:95px;transform:translate(-50%,20px);opacity:0;background:var(--gold);color:var(--night);padding:12px 18px;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;transition:.25s;pointer-events:none;box-shadow:6px 6px 0 rgba(240,139,62,.35)}.toast.on{opacity:1;transform:translate(-50%,0)}
-.earned{position:fixed;inset:0;z-index:190;background:rgba(8,11,14,.88);display:none;place-items:center;padding:20px}.earned.on{display:grid}.earned-card{width:min(430px,100%);background:var(--panel);border:1px solid var(--gold);padding:34px;text-align:center;box-shadow:12px 12px 0 rgba(240,139,62,.18);animation:badgeIn .45s ease both}@keyframes badgeIn{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}.earned-icon{font-size:52px;color:var(--gold)}.earned h2{font-family:var(--display);font-size:42px;text-transform:uppercase;margin:12px 0 5px}.earned p{color:var(--muted);line-height:1.5}
+/* footer */
+.footer{background:#070708;padding:85px 0 max(90px,env(safe-area-inset-bottom));border-top:1px solid var(--line)}.footer-top{display:flex;justify-content:space-between;gap:45px;align-items:flex-end;flex-wrap:wrap}.footer-title{font:600 clamp(50px,8vw,100px)/.82 var(--serif);margin:0}.footer-links{display:flex;gap:18px;flex-wrap:wrap}.footer-links a{font:500 9px var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-decoration:none}.footer-links a:hover{color:var(--saffron)}.contract{margin-top:55px;padding-top:18px;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;color:#696360;font:400 8px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase}.contract code{color:#8d8580;word-break:break-all}.copy{border:1px solid var(--line);background:transparent;color:#9d9690;padding:8px 10px;cursor:pointer;font:500 8px var(--mono);text-transform:uppercase}.toast{position:fixed;z-index:200;left:50%;bottom:24px;transform:translate(-50%,18px);opacity:0;background:var(--saffron);color:var(--night);padding:11px 16px;font:600 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;transition:.25s;pointer-events:none}.toast.on{opacity:1;transform:translate(-50%,0)}
 
-@media(max-width:850px){.hero{grid-template-columns:1fr}.visual{min-height:390px;order:-1}.hero h1{text-align:center}.hero-copy{text-align:center;margin:auto}.hero-actions,.promise{justify-content:center}.grid{grid-template-columns:1fr}.span7,.span5,.span12{grid-column:1}.flow-steps{grid-template-columns:1fr 1fr}.badges{grid-template-columns:1fr 1fr}.screen-head{align-items:flex-start}.day-stamp{font-size:46px}.top-progress span{display:none}}
-@media(max-width:560px){.wrap{width:min(100% - 26px,1120px)}.topbar{height:62px}.logo{font-size:20px}.view{padding-top:34px}.bottomnav{width:calc(100% - 20px);justify-content:stretch}.navbtn{flex:1;padding:10px 4px;font-size:8px}.visual{min-height:310px}.trident{width:190px}.hero h1{font-size:64px}.screen-head{display:block}.day-stamp{text-align:left;margin-top:18px}.flow-steps,.badges{grid-template-columns:1fr}.ash-form{display:grid}.welcome h1{font-size:65px}.card{padding:20px}.mantra{font-size:22px}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+@media(max-width:820px){
+ .nav-path{display:none}.hero{grid-template-columns:1fr;padding-top:115px}.hero-copy{max-width:560px}.hero-art{height:54vh;min-height:380px;order:-1;margin-bottom:-55px}.halo{width:min(500px,85vw)}.premise-grid,.cycle-layout,.benefit-intro,.discipline-layout,.book-layout{grid-template-columns:1fr}.sticky{position:static}.premise-copy p:nth-child(2),.premise-copy p:nth-child(3){margin-left:0}.s-line{grid-template-columns:105px 1fr}.s-line i{display:none}.cycle-layout{margin-top:55px}.cycle-side{order:-1}.benefit-intro{gap:20px}.ledger-row{grid-template-columns:52px 1fr}.ledger-row p{grid-column:2}.discipline-layout{gap:65px}.book-layout{gap:55px}.contract{grid-template-columns:1fr}.contract .copy{justify-self:start}.book-top{display:none}
+}
+@media(max-width:500px){body{font-size:16px}.wrap{width:min(100% - 28px,1180px)}.topbar{height:58px}.hero{padding-bottom:64px}.hero h1{font-size:67px}.hero-art{min-height:330px}.display{font-size:58px}.section{padding:105px 0}.s-line{grid-template-columns:1fr;padding:20px 0;gap:6px}.s-line span{font-size:15px}.flow li{padding-left:53px}.cycle-visual{width:110%;margin-left:-5%}.ledger-row strong{font-size:38px}.pause-number{font-size:78px}.edition strong{font-size:29px}.hero-foot,.scroll-mark{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.ash-canvas{display:none}}
 </style>
 </head>
 <body>
-<div class="bg" aria-hidden="true"><div class="orb a"></div><div class="orb b"></div><div class="stars"></div></div>
+<a class="skip" href="#main" data-i18n="skip">К содержанию</a>
+<canvas class="ash-canvas" id="ash-canvas" aria-hidden="true"></canvas><div class="noise" aria-hidden="true"></div>
+<div class="page">
+<header class="topbar" id="topbar"><nav class="nav" aria-label="Главная навигация">
+ <a class="wordmark" href="#top">SHI<b>VA</b></a>
+ <div class="nav-path"><a href="#meaning" data-i18n="navMeaning">Смысл</a><a href="#mechanism" data-i18n="navMechanism">Механика</a><a href="#benefit" data-i18n="navBenefit">Польза</a><a href="#discipline" data-i18n="navDiscipline">Третий глаз</a></div>
+ <div class="nav-actions"><button class="lang" id="lang" aria-label="Switch language">EN</button><a class="book-top book-link" href="book.html" data-i18n="navBook">Книга ↗</a></div>
+</nav></header>
 
-<section class="welcome" id="welcome">
-  <button class="welcome-skip" id="welcome-skip" type="button">Пропустить заставку ×</button>
-  <div class="welcome-card">
-    <svg class="sigil" viewBox="0 0 160 190" aria-hidden="true">
-      <circle cx="80" cy="82" r="67" fill="none" stroke="#d9af55" opacity=".24"/>
-      <path d="M80 22v120M39 47c0 42 18 55 41 68M121 47c0 42-18 55-41 68M25 117h110v12H25zM39 47V29M80 22V4M121 47V29" fill="none" stroke="#d9af55" stroke-width="3"/>
-      <circle cx="39" cy="24" r="5" fill="#f08b3e"/><circle cx="80" cy="5" r="5" fill="#79c8d8"/><circle cx="121" cy="24" r="5" fill="#f5a623"/>
-      <path d="M51 161c13-11 22-13 29-4 7-9 16-7 29 4-9 18-49 18-58 0z" fill="none" stroke="#f5a623" stroke-width="2"/>
-    </svg>
-    <div class="eyebrow">SHIVA · Путь начинается внутри</div>
-    <h1>ПЕПЕЛ<br>И ПЁС</h1>
-    <p>Рынок будет шуметь. Твоя задача — не стать тише рынка. Твоя задача — услышать себя внутри него.</p>
-    <div class="eyebrow" style="color:var(--muted)">Что ты ищешь?</div>
-    <div class="intentions" id="intentions">
-      <button class="intent" data-intent="спокойствие">Спокойствие</button>
-      <button class="intent" data-intent="ясность">Ясность</button>
-      <button class="intent" data-intent="смелость">Смелость</button>
-    </div>
-    <button class="btn" id="begin">Начать путь</button>
+<main id="main">
+<section class="opening" id="top">
+ <div class="wrap hero">
+  <div class="hero-text reveal">
+   <div class="eyebrow" data-i18n="heroEyebrow">Пепел и Пёс · история продолжается</div>
+   <h1 data-i18n="heroTitle">Спокойствие<span>имеет механику.</span></h1>
+   <p class="hero-copy" data-i18n="heroCopy"><b>SHIVA</b> — не обещание победить рынок. Это история и система, где движение оставляет след, след становится SHIB, а общая чаша возвращается к тем, кто остаётся.</p>
+   <div class="actions"><a class="button" href="#mechanism" data-i18n="understand">Понять Чашу</a><a class="button ghost book-link" href="book.html" data-i18n="readStory">Читать историю</a></div>
   </div>
+  <div class="hero-art reveal" aria-hidden="true">
+   <div class="halo"></div>
+   <svg class="trident" viewBox="0 0 360 590"><g fill="none" stroke="#e5a84c" stroke-width="4"><path d="M180 58v420M75 110c0 140 52 177 105 235M285 110c0 140-52 177-105 235M48 343h264v26H48zM75 110V62M180 58V12M285 110V62"/><path opacity=".22" d="M180 510c-64 0-101 16-101 36s37 33 101 33 101-13 101-33-37-36-101-36z"/></g><g class="pulse"><circle cx="75" cy="50" r="11" fill="#c85f38"/><circle cx="180" cy="12" r="11" fill="#68c8cf"/><circle cx="285" cy="50" r="11" fill="#f2a72b"/></g><path d="M128 526c22-20 38-23 52-7 14-16 30-13 52 7-17 31-87 31-104 0z" fill="none" stroke="#f2a72b" stroke-width="3"/><circle cx="157" cy="523" r="4" fill="#f2a72b"/><circle cx="203" cy="523" r="4" fill="#f2a72b"/></svg>
+  </div>
+ </div><div class="hero-foot" data-i18n="vertical">Шива · Шиба · общая чаша</div><div class="scroll-mark"></div>
 </section>
 
-<div class="app" id="app">
-  <header class="topbar wrap">
-    <a class="logo" href="#home" data-go="home" aria-label="SHIVA — домой">
-      <svg viewBox="0 0 32 38" aria-hidden="true"><path d="M16 6v24M7 11c0 9 4 12 9 15M25 11c0 9-4 12-9 15M3 26h26v4H3zM7 11V5M16 6V1M25 11V5" fill="none" stroke="#d9af55" stroke-width="2"/></svg>
-      SHI<span>VA</span>
-    </a>
-    <div class="top-progress"><span id="intent-label">Путь</span><div class="mini-bar"><i id="mini-progress"></i></div><b id="badge-count">0/8</b></div>
-  </header>
+<section class="section premise" id="meaning"><div class="wrap premise-grid">
+ <div class="sticky reveal"><div class="eyebrow" data-i18n="meaningEyebrow">01 · Зачем это существует</div><h2 class="display" data-i18n="meaningTitle">Не шум.<br><em>Связь.</em></h2><p class="lead" data-i18n="meaningLead">Философия здесь не декорация. Она объясняет, почему спокойствие, проверка и участие важнее импульса.</p></div>
+ <div class="reveal"><div class="premise-copy"><p data-i18n="meaning1">Рынок требует реакции. Шива оставляет пространство между страхом и действием.</p><p data-i18n="meaning2">Шиба напоминает: спутник — не тот, кто обещает лёгкий путь. Это тот, кто остаётся рядом и видит путь целиком.</p><p data-i18n="meaning3">Чаша превращает эту связь в понятную механику.</p></div>
+  <div class="three-s">
+   <a class="s-line" href="https://x.com/sunrise" target="_blank" rel="noopener"><strong>Sunrise</strong><span data-i18n="sunriseLine">провёл каноническую SHIB на Solana</span><i>@sunrise ↗</i></a>
+   <a class="s-line" href="https://x.com/LaunchOnSF" target="_blank" rel="noopener"><strong>StonkFun</strong><span data-i18n="stonkLine">дал новой истории выбрать SHIB своей парой</span><i>@LaunchOnSF ↗</i></a>
+   <a class="s-line" href="https://x.com/ShivaSolGod" target="_blank" rel="noopener"><strong>SHIVA</strong><span data-i18n="shivaLine">связала движение токена с общей чашей SHIB</span><i>@ShivaSolGod ↗</i></a>
+  </div>
+ </div>
+</div></section>
 
-  <main class="views">
-    <section class="view active" id="view-home">
-      <div class="wrap hero">
-        <div>
-          <div class="eyebrow">SHIVA × SHIB · SOLANA</div>
-          <h1>РЫНОК<br><em>КРИЧИТ.</em><br>ШИВА — НЕТ.</h1>
-          <p class="hero-copy"><b>SHIVA</b> — история о спокойствии среди движения. Рядом идёт Шиба: не талисман и не декорация, а спутник и сама награда для тех, кто остаётся.</p>
-          <div class="hero-actions">
-            <button class="btn" data-go="path">Получить задание</button>
-            <a class="btn ghost book-link" href="book.html">Читать мини-книгу</a>
-          </div>
-          <div class="promise">
-            <span><b>14</b> глав</span><span><b>1</b> задание в день</span><span><b>8</b> ачивок</span><span><b>0</b> клеймов</span>
-          </div>
-        </div>
-        <div class="visual" aria-hidden="true">
-          <div class="moon"></div>
-          <svg class="trident" viewBox="0 0 250 390">
-            <path d="M125 72v250M50 105c0 88 35 118 75 143M200 105c0 88-35 118-75 143M29 251h192v20H29zM50 105V66M125 72V26M200 105V66" fill="none" stroke="#d9af55" stroke-width="4"/>
-            <circle cx="50" cy="55" r="8" fill="#f08b3e"/><circle cx="125" cy="15" r="8" fill="#79c8d8"/><circle cx="200" cy="55" r="8" fill="#f5a623"/>
-            <path d="M78 345c20-17 36-20 47-6 11-14 27-11 47 6-15 28-79 28-94 0z" fill="none" stroke="#f5a623" stroke-width="3"/>
-            <circle cx="106" cy="342" r="3" fill="#f5a623"/><circle cx="144" cy="342" r="3" fill="#f5a623"/>
-          </svg>
-          <div class="dog-mark">Спутник остаётся</div>
-        </div>
-      </div>
-    </section>
+<section class="section mechanism" id="mechanism"><div class="wrap">
+ <div class="mechanism-head reveal"><div class="eyebrow" data-i18n="mechanismEyebrow">02 · Чаша без тумана</div><h2 class="display" data-i18n="mechanismTitle">Один цикл.<br><em>Четыре шага.</em></h2><p class="lead" data-i18n="mechanismLead">Никаких поинтов и кнопки Claim. Запусти путь и посмотри, что именно происходит с каждым следом движения.</p></div>
+ <div class="cycle-layout reveal">
+  <ol class="flow" id="flow">
+   <li data-step="1" data-no="01"><strong data-i18n="flow1Title">Движение</strong><span data-i18n="flow1Copy">Покупка, продажа или перевод SHIVA оставляют 1%.</span></li>
+   <li data-step="2" data-no="02"><strong data-i18n="flow2Title">Превращение</strong><span data-i18n="flow2Copy">Налог копится в SHIVA. StonkFun меняет накопленное на каноническую SHIB.</span></li>
+   <li data-step="3" data-no="03"><strong data-i18n="flow3Title">Общая чаша</strong><span data-i18n="flow3Copy">SHIB собирается до следующего автоматического цикла распределения.</span></li>
+   <li data-step="4" data-no="04"><strong data-i18n="flow4Title">Возвращение</strong><span data-i18n="flow4Copy">SHIB автоматически идёт подходящим холдерам SHIVA пропорционально балансу.</span></li>
+  </ol>
+  <div class="cycle-side">
+   <div class="cycle-visual" id="cycle-visual" aria-hidden="true"><svg viewBox="0 0 700 670">
+    <circle class="orbit-dash" cx="350" cy="300" r="245" fill="none" stroke="rgba(222,214,202,.18)" stroke-width="2"/>
+    <path d="M115 245C195 145 275 365 350 245S510 150 585 250" fill="none" stroke="#4b2d4f" stroke-width="17" stroke-linecap="round"/><path d="M115 245C195 145 275 365 350 245S510 150 585 250" fill="none" stroke="#d69b48" stroke-width="4" stroke-linecap="round"/>
+    <circle class="moving-token" cx="350" cy="245" r="34" fill="#c85f38"/><text class="moving-token" x="350" y="251" text-anchor="middle" fill="#0a090b" font-family="monospace" font-size="17" font-weight="bold">1%</text>
+    <circle class="swap-flare" cx="350" cy="245" r="62" fill="none" stroke="#68c8cf" stroke-width="3"/>
+    <g transform="translate(190 330)"><path d="M20 0h280l-25 208c-5 45-44 79-90 79h-50c-46 0-85-34-90-79z" fill="#0b0b0d" stroke="#e5a84c" stroke-width="5"/><clipPath id="bowl-clip"><path d="M24 5h272l-24 199c-5 41-40 72-82 72h-60c-42 0-77-31-82-72z"/></clipPath><rect class="bowl-liquid" x="22" y="68" width="276" height="210" fill="url(#gold-liquid)" clip-path="url(#bowl-clip)"/><ellipse cx="160" cy="4" rx="140" ry="24" fill="#111015" stroke="#e5a84c" stroke-width="4"/></g>
+    <defs><linearGradient id="gold-liquid" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f5c460"/><stop offset="1" stop-color="#c65d36"/></linearGradient></defs>
+    <g class="reward-streams" fill="none" stroke="#68c8cf" stroke-width="3" stroke-linecap="round"><path d="M350 420C245 378 162 350 90 300"/><path d="M350 420C455 378 538 350 610 300"/><path d="M350 420V288"/></g><g class="reward-streams" fill="#68c8cf"><circle cx="90" cy="300" r="8"/><circle cx="610" cy="300" r="8"/><circle cx="350" cy="288" r="8"/></g>
+   </svg></div>
+   <div class="cycle-status" id="cycle-status" aria-live="polite" data-i18n="cycleReady">Чаша ждёт первого движения.</div>
+   <button class="button" id="cycle-btn" type="button" data-i18n="cycleStart">Запустить цикл</button>
+   <p class="cycle-note" data-i18n="cycleNote">До миграции пара находится на кривой StonkFun. После порога 85 SOL она автоматически переходит в пул Raydium. Место меняется — логика чаши остаётся.</p>
+  </div>
+ </div>
+</div></section>
 
-    <section class="view" id="view-path">
-      <div class="wrap">
-        <div class="screen-head">
-          <div><div class="eyebrow">Твой личный ритуал</div><h2>ПУТЬ СЕГОДНЯ</h2><p>Здесь нет таблицы лидеров. Никто не видит твой прогресс. Задания нужны не проекту — они нужны тебе.</p></div>
-          <div class="day-stamp" id="path-day">01<small>день пути</small></div>
-        </div>
-        <div class="grid">
-          <article class="card span7" id="mission-card">
-            <div class="eyebrow">Задание дня</div>
-            <div class="mission-name" id="mission-name"></div>
-            <p class="mission-why" id="mission-why"></p>
-            <button class="btn mission-btn" id="mission-done">Я сделал это</button>
-            <div class="mission-done">✓ Сегодняшний шаг пройден</div>
-          </article>
+<section class="section benefit" id="benefit"><div class="wrap">
+ <div class="benefit-intro reveal"><div><div class="eyebrow" data-i18n="benefitEyebrow">03 · Где здесь польза</div><h2 class="display" data-i18n="benefitTitle">Не игра.<br><em>SHIB.</em></h2></div><p class="lead" data-i18n="benefitLead">Финансовая логика не спрятана за ачивками: система собирает реальный quote asset пары и распределяет его без ручного запроса.</p></div>
+ <div class="ledger reveal">
+  <div class="ledger-row"><span class="ledger-no">01 / ASSET</span><strong data-i18n="value1Title">Не внутренние баллы</strong><p data-i18n="value1Copy">В чаше после обмена копится каноническая SHIB — актив, с которым SHIVA стоит в паре.</p></div>
+  <div class="ledger-row"><span class="ledger-no">02 / CLAIM</span><strong data-i18n="value2Title">Без Claim</strong><p data-i18n="value2Copy">Не нужно подключаться к неизвестной странице или успевать нажать кнопку. Распределение автоматическое.</p></div>
+  <div class="ledger-row"><span class="ledger-no">03 / SHARE</span><strong data-i18n="value3Title">Пропорционально</strong><p data-i18n="value3Copy">Участвуют кошельки с SHIVA стоимостью выше $20; доля зависит от баланса. Около 2,5% чаши покрывает сеть и операционную работу.</p></div>
+  <div class="ledger-row"><span class="ledger-no">04 / LOOP</span><strong data-i18n="value4Title">Новый цикл</strong><p data-i18n="value4Copy">После распределения движение снова начинает наполнять чашу. Период и размер заранее не фиксированы.</p></div>
+ </div>
+ <aside class="honest reveal"><h3 data-i18n="honestTitle">Честная граница</h3><p data-i18n="honestCopy">Механика распределения не отменяет риск токена и не гарантирует прибыль. Её польза в другом: правила видны заранее, награда приходит в SHIB, а для получения не нужен отдельный Claim.</p></aside>
+</div></section>
 
-          <article class="card blue span5 still">
-            <div class="eyebrow">Практика неподвижности</div>
-            <div class="timer" id="timer"><strong id="timer-value">11</strong></div>
-            <p>Одиннадцать секунд без графика, ленты и решения. Просто не двигайся.</p>
-            <button class="btn blue" id="still-btn">Начать тишину</button>
-          </article>
+<section class="section discipline" id="discipline"><div class="wrap discipline-layout">
+ <div class="reveal"><div class="eyebrow" data-i18n="disciplineEyebrow">04 · Практика третьего глаза</div><h2 class="display" data-i18n="disciplineTitle">Верни себе<br><em>11 секунд.</em></h2><p class="lead" data-i18n="disciplineLead">Полезный сайт не подталкивает к действию. Он помогает не отдать решение панике. Перед любым движением остановись и задай три вопроса.</p>
+  <div class="checklist"><div class="check"><b>01</b><span data-i18n="check1">Это мой план или чужой шум?</span></div><div class="check"><b>02</b><span data-i18n="check2">Я сверил адрес и понимаю 1% на перевод?</span></div><div class="check"><b>03</b><span data-i18n="check3">Я готов принять результат без обещаний?</span></div></div>
+ </div>
+ <div class="pause-wrap reveal"><div class="pause-ring" id="pause-ring"><div class="pause-inside"><div class="pause-number" id="pause-number">11</div><div class="pause-prompt" id="pause-prompt" data-i18n="pauseReady">Одиннадцать секунд между импульсом и решением.</div></div></div><button class="button ghost" id="pause-start" type="button" data-i18n="pauseStart">Начать паузу</button></div>
+</div></section>
 
-          <article class="card fire span7">
-            <div class="eyebrow">Ритуал пепла</div>
-            <h3>Что ты готов отпустить?</h3>
-            <p>Не токен. Не позицию. Одну мысль, которая заставляет тебя дёргаться.</p>
-            <form class="ash-form" id="ash-form"><input id="ash-input" maxlength="90" placeholder="Например: страх опоздать" autocomplete="off"><button class="btn fire" type="submit">Сжечь</button></form>
-            <div class="ash-place" id="ash-place">Здесь останется только пепел</div>
-          </article>
+<section class="section book-section" id="book"><div class="wrap book-layout">
+ <div class="reveal"><div class="eyebrow" data-i18n="bookEyebrow">05 · История, из которой всё выросло</div><h2 class="display" data-i18n="bookTitle">Пепел<br><em>и Пёс</em></h2><blockquote class="book-quote" data-i18n="bookQuote">«Тишина оказалась громче города».</blockquote></div>
+ <div class="editions reveal"><a class="edition" href="book.html"><strong data-i18n="ruEdition">Русское издание</strong><span data-i18n="ruEditionMeta">14 глав · читать ↗</span></a><a class="edition" href="book-en.html"><strong data-i18n="enEdition">English edition</strong><span data-i18n="enEditionMeta">14 chapters · read ↗</span></a></div>
+</div></section>
+</main>
 
-          <article class="card shib span5">
-            <div class="eyebrow">Твой голос</div>
-            <h3>Мантра дня</h3>
-            <div class="mantra" id="mantra">Нажми «создать» — и забери строку с собой.</div>
-            <div class="action-row"><button class="btn small" id="mantra-new">Создать</button><button class="btn small ghost" id="mantra-copy">Копировать</button><a class="btn small ghost" id="mantra-x" href="#" target="_blank" rel="noopener">В X</a></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="view" id="view-bowl">
-      <div class="wrap">
-        <div class="bowl-intro">
-          <div class="eyebrow">Самое важное — без сложных слов</div>
-          <h2>ОБЩАЯ ЧАША</h2>
-          <p>Сначала собирается SHIVA. Потом StonkFun меняет её на <strong>SHIB</strong>. Именно <strong>SHIB копится</strong> в чаше — и только потом автоматически приходит на кошельки холдеров SHIVA.</p>
-        </div>
-        <div class="bowl-scene" id="bowl-scene">
-          <svg class="bowl-art" viewBox="0 0 500 310" aria-hidden="true">
-            <defs><clipPath id="cup"><path d="M65 90h370c-7 128-79 190-185 190S72 218 65 90z"/></clipPath><linearGradient id="liq" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5a623"/><stop offset="1" stop-color="#d9af55"/></linearGradient></defs>
-            <ellipse cx="250" cy="91" rx="185" ry="34" fill="#0a0f12" stroke="#d9af55" stroke-width="4"/>
-            <path d="M65 90h370c-7 128-79 190-185 190S72 218 65 90z" fill="#11181d" stroke="#d9af55" stroke-width="4"/>
-            <g clip-path="url(#cup)" class="liquid"><rect x="60" y="122" width="380" height="165" fill="url(#liq)"/><ellipse cx="250" cy="122" rx="190" ry="30" fill="#ffc15a"/></g>
-            <path d="M170 300h160" stroke="#d9af55" stroke-width="4"/>
-            <text x="250" y="205" text-anchor="middle" font-family="Impact,Arial" font-size="58" fill="#080b0e" opacity=".9">SHIB</text>
-          </svg>
-          <div style="text-align:center"><button class="btn" id="pour">Показать путь чаши</button></div>
-          <div class="flow-steps" id="flow-steps">
-            <div class="flow-step"><b>01</b><span>Покупка, продажа или обычный перевод SHIVA оставляет 1% в механике токена.</span></div>
-            <div class="flow-step"><b>02</b><span>StonkFun периодически меняет накопленную SHIVA на каноническую SHIB.</span></div>
-            <div class="flow-step"><b>03</b><span>После обмена в общей чаше копится уже SHIB — не поинты и не обещание.</span></div>
-            <div class="flow-step"><b>04</b><span>Когда приходит время раздачи, SHIB автоматически уходит холдерам SHIVA пропорционально балансу.</span></div>
-          </div>
-          <div class="truth"><b>Ничего клеймить не нужно.</b> В раздаче участвуют кошельки, где SHIVA больше чем на $20. 97,5% чаши идёт холдерам, около 2,5% — на работу механики и сети. Создателю токена этот 1% не идёт.</div>
-          <div class="official">
-            <a class="btn small ghost" href="https://www.stonkfun.xyz/token/3YhtPb2TTr671vg6zoStj2896sQoSSNBKyJzvzHQogib" target="_blank" rel="noopener">Открыть SHIVA</a>
-            <a class="btn small ghost" href="https://x.com/ShivaSolGod" target="_blank" rel="noopener">X</a>
-            <a class="btn small ghost" href="https://t.me/shivasolcult" target="_blank" rel="noopener">Telegram</a>
-            <button class="btn small ghost" id="copy-ca">Скопировать CA</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="view" id="view-achievements">
-      <div class="wrap">
-        <div class="screen-head">
-          <div><div class="eyebrow">Не баллы. Следы пути.</div><h2>АЧИВКИ</h2><p>Они не дают токены и не влияют на раздачу SHIB. Это личные отметки, которые живут только в твоём браузере.</p></div>
-          <div class="badge-head"><div class="big-progress" id="big-count">0/8</div></div>
-        </div>
-        <div class="badges" id="badges"></div>
-        <p class="fine">Прогресс хранится локально на этом устройстве. Нет аккаунта, базы пользователей, рейтинга и скрытого сбора данных.</p>
-      </div>
-    </section>
-  </main>
-
-  <nav class="bottomnav" aria-label="Разделы сайта">
-    <button class="navbtn on" data-go="home">Начало</button>
-    <button class="navbtn" data-go="path">Путь</button>
-    <button class="navbtn" data-go="bowl">Чаша</button>
-    <button class="navbtn" data-go="achievements">Ачивки</button>
-  </nav>
+<footer class="footer"><div class="wrap"><div class="footer-top"><h2 class="footer-title" data-i18n="footerTitle">Сначала проверь.<br>Потом решай.</h2><div class="footer-links"><a href="https://x.com/ShivaSolGod" target="_blank" rel="noopener">X · Shiva</a><a href="https://t.me/shivasolcult" target="_blank" rel="noopener">Telegram</a><a href="https://x.com/sunrise" target="_blank" rel="noopener">X · Sunrise</a><a href="https://x.com/LaunchOnSF" target="_blank" rel="noopener">X · StonkFun</a><a href="https://www.stonkfun.xyz/token/3YhtPb2TTr671vg6zoStj2896sQoSSNBKyJzvzHQogib" target="_blank" rel="noopener" data-i18n="officialToken">Официальная страница токена</a></div></div>
+ <div class="contract"><span data-i18n="contractLabel">Для тех, кто спрашивает · контракт SHIVA</span><code>3YhtPb2TTr671vg6zoStj2896sQoSSNBKyJzvzHQogib</code><button class="copy" id="copy-ca" type="button" data-i18n="copy">Копировать</button></div>
+</div></footer>
 </div>
-
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div class="earned" id="earned" role="dialog" aria-modal="true" aria-labelledby="earned-title">
-  <div class="earned-card"><div class="earned-icon" id="earned-icon">◇</div><div class="eyebrow">Новая ачивка</div><h2 id="earned-title"></h2><p id="earned-copy"></p><button class="btn" id="earned-close">Продолжить</button></div>
-</div>
-
 <script>
-'use strict';
-const CA='3YhtPb2TTr671vg6zoStj2896sQoSSNBKyJzvzHQogib';
-const KEY='shiva-human-path-v1';
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const defaults={startedAt:0,intention:'',badges:{},missions:{},mantra:'',ashes:0,introDismissed:false};
-let state=defaults;
-try{state=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'));state.badges=state.badges||{};state.missions=state.missions||{}}catch(e){}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
-
-const achievements=[
- {id:'spark',icon:'✦',name:'Первая искра',copy:'Ты выбрал намерение и начал путь.'},
- {id:'still',icon:'◉',name:'Неподвижность',copy:'Ты выдержал одиннадцать секунд без движения.'},
- {id:'ash',icon:'△',name:'Пепел',copy:'Ты назвал то, что больше не должно управлять тобой.'},
- {id:'voice',icon:'〰',name:'Голос',copy:'Ты нашёл свою строку и вынес её наружу.'},
- {id:'bowl',icon:'◡',name:'Общая чаша',copy:'Ты понял путь: SHIVA превращается в SHIB, SHIB копится и приходит к холдерам.'},
- {id:'eye',icon:'◈',name:'Третий глаз',copy:'Ты забрал адрес и выбрал проверку вместо веры.'},
- {id:'reader',icon:'▤',name:'Проводник',copy:'Ты открыл мини-книгу и пошёл за историей.'},
- {id:'trident',icon:'Ψ',name:'Трезубец',copy:'Три действия стали одним намерением.'}
-];
-const missions=[
- ['Не открывай график один час','У рынка не должно быть доступа к каждой минуте твоей жизни. Верни себе один час.'],
- ['Напиши одну честную строку','Не о цене и не о токене. Напиши, что помогает тебе не принимать решения из страха.'],
- ['Расскажи про чашу без терминов','Объясни одному человеку: SHIVA собирается, меняется на SHIB, SHIB копится и потом сам приходит к холдерам.'],
- ['Прочитай одну главу медленно','Не листай. Остановись после последней строки и ответь себе, что в ней было про тебя.'],
- ['Поприветствуй нового человека','Культ начинается не с лозунга, а с того, как встречают того, кто пришёл позже.'],
- ['Проверь адрес сам','Не верь даже этому сайту. Скопируй CA и сверь его на странице токена StonkFun.'],
- ['Не спорь с красной свечой','Сегодня не объясняй рынку, почему он неправ. Наблюдай и не принимай решений на первом импульсе.'],
- ['Поделись главой без призыва купить','Отправь историю человеку, которому близка её мысль. Пусть токен останется на втором плане.'],
- ['Назови свой настоящий порог','Сколько тревоги ты готов выдержать, не предавая собственный план? Ответь цифрой только себе.'],
- ['Сделай один перевод осознанно','Перед подтверждением любой транзакции перечитай адрес, сумму и сеть. Третий глаз — это привычка.'],
- ['Оставь тишину в чате','Не заполняй паузу шумом. Иногда лучшее сообщение — то, которое ты не отправил.'],
- ['Сформулируй, зачем ты здесь','Не «ради иксов». Одно предложение, которое останется верным и после сильного движения рынка.'],
- ['Позови спутника','Путь легче, когда рядом есть тот, кто не подталкивает к панике. Пришли ему мини-книгу.'],
- ['Собери свой трезубец','Три острия на сегодня: спокойствие, проверка, действие. Сделай по одному маленькому шагу в каждом.']
-];
-const mantraA=['Я не бегу за шумом.','Пепел не конец.','Моё внимание принадлежит мне.','Тишина тоже действие.','Я смотрю третьим глазом.','Спутник остаётся рядом.'];
-const mantraB=['Я остаюсь там, где выбрал быть.','Я отпускаю то, что заставляет меня дёргаться.','Я проверяю, а не верю.','Я слышу барабан, но сам выбираю шаг.','Я не прошу у огня обещаний.','Я несу спокойствие дальше.'];
-
-let toastTimer;
-function toast(text){const t=$('#toast');t.textContent=text;t.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('on'),2100)}
-function copy(text){if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(()=>toast('Скопировано')).catch(()=>fallback(text))}else fallback(text)}
-function fallback(text){const e=document.createElement('textarea');e.value=text;e.style.position='fixed';e.style.top='-1000px';document.body.appendChild(e);e.select();try{document.execCommand('copy');toast('Скопировано')}catch(_){toast('Скопируй вручную')}e.remove()}
-function xurl(text){return'https://x.com/intent/tweet?text='+encodeURIComponent(text)}
-
-function unlock(id,silent=false){if(state.badges[id])return;state.badges[id]=Date.now();save();renderProgress();renderBadges();if(!silent){const a=achievements.find(x=>x.id===id);$('#earned-icon').textContent=a.icon;$('#earned-title').textContent=a.name;$('#earned-copy').textContent=a.copy;$('#earned').classList.add('on')}checkTrident()}
-function checkTrident(){const base=['spark','still','ash','voice','bowl','eye','reader'].filter(x=>state.badges[x]).length;if(base>=3&&!state.badges.trident)unlock('trident')}
-function renderProgress(){const n=achievements.filter(a=>state.badges[a.id]).length;$('#badge-count').textContent=n+'/8';$('#big-count').textContent=n+'/8';$('#mini-progress').style.width=(n/8*100)+'%';$('#intent-label').textContent=state.intention?('Ищу: '+state.intention):'Путь'}
-function renderBadges(){const box=$('#badges');box.innerHTML='';achievements.forEach(a=>{const on=!!state.badges[a.id],el=document.createElement('article');el.className='badge'+(on?' unlocked':'');el.innerHTML=`<span class="badge-state">${on?'Открыта':'Закрыта'}</span><div class="badge-icon">${a.icon}</div><h3>${a.name}</h3><p>${a.copy}</p>`;box.appendChild(el)})}
-
-function dayNumber(){if(!state.startedAt)return 1;return Math.max(1,Math.floor((Date.now()-state.startedAt)/86400000)+1)}
-function renderMission(){const day=dayNumber(),idx=(day-1)%missions.length,m=missions[idx],done=!!state.missions[day];$('#path-day').firstChild.textContent=String(day).padStart(2,'0');$('#mission-name').textContent=m[0];$('#mission-why').textContent=m[1];$('#mission-card').classList.toggle('done',done)}
-function go(name){$$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));$$('.navbtn').forEach(b=>b.classList.toggle('on',b.dataset.go===name));history.replaceState(null,'','#'+name);window.scrollTo({top:0,behavior:'smooth'});if(name==='achievements')renderBadges()}
-
-$$('[data-intent]').forEach(b=>b.addEventListener('click',()=>{$$('[data-intent]').forEach(x=>x.classList.remove('on'));b.classList.add('on');state.intention=b.dataset.intent}));
-function dismissWelcome(){state.introDismissed=true;save();$('#welcome').classList.add('hidden')}
-$('#welcome-skip').addEventListener('click',()=>{dismissWelcome();go('home')});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#welcome').classList.contains('hidden')){dismissWelcome();go('home')}});
-$('#begin').addEventListener('click',()=>{state.intention=state.intention||'свой путь';state.startedAt=state.startedAt||Date.now();dismissWelcome();unlock('spark');renderMission();go('path')});
-$$('[data-go]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();go(b.dataset.go)}));
-$$('.book-link').forEach(a=>a.addEventListener('click',()=>unlock('reader',true)));
-$('#mission-done').addEventListener('click',()=>{state.missions[dayNumber()]=Date.now();save();renderMission();toast('Шаг сохранён');if(Object.keys(state.missions).length>=3)unlock('trident')});
-
-let ticking=false;
-$('#still-btn').addEventListener('click',()=>{if(ticking)return;ticking=true;let left=11;const timer=$('#timer'),value=$('#timer-value'),btn=$('#still-btn');btn.disabled=true;btn.textContent='Не двигайся';const tick=setInterval(()=>{left--;value.textContent=left;timer.style.setProperty('--p',((11-left)/11*100)+'%');if(left<=0){clearInterval(tick);ticking=false;btn.disabled=false;btn.textContent='Пройдено';unlock('still');toast('Тишина осталась с тобой')}},1000)});
-
-$('#ash-form').addEventListener('submit',e=>{e.preventDefault();const input=$('#ash-input'),text=input.value.trim();if(!text){toast('Сначала назови мысль');return}const place=$('#ash-place');place.textContent='«'+text+'»';for(let i=0;i<24;i++){const p=document.createElement('i');p.className='particle';p.style.left=(15+Math.random()*70)+'%';p.style.bottom=(5+Math.random()*22)+'px';p.style.setProperty('--dx',(-45+Math.random()*90)+'px');p.style.animationDelay=(Math.random()*.35)+'s';place.appendChild(p)}setTimeout(()=>{place.textContent='Остался только пепел'},1400);input.value='';state.ashes++;save();unlock('ash')});
-
-function makeMantra(){const text=mantraA[Math.floor(Math.random()*mantraA.length)]+' '+mantraB[Math.floor(Math.random()*mantraB.length)];state.mantra=text;save();$('#mantra').textContent=text;$('#mantra-x').href=xurl(text+'\n\n#SHIVA #Shivoham');unlock('voice')}
-$('#mantra-new').addEventListener('click',makeMantra);$('#mantra-copy').addEventListener('click',()=>state.mantra?copy(state.mantra):toast('Сначала создай мантру'));$('#mantra-x').addEventListener('click',e=>{if(!state.mantra){e.preventDefault();toast('Сначала создай мантру')}});
-
-$('#pour').addEventListener('click',()=>{const scene=$('#bowl-scene'),steps=$$('#flow-steps .flow-step');scene.classList.remove('poured');steps.forEach(s=>s.classList.remove('on'));$('#pour').disabled=true;steps.forEach((s,i)=>setTimeout(()=>{s.classList.add('on');if(i===2)scene.classList.add('poured');if(i===3){$('#pour').disabled=false;$('#pour').textContent='Путь понятен';unlock('bowl')}},450+i*720))});
-
-$('#earned-close').addEventListener('click',()=>$('#earned').classList.remove('on'));$('#earned').addEventListener('click',e=>{if(e.target===$('#earned'))$('#earned').classList.remove('on')});
-$('#copy-ca').addEventListener('click',()=>{copy(CA);unlock('eye')});
-
-// Third eye also lives quietly in the logo: a long press copies the official CA.
-let eyeTimer;$('.logo').addEventListener('pointerdown',()=>{eyeTimer=setTimeout(()=>{copy(CA);unlock('eye')},900)});$('.logo').addEventListener('pointerup',()=>clearTimeout(eyeTimer));$('.logo').addEventListener('pointerleave',()=>clearTimeout(eyeTimer));
-
-if(state.startedAt||state.introDismissed)$('#welcome').classList.add('hidden');
-if(state.mantra){$('#mantra').textContent=state.mantra;$('#mantra-x').href=xurl(state.mantra+'\n\n#SHIVA #Shivoham')}
-renderProgress();renderBadges();renderMission();
-const initial=location.hash.slice(1);if(['home','path','bowl','achievements'].includes(initial))go(initial);
+(() => {
+ 'use strict';
+ const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+ const CA='3YhtPb2TTr671vg6zoStj2896sQoSSNBKyJzvzHQogib';
+ const REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let lang=localStorage.getItem('shiva-site-lang')==='en'?'en':'ru', cycleState='ready', cycleTimers=[], pauseTimer=null;
+ const RU={}; $$('[data-i18n]').forEach(n=>RU[n.dataset.i18n]=n.innerHTML);
+ const EN={
+  skip:'Skip to content',navMeaning:'Meaning',navMechanism:'Mechanism',navBenefit:'Utility',navDiscipline:'Third eye',navBook:'The book ↗',
+  heroEyebrow:'Ash & the Hound · the story continues',heroTitle:'Calm<span>has a mechanism.</span>',heroCopy:'<b>SHIVA</b> is not a promise to beat the market. It is a story and a system where movement leaves a trace, the trace becomes SHIB, and the common bowl returns to those who stay.',understand:'Understand the Bowl',readStory:'Read the story',vertical:'Shiva · Shiba · the common bowl',
+  meaningEyebrow:'01 · Why this exists',meaningTitle:'Not noise.<br><em>A bond.</em>',meaningLead:'The philosophy is not decoration. It explains why calm, verification, and participation matter more than impulse.',meaning1:'The market demands a reaction. Shiva leaves space between fear and action.',meaning2:'Shiba reminds us: a companion is not someone who promises an easy road. It is someone who stays and sees the road whole.',meaning3:'The Bowl turns that bond into a mechanism you can understand.',sunriseLine:'brought canonical SHIB to Solana',stonkLine:'let a new story choose SHIB as its pair',shivaLine:'linked token movement to a common bowl of SHIB',
+  mechanismEyebrow:'02 · The Bowl without fog',mechanismTitle:'One cycle.<br><em>Four steps.</em>',mechanismLead:'No points and no Claim button. Start the path and see exactly what happens to every trace of movement.',flow1Title:'Movement',flow1Copy:'A buy, sell, or transfer of SHIVA leaves 1%.',flow2Title:'Transformation',flow2Copy:'The tax gathers in SHIVA. StonkFun converts what has accumulated into canonical SHIB.',flow3Title:'The common bowl',flow3Copy:'SHIB gathers until the next automatic distribution cycle.',flow4Title:'Return',flow4Copy:'SHIB automatically goes to eligible SHIVA holders in proportion to balance.',cycleReady:'The Bowl is waiting for the first movement.',cycleStart:'Start the cycle',cycleNote:'Before migration, the pair remains on the StonkFun curve. After the 85 SOL threshold, it moves automatically into a Raydium pool. The venue changes; the logic of the Bowl remains.',
+  benefitEyebrow:'03 · Where the utility lives',benefitTitle:'Not a game.<br><em>SHIB.</em>',benefitLead:'The financial logic is not hidden behind achievements: the system collects the pair’s real quote asset and distributes it without a manual request.',value1Title:'Not internal points',value1Copy:'After conversion, the Bowl holds canonical SHIB — the asset paired with SHIVA.',value2Title:'No Claim',value2Copy:'There is no need to connect to an unknown page or rush to press a button. Distribution is automatic.',value3Title:'Proportional',value3Copy:'Wallets holding more than $20 worth of SHIVA are eligible; share depends on balance. About 2.5% of the Bowl covers network and operations.',value4Title:'A new cycle',value4Copy:'After distribution, movement begins filling the Bowl again. Timing and size are not fixed in advance.',honestTitle:'The honest boundary',honestCopy:'The distribution mechanism does not remove token risk or guarantee profit. Its utility is different: the rules are visible in advance, the reward arrives in SHIB, and receiving it requires no separate Claim.',
+  disciplineEyebrow:'04 · Practice of the third eye',disciplineTitle:'Take back<br><em>11 seconds.</em>',disciplineLead:'A useful site does not push you to act. It helps you keep panic from making the decision. Before any movement, stop and ask three questions.',check1:'Is this my plan or someone else’s noise?',check2:'Did I verify the address and understand the 1% transfer tax?',check3:'Can I accept the outcome without promises?',pauseReady:'Eleven seconds between impulse and decision.',pauseStart:'Start the pause',
+  bookEyebrow:'05 · The story from which it grew',bookTitle:'Ash<br><em>& the Hound</em>',bookQuote:'“The silence was louder than the city.”',ruEdition:'Russian edition',ruEditionMeta:'14 chapters · read ↗',enEdition:'English edition',enEditionMeta:'14 chapters · read ↗',footerTitle:'Verify first.<br>Then decide.',officialToken:'Official token page',contractLabel:'For those who ask · SHIVA contract',copy:'Copy'
+ };
+ const cycleStatus={
+  ru:['Чаша ждёт первого движения.','Движение оставило 1% в SHIVA.','StonkFun превращает накопленную SHIVA в SHIB.','Каноническая SHIB наполняет общую чашу.','SHIB автоматически расходится подходящим холдерам.'],
+  en:['The Bowl is waiting for the first movement.','Movement left 1% in SHIVA.','StonkFun converts accumulated SHIVA into SHIB.','Canonical SHIB fills the common Bowl.','SHIB is distributed automatically to eligible holders.']
+ };
+ const pausePrompts={
+  ru:['Одиннадцать секунд между импульсом и решением.','Это мой план или чужой шум?','Я сверил адрес и понимаю механику?','Я готов принять любой результат?','Теперь решение снова твоё.'],
+  en:['Eleven seconds between impulse and decision.','Is this my plan or someone else’s noise?','Did I verify the address and understand the mechanism?','Can I accept any outcome?','The decision is yours again.']
+ };
+ function applyLanguage(){
+  document.documentElement.lang=lang; $$('[data-i18n]').forEach(n=>n.innerHTML=lang==='en'&&EN[n.dataset.i18n]?EN[n.dataset.i18n]:RU[n.dataset.i18n]);
+  $('#lang').textContent=lang==='ru'?'EN':'RU'; $('#lang').setAttribute('aria-label',lang==='ru'?'Switch to English':'Переключить на русский');
+  $$('.book-link').forEach(a=>a.href=lang==='en'?'book-en.html':'book.html');
+  if(cycleState==='ready')$('#cycle-status').textContent=cycleStatus[lang][0];
+  if(cycleState==='done'){$('#cycle-status').textContent=cycleStatus[lang][4];$('#cycle-btn').textContent=lang==='ru'?'Повторить цикл ↻':'Replay the cycle ↻'}
+  if(cycleState==='running'){const active=$('#flow li.active');const step=active?Number(active.dataset.step):0;$('#cycle-btn').textContent=lang==='ru'?'Цикл идёт…':'Cycle in motion…';$('#cycle-status').textContent=cycleStatus[lang][step];}
+  if(!pauseTimer&&$('#pause-number').textContent==='11')$('#pause-prompt').textContent=pausePrompts[lang][0];
+ }
+ $('#lang').addEventListener('click',()=>{lang=lang==='ru'?'en':'ru';localStorage.setItem('shiva-site-lang',lang);applyLanguage()});
+ function clearCycle(){cycleTimers.forEach(clearTimeout);cycleTimers=[];$('#cycle-visual').className='cycle-visual';$$('#flow li').forEach(x=>x.classList.remove('active','done'))}
+ function stage(n){
+  const visual=$('#cycle-visual'),items=$$('#flow li');visual.className=`cycle-visual stage-${n}`;
+  items.forEach((item,i)=>{item.classList.toggle('active',i===n-1);item.classList.toggle('done',i<n-1)});$('#cycle-status').textContent=cycleStatus[lang][n];
+ }
+ function runCycle(){
+  if(cycleState==='running')return;clearCycle();cycleState='running';$('#cycle-btn').disabled=true;$('#cycle-btn').textContent=lang==='ru'?'Цикл идёт…':'Cycle in motion…';
+  const gap=REDUCED?90:1150;[1,2,3,4].forEach((n,i)=>cycleTimers.push(setTimeout(()=>stage(n),i*gap+40)));
+  cycleTimers.push(setTimeout(()=>{cycleState='done';$$('#flow li').forEach(x=>{x.classList.remove('active');x.classList.add('done')});$('#cycle-status').textContent=cycleStatus[lang][4];$('#cycle-btn').disabled=false;$('#cycle-btn').textContent=lang==='ru'?'Повторить цикл ↻':'Replay the cycle ↻'},gap*4+80));
+ }
+ $('#cycle-btn').addEventListener('click',runCycle);
+ function pausePromptFor(left){if(left<=0)return 4;if(left<=3)return 3;if(left<=7)return 2;return 1}
+ $('#pause-start').addEventListener('click',()=>{
+  if(pauseTimer)return;let left=11;const button=$('#pause-start'),ring=$('#pause-ring');button.disabled=true;button.textContent=lang==='ru'?'Не спеши':'Do not rush';$('#pause-prompt').textContent=pausePrompts[lang][1];
+  pauseTimer=setInterval(()=>{left--;$('#pause-number').textContent=left;ring.style.setProperty('--p',`${(11-left)/11*100}%`);$('#pause-prompt').textContent=pausePrompts[lang][pausePromptFor(left)];if(left<=0){clearInterval(pauseTimer);pauseTimer=null;button.disabled=false;button.textContent=lang==='ru'?'Повторить паузу ↻':'Repeat the pause ↻'}},1000);
+ });
+ let toastTimer;function toast(text){const t=$('#toast');t.textContent=text;t.classList.add('on');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('on'),1900)}
+ $('#copy-ca').addEventListener('click',()=>{const done=()=>toast(lang==='ru'?'Адрес скопирован':'Address copied');if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(CA).then(done).catch(()=>fallback());else fallback();function fallback(){const x=document.createElement('textarea');x.value=CA;x.style.cssText='position:fixed;left:-9999px';document.body.append(x);x.select();try{document.execCommand('copy');done()}catch(_){toast(lang==='ru'?'Скопируй вручную':'Copy manually')}x.remove()}});
+ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.09});$$('.reveal').forEach(x=>observer.observe(x));
+ addEventListener('scroll',()=>$('#topbar').classList.toggle('scrolled',scrollY>30),{passive:true});
+ function ash(){if(REDUCED)return;const c=$('#ash-canvas'),x=c.getContext('2d');let w,h,p=[];function size(){const d=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';x.setTransform(d,0,0,d,0,0);p=Array.from({length:Math.min(75,Math.ceil(w/19))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3+.3,v:Math.random()*.22+.08,a:Math.random()*.35+.08}))}function draw(){x.clearRect(0,0,w,h);p.forEach(q=>{q.y+=q.v;q.x+=Math.sin((q.y+performance.now()*.015)*.01)*.08;if(q.y>h+3){q.y=-3;q.x=Math.random()*w}x.globalAlpha=q.a;x.fillStyle='#cfc5bd';x.beginPath();x.arc(q.x,q.y,q.r,0,Math.PI*2);x.fill()});requestAnimationFrame(draw)}size();addEventListener('resize',size,{passive:true});draw()}ash();applyLanguage();
+})();
 </script>
 </body>
 </html>
