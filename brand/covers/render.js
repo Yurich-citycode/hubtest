@@ -52,7 +52,6 @@ const MODULES = {
   glossary:   { accent: 'pink',   series: { ru: 'ГЛОССАРИЙ', en: 'GLOSSARY' }, note: { ru: 'СЛОВАРЬ RWA // 57 ТЕРМИНОВ', en: 'RWA GLOSSARY // 57 TERMS' } },
   cfa:        { accent: 'pink',   series: { ru: 'ЦФА', en: 'CFA' }, note: { ru: 'СБОРКА ВЫПУСКА // НЕ ОПЕРАТОР', en: 'ISSUE ASSEMBLY // NOT THE OPERATOR' } },
   research:   { accent: 'lime',   series: { ru: 'РАЗБОР', en: 'BREAKDOWN' }, note: { ru: 'РАЗБОР // ПО ОТКРЫТОМУ КОДУ', en: 'BREAKDOWN // STRAIGHT FROM THE CODE' } },
-  shiva:      { accent: 'gold',   series: { ru: 'SHIVA', en: 'SHIVA' }, note: { ru: 'ПЕПЕЛ И ПЁС // SHIVA × SHIB', en: 'ASH AND DOG // SHIVA × SHIB' } },
 };
 
 const STAT_CYCLE = ['lime', 'ink', 'pink', 'gold'];
