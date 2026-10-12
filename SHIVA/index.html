@@ -34,7 +34,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 
 /* welcome */
 .welcome{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(8,11,14,.97);padding:22px}
-.welcome-card{width:min(780px,100%);text-align:center;position:relative}.sigil{width:150px;margin:0 auto 24px;display:block;filter:drop-shadow(0 0 35px rgba(217,175,85,.14))}
+.welcome-card{width:min(780px,100%);text-align:center;position:relative}.welcome-skip{position:fixed;right:18px;top:18px;border:1px solid var(--line);background:transparent;color:var(--muted);padding:10px 13px;cursor:pointer;text-transform:uppercase;font-size:10px;font-weight:900;letter-spacing:.1em}.welcome-skip:hover{color:var(--gold);border-color:var(--gold)}.sigil{width:150px;margin:0 auto 24px;display:block;filter:drop-shadow(0 0 35px rgba(217,175,85,.14))}
 .eyebrow{font-size:11px;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);font-weight:800}
 .welcome h1,.hero h1{font-family:var(--display);text-transform:uppercase;letter-spacing:.01em;line-height:.88;margin:18px 0;font-weight:900}
 .welcome h1{font-size:clamp(62px,13vw,142px)}.welcome p{font-size:clamp(17px,2vw,22px);line-height:1.55;color:#b9c0c1;max-width:650px;margin:0 auto 28px}
@@ -92,6 +92,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 <div class="bg" aria-hidden="true"><div class="orb a"></div><div class="orb b"></div><div class="stars"></div></div>
 
 <section class="welcome" id="welcome">
+  <button class="welcome-skip" id="welcome-skip" type="button">Пропустить заставку ×</button>
   <div class="welcome-card">
     <svg class="sigil" viewBox="0 0 160 190" aria-hidden="true">
       <circle cx="80" cy="82" r="67" fill="none" stroke="#d9af55" opacity=".24"/>
@@ -108,7 +109,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
       <button class="intent" data-intent="ясность">Ясность</button>
       <button class="intent" data-intent="смелость">Смелость</button>
     </div>
-    <button class="btn" id="begin" disabled>Начать путь</button>
+    <button class="btn" id="begin">Начать путь</button>
   </div>
 </section>
 
@@ -253,7 +254,7 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 const CA='3YhtPb2TTr671vg6zoStj2896sQoSSNBKyJzvzHQogib';
 const KEY='shiva-human-path-v1';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const defaults={startedAt:0,intention:'',badges:{},missions:{},mantra:'',ashes:0};
+const defaults={startedAt:0,intention:'',badges:{},missions:{},mantra:'',ashes:0,introDismissed:false};
 let state=defaults;
 try{state=Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||'{}'));state.badges=state.badges||{};state.missions=state.missions||{}}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}};
@@ -302,8 +303,11 @@ function dayNumber(){if(!state.startedAt)return 1;return Math.max(1,Math.floor((
 function renderMission(){const day=dayNumber(),idx=(day-1)%missions.length,m=missions[idx],done=!!state.missions[day];$('#path-day').firstChild.textContent=String(day).padStart(2,'0');$('#mission-name').textContent=m[0];$('#mission-why').textContent=m[1];$('#mission-card').classList.toggle('done',done)}
 function go(name){$$('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));$$('.navbtn').forEach(b=>b.classList.toggle('on',b.dataset.go===name));history.replaceState(null,'','#'+name);window.scrollTo({top:0,behavior:'smooth'});if(name==='achievements')renderBadges()}
 
-$$('[data-intent]').forEach(b=>b.addEventListener('click',()=>{$$('[data-intent]').forEach(x=>x.classList.remove('on'));b.classList.add('on');state.intention=b.dataset.intent;$('#begin').disabled=false}));
-$('#begin').addEventListener('click',()=>{state.startedAt=state.startedAt||Date.now();save();$('#welcome').classList.add('hidden');unlock('spark');renderMission();go('path')});
+$$('[data-intent]').forEach(b=>b.addEventListener('click',()=>{$$('[data-intent]').forEach(x=>x.classList.remove('on'));b.classList.add('on');state.intention=b.dataset.intent}));
+function dismissWelcome(){state.introDismissed=true;save();$('#welcome').classList.add('hidden')}
+$('#welcome-skip').addEventListener('click',()=>{dismissWelcome();go('home')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#welcome').classList.contains('hidden')){dismissWelcome();go('home')}});
+$('#begin').addEventListener('click',()=>{state.intention=state.intention||'свой путь';state.startedAt=state.startedAt||Date.now();dismissWelcome();unlock('spark');renderMission();go('path')});
 $$('[data-go]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();go(b.dataset.go)}));
 $$('.book-link').forEach(a=>a.addEventListener('click',()=>unlock('reader',true)));
 $('#mission-done').addEventListener('click',()=>{state.missions[dayNumber()]=Date.now();save();renderMission();toast('Шаг сохранён');if(Object.keys(state.missions).length>=3)unlock('trident')});
@@ -324,7 +328,7 @@ $('#copy-ca').addEventListener('click',()=>{copy(CA);unlock('eye')});
 // Third eye also lives quietly in the logo: a long press copies the official CA.
 let eyeTimer;$('.logo').addEventListener('pointerdown',()=>{eyeTimer=setTimeout(()=>{copy(CA);unlock('eye')},900)});$('.logo').addEventListener('pointerup',()=>clearTimeout(eyeTimer));$('.logo').addEventListener('pointerleave',()=>clearTimeout(eyeTimer));
 
-if(state.startedAt)$('#welcome').classList.add('hidden');
+if(state.startedAt||state.introDismissed)$('#welcome').classList.add('hidden');
 if(state.mantra){$('#mantra').textContent=state.mantra;$('#mantra-x').href=xurl(state.mantra+'\n\n#SHIVA #Shivoham')}
 renderProgress();renderBadges();renderMission();
 const initial=location.hash.slice(1);if(['home','path','bowl','achievements'].includes(initial))go(initial);
