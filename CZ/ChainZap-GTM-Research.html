@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChainZap — GTM Research & Sales Playbook | Для стратегического партнёра и фаундера</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#101828; --muted:#475467; --line:#e4e7ec;
+    --accent:#0f766e; --accent2:#6941c6; --warn:#b42318; --warnbg:#fef3f2;
+    --ok:#067647; --okbg:#ecfdf3; --amber:#b54708; --amberbg:#fffaeb; --bluebg:#eff8ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;font-size:16px}
+  a{color:var(--accent2);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1020px;margin:0 auto;padding:24px 18px 80px}
+  header.hero{background:linear-gradient(135deg,#0b1220,#123332 55%,#2e1065);color:#fff;border-radius:20px;padding:36px 34px;margin-bottom:20px}
+  header.hero h1{font-size:34px;line-height:1.15;margin:0 0 12px}
+  header.hero p{color:#d0d5dd;max-width:820px;margin:6px 0}
+  .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin:2px 4px 2px 0}
+  .b-teal{background:#ccfbf1;color:#065f46}.b-violet{background:#ebe9fe;color:#3b1d8f}.b-amber{background:#fef0c7;color:#7a2e0e}.b-red{background:#fee4e2;color:#7a271a}
+  section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin:16px 0}
+  h2{font-size:24px;line-height:1.25;margin:0 0 14px;padding-bottom:10px;border-bottom:2px solid var(--line)}
+  h3{font-size:18px;margin:22px 0 8px} h4{font-size:16px;margin:16px 0 6px}
+  .muted{color:var(--muted)} .small{font-size:13px;color:var(--muted)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr} header.hero h1{font-size:27px}}
+  .card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:#fff}
+  .callout{border-radius:12px;padding:16px 18px;margin:14px 0;border:1px solid}
+  .ok{background:var(--okbg);border-color:#a6f4c5}.warn{background:var(--warnbg);border-color:#fecdca}.amber{background:var(--amberbg);border-color:#fedf89}.blue{background:var(--bluebg);border-color:#b2ddff}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px}
+  th,td{border:1px solid var(--line);padding:9px 10px;vertical-align:top;text-align:left}
+  th{background:#f2f4f7;font-weight:700}
+  ul,ol{margin:8px 0 12px 20px} li{margin:4px 0}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  pre{background:#0b1220;color:#e4e7ec;border-radius:12px;padding:16px;overflow:auto;font-size:13.5px;line-height:1.55;white-space:pre-wrap}
+  .msg{background:#f9fafb;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 16px;margin:10px 0;font-size:14.5px}
+  .toc{columns:2;column-gap:28px} @media(max-width:760px){.toc{columns:1}}
+  .toc li{break-inside:avoid}
+  .verdict{font-size:18px;font-weight:700}
+  .num{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;align-items:center;justify-content:center;font-weight:800;font-size:14px;margin-right:8px;flex:none}
+  .step{display:flex;gap:4px;margin:10px 0}.step div{flex:1}
+  .tag{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:#f2f4f7;border:1px solid var(--line)}
+  .checklist{list-style:none;margin-left:0;padding-left:0}.checklist li{padding-left:26px;position:relative}
+  .checklist li:before{content:"☐";position:absolute;left:0;color:var(--accent);font-weight:800}
+  .no li:before{content:"✕";color:var(--warn)}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+  .flow span{background:#f2f4f7;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:600}
+  .flow b{color:var(--muted)}
+  footer{color:var(--muted);font-size:13px;padding:10px 4px}
+  @media print{body{background:#fff} section{break-inside:avoid;border:none;border-bottom:1px solid #ddd;border-radius:0} header.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <span class="badge b-teal">ChainZap</span><span class="badge b-violet">GTM Research</span><span class="badge b-amber">14 октября 2026</span>
+  <h1>Кому нужен ChainZap, где искать клиентов и как продать первые сделки</h1>
+  <p><b>Полная картина для стратегического партнёра</b> — и готовый ответ фаундеру в §15: короткая версия для Telegram + полная версия письмом.</p>
+  <p><b>Если нужно быстро и простыми словами — сразу иди вниз:</b> <a href="#simple-steps" style="color:#fff;text-decoration:underline"><b>§19. Пошаговый чеклист: что делать по порядку</b></a> и <a href="#earnings" style="color:#fff;text-decoration:underline"><b>§20. Где и на чём ты зарабатываешь</b></a>. Там же в §21 — словарь всех английских терминов человеческим языком.</p>
+  <p class="small" style="color:#eaecf0">Источники внутри репозитория: <b>CZ/ChainZap Positioning Brief v2.2.pdf</b> (4 стр.) и <b>CZ/ChainZap Validation Playbook v1.pdf</b> (5 стр.) — оба файла перенесены в папку CZ из коммита «Add files via upload» на main. Плюс публичные chainzap.io и developers.chainzap.io и внешний рынок (ссылки в §18). Всё, чего нет в PDF и это гипотеза для проверки, — помечено как <span class="tag">ГИПОТЕЗА</span>.</p>
+</header>
+
+<section>
+<h2>Содержание</h2>
+<ol class="toc">
+  <li><a href="#tldr">TL;DR — вывод в 12 строках</a></li>
+  <li><a href="#product">Что такое ChainZap на самом деле (по PDF)</a></li>
+  <li><a href="#traps">5 позиционных ловушек: как нельзя продавать</a></li>
+  <li><a href="#market">Рынок: почему момент и почему TRON/USDT</a></li>
+  <li><a href="#icp">Кому нужен: ICP по приоритетам (A / B / волна-2 / анти-ICP)</a></li>
+  <li><a href="#where">Где искать: каналы и каталоги по каждой когорте</a></li>
+  <li><a href="#list">Как построить список аккаунтов за 2 дня (скоринг)</a></li>
+  <li><a href="#sell">Как продавать: цикл валидации на 4 недели</a></li>
+  <li><a href="#call">Разговор на 30 минут: скрипт слово в слово</a></li>
+  <li><a href="#offer">Оффер: Historical Transaction Review (пакет, данные, цена)</a></li>
+  <li><a href="#templates">Шаблоны сообщений (копируй и отправляй)</a></li>
+  <li><a href="#objections">Возражения и честные ответы</a></li>
+  <li><a href="#plan">План стратегического партнёра: 4 недели по дням</a></li>
+  <li><a href="#founder-questions">Что спросить у фаундера ДО старта (due diligence)</a></li>
+  <li><a href="#founder-answer">Готовый ответ фаундеру (2 версии)</a></li>
+  <li><a href="#gate">Decision Gate после 10 разговоров + метрики</a></li>
+  <li><a href="#risks">Риски, границы обещаний, юр./репутационные флаги</a></li>
+  <li><a href="#sources">Источники и что проверить руками</a></li>
+  <li><a href="#simple-steps"><b>Пошаговый чеклист простыми словами: что делать по порядку</b></a></li>
+  <li><a href="#earnings"><b>Где и на чём ты зарабатываешь: все варианты денег, рынок и твоя ставка $110</b></a></li>
+  <li><a href="#glossary"><b>Словарь: все термины человеческим языком</b></a></li>
+</ol>
+</section>
+
+<section id="tldr">
+<h2>1. Короткий вывод — 12 главных пунктов</h2>
+<p class="small">TL;DR — это сокращение от «too long, didn't read», то есть «слишком длинно, не читал». Здесь — самое главное в сжатом виде.</p>
+<p class="verdict">ChainZap продаётся не как «ещё один AML-сервис», а как независимый контроль: «то, что бизнес <i>считает</i> произошедшим с деньгами, vs то, что <i>реально</i> произошло on-chain».</p>
+<ol>
+<li><b>Продуктовая единица продажи сейчас — не подписка и не API, а Historical Transaction Review:</b> до 200 реальных записей, USDT/TRON, один workflow, до 5 рабочих дней, результат MATCH / MISMATCH / UNRESOLVED + причины + evidence + 30-мин walkthrough. Первые 3 — founding (бесплатно, с квалификацией), дальше тест цены $500–1 500 за review.</li>
+<li><b>Две когорты валидации (и только они в outbound):</b> A — Affiliate/CPA и payout-heavy операторы (обязательства, retry, закрытие выплат); B — iGaming, брокеры и withdrawal-heavy бизнесы (через тёплые интро, в PDF — «через Полину»). Остальные сегменты сейчас — только входящие.</li>
+<li><b>Покупатель — не compliance и не CTO.</b> Нужен тот, кто руками разбирает исключения: Head of Payments, Head of Ops / Payout Ops, Finance/Treasury lead, Risk lead. Compliance купит KYT, CTO напишет скрипт — боли исключений они не чувствуют.</li>
+<li><b>Главный крючок — не «проверим транзакцию», а obligation-level:</b> нужно было выплатить 1 000 USDT → первая попытка зависла → отправили повторно → потом подтвердилась и первая → ушло 2 000. Обычный tx lookup видит две «хорошие» транзакции. ChainZap при переданных references видит двойное исполнение обязательства. Без references это обещать нельзя.</li>
+<li><b>Цель первого цикла (4 недели):</b> 10–15 разговоров → 3 founding reviews запущено → 1 paid (paid review или paid continuation). Это валидация, а не «масштаб продаж».</li>
+<li><b>Твоя роль как стратегического партнёра реально ценна именно здесь:</b> доступ к payout/withdrawal-людям, тёплые интро в когорту B, умение довести owner’а workflow до передачи реального dataset. Ценность — не «база контактов», а dataset + debrief с владельцем процесса.</li>
+<li><b>Рынок под это есть:</b> TRON — главный рельс USDT (supply USDT на TRON ~$85 млрд на конец Q1 2026, ~$2 трлн переводов USDT за квартал по Messari), а массовые выплаты аффилиатам и выводы в iGaming до сих пор у многих — ручная рутина с explorer’ами и таблицами.</li>
+<li><b>Конкуренты не закрывают именно эту щель:</b> Chainalysis/Elliptic/TRM — enterprise-KYT за десятки–сотни тысяч $/год; AMLBot/MistTrack — риск-скоринг адреса/транзакции; payout-провайдеры (CoinGate, INXY, BVNK и др.) — <i>исполняют</i> выплаты. Никто из них массово не продаёт SMB-операторам «сверку expected-vs-actual по обязательству с причинами и покрытием evidence» как отдельный review-продукт. <span class="tag">ВЫВОД ИЗ РЫНКА</span></li>
+<li><b>Слабые места, которые клиент нащупает за 5 минут:</b> только USDT/TRON в честном scope, нет pre-withdrawal approval, нет clustering/fraud intelligence, нет замены KYT, молодой бренд и вопрос доверия к передаче данных. Продаётся это не скрытием, а узким честным scope (§12, §17).</li>
+<li><b>Нельзя начинать outreach, пока фаундер не ответил на блок вопросов §14</b> (кто физически делает review и за сколько часов, data handling/удаление, чем платит клиент, что такое paid continuation в цифрах, расхождение «только TRON» в брифе vs ETH/TON в публичной документации).</li>
+<li><b>Твоя переговорная позиция:</b> заходить не «помогу чем смогу», а циклом с измеримым gate: 4 недели → разговоры → reviews → решение по данным. Условия — фиксированная оплата за цикл и/или процент с каждой платной проверки и с дальнейшей платной работы с приведённым клиентом + понятный срок договора и право выйти после контрольной точки (gate), если результата нет (§15).</li>
+<li><b>Если после 10 разговоров сильных сигналов &lt;3</b> — это тоже результат: по playbook меняют когорту или уходят в obligation-level глубже, а не «докручивают лендинг». Твоя задача — принести эту правду быстро и дёшево, а не продать фаундеру надежду.</li>
+</ol>
+</section>
+
+<section id="product">
+<h2>2. Что такое ChainZap на самом деле (строго по PDF)</h2>
+
+<h3>2.1. Одна фраза продукта</h3>
+<div class="callout blue"><b>ChainZap — независимый контроль операций со стейблкоинами.</b> Сравнивает внутренние данные бизнеса с тем, что реально произошло on-chain. Начинаем с исторической проверки реальных транзакций → находим повторяющиеся дорогие расхождения → только потом автоматизируем именно этот контроль. <span class="small">(Positioning Brief v2.2, §1 и §6)</span></div>
+<p>Клиенту говорят так: <i>«Мы проверяем ваши реальные stablecoin-транзакции и сравниваем их с внутренними данными бизнеса. Если находим повторяющуюся проблему — можем помочь автоматизировать именно этот контроль».</i></p>
+
+<h3>2.2. Механика: expected vs actual</h3>
+<div class="flow"><span>Внутренняя запись бизнеса<br><small>order / obligation · recipient · amount · token</small></span><b>+</b><span>On-chain факт<br><small>tx · статус · recipient · amount · token contract</small></span><b>→</b><span><b>MATCH</b></span><span><b>MISMATCH</b></span><span><b>UNRESOLVED</b></span><span>причины + evidence + покрытие данных</span></div>
+<p>Проверяется: совпадает ли фактическая транзакция с ожидаемой; корректны ли recipient / amount / token; подтверждена ли транзакция (finality); достаточно ли evidence; есть ли расхождения или неясные случаи. Если клиент даёт больше контекста (business reference, попытки, связанные tx hashes) — дополнительно: retry, duplicate execution, partial execution, open obligation, несколько попыток одного обязательства.</p>
+
+<h3>2.3. Пример, который продаёт (из брифа)</h3>
+<div class="card">
+<p><b>Нужно выплатить 1 000 USDT</b> → первая попытка зависла → отправили повторно → повторная прошла → потом подтвердилась и первая → <b>ушло 2 000 USDT вместо 1 000</b>.</p>
+<ul>
+<li><b>Обычный tx lookup:</b> видит две подтверждённые транзакции. Всё «зелёное».</li>
+<li><b>ChainZap:</b> что бизнес должен был исполнить → какие были попытки → что реально произошло on-chain → чем закончилась операция.</li>
+<li><b>Честная оговорка (обязательна в продаже):</b> такой анализ возможен, только если клиент передал связанные references и историю попыток. По одному tx hash этого не определить.</li>
+</ul>
+</div>
+
+<h3>2.4. Один продукт — две точки входа</h3>
+<table>
+<tr><th style="width:28%">Вход</th><th>Кто</th><th>Что происходит</th></tr>
+<tr><td><b>Historical Transaction Review</b><br><span class="tag">ОСНОВНОЙ OUTBOUND</span></td><td>Operations / Finance / Risk</td><td>Находим расхождения и дорогие исключения на исторической выборке. Без большой интеграции.</td></tr>
+<tr><td><b>Transaction Control API</b><br><span class="tag">ТОЛЬКО INBOUND</span></td><td>Developers / PSP / Platforms</td><td>Проверяют существующую транзакцию, получают structured result. Отдельной outbound-кампании по API нет.</td></tr>
+</table>
+<p class="small">Публичная документация (developers.chainzap.io) при этом описывает API детально: <code>POST /v1/transaction/check</code>, <code>/v1/check</code>, <code>/v1/wallet/check</code>, batch до 200 строк, состояния MATCH/REVIEW/INSUFFICIENT в API-терминах, sandbox-ключи. Для продажи сверяйся с брифом: коммерческий scope уже публичной документации (см. расхождение в §14, п. 7).</p>
+
+<h3>2.5. Что продукт умеет сегодня / что пока только в планах (research)</h3>
+<div class="grid2">
+<div class="card"><h4 style="color:var(--ok)">✓ Сегодня (можно обещать)</h4>
+<ul>
+<li>USDT в сети TRON</li><li>проверка уже совершённой транзакции (existing transaction verification)</li><li>сверка «ожидали — получили по факту» (expected-vs-actual)</li><li>проверка, что транзакция окончательно подтверждена и не откатится (finality)</li><li>честный показ, по каким данным есть доказательства, а по каким — нет (evidence coverage)</li><li>понятные коды причин: почему запись попала в MATCH, MISMATCH или UNRESOLVED (reason codes)</li><li>базовые понятия: обязательство, попытка его исполнить, распределение платежа (obligation / attempt / allocation)</li><li>историческая проверка вручную с нашей помощью (historical / managed review)</li><li>подключение по API для тех, кто пришёл сам</li>
+</ul></div>
+<div class="card"><h4 style="color:var(--warn)">✕ Пока research (не обещать)</h4>
+<ul>
+<li>проверка <i>до</i> выплаты и одобрение/запрет выплаты (pre-withdrawal)</li><li>связывание аккаунтов и группировка кошельков (account linkage, wallet clustering)</li><li>разведка по мошенничеству (fraud intelligence)</li><li>автоматические правила вида «если X — делай Y» (policy engine)</li><li>автоматизация любого процесса под клиента (universal workflow automation)</li><li>собственная уникальная база данных, которую сложно повторить (proprietary data moat)</li><li>поиск дублей по одному tx hash</li><li>автоматическое блокирование или зачисление</li><li>замена KYT, сети кроме TRON в коммерческом scope</li>
+</ul></div>
+</div>
+<p class="small">Списки — Positioning Brief v2.2 §6 + Validation Playbook v1 §09 («В разговоре не обещаем»). Клиент просит отсутствующее → честное «пока нет, расскажите, насколько это важно» и фиксация как demand signal.</p>
+
+<h3>2.6. Пять гипотез, которые проверяет цикл</h3>
+<table>
+<tr><th>H</th><th>Гипотеза</th><th>Чем подтверждается в разговоре</th></tr>
+<tr><td><b>H1 · Боль</b></td><td>Денежные исключения со стейблкоинами регулярно разбирают вручную</td><td>Назвали workflow, частоту (в неделю/месяц) и кто разбирает</td></tr>
+<tr><td><b>H2 · Не commodity</b></td><td>Внутренний скрипт не закрывает задачу: ломается на retry, partial, нескольких провайдерах</td><td>Рассказали, где именно скрипт/таблица/ручной процесс рвётся</td></tr>
+<tr><td><b>H3 · Доверие</b></td><td>Клиент готов дать реальный historical sample с business references</td><td>Согласовали поля и дату передачи, а не «надо согласовать» без даты</td></tr>
+<tr><td><b>H4 · Ценность</b></td><td>Review находит расхождения, которые клиент признаёт денежно значимыми</td><td>На debrief клиент сам называет цену таких ошибок</td></tr>
+<tr><td><b>H5 · Деньги</b></td><td>После находок клиент платит за review или постоянный контроль</td><td>Paid review ($500–1 500 тест) или paid continuation</td></tr>
+</table>
+</section>
+
+<section id="traps">
+<h2>3. Пять ошибок в объяснении продукта: как нельзя продавать</h2>
+<p class="small">«Позиционирование» — это то, как клиент понимает, что мы за продукт и с чем нас сравнивать. Ошибка здесь = клиент сравнивает нас не с теми и уходит.</p>
+<p>Бриф прямо фиксирует, что ChainZap <b>не продаёт</b>. Каждое нарушение ниже = приход не того лида, проигранный разговор с compliance/CTO и размытие валидации.</p>
+<table>
+<tr><th style="width:24%">Ловушка</th><th>Почему убьёт сделку</th><th>Как правильно</th></tr>
+<tr><td>«Мы AML/KYT»</td><td>Сравнение с Chainalysis/TRM по покрытию и цене, procurement на месяцы, проигрыш</td><td>«Мы не заменяем KYT. Мы сверяем ваши внутренние обязательства с on-chain фактом»</td></tr>
+<tr><td>«Мы payout-софт / массовые выплаты»</td><td>Сравнение с CoinGate/INXY/BVNK по исполнению, комиссиям, лицензиям</td><td>«Выплаты исполняете вы/ваш провайдер. Мы контролируем, что исполнение совпало с обязательством»</td></tr>
+<tr><td>«У нас API, интегрируйтесь»</td><td>CTO-цикл, «напишем сами за выходные», нет владельца боли</td><td>API — inbound. Outbound начинается с review без интеграции</td></tr>
+<tr><td>«Мы fraud platform»</td><td>Ожидание скоригов, кластеринга, блокировок — ничего этого в production-scope нет</td><td>Продаём находки на <i>их</i> исторических данных, а не обещание интеллекта</td></tr>
+<tr><td>«Универсальный workflow builder»</td><td>Бесконечный presale и кастом под каждого</td><td>Один workflow, до 200 записей, стандартный формат, один walkthrough</td></tr>
+</table>
+<div class="callout warn"><b>Правило языка:</b> глаголы ChainZap — <i>сравниваем, проверяем, находим расхождения, показываем причины и покрытие</i>. Запрещённые глаголы — <i>одобряем, блокируем, гарантируем, предотвращаем мошенничество, подтверждаем безопасность</i>. UNRESOLVED/INSUFFICIENT — это честный результат, а не дефект: «unknown никогда молча не становится clear».</div>
+</section>
+
+<section id="market">
+<h2>4. Рынок: почему момент и почему TRON/USDT</h2>
+
+<h3>4.1. Рельс уже построен — контроля на нём не хватает</h3>
+<ul>
+<li><b>Масштаб USDT/TRON:</b> по Messari (State of TRON Q1 2026) supply USDT на TRON достиг ~$85,4 млрд, за Q1 2026 сеть обработала ~$2,0 трлн переводов USDT; TRON DAO/отраслевые сводки на 2026 дают $90+ млрд circulating USDT и десятки трлн cumulative volume. Точные цифры разнятся по источникам и датам — в продаже используй порядок («десятки миллиардов supply, триллионы оборота»), а не спор о второй цифре.</li>
+<li><b>Поведение:</b> USDT/TRC-20 — дефолт для P2P, обменников, аффилиатских выплат и выводов в СНГ, значительной части LATAM, Турции, MENA и ЮВА: дешёво, быстро, у получателя уже есть кошелёк. Это значит: у целевых операторов <i>уже</i> есть объём именно в том единственном scope, который ChainZap честно умеет сегодня.</li>
+<li><b>Ручная рутина как норма:</b> публичные кейсы payout-провайдеров описывают одну и ту же картину — finance-команды копируют адреса по одному, сверяют выплаты вручную, bottleneck’ом называют не трафик, а payout-инфраструктуру (INXY про affiliate payouts; CoinGate про manual/fragmented выплаты до автоматизации). ChainZap не обязан заменять этих провайдеров: контрольный слой ложится <i>поверх</i> любого исполнения.</li>
+<li><b>iGaming-математика:</b> у операторов выводы — зона ручных проверок (KYC/AML/wagering review перед выплатой, 2 часа – 5 дней total по отраслевым обзорам), цена ошибки — прямые потери + churn игроков из-за медленных выводов. Withdrawal-heavy процесс = ровно тот workflow, где исключения разбирают люди.</li>
+</ul>
+
+<h3>4.2. Конкурентная карта (кто рядом и почему мы не они)</h3>
+<table>
+<tr><th style="width:20%">Класс</th><th>Игроки</th><th>Что продают</th><th>Почему не закрывают щель ChainZap</th></tr>
+<tr><td>Enterprise blockchain analytics / KYT</td><td>Chainalysis, Elliptic, TRM Labs, Crystal</td><td>Риск-скоринг, расследования, compliance-платформу; контракты порядка €60–250 тыс./год для mid-size CASP по открытым оценкам</td><td>Не сверяют <i>твоё обязательство</i> с фактом (expected recipient/amount по твоему order id); тяжёлый procurement; overkill для payout-ops боли</td></tr>
+<tr><td>SMB AML-чекеры</td><td>AMLBot, MistTrack, Scorechain и др.</td><td>Проверка адреса/транзакции на «грязь»: от ~$0,45–3 за проверку у AMLBot, MistTrack API ~$0,05–0,20/call, планы $229–2 069/мес</td><td>Отвечают «насколько рискован адрес», а не «совпало ли исполнение с тем, что мы должны были заплатить, с учётом всех попыток»</td></tr>
+<tr><td>Payout/execution провайдеры</td><td>CoinGate, INXY, BVNK, Conduit, Triple-A и др.</td><td>Исполнение массовых выплат, on/off-ramp, кастоди/некастоди рельсы</td><td>Они — канал исполнения. Их логи показывают <i>свои</i> транзакции, а не независимую сверку с внутренней системой учёта клиента через несколько провайдеров/кошельков</td></tr>
+<tr><td>Explorer + таблица + свой скрипт</td><td>Tronscan/Etherscan, Excel, внутренний скрипт клиента</td><td>Бесплатно, привычно</td><td>Ломается ровно на H2: retry, partial, несколько провайдеров, смена адресов, нет evidence-фиксации и единого MATCH/MISMATCH/UNRESOLVED учёта. <b>Это главный «конкурент» в разговоре.</b></td></tr>
+</table>
+<div class="callout ok"><b>Щель ChainZap одной фразой:</b> независимая, провайдеро-нейтральная сверка «обязательство → попытки → on-chain факт → исход» с причинами и честным покрытием данных, упакованная в review на 200 записей без интеграции. Ни enterprise-KYT, ни payout-провайдер, ни AML-бот это как продукт для payout/finance-ops среднего оператора не продают.</div>
+
+<h3>4.3. Как считать рынок честно (без фейкового TAM)</h3>
+<p>Не рисуй фаундеру «рынок $X млрд». Считай bottom-up, это убедительнее:</p>
+<pre>Доступный рынок цикла = (число операторов в когортах A+B с USDT-TRON выплатами)
+  × (доля, где исключения до сих пор разбирают вручную)   ← измеряем разговорами H1
+  × (средний чек: paid review $500–1 500 → continuation)  ← измеряем H5
+
+Воронка первого цикла (рабочая модель, не прогноз):
+  60–80 целевых аккаунтов → 35–45 найденных owner-контактов → 10–15 разговоров
+  → 3 founding reviews → 1 paid. Дальше — только по факту gate §16.</pre>
+<p class="small">Если H1 подтверждается у &lt;30% разговоров или dataset не даёт никто — рынок для <i>этого оффера</i> не подтверждён, и это надо сказать фаундеру в лицо на gate, а не «давай ещё месяц поспамим».</p>
+</section>
+
+<section id="icp">
+<h2>5. Кому нужен: портрет идеального клиента (ICP) по приоритетам</h2>
+<p class="small">ICP (Ideal Customer Profile) — это описание клиента, которому продукт подходит лучше всего. Анти-ICP — наоборот, те, кому продавать не надо.</p>
+
+<h3>5.1. Когорта A — Payout / Obligation (прямой outbound, цель 6–8 разговоров)</h3>
+<table>
+<tr><th style="width:22%">Параметр</th><th>Профиль</th></tr>
+<tr><td>Кто</td><td>Affiliate/CPA-сети и партнёрские программы с регулярными выплатами партнёрам в USDT; payout-heavy операторы смежных вертикалей (рекламные сети, CPA по finance/crypto/iGaming-офферам, медиабаинг-команды с выплатами фрилансерам/подрядчикам в стейблах)</td></tr>
+<tr><td>Workflow-боль</td><td>Цикл выплат: реестр обязательств → несколько попыток/кошельков/провайдеров → закрытие. Retry после «зависшей» транзакции, partial-выплаты, спор «не дошло», ручная сверка в explorer перед закрытием периода</td></tr>
+<tr><td>Триггеры (когда писать)</td><td>Выплаты еженедельно/чаще; партнёры в разных GEO; публичная оферта «выплаты USDT TRC-20»; недавний инцидент/спор о невыплате; рост сети (набор аффилиатов); вакансия payout/finance ops</td></tr>
+<tr><td>Владелец боли</td><td>Head of Payments / Payout Ops, Finance lead. В маленьких сетях — COO или сам фаундер. <b>Не</b> affiliate-менеджер (он про отношения, не про closing)</td></tr>
+<tr><td>Цена ошибки</td><td>Двойная выплата = прямые деньги; недоплата/потерянная выплата = конфликт с партнёром и репутация в комьюнити; ручной разбор = часы finance-команды каждый цикл</td></tr>
+<tr><td>Что предлагаем</td><td>Founding review на прошлом payout-цикле: до 200 обязательств со всеми попытками</td></tr>
+</table>
+
+<h3>5.2. Когорта B — High-risk challenger (только тёплые интро, цель 4–7 разговоров)</h3>
+<table>
+<tr><th style="width:22%">Параметр</th><th>Профиль</th></tr>
+<tr><td>Кто</td><td>iGaming-операторы (casino/betting), брокеры (forex/CFD/crypto) и иные withdrawal-heavy бизнесы, принимающие/выводящие USDT-TRON</td></tr>
+<tr><td>Workflow-боль</td><td>Ручная работа <i>перед деньгами</i>: проверка вывода, сверка депозита с зачислением на счёт игрока/клиента, зависшие/частичные исполнения у провайдеров, повторные отправки, диспуты «вывод не пришёл»</td></tr>
+<tr><td>Почему только интро</td><td>Холодный доступ к ops/finance в high-risk почти закрыт, доверие решает всё; в playbook канал прямо задан — интро через профильный контакт (Полина). Твоя сеть здесь — актив №1, её надо беречь: не жечь контакт массовым спамом</td></tr>
+<tr><td>Владелец боли</td><td>Head of Payments, Head of Ops, Treasury, Risk lead. Первый вопрос — не «купите контроль», а «где у вас ручная работа перед деньгами»</td></tr>
+<tr><td>Особая осторожность</td><td>Не обещать compliance-эффект, не трогать лицензионные советы, не просить данные игроков/KYC — только транзакционный sample в согласованном scope (§17)</td></tr>
+</table>
+
+<h3>5.3. Волна-2 — осознанно НЕ outbound сейчас</h3>
+<p>Бриф: «Остальные сегменты пока не разворачиваем в отдельный outbound». Эти сегменты логичны как расширение <i>после</i> gate, фиксируй входящий интерес, но не трать на них цикл:</p>
+<table>
+<tr><th>Сегмент</th><th>Возможный workflow (гипотеза брифа)</th><th>Когда возвращаться</th></tr>
+<tr><td>Обменники, OTC-дески, малые/средние биржи</td><td>incoming credit control: проверил tx vs ожидаемый платёж до зачисления</td><td>После ≥3 сильных сигналов в A/B или при самостоятельном inbound</td></tr>
+<tr><td>PSP / crypto payment gateways</td><td>settlement exceptions, сверка сеттлментов с провайдерами</td><td>Они же — потенциальные партнёры-каналы (§6.4), сначала партнёрство, не продажа</td></tr>
+<tr><td>Казначейства с регулярными выплатами подрядчикам</td><td>payout closure, retry protection</td><td>Если в когорте A подтвердится obligation-боль вне affiliate</td></tr>
+<tr><td>Разработчики/платформы (API)</td><td>Transaction Control API в их продукте</td><td>Только inbound по playbook §08: scoping 20 мин → pilot key → сигнал = реальные вызовы и повторное использование за 7–14 дней</td></tr>
+</table>
+
+<h3>5.4. Анти-ICP: кому не продавать (сэкономит недели)</h3>
+<ul class="checklist no">
+<li>Один кошелёк, ручных выплат &lt;20 в месяц, ошибок не помнят — боли нет, review нечего проверять.</li>
+<li>Полностью автоматизированы у одного payout-провайдера и довольны его отчётностью — H2 не подтвердится.</li>
+<li>Первый контакт — compliance или CTO (см. §5 playbook): уведут в KYT-сравнение или «свой скрипт».</li>
+<li>Просят pre-withdrawal approval, блокировки, скоринг кошельков, сети кроме TRON как условие старта — это research-список, фиксируем demand signal и честно расходимся.</li>
+<li>«Дайте презентацию, вернёмся позже» без owner’а workflow и даты — не сигнал, в воронку не засчитывать.</li>
+<li>Готовы говорить только при условии «сначала покажите клиентов из нашей вертикали» и при этом сами dataset не дают — тупик доверия, не тратить founding-слот.</li>
+</ul>
+
+<h3>5.5. Хорошие признаки (квалификация из брифа, §4)</h3>
+<ul class="checklist">
+<li>Есть внутренние записи о платежах/обязательствах (order/obligation id живёт в их системе).</li>
+<li>Несколько кошельков, провайдеров или execution channels.</li>
+<li>Сотрудники открывают explorer и внутренние системы вручную.</li>
+<li>Бывают retry, partial, duplicate, unresolved или disputed cases.</li>
+<li>Ошибка может стоить заметных денег (назовут сумму/порядок без выжимания).</li>
+</ul>
+</section>
+
+<section id="where">
+<h2>6. Где искать: каналы по когортам</h2>
+
+<h3>6.1. Когорта A (Affiliate/CPA): где живут владельцы выплат</h3>
+<table>
+<tr><th style="width:24%">Канал</th><th>Как использовать конкретно</th></tr>
+<tr><td>Каталоги сетей и рейтинги</td><td>CPA.RIP (в т.ч. gambling-сети), Partnerkin, AffCatalog, Zorbas Media, обзоры сетей на PublisherGrowth/AffTank-подобных медиа. Выписывай сети с выплатами в USDT и еженедельным циклом — это фильтр №1.</td></tr>
+<tr><td>Конференции affiliate/iGaming</td><td>MAC Affiliate Conference, Affiliate World (Dubai/Bangkok/Budapest), iGB Affiliate, SiGMA, SBC Summit, TES. Ценность — не стенд, а список участников/спикеров: Head of Payments у сетей-спонсоров виден заранее. После ивента — тёплый повод («видел вашу панель про выплаты»).</td></tr>
+<tr><td>Telegram-комьюнити</td><td>Чаты и каналы арбитражных команд, CPA-сетей, медиабаинга. Ищи не «продать в чат», а владельцев: админы сетей, люди, отвечающие на споры о выплатах. Один полезный разбор в комментариях &gt; спам-пост.</td></tr>
+<tr><td>Платформы и подрядчики экосистемы</td><td>Трекеры (Affise, Scaleo и аналоги), антифрод/трекинг-вендоры, payout-провайдеры: их клиентские менеджеры знают, у кого выплаты — ручная боль. Партнёрское интро отсюда сильнее холодного письма.</td></tr>
+<tr><td>Вакансии как разведка</td><td>«Payout manager / Finance operations (crypto)» на hh/LinkedIn/в TG-каналах вакансий = компания масштабирует выплаты и, скорее всего, страдает рутиной. Вакансия — легальный повод написать фаундеру/COO.</td></tr>
+<tr><td>Собственный сайт сети</td><td>Страница «Выплаты»: USDT TRC-20, weekly, min payout, список методов — прямой сигнал ICP. Скриншотируй в CRM как evidence.</td></tr>
+</table>
+
+<h3>6.2. Когорта B (iGaming / brokers): только тёплый путь</h3>
+<table>
+<tr><th style="width:24%">Канал</th><th>Как использовать</th></tr>
+<tr><td>Профильные интро (канал Полины по playbook)</td><td>Подготовь для человека, который будет знакомить, короткий готовый текст (§11.3) — такой, который он сможет просто переслать дальше, ничего не придумывая сам. Одно интро = один конкретный оператор и владелец, не «познакомь с кем-нибудь из гемблы».</td></tr>
+<tr><td>Конференции операторов</td><td>SiGMA (Europe/Americas/Asia), SBC Summit, ICE/iGB Live, SPiCE. Платежные панели и спонсоры cashier-провайдеров — карта того, кто withdrawal-heavy.</td></tr>
+<tr><td>Платёжные провайдеры iGaming</td><td>Cashier/PSP, обслуживающие операторов: партнёрство «мы — контрольный слой поверх исполнения» может дать интро сразу к нескольким операторам. Не продавать им ChainZap как конкурента их отчётности (§12).</td></tr>
+<tr><td>Комьюнити и медиа вертикали</td><td>Профильные TG-чаты операторов/платёжников, отраслевые медиа и подкасты про iGaming payments. Контент-крючок: разбор двойной выплаты (обезличенный) заходит лучше питча.</td></tr>
+<tr><td>LinkedIn</td><td>Поиск по титулам Head of Payments / Payments Operations / Treasury в iGaming. Только как подготовка к тёплому интро или после касания на ивенте — холодный LinkedIn в B почти мёртв.</td></tr>
+</table>
+
+<h3>6.3. Поисковые запросы (копируй в Google / Telegram / LinkedIn)</h3>
+<pre>Google (когорта A):
+  "выплаты USDT" "TRC-20" партнёрская программа / CPA сеть
+  "weekly payouts" USDT affiliate network "Head of Payments"
+  site:partnerkin.com USDT выплаты сеть
+  CPA network "USDT" "payout" finance operations вакансия
+
+Google (когорта B):
+  iGaming operator "USDT" withdrawals "payments operations"
+  casino "TRON" OR "TRC20" deposit withdrawal Head of Payments
+  forex broker crypto withdrawals USDT operations manager
+
+LinkedIn:
+  ("Head of Payments" OR "Payout Operations" OR "Treasury") (affiliate OR iGaming OR casino OR broker)
+  Фильтры: 11–200 сотрудников сначала — там owner ближе к рутине, чем в корпорациях.
+
+Telegram (поиск по чатам/каналам):
+  "выплаты USDT", "спор по выплате", "не пришла выплата", названия сетей из каталогов + "чат"</pre>
+
+<h3>6.4. Партнёрский канал (параллельно, не вместо прямых разговоров)</h3>
+<ul>
+<li><b>Payout-провайдеры и трекеры:</b> предложи простую механику — они рекомендуют review своим клиентам с ручной сверкой, ChainZap делится находками (обезличенно) и/или процентом с дальнейшей платной работы клиента. Условие: сначала 1–2 успешных founding reviews, иначе партнёру нечего рекомендовать.</li>
+<li><b>Аудиторы/консультанты по платёжным операциям</b> в affiliate/iGaming: их продукт — «найди, где теряются деньги». Review ChainZap — инструмент под их аудит.</li>
+<li><b>Комьюнити-владельцы:</b> закрытые чаты владельцев сетей — один честный пост-разбор с цифрами (после первого review) ценнее рекламы.</li>
+</ul>
+<div class="callout amber"><b>Порядок важен:</b> партнёрский канал включается <i>после</i> первого завершённого review с денежными находками. До этого партнёрам продавать нечего, кроме обещаний, — а в high-risk комьюнити обещания без кейса сжигают репутацию и твою, и продукта.</div>
+</section>
+
+<section id="list">
+<h2>7. Как построить список аккаунтов за 2 дня</h2>
+<div class="step"><span class="num">1</span><div><b>День 1, утро — сырьё.</b> Из каталогов §6.1 выпиши 80–120 сетей/операторов с признаком «выплаты USDT». В когорту B — только тех, к кому реален путь интро (не выдумывай холодный список).</div></div>
+<div class="step"><span class="num">2</span><div><b>День 1, день — обогащение.</b> По каждой: сайт выплат (методы/частота), размер (косвенно: число офферов/партнёров, вакансии), каналы исполнения (какие провайдеры/кошельки видны), имя owner’а (LinkedIn/TG/ивенты).</div></div>
+<div class="step"><span class="num">3</span><div><b>День 2 — скоринг и отсев до 60–80.</b> Баллы ниже. Цель — не «много», а 10–15 реальных разговоров за цикл.</div></div>
+<div class="step"><span class="num">4</span><div><b>Касание волнами по 10–15 аккаунтов</b>, каждое — с персональным поводом (их страница выплат, вакансия, ивент, спор в чате). Массовая рассылка одного текста = минус репутация в узком комьюнити.</div></div>
+
+<h3>7.1. Скоринг аккаунта (0–12; в работу — от 7)</h3>
+<table>
+<tr><th>Признак</th><th>Балл</th><th>Где проверить</th></tr>
+<tr><td>Выплаты/выводы в USDT, виден TRON/TRC-20</td><td>0–3</td><td>Сайт, FAQ, кабинет партнёра, поддержка</td></tr>
+<tr><td>Частота выплат: weekly и чаще / выводы daily</td><td>0–2</td><td>Страница выплат, условия для партнёров/игроков</td></tr>
+<tr><td>Несколько методов/провайдеров/кошельков</td><td>0–2</td><td>Страница выплат, платёжные логотипы, вакансии</td></tr>
+<tr><td>Признаки рутины: ручная модерация выплат, «выплаты по запросу», споры в чатах</td><td>0–2</td><td>Чаты, отзывы партнёров, вакансии payout ops</td></tr>
+<tr><td>Найден owner workflow и тёплый путь к нему</td><td>0–3</td><td>LinkedIn, интро, ивенты</td></tr>
+</table>
+
+<h3>7.2. CRM: одна строка = один разговор (поля из playbook §07 + продающие)</h3>
+<pre>Компания | Когорта A/B/Inbound-API | Контакт + роль (owner? да/нет) | Путь касания (direct/интро/ивент)
+Workflow | Частота исключений | Цена ошибки (их слова) | Скрипт: есть? где ломается?
+Dataset: готов? поля? дата? | Сигнал: сильный/слабый/нет | Следующий шаг + дата | Дословная цитата
+Источник аккаунта | Скоринг | Что просили из research-списка (demand signal)</pre>
+<p class="small">Цитата дословно — обязательное поле. На gate фаундер принимает решения по языку клиентов, а не по твоему пересказу «вроде заинтересовались».</p>
+</section>
+
+<section id="sell">
+<h2>8. Как продавать: цикл валидации на 4 недели</h2>
+<div class="flow"><span>10–15 разговоров</span><b>→</b><span>Квалификация по сигналам</span><b>→</b><span>3 founding reviews</span><b>→</b><span>Debrief с owner’ом</span><b>→</b><span>1 paid (review или continuation)</span><b>→</b><span>Decision Gate (§16)</span></div>
+
+<h3>8.1. Принципы цикла (из playbook, не обсуждаются)</h3>
+<ul>
+<li><b>Сначала их последний случай, потом продукт.</b> Первые 20 минут разговора — не питч.</li>
+<li><b>Не спрашивать «было бы вам интересно?»</b> — ответ всегда «да» и ничего не значит.</li>
+<li><b>Не презентовать лендинг в начале</b>, не обещать того, чего нет в production-scope.</li>
+<li><b>Сильный сигнал измеряется поведением:</b> назвали частоту и цену ошибки → рассказали, где ломается скрипт → дали dataset с references → сами спросили цену. Вежливость сигналом не является.</li>
+<li><b>Founding review — не free trial.</b> 3 места, жёсткий scope, взамен: реальный dataset, owner на debrief, право использовать обезличенные находки для product learning, разговор о paid continuation при найденных находках.</li>
+</ul>
+
+<h3>8.2. Воронка и честная математика</h3>
+<table>
+<tr><th>Этап</th><th>Цель цикла</th><th>Что значит провал этапа</th></tr>
+<tr><td>Аккаунты в работе</td><td>60–80 (A: ~45–55, B: ~15–25 через интро)</td><td>Список из «кого знаю» без скоринга — разговоры будут не с owner’ами</td></tr>
+<tr><td>Разговоры с owner’ом workflow</td><td>10–15</td><td>Разговоры с affiliate-менеджерами/compliance не засчитываются</td></tr>
+<tr><td>Сильные сигналы</td><td>≥3</td><td>&lt;3 — см. gate: смена когорты/глубины, а не «ещё спама»</td></tr>
+<tr><td>Founding reviews запущено</td><td>3</td><td>Dataset не дают — проблема доверия: усиливать data handling или API-pilot на их стороне</td></tr>
+<tr><td>Paid</td><td>1</td><td>Находки есть, платить не готовы — находки не денежные: искать workflow дороже, а не снижать цену в ноль</td></tr>
+</table>
+
+<h3>8.3. Что продаём после review (paid continuation) <span class="tag">ГИПОТЕЗА — согласовать с фаундером</span></h3>
+<p>В PDF зафиксирована только цена paid review ($500–1 500, тест). Формат continuation в документах не определён — это вопрос №1 к фаундеру (§14). Рабочие варианты для обсуждения, не для обещания клиенту:</p>
+<ul>
+<li><b>Повторный review по циклу:</b> каждый payout-период / месяц, фикс за объём до N записей.</li>
+<li><b>Постоянный контроль одного workflow:</b> ежемесячная плата за workflow + лимит записей, сверх — per-record.</li>
+<li><b>API-usage:</b> если клиент пришёл в постоянный контроль через API — per-check внутри согласованного коридора (ориентир рынка SMB-чеков $0,05–3 в зависимости от глубины; коридор обязан дать фаундер по своей себестоимости провайдеров данных).</li>
+</ul>
+<div class="callout warn">Не называй клиенту цену continuation, пока фаундер не утвердил модель и юнит-экономику (себестоимость проверок, часы аналитика на review). Проданный «постоянный контроль» по выдуманной цене — главный способ убить маржу на первом же клиенте.</div>
+</section>
+
+<section id="call">
+<h2>9. Разговор на 30 минут: скрипт</h2>
+<table>
+<tr><th style="width:14%">Время</th><th>Цель</th><th>Что говорить / спрашивать</th></tr>
+<tr><td>0–5 мин</td><td>Контекст</td><td>«Расскажите, как у вас устроены [выплаты партнёрам / выводы]: объём в месяц, в чём платите, сколько кошельков/провайдеров, кто разбирает случаи, когда что-то не сходится?»</td></tr>
+<tr><td>5–20 мин</td><td>Последний реальный случай</td><td>«Вспомните последний случай, когда платёж пришлось разбирать руками перед тем, как зачислить, выдать, повторить или закрыть. Что произошло — по шагам?» Уточняющие: как часто бывает (неделя/месяц)? сколько времени ушло и кто разбирал? во сколько обошлась ошибка? что уже пробовали?</td></tr>
+<tr><td>20–25 мин</td><td>Продукт одной фразой + пример</td><td>«Мы сравниваем то, что бизнес считает произошедшим с деньгами, с тем, что реально произошло on-chain». Дальше пример 1 000 → 2 000 USDT из §2.3 — он попадает в их опыт лучше любого фич-листа.</td></tr>
+<tr><td>25–30 мин</td><td>Конкретный следующий шаг</td><td>Предложить review с датой и полями (§10), а не «скину презентацию». Финал: «Если на ваших данных таких случаев нет — так и скажем, это тоже ответ. Если есть — покажем каждую запись с причиной».</td></tr>
+</table>
+<h3>Два главных вопроса (выучить дословно)</h3>
+<div class="msg"><b>1.</b> «Какие транзакции вы до сих пор проверяете руками перед тем, как зачислить, выдать, повторить или закрыть платёж?»<br><b>2.</b> «У вас есть свой скрипт? Где он ломается?»</div>
+<h3>Красные флаги прямо на звонке</h3>
+<ul>
+<li>Собеседник не может вспомнить ни одного случая за месяц → боли нет или это не owner. Вежливо сворачивай, фиксируй «нет сигнала».</li>
+<li>«Скрипт есть, работает нормально» у 3–4 из 10 → по gate: одиночная проверка tx не продаётся, уходить в obligation-level или менять когорту.</li>
+<li>Всё время уводит в «а вы AML умеете / а сети кроме TRON» → фиксируй demand signal, честно «пока нет», не выдумывай roadmap-даты.</li>
+</ul>
+</section>
+
+<section id="offer">
+<h2>10. Оффер: Historical Transaction Review</h2>
+<div class="grid3">
+<div class="card"><h4>Scope</h4><p>До <b>200 записей</b><br>USDT on TRON<br><b>Один</b> workflow</p></div>
+<div class="card"><h4>Delivery</h4><p>До <b>5 рабочих дней</b> после получения пригодного dataset</p></div>
+<div class="card"><h4>Deliverable</h4><p>Таблица исключений MATCH/MISMATCH/UNRESOLVED, причины и evidence, 30-мин walkthrough</p></div>
+</div>
+
+<h3>10.1. Что просим у клиента (поля dataset)</h3>
+<table>
+<tr><th style="width:30%">Уровень</th><th>Поля</th><th>Что сможем сказать</th></tr>
+<tr><td><b>Минимум</b></td><td>network · tx hash · expected recipient · expected amount · token · business reference</td><td>MATCH / MISMATCH / UNRESOLVED по каждой записи</td></tr>
+<tr><td><b>Для retry/duplicate/partial</b></td><td>+ payout/obligation reference · ожидаемая сумма обязательства · все попытки · все связанные tx hashes · провайдер или кошелёк каждой попытки</td><td>Obligation-level находки (двойные исполнения, незакрытые обязательства, partial). Без этих полей — не обещаем</td></tr>
+</table>
+<p>Без customer names и KYC-файлов. Scope данных согласуем до отправки. Публичной загрузки файлов нет (playbook §04). Формат передачи, хранение и удаление — письменно до dataset (§14, вопрос к фаундеру — готовый data-handling текст нужен до первого клиента).</p>
+
+<h3>10.2. Условия founding review (3 места, квалификация)</h3>
+<ul class="checklist">
+<li>Реальный workflow и достаточный объём.</li>
+<li>Настоящий historical dataset (не синтетика «для посмотреть»).</li>
+<li>Owner workflow участвует в debrief.</li>
+<li>Можно использовать anonymized findings для product learning.</li>
+<li>После review обсуждаем paid continuation, если нашли материал.</li>
+</ul>
+<p><b>После первых трёх:</b> paid review $500–1 500 за review до 200 записей (тестируем цену), строку про founding reviews с лендинга убрать в тот же день. Жёсткий лимит scope иначе превращается в бесплатный консалтинг.</p>
+
+<h3>10.3. Как проходит debrief (30 минут, продаёт continuation)</h3>
+<ol>
+<li>Сколько записей проверили, покрытие данных: где evidence полный, где UNRESOLVED и почему (честно).</li>
+<li>Каждое MISMATCH — с причиной и деньгами: «вот обязательство, вот две попытки, вот сумма».</li>
+<li>Повторяемость: это разовый сбой или паттерн (доля исключений, частота в месяц по их данным).</li>
+<li>Цена паттерна их же цифрами из разговора (частота × цена ошибки).</li>
+<li>Предложение: взять именно этот workflow под постоянный контроль. Один следующий шаг, дата, владелец с их стороны.</li>
+</ol>
+</section>
+
+<section id="templates">
+<h2>11. Шаблоны сообщений (копируй и отправляй)</h2>
+<p class="small">Подставляй [скобки]. Каждое сообщение — с персональным поводом, без массовой рассылки. Тон: коллега по операционке, не «продажник».</p>
+
+<h3>11.1. Когорта A — первое касание (Telegram / email)</h3>
+<div class="msg">Привет, [имя]. Я сейчас помогаю команде ChainZap разбираться, как payout-команды сверяют выплаты в USDT. Видел у вас [выплаты weekly в USDT TRC-20 / вашу вакансию payout ops] — поэтому пишу именно тебе.<br><br>Коротко, что делаем: сравниваем внутренние обязательства бизнеса с тем, что реально ушло on-chain, и показываем расхождения — например, когда зависшую выплату отправили повторно, а потом прошла и первая.<br><br>Не продаю ничего на этом сообщении. Собираю 10–15 разговоров с теми, кто руками разбирает такие случаи. 30 минут: расскажешь про ваш процесс и последний сложный случай, я в ответ покажу, как такой случай выглядит в нашей сверке. Если боли нет — честно разойдёмся.<br><br>Удобно на этой неделе?</div>
+
+<h3>11.2. Follow-up (через 3–4 дня, один раз)</h3>
+<div class="msg">[Имя], доберусь коротко: мы как раз закрываем набор на 3 founding-review — бесплатно проверяем до 200 записей прошлого payout-цикла (USDT/TRON) и показываем каждое расхождение с причиной. Место отдаём тем, у кого владелец выплат готов на 30-минутный разбор результатов. Если у вас сверка выплат — ручная рутина, это может быть полезно. Если нет — просто скажи, не буду беспокоить.</div>
+
+<h3>11.3. Запрос интро для когорты B (forwardable — интродьюсер пересылает как есть)</h3>
+<div class="msg">Текст для пересылки:<br>«[Имя], привет. Есть команда ChainZap — делают независимую сверку стейблкоин-операций: сравнивают, что бизнес должен был выплатить/зачислить, с тем, что реально прошло on-chain, и находят расхождения (повторные исполнения, зависшие и частичные выплаты, незакрытые обязательства). Сейчас проверяют гипотезу на withdrawal-процессах и ищут 3 компании на бесплатный founding review: до 200 исторических записей USDT/TRON, результат — таблица расхождений с причинами за 5 дней. Подумал, что тебе как [Head of Payments] может быть интересно посмотреть на своих данных. Соединить?»</div>
+
+<h3>11.4. После разговора — запрос dataset</h3>
+<div class="msg">[Имя], спасибо за разговор. Как договорились, для review нужны записи одного workflow ([выплаты партнёрам за прошлый цикл]) — до 200 строк. Минимум по каждой: tx hash, ожидаемый получатель, ожидаемая сумма, токен, ваш внутренний reference. Если сможем добавить все попытки по каждому обязательству и каким кошельком/провайдером отправляли — сможем проверить и двойные/частичные исполнения, это самое дорогое.<br><br>Имена клиентов и KYC не нужны. Формат и удаление данных фиксируем письменно до отправки [приложить data-handling]. Результат: таблица MATCH/MISMATCH/UNRESOLVED с причинами + созвон на 30 минут [дата]. Дедлайн с нашей стороны — 5 рабочих дней с получения файла.</div>
+
+<h3>11.5. Если пришли за API (inbound, по playbook §08)</h3>
+<div class="msg">Спасибо за интерес к API. Прежде чем выдать pilot key, предлагаю 20 минут scoping: какой workflow проверяете, какой объём в месяц, кто принимает решение по результату проверки. Дальше — ключ, и смотреть будем не на «взяли ключ», а на первые реальные вызовы и повторное использование в течение 7–14 дней.</div>
+
+<h3>11.6. English — короткая версия для международных операторов</h3>
+<div class="msg">Hi [Name] — I’m helping ChainZap validate a stablecoin operations-control product with payout-heavy teams. We compare what your business expected to pay (obligation, recipient, amount) with what actually happened on-chain, and flag mismatches — e.g. a stuck payout resent manually that later confirmed twice. We’re running 3 founding reviews: up to 200 historical USDT/TRON records, one workflow, results in 5 business days with a reason for every exception. No integration needed. Open to a 30-min call about how your team handles payout exceptions today?</div>
+</section>
+
+<section id="objections">
+<h2>12. Возражения и честные ответы</h2>
+<table>
+<tr><th style="width:26%">Возражение</th><th>Что за ним стоит</th><th>Ответ (и чего не делать)</th></tr>
+<tr><td>«У нас свой скрипт»</td><td>H2 — главный вопрос цикла</td><td>«Отлично, это нормально. Где он ломается: retry, partial, несколько провайдеров, смена адресов получателей?» Если нигде — это данные для gate, а не повод давить. Не спорить «наш лучше».</td></tr>
+<tr><td>«Мы смотрим Tronscan руками»</td><td>Ручной процесс = боль H1</td><td>«Сколько записей в цикле и сколько времени уходит? Покажите на review: мы вернём таблицу по 200 записям, вы сравните со своим ручным разбором». Продаём время и полноту, не «магию».</td></tr>
+<tr><td>«Это AML? У нас уже есть AMLBot/KYT»</td><td>Неверная категория</td><td>«Нет, мы не замена KYT и не скоринг адресов. Мы сверяем ваши обязательства с фактом исполнения. AML отвечает “кто получатель”, мы — “вы заплатили то, что должны были, один раз и тому ли”».</td></tr>
+<tr><td>«Дать данные надо согласовать…» (без даты)</td><td>Слабый сигнал / доверие</td><td>Назначить дату и владельца согласования прямо на звонке. Не ушло в дату — сигнал слабый. Параллельно: предложить API-pilot на их стороне или начать с обезличенных references. Не слать dataset «в никуда» обещаниями.</td></tr>
+<tr><td>«А можете до выплаты проверять?» (pre-withdrawal)</td><td>Спрос на research-фичу</td><td>«Пока нет. Мы проверяем существующие/исторические транзакции. Расскажите, насколько это важно и что должно проверяться» — зафиксировать demand signal фаундеру дословно. Не обещать сроки.</td></tr>
+<tr><td>«Нужны другие сети (ETH/SOL/BNB)»</td><td>Их объём вне TRON</td><td>«Коммерческий scope сейчас — USDT/TRON. Если ваш основной объём там, начнём с него; остальные сети — фиксирую как запрос». Не продавать публичную документацию про ETH/TON как готовность (см. §14.7).</td></tr>
+<tr><td>«Дорого» (про paid review)</td><td>Ценность находок не доказана</td><td>Вернуться к их цифре цены ошибки из разговора: «Один двойной платёж у вас — [их сумма]. Review стоит меньше одного такого случая». Если находок не было — не продавать продолжение любой ценой.</td></tr>
+<tr><td>«Сделайте бесплатно, потом заплатим»</td><td>После 3 founding — попытка расширить бесплатное</td><td>«Founding-места закрыты квалификацией. Paid review — $500–1 500, до 200 записей, результат с walkthrough. Если не найдём денежных расхождений — вы платите только за проверку факта, и это честный исход». Не размывать лимит scope.</td></tr>
+<tr><td>«Вы гарантируете, что поймаете всё?»</td><td>Проверка на честность</td><td>«Нет. Мы показываем, что проверили и где данных не хватило — UNRESOLVED остаётся UNRESOLVED. Решение по деньгам всегда ваше». Гарантии безопасности запрещены и по продукту, и репутационно.</td></tr>
+<tr><td>«Чем вы лучше payout-провайдера X, у него есть отчёты»</td><td>Категорийная путаница</td><td>«Он отчитывается о своих исполнениях. Мы независимы от канала: сверяем вашу систему учёта со всеми каналами сразу — кошельки, провайдеры, ручные отправки».</td></tr>
+</table>
+</section>
+
+<section id="plan">
+<h2>13. План стратегического партнёра: 4 недели</h2>
+<table>
+<tr><th style="width:16%">Неделя</th><th>Фокус</th><th>Артефакт к концу недели</th></tr>
+<tr><td><b>Неделя 0–1</b></td><td>Синхронизация с фаундером по §14 (ответы письменно), доступы (демо результата review, пример обезличенного deliverable, data-handling текст), собрать и отскорить список A, подготовить интро-пак для B</td><td>Список 60–80 аккаунтов со скорингом; 10–15 персональных первых касаний; готовый текст для пересылки — у человека, который знакомит с когортой B</td></tr>
+<tr><td><b>Неделя 2</b></td><td>Разговоры волной 1 (A direct + B intro), фиксация каждой строки в CRM в день разговора, follow-up волна</td><td>5–8 проведённых разговоров с заполненными полями и цитатами; первые запросы dataset с датами</td></tr>
+<tr><td><b>Неделя 3</b></td><td>Добить 10–15 разговоров, запустить founding reviews (dataset → проверка), параллельно договариваться о paid-логике с фаундером по первым находкам</td><td>1–3 founding reviews в работе; промежуточный разбор сигналов фаундеру (что болит дословно)</td></tr>
+<tr><td><b>Неделя 4</b></td><td>Debrief’ы, предложение paid continuation, Decision Gate</td><td>Завершённые reviews, 1 paid (цель), письменное решение gate: продолжаем когорту / obligation-глубже / меняем когорту</td></tr>
+</table>
+<h3>Ежедневная рутина (2–3 часа фокуса лучше, чем «весь день в чатах»)</h3>
+<ul class="checklist">
+<li>Утро: 5 новых/уточнённых аккаунтов в CRM со скорингом или 3 follow-up по вчерашним касаниям.</li>
+<li>День: разговоры (цель — owner и последний случай, не количество созвонов).</li>
+<li>Вечер: каждая строка CRM закрыта в день контакта: сигнал, следующий шаг + дата, цитата.</li>
+<li>Раз в неделю (30 мин с фаундером): сигналы по H1–H5, где рвётся, что клиенты просят из research-списка. Никаких «вроде интерес есть» без цитат.</li>
+</ul>
+<div class="callout blue"><b>Твой главный показатель успеха — не количество «лидов» (заинтересовавшихся людей), а запущенные проверки: клиент прислал таблицу своих прошлых выплат, а ответственный за выплаты человек пришёл на разбор результата.</b> Всё остальное — промежуточные шаги. Именно под этот показатель строй договорённость с фаундером (§15).</div>
+</section>
+
+<section id="founder-questions">
+<h2>14. Что спросить у фаундера ДО старта (проверка перед началом работы)</h2>
+<p>Не начинай outreach, пока ключевые ответы не получены <b>письменно</b>. Половина вопросов — о том, не сгоришь ли ты репутационно перед своей сетью.</p>
+<h3>Продукт и доставка review</h3>
+<ol>
+<li>Кто физически делает Historical Review сегодня: ты, аналитик, автоматика + ручная проверка? Сколько часов занимает 200 записей и сколько reviews параллельно потянете без срыва «5 рабочих дней»?</li>
+<li>Покажи пример deliverable на обезличенных/синтетических данных: таблица, reason codes, как выглядит UNRESOLVED. Мне это показывать клиенту на разговоре?</li>
+<li>Точность: на каких данных проверяли MATCH/MISMATCH? Известны ли ложные срабатывания и как вы объясняете их клиенту?</li>
+<li>Откуда risk/evidence данные (провайдеры), какова их себестоимость на проверку и что происходит при недоступности источника (LIMITED_DATA-логика)?</li>
+<li>Obligation-уровень: что именно нужно от клиента, чтобы обещать duplicate/partial, и где граница, после которой честно говорим «по этим данным не определим»?</li>
+</ol>
+<h3>Границы и расхождения</h3>
+<ol start="6">
+<li>Что из публичного сайта/документации (Telegram-бот для физлиц, тарифы Pro/Trader, ETH/TON) — живой продукт, а что легаси/эксперимент? Клиент нагуглит всё это за минуту.</li>
+<li><b>Расхождение:</b> бриф говорит «сети кроме TRON не обещаем», документация API описывает TRON live, TON preview (LIMITED_DATA), Ethereum — по запросу в поддержку. Что я говорю клиенту дословно, если он спросит про ETH?</li>
+<li>Когорта B: кто такая Полина как канал интро, сколько интро реально доступно, чтобы не сжечь канал? Кто ещё даёт тёплый доступ в iGaming/brokers?</li>
+</ol>
+<h3>Данные, безопасность, юр.</h3>
+<ol start="9">
+<li>Data handling: где хранится dataset, кто имеет доступ, срок удаления, NDA — есть ли готовый текст, который я прикладываю к запросу данных?</li>
+<li>Юрлицо, принимающее оплату paid review ($500–1 500): юрисдикция, способы оплаты для клиентов из целевых GEO, инвойсы? Для high-risk клиентов — какие ограничения?</li>
+<li>Что я вправе обещать про использование anonymized findings (обучение продукта, кейсы) и где клиент может отказаться?</li>
+</ol>
+<h3>Деньги и продолжение</h3>
+<ol start="12">
+<li>Paid continuation: какая модель после review (повторный review / контроль workflow / API usage), коридор цен, кто утверждает скидки? Себестоимость на одного клиента?</li>
+<li>Почему первые 3 — бесплатно именно в такой квалификации и кто финально одобряет founding-слот: ты или я?</li>
+<li>Цель «1 paid» за цикл — это paid review или именно continuation? Что считаем успехом моего цикла в договоре?</li>
+</ol>
+<h3>Стратегия и твоя роль</h3>
+<ol start="15">
+<li>Этот Positioning Brief v2.2 «не заменяет Strategy v1.1 автоматически» — где у нас конфликт версий и какая версия побеждает при споре?</li>
+<li>Что происходит на Decision Gate, если сигналов мало: ты реально готов менять когорту/позиционирование, или от меня ждут «продай во что бы то ни стало»?</li>
+<li>Твоя доступность: разборы результатов с клиентами ведёшь ты? За сколько часов ты обязуешься отвечать мне и клиенту (это и называется SLA — согласованный срок ответа)? Кто тебя подменяет, если ты недоступен?</li>
+<li>Мои полномочия: от чьего имени пишу, какие логотипы/кейсы могу упоминать, могу ли обещать founding-слот без твоего ок?</li>
+<li>Деньги за мою работу: фиксированная оплата, процент с оплат клиентов, доля в компании — или сочетание? С чего именно считается процент (с разовой платной проверки? с ежемесячной платной работы? как долго клиент считается «моим»?), и что будет с моими деньгами, если я выйду после контрольной точки?</li>
+<li>Красные флаги для меня: runway команды, кто ещё продаёт ChainZap сейчас, были ли уже разговоры с когортами A/B и чем кончились (чтобы не приходить второй раз к тем же людям вслепую)?</li>
+</ol>
+<div class="callout warn"><b>Стоп-сигналы до подписания чего-либо:</b> фаундер не показывает пример deliverable; не может назвать, кто делает review руками; просит «сначала приведи клиентов, условия потом»; требует обещать pre-withdrawal/другие сети/KYT-замену; нет письменного data handling, но клиентов просят слать данные «в телегу». Любой из пунктов — сначала чинить, потом outreach твоим именем.</div>
+</section>
+
+<section id="founder-answer">
+<h2>15. Готовый ответ фаундеру</h2>
+<p class="small">Две версии. Короткая — в Telegram после созвона. Полная — письмом/файлом как фиксация договорённости. Цифры условий — место для вашей договорённости, не выдумывай их за фаундера.</p>
+
+<h3>15.1. Короткая версия (Telegram)</h3>
+<div class="msg">Привет! Изучил Positioning Brief v2.2 и Validation Playbook — логика мне понятна и близка: продаём не API и не AML, а Historical Review на 200 записей USDT/TRON, две когорты, покупатель — владелец payout/withdrawal-процесса.<br><br>Готов зайти стратегическим партнёром на первый 4-недельный цикл валидации. С моей стороны: список аккаунтов по когорте A с прямым outreach, тёплые интро в когорту B через мою сеть, проведение разговоров по playbook и доведение квалифицированных компаний до dataset и debrief. Цель, как у вас в playbook: 10–15 разговоров, 3 founding reviews, 1 paid — и честное решение на gate по данным.<br><br>Чтобы стартовать, мне нужны ответы на несколько вопросов — по доставке review, data handling, модели paid continuation и границам обещаний (ETH/TON и т.д.). Скину списком. И давай сразу письменно зафиксируем мои условия и полномочия: кто за что отвечает, что я могу обещать клиентам от твоего имени, а что — нет. Так мы с первого дня честно понимаем, что каждый из нас делает, и не строим друг другу ложных ожиданий.<br><br>Если ок — созвон на 45 минут на этой неделе, и в понедельник у тебя уже список первых аккаунтов.</div>
+
+<h3>15.2. Полная версия (письмо)</h3>
+<div class="msg">
+<p><b>Тема: Стратегическое партнёрство по валидации ChainZap — предложение по первому циклу</b></p>
+<p>Привет, [имя].</p>
+<p>Изучил Positioning Brief v2.2 и Validation Playbook v1. Резюме, как я понял задачу: ChainZap — независимый контроль стейблкоин-операций (expected vs on-chain), вход — Historical Transaction Review до 200 записей USDT/TRON на один workflow, валидируем две когорты (A: affiliate/CPA payout-heavy — прямой outbound; B: iGaming/brokers withdrawal-heavy — тёплые интро), решение принимаем на gate после 10 разговоров. Я подписываюсь под этой логикой и не буду продавать ChainZap как AML/KYT, payout-софт или API.</p>
+<p><b>Что беру на себя на первый цикл (4 недели):</b></p>
+<ul>
+<li>Сбор и скоринг целевого списка по когорте A (60–80 аккаунтов), персональный outreach до владельцев payout/withdrawal-процессов.</li>
+<li>Тёплые знакомства в когорту B через мою сеть — аккуратно, без массовой рассылки, по согласованным текстам, которые человек сможет просто переслать дальше.</li>
+<li>Проведение 30-минутных разговоров по playbook (последний случай → боль → оффер review), фиксация каждого разговора в общем трекере с дословными цитатами.</li>
+<li>Доведение квалифицированных компаний до founding review: dataset по согласованному scope, владелец процесса на debrief.</li>
+<li>Еженедельный разбор сигналов H1–H5 и письменная рекомендация на Decision Gate.</li>
+</ul>
+<p><b>Цель цикла:</b> 10–15 разговоров с владельцами процессов, 3 запущенных founding reviews, 1 paid (review или continuation). Если сигналов не будет — на gate честно фиксируем это с данными, а не продолжаем спам за надежду.</p>
+<p><b>Что мне нужно от тебя для старта:</b></p>
+<ul>
+<li>Пример deliverable review (обезличенный) и подтверждение мощности: кто делает review и срок 5 рабочих дней реален при 3 параллельных.</li>
+<li>Письменный data-handling (хранение, доступ, удаление, NDA) — прикладываю к каждому запросу dataset.</li>
+<li>Утверждённая модель и коридор paid continuation, и кто одобряет founding-слоты.</li>
+<li>Твоё участие в debrief’ах и SLA по ответам клиентам; ясность по границам обещаний (сети кроме TRON, pre-withdrawal и пр.).</li>
+<li>Ответы на вопросы из моего списка (приложу) — коротко, можно голосом, но ключевые пункты письменно.</li>
+</ul>
+<p><b>Условия партнёрства предлагаю зафиксировать до первого outreach:</b> формат [фикс за цикл / процент с paid review и paid continuation по привлечённым мной клиентам в течение N месяцев / опционная часть — обсуждаемо], мои полномочия (от чьего имени пишу, что вправе обещать), и право обеих сторон выйти после gate без взаимных претензий, если гипотезы не подтвердятся.</p>
+<p>Следующий шаг: 45-минутный созвон на этой неделе по вопросам выше. После него в течение 2 рабочих дней покажу первую волну аккаунтов и тексты касаний на согласование.</p>
+<p>[Имя]</p>
+</div>
+
+<h3>15.3. Как вести разговор о твоих условиях (шпаргалка, не в письмо)</h3>
+<ul>
+<li><b>Якорь ценности:</b> ты приносишь не «контакты», а доступ к закрытым owner’ам + доведение до dataset. В high-risk когорте это самый дефицитный ресурс цикла.</li>
+<li><b>База вознаграждения:</b> договаривайся о доле именно с денег, которые появятся по твоим аккаунтам (paid review + continuation за 6–12 месяцев), а не с «будущей оценки компании».</li>
+<li><b>Защита:</b> список привёдённых аккаунтов фиксируется в общем трекере с датой первого касания — это и есть доказательство источника при спорах.</li>
+<li><b>Выход:</b> после gate каждая сторона может остановиться; заработанное по уже оплаченным сделкам твоих аккаунтов сохраняется.</li>
+<li><b>Не соглашайся</b> на «процент, когда поднимем раунд» без фиксированной оплаты и без процента с самых первых платных сделок, а также без даты, когда условия можно пересмотреть.</li>
+</ul>
+
+<h3>15.4. Товарищеская версия — что написать фаундеру прямо сейчас, до всего</h3>
+<p>Если вы в нормальных отношениях, не надо начинать с официального письма из §15.2. Отправь одно человеческое сообщение ниже (можно целиком, можно двумя частями). Оно делает четыре вещи: показывает, что ты прочитал документы; называет твою роль; просит созвон до любых клиентов; и сразу, по-партнёрски, ставит тему денег — чтобы потом не было неловкости.</p>
+<div class="msg">Привет! Слушай, я спокойно вчитался в оба файла — и в позиционирование, и в плейбук. Мне зашло, логика понятная: мы не продаём никакой AML и не «API ради API», а начинаем с проверки прошлых выплат — ищем, где компания заплатила не туда, не столько или два раза. И идём не ко всем подряд, а к партнёрским сетям и к ребятам с массовыми выводами, причём к человеку, который сам эти выплаты разгребает.<br><br>Я готов тебе с этим помочь и вижу это как первый цикл на 4 недели: я собираю компании, выхожу на нужных людей, провожу разговоры и довожу нормальных ребят до того, чтобы они прислали свои прошлые выплаты на проверку. Цель, как у тебя и написано: 10–15 разговоров, 3 проверки, дальше смотрим по-честному, есть ли за что зацепиться.<br><br>Только давай до того, как я кому-то напишу от твоего имени, созвонимся минут на 45 и пройдём несколько простых вещей. Мне надо своими глазами увидеть пример готовой проверки, понять, кто её делает и точно ли успеваете за 5 дней, как клиент безопасно присылает данные и что он потом покупает и за сколько. И там есть момент с сетями: в брифе только TRON, а на сайте видны ещё Ethereum и TON — мне просто нужна одна фраза, что отвечать, когда спросят.<br><br>И давай сразу, по-товарищески, на берегу договоримся про мои условия. Не чтобы усложнить, а чтобы потом не портить отношения деньгами. У меня в RWA час стоит $110, и я прекрасно понимаю, что на вашей стадии за полный цикл по такой ставке никто не заплатит — у вас первая платная проверка сама стоит $500–1 500. Поэтому я не про «плати по $110». Я про нормальный пакет: скромный фикс за цикл, чтобы моё время не было бесплатным, плюс процент с денег тех клиентов, кого приведу я. Цифры спокойно обсудим на созвоне, я накину вариант, от которого можно оттолкнуться.<br><br>Если тебе ок такой план — давай созвон на этой неделе, и после него я за пару дней покажу первых ребят, кому буду писать, и тексты, чтобы ты всё видел до отправки.</div>
+<p><b>Если фаундер в ответ пишет «ок, а по деньгам что ты хочешь?»</b> — не уходи в длинную переписку, отправь короткое второе сообщение из §20.9 и зови на тот же созвон: цифры обсуждают голосом, а не в чате.</p>
+</section>
+
+<section id="gate">
+<h2>16. Decision Gate после 10 разговоров + метрики</h2>
+<table>
+<tr><th style="width:38%">Что видим</th><th>Решение (по playbook)</th></tr>
+<tr><td>≥3 сильных сигнала и ≥1 founding review запущен</td><td>Продолжаем когорту, добиваем 3 reviews</td></tr>
+<tr><td>3–4 из 10: «скрипт есть, работает нормально»</td><td>Одиночная проверка tx не продаётся: уходим в obligation-level или меняем когорту</td></tr>
+<tr><td>Боль подтверждают, но dataset никто не даёт</td><td>Проблема доверия, а не продукта: усиливаем security/data handling, пробуем API-pilot на стороне клиента</td></tr>
+<tr><td>Review прошёл, находки есть, платить не готовы</td><td>Находки не денежные: проверяем, какой workflow стоит дороже, прежде чем снижать цену</td></tr>
+<tr><td>API-ключи берут, вызовов нет / один тестовый прогон</td><td>Не сигнал. Сигнал: реальные вызовы + повторное использование за 7–14 дней + готовность платить</td></tr>
+</table>
+<p><b>Позиционирование и лендинг меняем только по итогам gate, не после одного разговора.</b> Твоя еженедельная сводка фаундеру — одна страница: разговоры (n), сильные сигналы (n + цитаты), dataset обещаны/получены (даты), топ-3 возражения дословно, топ-3 запроса из research-списка, следующий шаг по каждому живому аккаунту.</p>
+<h3>Метрики, которые смотришь каждый день</h3>
+<ul>
+<li>Касаний сделано / ответов получено (по волнам, не суммарно — видна усталость текстов).</li>
+<li>Разговоров именно с owner’ом (не «созвонился с компанией»).</li>
+<li>Доля разговоров, где назвали частоту и цену ошибки (качество H1).</li>
+<li>Dataset: обещан с датой → получен пригодный → review запущен (три разных статуса, не смешивать).</li>
+<li>Время ответа фаундера/доставки review против обещанных 5 дней — репутационный риск №1 внутри твоей сети.</li>
+</ul>
+</section>
+
+<section id="risks">
+<h2>17. Риски, границы обещаний, флаги</h2>
+<div class="grid2">
+<div class="card"><h4>Продуктовые / репутационные</h4><ul>
+<li>Твоё имя — залог в тёплых интро когорты B. Один сорванный срок review или размытый scope сжигает канал быстрее, чем рождает второй шанс.</li>
+<li>Не обещай «найдём дубли» без obligation-контекста, «одобрим вывод», «заменим KYT», «поддерживаем все сети». Список запретов — §2.5 и playbook §09.</li>
+<li>High-risk вертикали: не давай юр. советов по лицензиям/регуляторике, не принимай и не передавай KYC/персональные данные игроков — только согласованный транзакционный scope.</li>
+<li>Публичный след противоречив (бот для физлиц, Pro/Trader-тарифы, API-доки про ETH/TON). Подготовь с фаундером одну фразу-объяснение до того, как первый клиент нагуглит.</li>
+</ul></div>
+<div class="card"><h4>Коммерческие / личные</h4><ul>
+<li>Бесплатные founding reviews легко превращаются в бесплатный консалтинг твоими руками — держи лимит: 1 workflow, 200 записей, 1 walkthrough.</li>
+<li>Без письменной фиксации базы вознаграждения и реестра твоих аккаунтов партнёрство закончится спором о «чей клиент».</li>
+<li>Оплата от high-risk клиентов и твоё вознаграждение: юрисдикции, способы расчётов и налоговые вопросы проговорить до первой сделки, а не после.</li>
+<li>Если gate показывает отсутствие сигналов — умение остановиться защищает и твою репутацию, и время. Залипание в мёртвую когорту ради «стратегического партнёрства» — главный личный риск.</li>
+</ul></div>
+</div>
+</section>
+
+<section id="sources">
+<h2>18. Источники и что проверить руками</h2>
+<h3>Внутренние (в этой папке CZ)</h3>
+<ul>
+<li><b>ChainZap Positioning Brief v2.2.pdf</b> — позиционирование, scope, когорты A/B, «умеем сегодня / research», пример двойной выплаты.</li>
+<li><b>ChainZap Validation Playbook v1.pdf</b> — гипотезы H1–H5, структура разговора, пакет Historical Review, founding-условия, цена paid review $500–1 500, сигналы и Decision Gate, inbound API-правила.</li>
+</ul>
+<h3>Публичные продуктовые</h3>
+<ul>
+<li><a href="https://chainzap.io/">chainzap.io</a> — публичный лендинг (обрати внимание: витрина и документация шире коммерческого scope брифа — см. §14.6–7).</li>
+<li><a href="https://developers.chainzap.io/docs/v1/">developers.chainzap.io/docs/v1</a> — Transaction Decision API: эндпоинты, batch до 200, состояния, sandbox, usage/quota.</li>
+</ul>
+<h3>Внешний рынок (проверено при подготовке отчёта, октябрь 2026)</h3>
+<ul>
+<li>Messari, State of TRON Q1 2026 — USDT supply на TRON ~$85,4 млрд, ~$2,0 трлн USDT-переводов за квартал.</li>
+<li>TRON DAO / отраслевые сводки 2026 (The Block, Token Terminal через пресс-релизы) — $90+ млрд circulating USDT, лидирующий объём USDT-переводов; цифры сверять на дату использования.</li>
+<li>INXY Payments, CoinGate — публичные разборы affiliate payout-рутины: ручная сверка и копирование адресов как bottleneck payout-циклов; кейс автоматизации выплат рекламной сети Coinzilla.</li>
+<li>Отраслевые обзоры iGaming payments (CoinGate, iGamingPayments и др.) — ручные проверки перед выводами, цена фрода/чарджбэков, сроки выводов 2 часа – 5 дней с учётом review.</li>
+<li>Открытые оценки рынка blockchain analytics (Spark/Sphinx и др.) — порядок контрактов Chainalysis/Elliptic/TRM для mid-size: десятки–сотни тыс. $/год; публичные тарифы AMLBot (~$0,45–3/чек) и MistTrack (API ~$0,05–0,20/call, планы $229–2 069/мес) — как ценовые ориентиры смежных категорий, не как прямые конкуренты.</li>
+<li>Каталоги и календари: CPA.RIP, Partnerkin; конференции MAC, Affiliate World, SiGMA, SBC Summit, iGB Affiliate — как источники аккаунтов и owner-контактов (§6).</li>
+</ul>
+<h3>Что проверить руками в первую неделю (не верить отчёту на слово)</h3>
+<ul class="checklist">
+<li>Открыть 20 сайтов сетей из каталогов и вручную подтвердить признак «выплаты USDT weekly» у каждого.</li>
+<li>Попросить фаундера показать один полный deliverable review и прогнать через него твой контрольный вопрос: «я смогу защитить каждую строку перед клиентом?»</li>
+<li>Сверить дословную фразу про ETH/TON с фаундером до первого клиентского вопроса.</li>
+<li>Провести 2 разговора «вхолостую» с дружественными payout-людьми из своей сети и проверить, заходит ли пример 1 000 → 2 000 без питча.</li>
+</ul>
+<p class="small">Отчёт подготовлен 14 октября 2026 по внутренним документам ChainZap (версии выше) и открытым источникам. Рыночные цифры даны порядками и требуют освежения на дату переговоров. Всё, помеченное «ГИПОТЕЗА», фаундер должен подтвердить или отклонить до использования с клиентами.</p>
+</section>
+
+<section id="simple-steps">
+<h2>19. Пошаговый чеклист простыми словами: что делать по порядку</h2>
+<p><b>Как пользоваться этим разделом.</b> Иди строго по этапам сверху вниз и ставь галочки. Не перепрыгивай: нельзя искать клиентов (этап 4), пока не договорился с фаундером о деньгах и материалах (этапы 1–3). Каждый этап написан по одной схеме: <b>что сделать → что должно получиться → пример</b>.</p>
+<div class="callout blue"><b>Вся работа в одной фразе:</b> ты находишь компании, которые вручную мучаются со сверкой выплат в USDT, разговариваешь с человеком, который за эти выплаты отвечает, и доводишь его до простого шага — прислать таблицу своих прошлых выплат на бесплатную проверку. Дальше команда ChainZap проверяет таблицу, вы вместе показываете клиенту ошибки, и клиент платит за следующую проверку или за постоянную работу.</div>
+
+<h3>Этап 0. Сначала сам пойми продукт (полдня, никого не искать)</h3>
+<ul class="checklist">
+<li>Прочитай оба PDF в папке CZ. Это всего 9 страниц.</li>
+<li>Выпиши себе на лист три фразы и выучи их:
+  <br>1) «ChainZap сравнивает то, что компания <i>должна была</i> выплатить, с тем, что <i>на самом деле</i> ушло в блокчейн».
+  <br>2) «Мы не AML и не проверяем “грязные” кошельки. Мы ищем расхождения: заплатили не тому, не столько, два раза или платёж потерялся».
+  <br>3) «Первый шаг — бесплатная проверка до 200 прошлых выплат. Интеграция и API для этого не нужны».</li>
+<li>Выучи главный пример: <i>надо было выплатить 1 000 USDT → первая отправка зависла → отправили ещё раз вручную → потом прошла и первая → компания потеряла лишние 1 000 USDT.</i> Этот пример ты будешь рассказывать в каждом разговоре.</li>
+<li>Заведи простую таблицу (Google Sheets или Excel) — это твой список компаний и разговоров. Колонки сделай сразу как в этапе 9 ниже.</li>
+</ul>
+<p><b>Готово, если:</b> ты можешь за 30 секунд объяснить другу без крипты, что делает ChainZap и зачем это компании, которая платит партнёрам в USDT.</p>
+
+<h3>Этап 1. Созвон с фаундером (45 минут) — до любых клиентов</h3>
+<p>Цель созвона — не «познакомиться», а получить ответы и материалы. Без них к клиентам идти нельзя: ты не сможешь ответить на их вопросы и сгоришь по срокам.</p>
+<ul class="checklist">
+<li>Задай вопросы из §14. Самые важные пять, без которых стоп:
+  <br>1) Покажи пример готовой проверки: как выглядит таблица с результатами, которую получает клиент?
+  <br>2) Кто лично делает проверку и правда ли успеете за 5 рабочих дней, если придут 3 клиента сразу?
+  <br>3) Как клиент безопасно передаёт данные и когда вы их удаляете? Дай текст про это письменно.
+  <br>4) Что клиент покупает после бесплатной проверки и сколько это стоит? (В PDF цены продолжения нет — фаундер должен её назвать.)
+  <br>5) В брифе написано «только сеть TRON», а на сайте видны Ethereum и TON. Что мне дословно отвечать, если клиент спросит?</li>
+<li>Попроси у фаундера 5 вещей письменно/файлами: пример результата проверки; текст о хранении и удалении данных; одну фразу, что можно обещать клиенту, и список, что обещать нельзя; цены платной проверки и продолжения; подтверждение, сколько бесплатных проверок (founding) ты можешь раздавать — в PDF это 3 места.</li>
+<li>Сразу договорись: фаундер участвует в разборе результатов с клиентом, а тебе отвечает в течение согласованного срока (например, в рабочие часы в тот же день).</li>
+</ul>
+<div class="callout warn"><b>Стоп, не идём дальше, если:</b> фаундер не показывает пример готовой проверки; не может сказать, кто её делает руками; говорит «сначала приведи клиентов, а условия потом»; просит обещать проверку до выплаты, другие сети или замену AML. Сначала чиним это, потом работаем. Полный список стоп-сигналов — в конце §14.</div>
+
+<h3>Этап 2. Договорись о своих деньгах — тоже до клиентов</h3>
+<ul class="checklist">
+<li>Прочитай §20 ниже целиком. Там все варианты, где ты вообще можешь заработать.</li>
+<li>Предложи фаундеру конкретный вариант (готовые фразы — в §20.6) и запиши договорённость письменно. Хоть в одном документе: что ты делаешь, сколько длится первый цикл (4 недели), сколько и за что тебе платят, как долго клиент считается «твоим», когда выплата.</li>
+<li>Заведи реестр своих компаний: дата первого касания, компания, кто познакомил/как нашёл. Это твоё доказательство, что клиент пришёл от тебя (подробно — §20.5).</li>
+</ul>
+<p><b>Готово, если:</b> ты одним предложением можешь сказать: «Я получаю [столько] за [это], клиент считается моим [столько] месяцев, деньги приходят [тогда-то]».</p>
+
+<h3>Этап 3. Подготовь рабочие материалы (1 день)</h3>
+<ul class="checklist">
+<li>Пример результата проверки от фаундера — чтобы показывать на созвоне с клиентом (можно обезличенный).</li>
+<li>Текст про данные (хранение/доступ/удаление) — будешь прикладывать к каждой просьбе прислать таблицу выплат.</li>
+<li>Три готовых сообщения из §11: первое сообщение, повторное сообщение, текст для знакомства через общего человека.</li>
+<li>Лист «Что я не обещаю» из §2.5 (правая колонка). Распечатай или держи перед глазами на звонках.</li>
+</ul>
+
+<h3>Этап 4. Составь список компаний (2 дня)</h3>
+<p><b>Кого ищем — простыми словами.</b> Компании, которые регулярно платят многим людям в USDT и где эти выплаты до сих пор кто-то сверяет руками. В первую очередь две группы из PDF:</p>
+<table>
+<tr><th style="width:26%">Группа</th><th>Кто это простыми словами</th><th>Их боль</th></tr>
+<tr><td><b>A. Партнёрские / CPA-сети</b></td><td>Компании, которые платят партнёрам (вебмастерам, блогерам, арбитражникам) за приведённых клиентов. Обычно платят каждую неделю в USDT</td><td>Надо выплатить 100 партнёрам. Один платёж завис — отправили ещё раз — первый тоже прошёл. Или партнёр кричит «не дошло», а деньги ушли</td></tr>
+<tr><td><b>B. Казино / букмекеры / брокеры</b></td><td>Компании, откуда люди выводят деньги (выигрыши, заработок) в USDT</td><td>Перед выводом человек вручную проверяет платёж. Ошибка = деньги ушли не туда или два раза, вернуть нельзя</td></tr>
+</table>
+<p><b>Как искать группу A — по шагам:</b></p>
+<ol>
+<li>Открой каталоги партнёрских сетей: <b>CPA.RIP</b> и <b>Partnerkin</b>. Включи фильтр/раздел по gambling и finance — там больше всего выплат в крипте.</li>
+<li>Заходи в карточку каждой сети и ищи: «выплаты в USDT», «выплаты каждую неделю», «TRC-20». Нет выплат в USDT — сеть не подходит, иди дальше.</li>
+<li>Зайди на сайт сети, открой страницу «Выплаты» или «Партнёрам». Сделай скриншот, где видно USDT и частоту выплат. Это твой повод для письма и доказательство, что сеть подходит.</li>
+<li>Запиши сеть в таблицу. Так собери 80–120 названий, потом отберёшь лучшие.</li>
+</ol>
+<p><b>Как искать группу B — по шагам:</b></p>
+<ol>
+<li>Эту группу в холодную не атакуют — только через знакомых. Составь список людей, которые могут познакомить (в PDF это канал через Полину + твоя сеть).</li>
+<li>Каждому такому человеку дай готовый текст из §11.3 — чтобы он просто переслал его, а не придумывал сам.</li>
+<li>Проси знакомить не «с кем-нибудь из казино», а с одним конкретным человеком, который отвечает за выплаты или выводы.</li>
+</ol>
+<p><b>Пример заполненной строки (компания выдумана для примера):</b></p>
+<table>
+<tr><th>Компания</th><th>Группа</th><th>Почему подходит</th><th>Кому писать</th><th>Балл</th></tr>
+<tr><td>«Ракета Партнёрка» (пример)</td><td>A</td><td>На сайте: выплаты каждый понедельник, USDT TRC-20, от $50</td><td>Руководитель выплат — ищем имя на LinkedIn и в чате сети</td><td>9 из 12</td></tr>
+</table>
+<p><b>Как ставить балл (простая версия скоринга из §7.1):</b> платят в USDT именно на TRON — до 3 баллов; платят каждую неделю или чаще — до 2; платят несколькими способами/кошельками — до 2; видно, что сверяют руками (есть споры о выплатах в чатах, висит вакансия «менеджер по выплатам») — до 2; нашёл нужного человека и путь к нему — до 3. <b>В работу бери компании от 7 баллов.</b> Цель этапа: 60–80 компаний, из них первая волна — 10–15 лучших.</p>
+<div class="callout amber"><b>Кому точно не пишем:</b> компания платит 5 людям раз в месяц с одного кошелька (им нечего проверять); всё уже автоматизировано у одного платёжного сервиса и они довольны; первый контакт — юрист по комплаенсу или технический директор (они не страдают от ручной сверки, разговор умрёт). Полный список — §5.4.</div>
+
+<h3>Этап 5. Найди нужного человека в каждой компании</h3>
+<p>Нужен не директор и не «менеджер по партнёрам», а <b>человек, который отвечает за выплаты и лично разгребает случаи, когда платёж не сошёлся</b>. Должности называются так: руководитель выплат (Head of Payments), руководитель операций (Head of Operations), человек по финансам/казначейству (Finance / Treasury lead), руководитель по рискам.</p>
+<ul class="checklist">
+<li><b>Способ 1 — LinkedIn.</b> Вбей в поиск должность + название компании. Ищи компании размером примерно 11–200 человек: там этот человек ближе к ручной работе.</li>
+<li><b>Способ 2 — сайт и чат компании.</b> Страница «Команда», админы партнёрского чата в Telegram, человек, который отвечает в чате на вопросы «где моя выплата».</li>
+<li><b>Способ 3 — через знакомых.</b> Спроси общих знакомых одной фразой: «Кто у них отвечает за выплаты партнёрам? Хочу поговорить про сверку выплат, не продать рекламу».</li>
+<li>Запиши в таблицу: имя, должность, где нашёл, как выйти (напрямую / через кого).</li>
+</ul>
+<p><b>Проверка, что человек тот самый:</b> на звонке он сам вспоминает последний случай с проблемным платежом. Не вспоминает — это не тот человек, вежливо попроси познакомить с тем, кто разбирает такие случаи.</p>
+
+<h3>Этап 6. Напиши первое сообщение</h3>
+<p><b>Правила простого сообщения:</b> 5–8 коротких строк; первая строка — почему именно ему (его сайт, его вакансия, ваш общий знакомый); никакой рекламы и списка функций; в конце — один простой вопрос про созвон на 30 минут. Отправляй волнами по 10–15 человек, не всем сразу.</p>
+<p><b>Хороший пример (заполненный, можно почти так и отправлять):</b></p>
+<div class="msg">Привет, Анна. Увидел на сайте вашей сети, что вы платите партнёрам каждый понедельник в USDT TRC-20 — поэтому пишу именно тебе, а не в общий чат.<br><br>Я сейчас помогаю команде ChainZap. Они сверяют список выплат компании с тем, что реально ушло в блокчейн, и находят расхождения. Классика: платёж завис, отправили повторно, а потом прошёл и первый — и партнёру ушло в два раза больше.<br><br>Ничего не продаю в этом сообщении. Собираю разговоры с людьми, которые лично разбирают такие случаи. Созвонимся на 30 минут на этой неделе? Ты расскажешь, как у вас проходят выплаты, а я покажу на примере, как такая ошибка выглядит в сверке. Если у вас такой боли нет — честно разойдёмся.</div>
+<p><b>Плохой пример (так не надо):</b></p>
+<div class="msg" style="border-left-color:var(--warn)">«Здравствуйте! Предлагаем инновационную платформу ChainZap — API для верификации транзакций, AML/KYT-контроля и автоматизации workflow. Интеграция за 1 день, enterprise-поддержка. Скину презентацию?» — <span class="small">Почему плохо: продаёт API и AML (это запрещено позиционированием), ноль повода «почему именно вам», просит смотреть презентацию вместо разговора.</span></div>
+<ul class="checklist">
+<li>Нет ответа 3–4 дня → отправь <b>одно</b> короткое повторное сообщение из §11.2 (про бесплатную проверку 200 записей). Ещё тишина — забудь на этот цикл, не долби.</li>
+<li>Ответ «скиньте презентацию» → это слабый интерес. Отвечай: «Презентация не покажет главного. Давайте 30 минут: расскажете про ваш последний сложный платёж, и я на нём покажу, что делает сверка. Не зайдёт — презентацию пришлю после».</li>
+<li>Ответ «у нас всё автоматизировано» → спроси одним сообщением: «А когда платёж зависает или партнёр говорит, что не дошло, — кто и как это проверяет?» Ответ покажет, есть ли ручная работа.</li>
+</ul>
+
+<h3>Этап 7. Проведи разговор (30 минут)</h3>
+<p><b>За 15 минут до звонка:</b> открой его сайт выплат, свою таблицу и лист «что не обещаю». Подготовь пример про 1 000 → 2 000 USDT.</p>
+<table>
+<tr><th style="width:14%">Время</th><th>Что делаешь простыми словами</th><th>Что сказать (можно дословно)</th></tr>
+<tr><td>0–5 мин</td><td>Узнаёшь, как у них устроены выплаты</td><td>«Расскажи, как у вас проходят выплаты: сколько в месяц, в чём платите, сколько кошельков, и кто разбирает случаи, когда что-то не сходится?»</td></tr>
+<tr><td>5–20 мин</td><td><b>Главное.</b> Не продаёшь, а слушаешь и записываешь их последний проблемный случай</td><td>«Вспомни последний случай, когда платёж пришлось проверять руками перед тем, как отправить, повторить или закрыть выплату. Что случилось — по шагам?» Дальше: «Как часто такое бывает? Кто разбирал и сколько времени ушло? Сколько денег потеряли, если потеряли? Что пробовали сделать, чтобы не повторялось?»</td></tr>
+<tr><td>20–25 мин</td><td>Одной фразой объясняешь продукт и рассказываешь главный пример</td><td>«Мы сравниваем то, что вы должны были выплатить, с тем, что реально ушло в блокчейн». Дальше пример про зависший платёж и двойную выплату</td></tr>
+<tr><td>25–30 мин</td><td>Договариваешься о конкретном следующем шаге с датой</td><td>«Давай проверим на ваших прошлых выплатах: до 200 записей, один процесс, результат за 5 рабочих дней — таблица, где по каждой выплате: совпало / не совпало / не хватило данных, и почему. Если таких случаев у вас нет — так и скажем»</td></tr>
+</table>
+<p><b>Два главных вопроса, выучи дословно:</b> 1) «Какие платежи вы до сих пор проверяете руками перед тем, как зачислить, выплатить, повторить или закрыть платёж?» 2) «У вас есть своя программа/таблица для сверки? Где она ломается?»</p>
+<div class="callout warn"><b>Не делай на звонке:</b> не начинай с презентации; не спрашивай «было бы вам интересно?» (всегда ответят «да» — и это ничего не значит); не обещай проверку до выплаты, другие сети, блокировку платежей и замену AML.</div>
+<p><b>Хороший знак:</b> сам назвал, как часто случаются проблемы и сколько стоит ошибка; рассказал, где ломается его таблица/скрипт; согласился прислать данные и спросил «а сколько стоит дальше?» <b>Плохой знак:</b> «интересно, держите в курсе», «пришлите презентацию», не может вспомнить ни одного случая за месяц.</p>
+
+<h3>Этап 8. Сразу после звонка (в течение часа)</h3>
+<ul class="checklist">
+<li>Заполни строку в таблице. Колонки: компания; группа A или B; с кем говорил и его должность; какой процесс болит; как часто случаются проблемы; сколько стоит одна ошибка (его словами!); есть ли своя таблица/скрипт и где ломается; готов ли прислать данные и когда; интерес: сильный / слабый / нет; следующий шаг и дата; <b>его фраза дословно</b> (например: «в прошлый понедельник два раза заплатили одному партнёру, минус 800 долларов»).</li>
+<li>Отправь человеку короткое письмо по итогам (пример ниже).</li>
+<li>Поставь себе напоминание на дату следующего шага. Нет даты — шага нет.</li>
+</ul>
+<div class="msg">Анна, спасибо за разговор. Зафиксирую, как понял: выплаты по понедельникам, около 300 партнёрам, два кошелька; примерно раз в месяц бывает зависший платёж, разбирает твой финансовый менеджер, в сентябре была двойная выплата на $800. Договорились: ты до четверга присылаешь таблицу выплат за прошлый цикл, мы за 5 рабочих дней возвращаем разбор по каждой записи и созваниваемся на 30 минут [дата]. Если что-то не так понял — поправь.</div>
+
+<h3>Этап 9. Получи таблицу выплат и запусти бесплатную проверку</h3>
+<p><b>Кому даём бесплатную проверку:</b> только тем, кто прошёл проверку по списку: процесс выплат реальный и объёма хватает; пришлёт настоящие прошлые данные; ответственный за выплаты человек придёт на разбор результата; после разбора готов обсудить платную работу, если найдутся денежные ошибки. Всего таких бесплатных мест — 3 на цикл. Не раздавай их «чтобы было».</p>
+<p><b>Что попросить у клиента (простая таблица, Excel или Google Sheets):</b></p>
+<table>
+<tr><th>Колонка</th><th>Что это простыми словами</th><th>Пример строки (выдуманная)</th></tr>
+<tr><td>Номер выплаты у вас</td><td>Внутренний номер заказа/выплаты в вашей системе</td><td>Выплата №4821</td></tr>
+<tr><td>Кому должны были заплатить</td><td>Адрес кошелька получателя</td><td>TJRab…RTv8</td></tr>
+<tr><td>Сколько должны были заплатить</td><td>Ожидаемая сумма и токен</td><td>1 000 USDT</td></tr>
+<tr><td>Хэш транзакции</td><td>Номер транзакции в блокчейне (tx hash)</td><td>a1b2c3…</td></tr>
+<tr><td>Все попытки (если есть)</td><td>Если платили в несколько попыток — все хэши по этой выплате и чем отправляли (какой кошелёк/сервис)</td><td>попытка 1: …; попытка 2: …</td></tr>
+</table>
+<p>Имена клиентов и паспорта не нужны. Как храним и когда удаляем данные — приложи текст фаундера из этапа 1. Данные не принимают «в общий чат» — только согласованным способом.</p>
+<ul class="checklist">
+<li>Получил таблицу → в тот же день подтверди клиенту: «Получили, записей N, результат к [дата], разбор [дата]».</li>
+<li>На 2-й день уточни у фаундера, что проверка идёт. На 4-й — что успеваете к сроку. Не пропадай для клиента на 5 дней.</li>
+<li>Таблица кривая (нет нужных колонок) → не молчи: в тот же день попроси дослать недостающее одним сообщением со списком колонок выше.</li>
+</ul>
+
+<h3>Этап 10. Покажи результат и предложи платное продолжение</h3>
+<p>Разбор результата (30 минут, ты + фаундер + ответственный за выплаты клиента). Иди по порядку:</p>
+<ol>
+<li>«Проверили N выплат. По M всё совпало. По K — не совпало, сейчас покажу каждую. По остальным не хватило данных, и вот почему».</li>
+<li>Каждая ошибка — с деньгами: «Вот выплата №4821: должны были 1 000, ушло двумя платежами по 1 000. Минус 1 000 долларов».</li>
+<li>«Это случайность или повторяется?» Покажи, сколько таких случаев в их таблице и как часто это будет в месяц.</li>
+<li>Посчитай цену на их же цифрах: «Вы говорили, такая ошибка стоит около $800 и бывает раз в месяц. Это примерно $9 600 в год, не считая времени вашего менеджера».</li>
+<li>Предложи <b>один</b> следующий шаг: «Предлагаем взять именно этот процесс выплат под постоянную проверку: каждый цикл присылаете таблицу — получаете разбор до того, как закроете выплаты. Стоит [цена от фаундера]. Начнём со следующего цикла [дата]?»</li>
+</ol>
+<ul>
+<li><b>Если ошибок не нашли или они копеечные</b> — честно скажи об этом. Не продавай продолжение любой ценой: один впаренный клиент убьёт твою репутацию в узком кругу.</li>
+<li><b>Если сказали «дорого»</b> — верни их же цифру: «Одна двойная выплата у вас — $800. Проверка стоит меньше одной такой ошибки».</li>
+<li><b>Если сказали «надо подумать»</b> — договорись о дате ответа и о том, что должно произойти для «да» (кто ещё должен посмотреть, какой документ нужен). «Подумаем» без даты = нет.</li>
+</ul>
+
+<h3>Этап 11. Каждую неделю — короткий отчёт фаундеру</h3>
+<p>Раз в неделю отправляй фаундеру полстраницы. Не «всё идёт хорошо», а цифры и фразы клиентов:</p>
+<div class="msg">Неделя 2. Написал 15 людям, ответили 6. Провёл 4 разговора с ответственными за выплаты. Сильный интерес: 2 (приложил их фразы дословно). Таблицу выплат обещали: 1 компания к четвергу. Главные возражения: «у нас своя таблица» (3 раза), «давайте после Нового года» (1 раз). Просили то, чего у нас нет: проверку до выплаты (2 раза). Следующая неделя: ещё 10 первых сообщений, добить таблицу от [компания], первый разбор [дата].</div>
+
+<h3>Этап 12. После 10 разговоров — остановись и примите решение</h3>
+<p>Это контрольная точка из PDF. Не продолжай по инерции.</p>
+<table>
+<tr><th style="width:34%">Что получилось</th><th>Что делаете</th></tr>
+<tr><td>3 и больше компаний с сильным интересом, хотя бы 1 уже прислала таблицу</td><td>Продолжаете с этими группами, добиваете 3 бесплатные проверки до конца</td></tr>
+<tr><td>3–4 из 10 говорят «наша таблица и так работает»</td><td>Простая проверка одной транзакции никому не нужна. Продаёте только поиск двойных/частичных выплат по всем попыткам — или меняете группу клиентов</td></tr>
+<tr><td>Боль признают, но таблицу никто не присылает</td><td>Проблема в доверии к передаче данных. Усиливаете текст про хранение/удаление или предлагаете проверку через API на стороне клиента</td></tr>
+<tr><td>Проверку сделали, ошибки нашли, платить не хотят</td><td>Ошибки оказались дешёвыми для них. Ищите процесс, где ошибка стоит дороже, а не снижайте цену до нуля</td></tr>
+</table>
+
+<h3>Твой обычный день (короткий чеклист)</h3>
+<ul class="checklist">
+<li><b>Утром (30 мин):</b> 5 новых компаний в таблицу с баллами — или 3 повторных сообщения тем, кто молчит.</li>
+<li><b>Днём:</b> разговоры. Цель дня — не «много звонков», а разговор именно с ответственным за выплаты и его последний проблемный случай.</li>
+<li><b>Вечером (15 мин):</b> каждая строка таблицы заполнена в день контакта: интерес, следующий шаг, дата, фраза клиента дословно.</li>
+<li><b>Раз в неделю:</b> отчёт фаундеру из этапа 11.</li>
+</ul>
+<p><b>Цифры первого цикла, к которым идём (из PDF):</b> 10–15 разговоров → 3 бесплатные проверки запущено → 1 платная сделка. Если после 10 разговоров сильных интересов меньше 3 — это не провал тебя лично, а ответ рынка, который ты честно приносишь фаундеру на этапе 12.</p>
+</section>
+
+<section id="earnings">
+<h2>20. Где и на чём ты зарабатываешь: все возможные варианты</h2>
+<div class="callout warn"><b>Сначала главное, без иллюзий.</b> В PDF ChainZap <b>нет ни слова о твоих условиях</b>. Там есть только цены для клиента: первые 3 проверки бесплатно, дальше разовая проверка $500–1 500. Поэтому всё в этом разделе — не «тебе положено», а <b>варианты, которые ты предлагаешь фаундеру и фиксируешь письменно до начала работы</b>. Пока клиент не заплатил ChainZap и пока у тебя нет письменной договорённости — ты не зарабатываешь ничего.</div>
+
+<h3>20.1. Откуда вообще берутся деньги (простая цепочка)</h3>
+<div class="flow"><span>Клиент платит ChainZap</span><b>→</b><span>ChainZap получает деньги</span><b>→</b><span>Тебе: фикс и/или твой процент</span></div>
+<p>Вывод из цепочки: если ты договорился <b>только на процент</b>, то на бесплатных первых проверках ты зарабатываешь <b>0</b>. А цель первого цикла по PDF — всего 1 платная сделка. Посмотри на цифрах ниже, почему процент в одиночку — слабая сделка для тебя.</p>
+
+<h3>20.2. Все способы заработка, которые существуют в такой роли</h3>
+<table>
+<tr><th style="width:22%">Способ</th><th>Что это простыми словами</th><th>Плюсы и минусы для тебя</th></tr>
+<tr><td><b>1. Фиксированная оплата за цикл</b></td><td>Договорились: за 4 недели работы ты получаешь твёрдую сумму (например, платится 50% в начале и 50% в конце цикла). Не зависит от того, заплатил клиент или нет</td><td>Самый надёжный вариант на старте: твоё время оплачено, даже если рынок скажет «нет». Минус: фаундер на ранней стадии может предложить мало</td></tr>
+<tr><td><b>2. Процент с разовой платной проверки</b></td><td>Клиент, которого привёл ты, платит $500–1 500 за проверку. Ты получаешь свой процент от этих денег</td><td>Просто и понятно. Минус: сделка разовая, следующие деньги — только со следующей продажи</td></tr>
+<tr><td><b>3. Процент с постоянной работы (главный джекпот)</b></td><td>После проверки клиент платит каждый месяц за постоянный контроль своих выплат. Ты каждый месяц получаешь процент, пока клиент платит</td><td>Это «спящие деньги»: клиент платит год — ты год получаешь долю, уже не продавая заново. Ради этого стоит торговаться о сроке: клиент считается твоим 12 месяцев и дольше</td></tr>
+<tr><td><b>4. Оплата за промежуточный результат</b></td><td>Фаундер платит не за продажу, а за шаг: например, за каждый разговор с нужным человеком, за каждую присланную таблицу выплат, за каждую запущенную проверку</td><td>Хорошо, если фаундер не готов к фиксу: ты получаешь деньги за работу, которую контролируешь. Суммы за шаг — предмет торга, в PDF их нет</td></tr>
+<tr><td><b>5. Бонус за веху</b></td><td>Разовый бонус за событие: первый платный клиент, 3 запущенные проверки, выход на определённую выручку</td><td>Приятное дополнение к фиксу/проценту, но не основа: веха может не случиться не по твоей вине</td></tr>
+<tr><td><b>6. Деньги через партнёров</b></td><td>Ты приводишь не клиента, а партнёра (например, платёжный сервис), а уже его клиенты покупают ChainZap. Ты получаешь процент и с этих клиентов</td><td>Масштаб без твоих личных продаж. Минус: работает только после первых успешных проверок — партнёру нужно что-то показывать. И долю надо фиксировать на троих письменно</td></tr>
+<tr><td><b>7. Зарплата, если зайдёшь в команду</b></td><td>После успешного цикла фаундер берёт тебя на роль руководителя продаж/развития с окладом + процентом</td><td>Стабильно. Имеет смысл обсуждать только после того, как цикл показал результат — тогда твоя цена выше</td></tr>
+<tr><td><b>8. Доля в компании (опционы)</b></td><td>Тебе дают право в будущем получить долю компании. Обычно доля «созревает» годами: стандарт — 4 года, первый кусок через 1 год</td><td>Может стоить много, а может 0: если компания не вырастет и не продастся, доля — просто бумага. Никогда не бери долю <i>вместо всех денег</i>, если не готов работать бесплатно</td></tr>
+<tr><td><b>9. Токены</b></td><td>Оплата токенами проекта, если они есть</td><td>В документах ChainZap токена нет. Не считай это заработком и не закладывай в план</td></tr>
+<tr><td><b>10. Не деньги, но ценность</b></td><td>Репутация в кругу, кейсы, новые связи: владельцы платёжных направлений — люди, которые потом зовут в другие проекты</td><td>Это реально, но этим нельзя платить за квартиру. Не позволяй фаундеру расплачиваться с тобой только «связями и перспективой»</td></tr>
+</table>
+
+<h3>20.3. Считаем на цифрах (примеры для понимания, а не обещание)</h3>
+<p><b>Вариант «только процент» — почему это слабо на первом цикле.</b> Допустим, твой процент — 20% (цифра для примера, её ты торгуешь сам):</p>
+<table>
+<tr><th>Что случилось</th><th>Клиент заплатил</th><th>Твои 20%</th></tr>
+<tr><td>3 бесплатные проверки (весь старт цикла)</td><td>$0</td><td><b>$0</b></td></tr>
+<tr><td>1 платная проверка по нижней цене</td><td>$500</td><td>$100</td></tr>
+<tr><td>1 платная проверка по верхней цене</td><td>$1 500</td><td>$300</td></tr>
+</table>
+<p>То есть за 4 недели работы при «только проценте» ты, скорее всего, получишь $0–300. Поэтому нормальная конструкция для тебя — <b>фикс за цикл + процент</b>: фикс оплачивает время, процент даёт интерес продать дорого и довести клиента до постоянной работы.</p>
+<p><b>Как выглядит постоянная работа, если дело пойдёт.</b> Допустим, клиент платит за постоянный контроль $800 в месяц, твой процент 20% — это $160 каждый месяц с одного клиента, пока он платит:</p>
+<table>
+<tr><th>Клиентов на постоянной оплате</th><th>Они платят в месяц (по $800)</th><th>Твои 20% в месяц</th><th>Твои деньги за год</th></tr>
+<tr><td>1</td><td>$800</td><td>$160</td><td>$1 920</td></tr>
+<tr><td>3</td><td>$2 400</td><td>$480</td><td>$5 760</td></tr>
+<tr><td>5</td><td>$4 000</td><td>$800</td><td>$9 600</td></tr>
+<tr><td>10</td><td>$8 000</td><td>$1 600</td><td>$19 200</td></tr>
+</table>
+<p class="small">Все цифры в таблицах — арифметика для понимания на выдуманных вводных ($800 и 20%). Реальная цена постоянной работы в PDF не названа, её должен дать фаундер. Твоя задача — подставить в эту таблицу настоящие цифры до старта и посмотреть, устраивает ли тебя результат.</p>
+<p><b>Как посчитать фикс за цикл.</b> Прикинь честно: цикл — это примерно 40–60 часов твоего времени (списки, письма, звонки, отчёты). Умножь на цену твоего часа, за которую ты готов делать эту работу. Получившаяся сумма — твоя стартовая позиция в разговоре о фиксе. Если фаундер предлагает сильно меньше — сокращай объём (например, только тёплые знакомства в группу B без холодных списков), а не работай тот же объём за копейки.</p>
+
+<h3>20.4. За что ты НЕ получаешь денег (если сам не договоришься обратного)</h3>
+<ul>
+<li>За бесплатные первые проверки — клиент платит $0, процент с нуля равен нулю.</li>
+<li>За разговоры, «интерес» и присланные презентации — это не оплата клиента.</li>
+<li>За клиентов, которые пришли сами через сайт (входящие по API и т.п.), если ты их не приводил.</li>
+<li>За клиента после того, как истёк срок, в течение которого он считается «твоим».</li>
+<li>Если клиент перестал платить за постоянную работу — твой процент тоже останавливается.</li>
+<li>Если оплату клиента вернули (отказ/возврат) — твой процент обычно вычитают. Уточни это заранее.</li>
+</ul>
+
+<h3>20.5. Как защитить свой заработок (сделай до первого клиента)</h3>
+<ul class="checklist">
+<li><b>Реестр твоих компаний.</b> Простая таблица: дата первого касания; компания; кто познакомил или где нашёл; кому написал. Веди с первого дня — это доказательство, что клиент твой, если потом будет спор «а мы его и без тебя знали».</li>
+<li><b>Срок «твоего» клиента.</b> Договорись: клиент, которого ты привёл, считается твоим минимум 12 месяцев с первой оплаты, включая все его повторные покупки.</li>
+<li><b>С чего считается процент.</b> С денег, которые реально пришли от клиента (не со счетов и обещаний), и со всех его платежей: разовые проверки + постоянная работа.</li>
+<li><b>Когда выплата тебе.</b> Конкретно: например, в течение 7–14 дней после оплаты клиента, раз в месяц одной суммой.</li>
+<li><b>Как ты проверяешь.</b> Раз в месяц фаундер показывает простую выписку: кто из твоих клиентов платил, сколько, твой процент. Без этого процент «на честном слове» рано или поздно закончится спором.</li>
+<li><b>Что при твоём уходе.</b> Если после контрольной точки вы расходитесь — деньги по уже оплаченным сделкам твоих клиентов должны сохраниться, включая срок из пункта про 12 месяцев.</li>
+<li><b>Чем платят.</b> Валюта и способ (банк/USDT), кто платит комиссии за перевод, и кто отвечает за налоги с твоего дохода. Проговори до первой выплаты, а не после.</li>
+</ul>
+
+<h3>20.6. Что именно предложить фаундеру (готовые фразы)</h3>
+<div class="msg">Давай зафиксируем мои условия до первого клиента, чтобы потом не спорить. Предлагаю так: первое — фиксированная оплата за 4-недельный цикл, потому что первые три проверки бесплатные и на одном проценте я заработаю ноль, даже если всё сделаю хорошо. Второе — мой процент со всех денег, которые заплатят приведённые мной клиенты: и за платные проверки, и за постоянную работу, в течение 12 месяцев с их первой оплаты. Третье — раз в месяц ты показываешь мне выписку по моим клиентам: кто заплатил и сколько. И если после контрольной точки мы решим не продолжать, деньги по моим уже оплаченным клиентам сохраняются. Проценты и сумму фикса давай обсудим сейчас, у меня позиция такая: [твои цифры].</div>
+<p><b>Как вести этот разговор:</b> сначала назови, что ты даёшь (доступ к закрытым людям, которые отвечают за выплаты; доведение их до присылки данных — это самое сложное место всей продажи), и только потом цифры. Не соглашайся на «процент, когда поднимем инвестиции» без фикса и без даты пересмотра. Если фаундер не тянет фикс деньгами — предлагай оплату за промежуточный результат (способ 4: за запущенные проверки и присланные таблицы), а не бесплатную работу «за перспективу».</p>
+<div class="callout warn"><b>Тревожные сигналы по деньгам:</b> «условия обсудим, когда приведёшь первого платящего» (потом у тебя нет рычага); фаундер не может назвать цену постоянной работы для клиента (значит, твой процент считается от воздуха); нет выписок по оплатам («верь мне»); доля в компании предлагается вместо любых живых денег при полном объёме работы. Каждый сигнал — повод сначала договориться, а не «начать, а там видно будет».</div>
+<p class="small">Этот раздел — не юридическая консультация. Договорённость на серьёзные суммы стоит показать юристу до подписания, особенно про долю в компании и налоги.</p>
+
+<h3>20.7. Сколько за такую работу платит рынок (проверено в октябре 2026)</h3>
+<table>
+<tr><th style="width:30%">Формат работы</th><th>Рыночная вилка</th><th>Что это значит для тебя</th></tr>
+<tr><td>Руководитель развития бизнеса (BD) в крипте, полная занятость, глобально</td><td>В среднем около $110 тыс. в год; обычный коридор базы $90–129 тыс. в год. По вакансиям с указанными зарплатами медиана около $140 тыс. в год</td><td>Это цена найма в компанию с деньгами, не твой случай сейчас</td></tr>
+<tr><td>BD в крипте удалённо из Восточной Европы</td><td>$60–120 тыс. в год, то есть $5–10 тыс. в месяц в верхней части; на русскоязычном рынке чаще $3–5 тыс. в месяц, в платёжных high-risk компаниях — от $2 800 в месяц</td><td>Твой географический коридор для постоянной работы</td></tr>
+<tr><td>Внешний руководитель продаж/развития на часть времени (fractional), Запад</td><td>$6 000–15 000 в месяц за 10–20 часов в неделю. У стартапов до выручки (pre-seed) скромнее: $3 000–6 000 в месяц за 5–10 часов в неделю, иногда часть оплачивают долей</td><td>Твои $110/час — это даже низ западной вилки для такого формата ($200–450/час у старших ролей). Но ChainZap — не профинансированный западный стартап</td></tr>
+<tr><td>Процент за приведённого клиента в B2B</td><td>Просто познакомил: 10–20% выручки первого года. Довёл до встречи и помог: 15–25%. Вёл продажу целиком, от поиска до оплаты: 20–40%. Со второго года обычно 5–10%</td><td>Твоя работа — «вёл целиком», поэтому проси верхнюю часть, а не 10% «за знакомство»</td></tr>
+<tr><td>Оплата за результат по шагам</td><td>Состоявшаяся встреча с нужным человеком в B2B: $50–250. Присланная клиентом таблица данных и запущенная проверка рыночного аналога не имеет — оценивай как самый дорогой шаг, $250–500</td><td>Запасной вариант, если фаундер не готов к фиксу</td></tr>
+<tr><td>Доля советнику (не сотруднику)</td><td>Стандарт FAST для ранней стадии: обычный советник 0,25%, стратегический 0,5%, экспертный 1,0%, созревает (вестинг) обычно 2 года</td><td>Ты делаешь работу руками, а не советуешь 5 часов в месяц, поэтому доля у тебя — только добавка к деньгам, а не замена</td></tr>
+</table>
+<p class="small">Источники вилок: BeInCrypto и SailOnChain (зарплаты Web3 BD), Wellfound (remote BD, Восточная Европа), Fractionus/FractionalPulse и Activated Scale (цены внешних руководителей), PartnerStack/Growigami-обзоры партнёрских комиссий B2B SaaS, FAST (Founder Institute) по долям советников. Вилки широкие, потому что «BD» называют и человека за $3 тыс., и вице-президента за $15 тыс. в месяц. Опираться надо не на чужую вилку, а на математику ChainZap ниже.</p>
+
+<h3>20.8. Твоя ставка $110/час и почему здесь продаётся пакет, а не часы</h3>
+<p>В RWA твой час стоит $110, потому что там клиент платит за результат совсем другие деньги. В ChainZap первая платная проверка стоит $500–1 500, а первые три вообще бесплатные. Честная арифметика твоего цикла:</p>
+<table>
+<tr><th>Твоё время на цикл</th><th>По ставке $110</th><th>Что получит фаундер за цикл по своему же плану</th></tr>
+<tr><td>10 часов (только знакомства и советы)</td><td>$1 100</td><td rowspan="3">3 бесплатные проверки + цель — 1 платная сделка на $500–1 500</td></tr>
+<tr><td>40 часов (полный цикл: списки, письма, звонки, разборы)</td><td>$4 400</td></tr>
+<tr><td>60 часов (цикл + запас на созвоны и переделки)</td><td>$6 600</td></tr>
+</table>
+<p>Вывод: спорить «мой час стоит $110» не надо. Надо продать <b>ограниченный объём за твёрдую сумму ниже твоей ставки — и купить этой скидкой процент и срок</b>. Скидку ты даёшь не бесплатно: в обмен — 25% со всех денег твоих клиентов и 12 месяцев, в течение которых клиент считается твоим.</p>
+<table>
+<tr><th style="width:22%">Пакет</th><th>Что ты делаешь</th><th>Что просить</th><th>Где сойтись / твой пол</th></tr>
+<tr><td><b>A. Лёгкий</b></td><td>2–4 тёплых знакомства, участие в созвонах как эксперт, советы. До 10 часов, без холодных списков и переписок</td><td>$1 000–1 500 за цикл или $110/час с лимитом 10 часов + 20% с оплат этих клиентов на 12 месяцев</td><td>Вариант, если у фаундера совсем нет денег, а ты не хочешь тратить время</td></tr>
+<tr><td><b>B. Рабочий (советую)</b></td><td>Весь цикл из §19: список 60–80 компаний, письма, 10–15 разговоров, 3 проверки, разборы, недельный отчёт. Лимит — 40 часов за 4 недели</td><td>Открыться с <b>$3 500 фикса</b> (50% вперёд, 50% на третьей неделе) + <b>25% со всех оплат</b> твоих клиентов 12 месяцев + бонус $500 за первого платного клиента</td><td>Сойтись: $2 500–3 000 + 25%. Пол: $2 000 + 25% и лимит уже 30 часов. Ниже — не тот же объём дешевле, а меньше объём</td></tr>
+<tr><td><b>C. Только за результат</b></td><td>То же, что B, но без гарантированной оплаты</td><td>35–40% со всех оплат твоих клиентов за 12 месяцев + $250–500 за каждую запущенную проверку + доля 0,5%</td><td>Честно: цель цикла — 1 платная проверка, 40% от неё — $200–600 за месяц работы. Брать только как свою инвестицию временем, не как заработок</td></tr>
+</table>
+<p><b>Как посчитать свой фикс самому:</b> оцени цикл в часах (реально 40–60), умножь на цену часа, ниже которой тебе эта работа неинтересна, — это твоя стартовая цифра. Если фаундер даёт сильно меньше, режь объём (например, только знакомства в группу B), а не делай всё то же самое за копейки. И всегда фиксируй лимит часов: без лимита при дешёвом фиксе твоя реальная ставка сама упадёт до $30/час.</p>
+<p><b>Если после успешного цикла зайдёшь на постоянку:</b> реалистичный коридор для тебя — $2 500–4 000 в месяц за частичную занятость + процент с клиентов, выше — только когда у ChainZap появится выручка, из которой это платить. Полная занятость уровня «руководитель развития» на твоём рынке — $3–6 тыс. в месяц плюс процент.</p>
+
+<h3>20.9. Короткое второе сообщение про деньги (если фаундер спросил «по цифрам что?»)</h3>
+<div class="msg">По деньгам предлагаю просто и без напряга. За полный цикл на 4 недели — $3 500 фиксом, половина в начале, половина на третьей неделе. Это ниже моей обычной ставки часа, я сознательно делаю скидку за партнёрство. Сверху — 25% со всех денег, которые заплатят клиенты, приведённые мной, в течение года: и за платные проверки, и за постоянную работу, если она у них начнётся. И раз в месяц ты мне просто показываешь, кто из моих заплатил и сколько, чтобы нам не надо было ничего выяснять. Если такой фикс сейчас тяжело — есть лёгкий вариант: я захожу только знакомствами и экспертизой, 10 часов по моей ставке, без холодных продаж. А вот месяц полной работы только за процент я не потяну, сам видишь математику: первая сделка по плану одна и за $500–1 500. Давай голосом за 15 минут пройдём, это быстрее, чем переписываться.</div>
+<div class="callout warn"><b>Красные линии, ниже которых не опускайся:</b> ноль фикса + только процент при полном объёме; нет реестра твоих компаний и ежемесячной выписки («на честном слове» процент не работает); клиент закреплён за тобой меньше 12 месяцев; нет лимита часов при дешёвом фиксе; доля в компании вместо любых живых денег при работе 40+ часов.</div>
+</section>
+
+<section id="glossary">
+<h2>21. Словарь: все термины человеческим языком</h2>
+<table>
+<tr><th style="width:28%">Термин в отчёте</th><th>Что это значит простыми словами</th></tr>
+<tr><td>Workflow (воркфлоу)</td><td>Один повторяющийся процесс с деньгами. Например: «каждый понедельник платим партнёрам» или «выводим деньги игрокам». ChainZap берёт под проверку один такой процесс, а не всё сразу</td></tr>
+<tr><td>Owner (владелец процесса)</td><td>Человек в компании, который отвечает за этот процесс и лично страдает, когда платёж пошёл не так. Наш покупатель</td></tr>
+<tr><td>Dataset (датасет)</td><td>Таблица прошлых выплат, которую клиент присылает на проверку: кому, сколько, номер транзакции</td></tr>
+<tr><td>Founding review</td><td>Первые 3 бесплатные проверки для первых компаний. Бесплатные не «для всех», а в обмен на настоящие данные и участие в разборе результата</td></tr>
+<tr><td>Paid review</td><td>Та же проверка, но платная: $500–1 500 за до 200 записей (цену ещё тестируют)</td></tr>
+<tr><td>Paid continuation</td><td>Платное продолжение после проверки: клиент платит регулярно, чтобы этот процесс проверялся постоянно, а не один раз</td></tr>
+<tr><td>Debrief (дебриф)</td><td>Созвон-разбор результата проверки с клиентом на 30 минут</td></tr>
+<tr><td>Walkthrough</td><td>То же самое: проход по результатам проверки вместе с клиентом, шаг за шагом</td></tr>
+<tr><td>Decision Gate (гейт)</td><td>Контрольная точка после 10 разговоров: останавливаемся и по цифрам решаем, продолжать или менять подход</td></tr>
+<tr><td>Outbound / Inbound</td><td>Outbound — мы сами пишем клиентам. Inbound — клиенты приходят сами (например, с сайта). По PDF мы сами идём только с проверкой, а API-клиентов не ищем — обрабатываем пришедших</td></tr>
+<tr><td>ICP / когорта</td><td>ICP — описание идеального клиента. Когорта — группа таких компаний: A — партнёрские сети, B — казино/брокеры</td></tr>
+<tr><td>Obligation (обязательство)</td><td>То, что компания должна заплатить: «партнёру Ивану — 1 000 USDT за прошлую неделю». Проверка смотрит, исполнилось ли именно это обязательство, один раз и полностью</td></tr>
+<tr><td>Retry / partial / duplicate</td><td>Retry — повторная отправка платежа. Partial — заплатили часть суммы. Duplicate — заплатили два раза вместо одного</td></tr>
+<tr><td>Expected vs actual</td><td>«Ожидали — получили по факту»: сверка того, что должно было произойти, с тем, что реально записано в блокчейне</td></tr>
+<tr><td>Tx hash</td><td>Номер-чек транзакции в блокчейне, по нему платёж находят в обозревателе (например, Tronscan)</td></tr>
+<tr><td>MATCH / MISMATCH / UNRESOLVED</td><td>Итог по каждой записи: совпало / не совпало / не хватило данных, чтобы сказать точно. Третий вариант — честный ответ, а не ошибка</td></tr>
+<tr><td>Evidence</td><td>Доказательства под каждый вывод: данные, на основании которых сказали «совпало» или «не совпало»</td></tr>
+<tr><td>KYT / AML</td><td>Проверки на «грязные» деньги и рискованных получателей. Это делают другие сервисы (Chainalysis, AMLBot). ChainZap этим не занимается и их не заменяет — не путай на звонке</td></tr>
+<tr><td>Scope (скоуп)</td><td>Границы договорённости: что входит в работу, а что нет. У проверки: 1 процесс, до 200 записей, только USDT/TRON</td></tr>
+<tr><td>Demand signal</td><td>Запрос клиента на то, чего у продукта пока нет («а можно проверять до выплаты?»). Не обещаем, а записываем дословно и передаём фаундеру</td></tr>
+<tr><td>Скоринг</td><td>Оценка компании в баллах (у нас 0–12), чтобы не тратить время на неподходящих</td></tr>
+<tr><td>Лид</td><td>Человек или компания, которые проявили интерес. Лид — ещё не клиент и не деньги</td></tr>
+<tr><td>Revshare (ревшар)</td><td>Процент с денег клиента, который ты получаешь. Например, клиент платит $1 000, твой ревшар 20% — ты получаешь $200</td></tr>
+<tr><td>High-risk вертикаль</td><td>Бизнесы с повышенным риском и вниманием регуляторов: казино, букмекеры, часть брокеров. С ними — только через знакомых и без обещаний про «легальность»</td></tr>
+<tr><td>Pre-withdrawal</td><td>Проверка платежа <i>до</i> того, как деньги ушли. У ChainZap этого пока нет — клиенты будут спрашивать, отвечай честно</td></tr>
+</table>
+<p class="small">Если в разговоре с клиентом или фаундером слышишь слово, которого нет в словаре, — попроси объяснить простыми словами и запиши объяснение сюда. Стесняться нечего: половина «умных» слов в этой индустрии означает простые вещи.</p>
+</section>
+
+<footer>
+ChainZap GTM Research · CZ/ChainZap-GTM-Research.html · Внутренние документы: CZ/ChainZap Positioning Brief v2.2.pdf, CZ/ChainZap Validation Playbook v1.pdf
+</footer>
+
+</div>
+</body>
+</html>
