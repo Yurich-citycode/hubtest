@@ -9,3 +9,6 @@ node_modules/
 # Local Python environment and scratch renders
 .venv/
 dist/
+
+# Image-search working files (selected assets live in article-assets/)
+image-search/
