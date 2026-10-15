@@ -5,3 +5,7 @@ __pycache__/
 .env
 **/.env
 node_modules/
+
+# Local Python environment and scratch renders
+.venv/
+dist/
