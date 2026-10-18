@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>$JEET — Don't Jeet. Collect Rewards.</title>
+  <meta name="description" content="The Jeet ($JEET) — anti-jeet memecoin on Solana paired with UVXY. Don't Jeet. Collect Rewards. Hedge the Market. Laugh at Stupidity.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1a1a1a;
+      --green: #00ff88;
+      --green-dim: #00cc6a;
+      --red: #ff3b5c;
+      --yellow: #ffd700;
+      --text: #e8e8e8;
+      --muted: #666;
+      --font: 'Space Grotesk', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+    .nav-logo span { font-weight: 700; font-size: 1.25rem; color: var(--green); }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .9rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta {
+      background: var(--green); color: #000; font-weight: 700;
+      padding: .5rem 1.25rem; border-radius: 8px; text-decoration: none;
+      font-size: .85rem; transition: transform .2s, box-shadow .2s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,255,136,.3); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(0,255,136,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(0,255,136,.08); border: 1px solid rgba(0,255,136,.2);
+      padding: .4rem 1rem; border-radius: 999px; font-size: .8rem;
+      color: var(--green); margin-bottom: 2rem;
+      font-family: var(--mono);
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+    .hero-logo {
+      width: 140px; height: 140px; border-radius: 28px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 60px rgba(0,255,136,.15);
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700; line-height: 1.1;
+      margin-bottom: .5rem;
+    }
+    .hero h1 .accent { color: var(--green); }
+    .hero .ticker {
+      font-family: var(--mono); font-size: 1.5rem;
+      color: var(--green); margin-bottom: 1.5rem;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--muted);
+      max-width: 500px; margin-bottom: 2.5rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      padding: .75rem 2rem; border-radius: 10px; font-weight: 700;
+      font-size: 1rem; text-decoration: none; transition: all .2s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-primary { background: var(--green); color: #000; }
+    .btn-primary:hover { box-shadow: 0 4px 30px rgba(0,255,136,.3); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid var(--border); color: var(--text); background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+    /* ── MOTTO STRIP ── */
+    .motto-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .motto-track {
+      display: flex; gap: 4rem;
+      animation: scroll 20s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .motto-item {
+      font-size: 1.1rem; font-weight: 600; color: var(--muted);
+      display: flex; align-items: center; gap: .75rem;
+      flex-shrink: 0;
+    }
+    .motto-item .sep { color: var(--green); }
+
+    /* ── JEET CALCULATOR ── */
+    .calculator-section {
+      padding: 6rem 2rem;
+      max-width: 900px; margin: 0 auto;
+    }
+    .calculator-section h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      text-align: center; margin-bottom: .5rem;
+    }
+    .calculator-section .sub {
+      text-align: center; color: var(--muted);
+      font-size: 1.05rem; margin-bottom: 3rem;
+    }
+
+    .calc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .calc-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+
+    .calc-inputs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .calc-field label {
+      display: block; font-size: .8rem; color: var(--muted);
+      font-family: var(--mono); margin-bottom: .5rem; text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .calc-field input, .calc-field select {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: .75rem 1rem; color: var(--text);
+      font-family: var(--mono); font-size: 1rem;
+      transition: border-color .2s;
+    }
+    .calc-field input:focus, .calc-field select:focus {
+      outline: none; border-color: var(--green);
+    }
+
+    .calc-btn {
+      width: 100%; background: var(--green); color: #000;
+      border: none; padding: 1rem; border-radius: 10px;
+      font-family: var(--font); font-size: 1.1rem; font-weight: 700;
+      cursor: pointer; transition: all .2s;
+    }
+    .calc-btn:hover { box-shadow: 0 4px 30px rgba(0,255,136,.3); }
+
+    .calc-result {
+      margin-top: 2rem; padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
+    .calc-result.active { display: block; }
+    .result-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .75rem 0;
+    }
+    .result-label { color: var(--muted); font-size: .9rem; }
+    .result-value { font-family: var(--mono); font-weight: 700; font-size: 1.2rem; }
+    .result-value.lost { color: var(--red); }
+    .result-value.gained { color: var(--green); }
+    .result-big {
+      text-align: center; padding: 1.5rem 0;
+    }
+    .result-big .amount {
+      font-family: var(--mono); font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700; color: var(--red);
+    }
+    .result-big .label {
+      color: var(--muted); font-size: .9rem; margin-top: .25rem;
+    }
+    .result-meme {
+      text-align: center; margin-top: 1rem;
+      font-size: 1.1rem; color: var(--yellow);
+      font-weight: 600;
+    }
+
+    /* ── STATS ── */
+    .stats-section {
+      padding: 4rem 2rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .stat-card .stat-value {
+      font-family: var(--mono); font-size: 2rem; font-weight: 700;
+      color: var(--green); margin-bottom: .25rem;
+    }
+    .stat-card .stat-label {
+      color: var(--muted); font-size: .85rem;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      padding: 6rem 2rem;
+      max-width: 1000px; margin: 0 auto;
+    }
+    .how-section h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      text-align: center; margin-bottom: 3rem;
+    }
+    .how-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .how-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      transition: border-color .3s, transform .3s;
+    }
+    .how-card:hover {
+      border-color: var(--green);
+      transform: translateY(-4px);
+    }
+    .how-card .icon {
+      font-size: 2rem; margin-bottom: 1rem;
+    }
+    .how-card h3 {
+      font-size: 1.2rem; margin-bottom: .75rem; color: var(--text);
+    }
+    .how-card p {
+      color: var(--muted); font-size: .95rem;
+    }
+
+    /* ── TOKEN INFO ── */
+    .token-section {
+      padding: 6rem 2rem;
+      max-width: 800px; margin: 0 auto;
+    }
+    .token-section h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      text-align: center; margin-bottom: 2.5rem;
+    }
+    .token-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+    .token-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .token-row:last-child { border-bottom: none; }
+    .token-key {
+      color: var(--muted); font-size: .85rem;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .token-val {
+      font-family: var(--mono); font-size: .95rem; color: var(--text);
+      text-align: right; word-break: break-all;
+    }
+    .token-val a { color: var(--green); text-decoration: none; }
+    .token-val a:hover { text-decoration: underline; }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: var(--muted); font-size: 1.1rem;
+      max-width: 500px; margin: 0 auto 2rem;
+    }
+    .social-links {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .social-link {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .6rem 1.5rem; border-radius: 10px;
+      border: 1px solid var(--border); color: var(--text);
+      text-decoration: none; font-size: .9rem; font-weight: 600;
+      transition: all .2s;
+    }
+    .social-link:hover {
+      border-color: var(--green); color: var(--green);
+      transform: translateY(-2px);
+    }
+    .social-link svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+    footer a { color: var(--green); text-decoration: none; }
+
+    /* ── LIVE FEED ── */
+    .feed-section {
+      padding: 4rem 2rem;
+      max-width: 700px; margin: 0 auto;
+    }
+    .feed-section h2 {
+      font-size: 1.5rem; text-align: center; margin-bottom: 2rem;
+      color: var(--muted);
+    }
+    .feed-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeIn .5s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .feed-item .emoji { font-size: 1.5rem; }
+    .feed-item .text { flex: 1; }
+    .feed-item .text strong { color: var(--text); }
+    .feed-item .text span { color: var(--muted); font-size: .9rem; }
+    .feed-item .amount { font-family: var(--mono); font-weight: 700; }
+    .feed-item .amount.lost { color: var(--red); }
+    .feed-item .amount.held { color: var(--green); }
+    .feed-item .time { color: var(--muted); font-size: .75rem; font-family: var(--mono); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .calc-inputs { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      nav { padding: 0 1rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .calc-card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="img/logo.png" alt="$JEET" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2300ff88%22/><text x=%2250%22 y=%2268%22 text-anchor=%22middle%22 font-size=%2250%22 font-weight=%22bold%22 fill=%22%23000%22>J</text></svg>'">
+    <span>$JEET</span>
+  </a>
+  <div class="nav-links">
+    <a href="#calculator">Calculator</a>
+    <a href="#how">How It Works</a>
+    <a href="#token">Token</a>
+  </div>
+  <a href="https://www.stonkfun.xyz/token/BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph" class="nav-cta" target="_blank">Buy $JEET</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    <span>Solana &middot; StonkFun &middot; Paired with UVXY</span>
+  </div>
+
+  <img src="img/logo.png" alt="$JEET" class="hero-logo"
+       onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 rx=%2240%22 fill=%22%2300ff88%22/><text x=%22100%22 y=%22130%22 text-anchor=%22middle%22 font-size=%22100%22 font-weight=%22bold%22 fill=%22%23000%22>J</text></svg>'">
+
+  <h1>The <span class="accent">Jeet</span></h1>
+  <div class="ticker">$JEET</div>
+  <p>The anti-jeet memecoin. You either hold or you become a case study in the calculator below.</p>
+
+  <div class="hero-buttons">
+    <a href="https://www.stonkfun.xyz/token/BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph" class="btn btn-primary" target="_blank">
+      Buy on StonkFun
+    </a>
+    <a href="https://t.me/jeeets_UVXY" class="btn btn-outline" target="_blank">Join Telegram</a>
+  </div>
+</section>
+
+<!-- MOTTO STRIP -->
+<div class="motto-strip">
+  <div class="motto-track">
+    <span class="motto-item">Don't Jeet <span class="sep">◆</span></span>
+    <span class="motto-item">Collect Rewards <span class="sep">◆</span></span>
+    <span class="motto-item">Hedge the Market <span class="sep">◆</span></span>
+    <span class="motto-item">Laugh at Stupidity <span class="sep">◆</span></span>
+    <span class="motto-item">Don't Jeet <span class="sep">◆</span></span>
+    <span class="motto-item">Collect Rewards <span class="sep">◆</span></span>
+    <span class="motto-item">Hedge the Market <span class="sep">◆</span></span>
+    <span class="motto-item">Laugh at Stupidity <span class="sep">◆</span></span>
+    <span class="motto-item">Don't Jeet <span class="sep">◆</span></span>
+    <span class="motto-item">Collect Rewards <span class="sep">◆</span></span>
+    <span class="motto-item">Hedge the Market <span class="sep">◆</span></span>
+    <span class="motto-item">Laugh at Stupidity <span class="sep">◆</span></span>
+  </div>
+</div>
+
+<!-- JEET CALCULATOR -->
+<section class="calculator-section" id="calculator">
+  <h2>The Jeet Calculator</h2>
+  <p class="sub">See exactly how much you lost by selling early. Pain is educational.</p>
+
+  <div class="calc-card">
+    <div class="calc-inputs">
+      <div class="calc-field">
+        <label>Tokens you sold</label>
+        <input type="number" id="tokensSold" placeholder="e.g. 1000000" value="1000000">
+      </div>
+      <div class="calc-field">
+        <label>Sell price (USD)</label>
+        <input type="number" id="sellPrice" step="0.00000001" placeholder="e.g. 0.00001" value="0.00001">
+      </div>
+      <div class="calc-field">
+        <label>Current / Peak price (USD)</label>
+        <input type="number" id="currentPrice" step="0.00000001" placeholder="e.g. 0.000025" value="0.000025">
+      </div>
+      <div class="calc-field">
+        <label>Your jeet level</label>
+        <select id="jeetLevel">
+          <option value="1">Sold on first red candle</option>
+          <option value="2">Sold on first green candle</option>
+          <option value="3">Sold because "it's pumping, take profit"</option>
+          <option value="4" selected>Sold because Telegram said so</option>
+          <option value="5">Sold at -5% "risk management bro"</option>
+        </select>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calculateJeet()">Calculate My Losses 📉</button>
+
+    <div class="calc-result" id="calcResult">
+      <div class="result-big">
+        <div class="amount" id="resultAmount">$0</div>
+        <div class="label">You left on the table</div>
+      </div>
+      <div class="result-row">
+        <span class="result-label">What you got when you jeeted</span>
+        <span class="result-value" id="resultSold">-</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">What it's worth now</span>
+        <span class="result-value gained" id="resultWorth">-</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Rewards you missed by not holding</span>
+        <span class="result-value lost" id="resultRewards">-</span>
+      </div>
+      <div class="result-meme" id="resultMeme"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE FEED (simulated) -->
+<section class="feed-section">
+  <h2>🔴 Live Jeet Activity</h2>
+  <div id="feedContainer"></div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="statHolders">208</div>
+      <div class="stat-label">Diamond Hands</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="statJeeted">1,247</div>
+      <div class="stat-label">Jeeted</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="statRewards">$0</div>
+      <div class="stat-label">Rewards Distributed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">UVXY</div>
+      <div class="stat-label">Hedge Pair</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <h2>How It Works</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="icon">🚫</div>
+      <h3>Don't Jeet</h3>
+      <p>Paper hands sell early. Diamond hands collect. Every time someone jeets, their unclaimed rewards get redistributed to holders. Their loss, your gain.</p>
+    </div>
+    <div class="how-card">
+      <div class="icon">💰</div>
+      <h3>Collect Rewards</h3>
+      <p>StonkFun's reward model pays holders a share of trading fees. The more $JEET trades, the more you earn. Just by holding. Do nothing, get paid.</p>
+    </div>
+    <div class="how-card">
+      <div class="icon">📉</div>
+      <h3>Hedge the Market</h3>
+      <p>$JEET is paired with UVXY, the VIX volatility ETF. When markets panic and VIX spikes, you're hedged. Long the meme, short the stupidity.</p>
+    </div>
+    <div class="how-card">
+      <div class="icon">😂</div>
+      <h3>Laugh at Stupidity</h3>
+      <p>Watch others exit at lunch while you stack rewards. The calculator above exists for a reason. Every jeet is a cautionary tale.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOKEN INFO -->
+<section class="token-section" id="token">
+  <h2>Token Info</h2>
+  <div class="token-card">
+    <div class="token-row">
+      <span class="token-key">Name</span>
+      <span class="token-val">The Jeet</span>
+    </div>
+    <div class="token-row">
+      <span class="token-key">Ticker</span>
+      <span class="token-val">$JEET</span>
+    </div>
+    <div class="token-row">
+      <span class="token-key">Network</span>
+      <span class="token-val">Solana</span>
+    </div>
+    <div class="token-row">
+      <span class="token-key">Contract</span>
+      <span class="token-val"><a href="https://solscan.io/account/BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph" target="_blank">BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph</a></span>
+    </div>
+    <div class="token-row">
+      <span class="token-key">Launchpad</span>
+      <span class="token-val"><a href="https://www.stonkfun.xyz/token/BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph" target="_blank">StonkFun</a></span>
+    </div>
+    <div class="token-row">
+      <span class="token-key">Paired With</span>
+      <span class="token-val">UVXY (ProShares Ultra VIX)</span>
+    </div>
+    <div class="token-row">
+      <span class="token-key">Holders</span>
+      <span class="token-val" id="tokenHolders">208</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Stop Jeeting.<br>Start Earning.</h2>
+  <p>Every sell is a future calculator entry. Don't be a statistic.</p>
+  <div class="social-links">
+    <a href="https://x.com/MarkJeet" class="social-link" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @MarkJeet
+    </a>
+    <a href="https://t.me/jeeets_UVXY" class="social-link" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Telegram
+    </a>
+    <a href="https://www.stonkfun.xyz/token/BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph" class="social-link" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      StonkFun
+    </a>
+    <a href="https://solscan.io/account/BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph" class="social-link" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      Solscan
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>$JEET is a memecoin. Not financial advice. DYOR. If you jeet, that's on you.</p>
+  <p style="margin-top:.5rem">Contract: <a href="https://solscan.io/account/BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph" target="_blank">BpLjp3yd...aUR3ph</a></p>
+</footer>
+
+<script>
+// ── JEET CALCULATOR ──
+const memes = [
+  "You jeeted. Someone else bought your bag and made {x}. Congratulations.",
+  "Risk management, they said. You managed yourself right out of {x}.",
+  "Your hands are made of tissue paper. {x} gone. Forever.",
+  "You sold. The chart went up. Tale as old as time. {x} left behind.",
+  "If jeeting was an Olympic sport, you'd have {x} in gold medals.",
+  "Every time you jeet, a diamond hand gets its wings. And {x}.",
+  "You didn't lose money. You just gave {x} to someone with patience.",
+  "Your therapist will hear about this. And the {x}.",
+  "Sold early? Don't worry, the person who bought your bags is doing great with {x}.",
+  "Jeet level: legendary. Losses: {x}. Lessons learned: probably none."
+];
+
+function calculateJeet() {
+  const tokens = parseFloat(document.getElementById('tokensSold').value) || 0;
+  const sellP = parseFloat(document.getElementById('sellPrice').value) || 0;
+  const currP = parseFloat(document.getElementById('currentPrice').value) || 0;
+
+  const soldFor = tokens * sellP;
+  const worthNow = tokens * currP;
+  const missed = worthNow - soldFor;
+  const rewardsEst = worthNow * 0.02;
+
+  document.getElementById('resultSold').textContent = '$' + soldFor.toFixed(2);
+  document.getElementById('resultWorth').textContent = '$' + worthNow.toFixed(2);
+  document.getElementById('resultRewards').textContent = '~$' + rewardsEst.toFixed(2);
+
+  const amtEl = document.getElementById('resultAmount');
+  if (missed > 0) {
+    amtEl.textContent = '-$' + missed.toFixed(2);
+    amtEl.style.color = '#ff3b5c';
+  } else {
+    amtEl.textContent = '+$' + Math.abs(missed).toFixed(2);
+    amtEl.style.color = '#00ff88';
+  }
+
+  const meme = memes[Math.floor(Math.random() * memes.length)]
+    .replace('{x}', '$' + missed.toFixed(2));
+  document.getElementById('resultMeme').textContent = meme;
+
+  document.getElementById('calcResult').classList.add('active');
+}
+
+// ── LIVE FEED ──
+const wallets = [
+  '7qk3M…a9sD', 'Bn4Yx…k2mP', '9fjW1…h7bR', '3mNx8…c4vT',
+  '5pRs2…j8nK', '8wLk6…d3fQ', '4tHm9…g5sZ', '6bCx1…e7rY',
+  '2jFp4…m6wU', '1kDs8…n9xB'
+];
+
+const feedActions = [
+  { emoji: '💀', template: '{wallet} jeeted {amount} $JEET', type: 'jeet' },
+  { emoji: '💎', template: '{wallet} is still holding {amount} $JEET', type: 'hold' },
+  { emoji: '🤡', template: '{wallet} sold {amount} for $0.12 profit', type: 'jeet' },
+  { emoji: '📈', template: '{wallet} collected {amount} in rewards', type: 'reward' },
+  { emoji: '🫡', template: '{wallet} bought {amount} more $JEET', type: 'buy' },
+];
+
+function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function randWallet() { return wallets[randInt(0, wallets.length - 1)]; }
+function formatNum(n) {
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+  return n.toString();
+}
+
+function createFeedItem() {
+  const action = feedActions[randInt(0, feedActions.length - 1)];
+  const amount = formatNum(randInt(10000, 5000000));
+  const text = action.template
+    .replace('{wallet}', '<strong>' + randWallet() + '</strong>')
+    .replace('{amount}', amount);
+
+  const item = document.createElement('div');
+  item.className = 'feed-item';
+  item.innerHTML = `
+    <span class="emoji">${action.emoji}</span>
+    <span class="text">${text}</span>
+    <span class="time">just now</span>
+  `;
+  return item;
+}
+
+function initFeed() {
+  const container = document.getElementById('feedContainer');
+  for (let i = 0; i < 5; i++) {
+    container.appendChild(createFeedItem());
+  }
+  setInterval(() => {
+    const items = container.querySelectorAll('.feed-item');
+    if (items.length >= 8) items[0].remove();
+    container.appendChild(createFeedItem());
+  }, 3000 + Math.random() * 4000);
+}
+
+initFeed();
+
+// ── ANIMATED COUNTER ──
+function animateCounter(el, target, prefix = '', suffix = '') {
+  let current = 0;
+  const step = Math.ceil(target / 60);
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(interval); }
+    el.textContent = prefix + current.toLocaleString() + suffix;
+  }, 30);
+}
+</script>
+
+</body>
+</html>
