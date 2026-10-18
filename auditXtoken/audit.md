@@ -144,11 +144,11 @@ Given the current data:
 |---|---|
 | Liquidity depth | Very Low Risk |
 | Holder concentration | Unknown (High Risk assumed) |
-| Team transparency | Low-Medium Risk |
-| Token utility | None visible |
+| Team transparency | Medium Risk (improved after doc review) |
+| Token utility | None live yet, vision described |
 | Smart contract risk | Low (Pump.fun standard) |
 | Social proof | Very Low |
-| **Overall Rug Risk** | **HIGH** |
+| **Overall Rug Risk** | **MEDIUM-HIGH** |
 
 Not a confirmed scam. But the risk profile matches the pattern of thousands of Pump.fun tokens that launch, attract initial hype, and die within days. The lack of tokenomics, the tiny liquidity, the sell pressure dominance, and the disconnect between the website vision and the token reality are all consistent with a low-effort or opportunistic token launch.
 
@@ -185,6 +185,49 @@ Not a confirmed scam. But the risk profile matches the pattern of thousands of P
 
 ---
 
+## UPDATE: Document Review (Oct 18, 2026)
+
+After the founder shared project documents, I reviewed the following publicly accessible files:
+
+### Documents Reviewed
+1. **Holder & Ambassador Playbook** (Oct 16, 2026) - publicly accessible
+2. **Go-To-Market 4.0 Strategy** (Oct 14, 2026) - publicly accessible
+3. Token Vision doc - requires Google sign-in, could not access
+4. Manifesto doc - requires Google sign-in, could not access
+
+### What the Documents Reveal
+
+**Positive Signals:**
+- The Ambassador Playbook explicitly states: "X is NOT a share in the company, a dividend right, a guarantee of access to every product, or a promise of profit"
+- They instruct ambassadors to "Never claim guaranteed returns, target prices, imminent listings, verified locks, partnerships, utility or revenue unless official evidence confirms them"
+- The GTM document separates financial circuits: "real business revenue, partner funds, personal token purchase, treasury, actual Creator Fees, market cap X - none of these replaces another"
+- They explicitly label goals vs. facts: "111 days: 1B total views - AMBITIOUS GOALS, not actual achievements and not a forecast"
+- They commit to transparency: "Publicly disclose related wallets, actual creator purchases, real vesting/lockups, Creator Fees per Pump.fun rules, risks, utility, legal review status"
+- No wash trading, no fake volume, no hidden sells - stated as principle
+- Token trading launch described as "independent GO/NO-GO after legal, technical and product review; it does not have to coincide with the season date"
+- They mark content labels: "REAL FOOTAGE / AI-GENERATED ENTERTAINMENT / CONCEPT / VERIFIED RESULT / PLANNED FEATURE"
+
+**Concerning Signals:**
+- The GTM budget for the early Bali phase is only $20K (equipment $4K, team $9K, AI $2.5K, PR $2K) - extremely thin for the described ambitions
+- The ecosystem ambition is massive (THE GAME X, ARENA X, CHESS X, MEDIA X HEROES, CWC, World Film Festival) but none of these appear to be functioning products yet
+- The 111-day target of 1B views and 10,000 players by Jan 1, 2027 is extremely aggressive for a project with 55 X followers
+- Multiple X accounts for the founder: @DmitryKIMXGAME and @kimdmitrii11 - unclear why
+- The "X HERO" mascot concept (black-gold armor, lime-green eyes) is creative but is a content idea, not a product
+- The GTM doc references "potential future tokens" for sub-brands (ARENA X, CHESS X, etc.) - dilution risk
+- Documents are well-written but remain strategic vision, not evidence of execution
+
+### Updated Assessment
+
+The documents show the founder is more thoughtful and transparent than the average Pump.fun launcher. The disclaimers, the separation of token from business, the explicit labeling of goals vs. facts - these are positive signs that suggest awareness of regulatory and ethical risks.
+
+However, documents are not products. The fundamental question remains: is there anything beyond a $33K token on Pump.fun and a beautiful website? The documents describe an elaborate vision, but the on-chain reality is still 115 holders and $13K liquidity.
+
+**Revised Risk Level: MEDIUM-HIGH** (downgraded from HIGH)
+
+The founder's transparency and explicit disclaimers reduce the "scam" probability. But the risk of failure (as opposed to fraud) remains very high. The gap between vision and current reality is enormous.
+
+---
+
 ## Links
 
 | Resource | URL |
@@ -200,9 +243,11 @@ Not a confirmed scam. But the risk profile matches the pattern of thousands of P
 
 ## TL;DR
 
-$33K market cap. $13K liquidity. 115 holders. 21 hours old. Sell pressure already exceeds buying. No tokenomics. No utility described. No audit. Creator has 55 X followers. Website makes billion-dollar promises but has zero verifiable proof. Mint authority renounced (good). Token-2022 with extensions (verify which ones).
+$33K market cap. $13K liquidity. 115 holders. ~3 days old. Sell pressure already exceeds buying. No tokenomics published. No utility live yet. No audit. Creator has 55 X followers. Website makes ambitious promises. Mint authority renounced (good). Token-2022 with extensions (verify which ones).
 
-**Risk level: HIGH.** Not confirmed scam, but matches the pattern of 99%+ of Pump.fun launches that go to zero. DYOR. Don't bet the farm.
+**After document review:** Founder is more transparent than average. Explicit disclaimers. Separates token from business. Labels goals vs. facts. But documents are not products. The gap between vision ($20K Bali budget, 1B views target, 10K players by Jan 2027) and current reality ($33K MC, 115 holders) is enormous.
+
+**Risk level: MEDIUM-HIGH.** Lower scam probability than initially assessed. But failure risk remains very high. Not a quick rug, but possibly an overambitious project that never achieves critical mass. DYOR. Don't bet the farm.
 
 ---
 
