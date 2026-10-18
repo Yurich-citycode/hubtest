@@ -327,6 +327,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:h
 }
 .modal .copy-btn:hover{box-shadow:0 0 20px rgba(0,255,136,.3)}
 
+/* REWARDS LIVE */
+.rewards-section{
+  padding:4rem 1.5rem;max-width:600px;margin:0 auto;
+}
+.rewards-section h2{font-size:clamp(1.6rem,4vw,2.2rem);text-align:center;margin-bottom:.3rem}
+.rewards-section .rsub{text-align:center;color:var(--muted);font-size:.8rem;margin-bottom:2rem;font-family:var(--mono)}
+.rew-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+.rew-card{
+  background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:1rem;text-align:center;
+}
+.rew-card .rv{font-family:var(--mono);font-size:1.4rem;font-weight:700;color:var(--green)}
+.rew-card .rl{color:var(--muted);font-size:.7rem;margin-top:.2rem;text-transform:uppercase;letter-spacing:.04em}
+.rew-card.wide{grid-column:1/-1}
+.rew-card .rv.sm{font-size:1rem}
+.rew-pulse{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--green);margin-right:.4rem;animation:blink 2s infinite;
+}
+.rew-status{text-align:center;margin-top:1rem;font-size:.75rem;color:var(--muted);font-family:var(--mono)}
+
 /* Confetti */
 .confetti-piece{
   position:fixed;z-index:1000;
@@ -417,6 +438,43 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:h
       <div class="gi-tag">jeet vibes</div>
     </div>
   </div>
+</section>
+
+<!-- REWARDS LIVE -->
+<section class="rewards-section" id="rewards">
+  <h2>Live Rewards</h2>
+  <p class="rsub">pulled from StonkFun API</p>
+  <div class="rew-grid">
+    <div class="rew-card">
+      <div class="rv" id="rwDistributed">--</div>
+      <div class="rl">UVXY Distributed</div>
+    </div>
+    <div class="rew-card">
+      <div class="rv" id="rwPending">--</div>
+      <div class="rl">UVXY Pending</div>
+    </div>
+    <div class="rew-card">
+      <div class="rv" id="rwPayouts">--</div>
+      <div class="rl">Total Payouts</div>
+    </div>
+    <div class="rew-card">
+      <div class="rv" id="rwHolders">--</div>
+      <div class="rl">Reward Recipients</div>
+    </div>
+    <div class="rew-card">
+      <div class="rv" id="rwMC">--</div>
+      <div class="rl">Market Cap</div>
+    </div>
+    <div class="rew-card">
+      <div class="rv" id="rwPrice">--</div>
+      <div class="rl">Price</div>
+    </div>
+    <div class="rew-card wide">
+      <div class="rv sm" id="rwLast">--</div>
+      <div class="rl">Last Payout</div>
+    </div>
+  </div>
+  <div class="rew-status"><span class="rew-pulse"></span>auto-refreshes every 30s</div>
 </section>
 
 <!-- WHY -->
@@ -599,6 +657,58 @@ window.addEventListener('scroll', () => {
   const hero = document.querySelector('.hero-bg');
   if (hero) hero.style.transform = 'scale(' + (1.05 + s * 0.0002) + ') translateY(' + (s * 0.3) + 'px)';
 }, { passive: true });
+
+// ── LIVE REWARDS FROM STONKFUN API ──
+const JEET_MINT = 'BpLjp3ydXEPmnEp7RL3gEZigS91qnuvuA6MwA8aUR3ph';
+const API_BASE = 'https://www.stonkfun.xyz/api/public/v1';
+
+async function fetchRewards() {
+  try {
+    const [tokenRes, rewardsRes] = await Promise.all([
+      fetch(API_BASE + '/tokens/' + JEET_MINT),
+      fetch(API_BASE + '/tokens/' + JEET_MINT + '/rewards')
+    ]);
+    const tokenData = await tokenRes.json();
+    const rewardsData = await rewardsRes.json();
+
+    const m = tokenData.data.token.market;
+    const r = rewardsData.data.rewards;
+
+    document.getElementById('rwDistributed').textContent = r.distributedTokens.toFixed(2) + ' UVXY';
+    document.getElementById('rwPending').textContent = (r.undistributedTokens + r.inFlightTokens).toFixed(2) + ' UVXY';
+    document.getElementById('rwPayouts').textContent = r.payoutCount.toLocaleString();
+    document.getElementById('rwHolders').textContent = r.holderCount.toLocaleString();
+    document.getElementById('rwMC').textContent = '$' + formatMC(m.marketCapUsd);
+    document.getElementById('rwPrice').textContent = '$' + formatPrice(m.priceUsd);
+
+    const last = new Date(r.lastPayoutAt);
+    const ago = timeSince(last);
+    document.getElementById('rwLast').textContent = ago + ' ago';
+  } catch(e) {
+    console.log('Rewards fetch error:', e);
+  }
+}
+
+function formatMC(v) {
+  if (v >= 1e6) return (v/1e6).toFixed(2) + 'M';
+  if (v >= 1e3) return (v/1e3).toFixed(1) + 'K';
+  return v.toFixed(2);
+}
+function formatPrice(v) {
+  if (v < 0.001) return v.toFixed(7);
+  if (v < 1) return v.toFixed(5);
+  return v.toFixed(4);
+}
+function timeSince(date) {
+  const s = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (s < 60) return s + 's';
+  if (s < 3600) return Math.floor(s/60) + 'm';
+  if (s < 86400) return Math.floor(s/3600) + 'h';
+  return Math.floor(s/86400) + 'd';
+}
+
+fetchRewards();
+setInterval(fetchRewards, 30000);
 </script>
 </body>
 </html>
