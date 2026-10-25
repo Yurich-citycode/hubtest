@@ -117,7 +117,9 @@
     const layoutKey = boxed ? '4x5' : fmtKey;
     const html = t.render(data, helpers(layoutKey)).replace(/style="([^"]*)"/g, (m, css) => 'style="' + css
       .replace(/(^|;|\s)(left|top|right|bottom|width|height)\s*:\s*(-?[\d.]+)em/g, (mm, pre, k, v) => `${pre}${k}:${px(v)}`)
-      .replace(/calc\(50% - ([\d.]+)em\)/g, (mm, v) => `calc(50% - ${px(v)})`) + '"');
+      .replace(/calc\(50% - ([\d.]+)em\)/g, (mm, v) => `calc(50% - ${px(v)})`) + '"')
+      // однофайловая сборка (Студия.html): картинки из assets/ подставляются как data: из window.STUDIO_ASSETS
+      .replace(/assets\/[\w\/.-]+\.(?:jpe?g|png|webp|svg)/g, (m) => (window.STUDIO_ASSETS && window.STUDIO_ASSETS[m]) || m);
     if (boxed) {
       const bh = FORMATS['4x5'].h, off = (F.h - bh) / 2;
       cv.innerHTML = `<div class="storybox" style="position:absolute;left:0;top:${off}px;width:${F.w}px;height:${bh}px">${html}</div>`;
@@ -211,7 +213,7 @@
     save(); render(); if (rebuildForm) buildForm();
   }
   function imageInput(val, onSet) {
-    const th = el('div', { class: 'thumb' }); if (val) th.style.backgroundImage = url(val);
+    const th = el('div', { class: 'thumb' }); if (val) th.style.backgroundImage = url((window.STUDIO_ASSETS && window.STUDIO_ASSETS[val]) || val);
     return el('div', { class: 'img-in' }, th,
       el('button', { type: 'button', onclick: () => pickImage(onSet) }, val ? 'Заменить' : 'Загрузить'),
       val ? el('button', { type: 'button', class: 'btn ghost', onclick: () => onSet('') }, 'Убрать') : null);

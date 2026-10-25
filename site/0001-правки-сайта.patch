@@ -1,0 +1,268 @@
+diff --git a/glossary.html b/glossary.html
+index 07fdb15..aab0b3c 100644
+--- a/glossary.html
++++ b/glossary.html
+@@ -22,7 +22,7 @@
+ <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2318140F'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='20' font-weight='bold' text-anchor='middle' fill='%23F1E9D8'%3EY%3C/text%3E%3Crect x='22' y='7' width='5' height='5' fill='%23E8377E'/%3E%3C/svg%3E">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
++<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+ <style>
+   
+   :root{
+@@ -476,7 +476,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 01 · в двух словах</div>
+           <p class="cp-caption">почему «рынок вырос до $30 млрд» — не вся правда</p>
+-          <div class="cp-frame" data-hint="comics1.jpg — сюда вставить фото"><img src="comics1.jpg" alt="Комикс: Total Value против TVL" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async" width="1024" height="1536"></div>
++          <div class="cp-frame" data-hint="comics1.jpg — сюда вставить фото"><img src="comics1.jpg" alt="Комикс: Total Value против TVL" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async" width="1024" height="1536"></div>
+         </div>
+       </section>
+ 
+@@ -533,7 +533,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 02 · в двух словах</div>
+           <p class="cp-caption">три токена, три разных права — не путай</p>
+-          <div class="cp-frame" data-hint="comics2.jpg — сюда вставить фото"><img src="comics2.jpg" alt="Комикс: три типа токенизированной акции" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async" width="1280" height="853"></div>
++          <div class="cp-frame" data-hint="comics2.jpg — сюда вставить фото"><img src="comics2.jpg" alt="Комикс: три типа токенизированной акции" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async" width="1280" height="853"></div>
+         </div>
+       </section>
+ 
+@@ -590,7 +590,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 03 · в двух словах</div>
+           <p class="cp-caption">«продам когда захочу» — миф</p>
+-          <div class="cp-frame" data-hint="comics3.jpg — сюда вставить фото"><img src="comics3.jpg" alt="Комикс: мираж ликвидности" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async" width="1280" height="853"></div>
++          <div class="cp-frame" data-hint="comics3.jpg — сюда вставить фото"><img src="comics3.jpg" alt="Комикс: мираж ликвидности" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async" width="1280" height="853"></div>
+         </div>
+       </section>
+ 
+@@ -647,7 +647,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 04 · в двух словах</div>
+           <p class="cp-caption">доходность настоящая — просто не мгновенная</p>
+-          <div class="cp-frame" data-hint="comics4.jpg — сюда вставить фото"><img src="comics4.jpg" alt="Комикс: доходность трежерис едет с задержкой" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async" width="1280" height="853"></div>
++          <div class="cp-frame" data-hint="comics4.jpg — сюда вставить фото"><img src="comics4.jpg" alt="Комикс: доходность трежерис едет с задержкой" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async" width="1280" height="853"></div>
+         </div>
+       </section>
+ 
+@@ -704,7 +704,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 05 · в двух словах</div>
+           <p class="cp-caption">12% на баннере редко доезжают до кошелька целиком</p>
+-          <div class="cp-frame" data-hint="comics5.jpg — сюда вставить фото"><img src="comics5.jpg" alt="Комикс: заявленная против реализованной доходности" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async" width="1280" height="853"></div>
++          <div class="cp-frame" data-hint="comics5.jpg — сюда вставить фото"><img src="comics5.jpg" alt="Комикс: заявленная против реализованной доходности" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async" width="1280" height="853"></div>
+         </div>
+       </section>
+ 
+@@ -761,7 +761,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 06 · в двух словах</div>
+           <p class="cp-caption">ставка выше рынка — это не подарок</p>
+-          <div class="cp-frame" data-hint="comics6.jpg — сюда вставить фото"><img src="comics6.jpg" alt="Комикс: слишком хорошая доходность" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async" width="1280" height="853"></div>
++          <div class="cp-frame" data-hint="comics6.jpg — сюда вставить фото"><img src="comics6.jpg" alt="Комикс: слишком хорошая доходность" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async" width="1280" height="853"></div>
+         </div>
+       </section>
+ 
+@@ -820,7 +820,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 07 · в двух словах</div>
+           <p class="cp-caption">токен не умеет чинить крышу</p>
+-          <div class="cp-frame" data-hint="comics7.jpg — сюда вставить фото"><img src="comics7.jpg" alt="Комикс: токен не чинит крышу" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async"></div>
++          <div class="cp-frame" data-hint="comics7.jpg — сюда вставить фото"><img src="comics7.jpg" alt="Комикс: токен не чинит крышу" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async"></div>
+         </div>
+       </section>
+ 
+@@ -888,7 +888,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 08 · в двух словах</div>
+           <p class="cp-caption">оракул не проверяет правду — он её пересказывает</p>
+-          <div class="cp-frame" data-hint="comics8.jpg — сюда вставить фото"><img src="comics8.jpg" alt="Комикс: оракул пересказывает, а не проверяет" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async"></div>
++          <div class="cp-frame" data-hint="comics8.jpg — сюда вставить фото"><img src="comics8.jpg" alt="Комикс: оракул пересказывает, а не проверяет" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async"></div>
+         </div>
+       </section>
+ 
+@@ -934,7 +934,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 09 · в двух словах</div>
+           <p class="cp-caption">слиток ваш, только если он выделен именно под вас</p>
+-          <div class="cp-frame" data-hint="comics9.jpg — сюда вставить фото"><img src="comics9.jpg" alt="Комикс: аллокированный против неаллокированного металла" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async"></div>
++          <div class="cp-frame" data-hint="comics9.jpg — сюда вставить фото"><img src="comics9.jpg" alt="Комикс: аллокированный против неаллокированного металла" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async"></div>
+         </div>
+       </section>
+ 
+@@ -991,7 +991,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 10 · в двух словах</div>
+           <p class="cp-caption">имя управляющего и имя платформы — не всегда один человек</p>
+-          <div class="cp-frame" data-hint="comics10.jpg — сюда вставить фото"><img src="comics10.jpg" alt="Комикс: кто ведёт реестр держателей фонда" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async"></div>
++          <div class="cp-frame" data-hint="comics10.jpg — сюда вставить фото"><img src="comics10.jpg" alt="Комикс: кто ведёт реестр держателей фонда" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async"></div>
+         </div>
+       </section>
+ 
+@@ -1048,7 +1048,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 11 · в двух словах</div>
+           <p class="cp-caption">цифра без внешнего проверяющего — это слово эмитента</p>
+-          <div class="cp-frame" data-hint="comics11.jpg — сюда вставить фото"><img src="comics11.jpg" alt="Комикс: кто проверил цифру" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async"></div>
++          <div class="cp-frame" data-hint="comics11.jpg — сюда вставить фото"><img src="comics11.jpg" alt="Комикс: кто проверил цифру" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async"></div>
+         </div>
+       </section>
+ 
+@@ -1105,7 +1105,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 12 · в двух словах</div>
+           <p class="cp-caption">стейблкоин — кассир рынка RWA, а не его витрина</p>
+-          <div class="cp-frame" data-hint="comics12.jpg — сюда вставить фото"><img src="comics12.jpg" alt="Комикс: стейблкоин как расчётный слой" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async"></div>
++          <div class="cp-frame" data-hint="comics12.jpg — сюда вставить фото"><img src="comics12.jpg" alt="Комикс: стейблкоин как расчётный слой" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async"></div>
+         </div>
+       </section>
+ 
+@@ -1391,7 +1391,7 @@
+         <div class="comic-plate">
+           <div class="cp-kicker">Раздел 13 · в двух словах</div>
+           <p class="cp-caption">регулятор защищает от мошенничества, а не от дефолта</p>
+-          <div class="cp-frame" data-hint="comics13.jpg — сюда вставить фото"><img src="comics13.jpg" alt="Комикс: что регулирование ЦФА защищает, а что нет" onerror="this.style.display='none';this.parentNode.classList.add('no-img')" loading="lazy" decoding="async"></div>
++          <div class="cp-frame" data-hint="comics13.jpg — сюда вставить фото"><img src="comics13.jpg" alt="Комикс: что регулирование ЦФА защищает, а что нет" onerror="this.style.display='none';this.parentNode.style.display='none'" loading="lazy" decoding="async"></div>
+         </div>
+       </section>
+ 
+diff --git a/index.html b/index.html
+index de407f6..05e815e 100644
+--- a/index.html
++++ b/index.html
+@@ -694,7 +694,7 @@
+     </h1>
+     <div class="sub doors">
+       <p class="door"><span class="chaos-tag" style="color:var(--gold); transform:rotate(-1.5deg);">Sevastopol AI</span> — бот по городу. Где поесть, где закат, какой маршрут.</p>
+-      <p class="door"><span class="chaos-tag" style="color:var(--lime); transform:rotate(1deg);">City Code</span> — закрытый круг. Правила, скидка у своих, мероприятия. Не скидочная карта.</p>
++      <p class="door"><span class="chaos-tag" style="color:var(--lime); transform:rotate(1deg);">City Code</span> — закрытый круг. Правила, привилегии 3–7% у своих, встречи. Не скидочная карта.</p>
+       <p class="door"><span class="chaos-tag" style="color:var(--bronze); transform:rotate(-1deg);">Crimea RWA</span> — доля городской кассы в ЦФА. Сначала точка, потом бумага, потом оператор.</p>
+     </div>
+     <div class="cta-row">
+@@ -763,7 +763,7 @@
+     <div>
+       <div class="eyebrow" style="color:var(--gold)"><span class="num">01</span> Открытие</div>
+       <h2 class="split">Город, который отвечает</h2>
+-      <p class="copy reveal">Sevastopol AI — телеграм-бот. Где поесть, где закат и др. 200+ мест еды, 100+ локаций, маршруты и события. Фото и координаты.</p>
++      <p class="copy reveal">Sevastopol AI — телеграм-бот. Где поесть, где закат и др. 140+ мест еды, 50+ локаций, маршруты и события. Фото и координаты.</p>
+       <p class="copy reveal reveal-2">Заходят с одним вопросом. После добавляют свои места.</p>
+       <a href="https://t.me/SevastopolAIBot" target="_blank" rel="noopener" class="btn magnetic" style="margin-top:22px;background:var(--gold);border-color:var(--gold);">Открыть бота</a>
+     </div>
+@@ -796,7 +796,7 @@
+     <div>
+       <div class="eyebrow" style="color:var(--lime)"><span class="num">02</span> Круг</div>
+       <h2 class="split">Ключ к городу</h2>
+-      <p class="copy reveal">City Code — закрытый круг вокруг Севастополя. Шесть ключей: правила, скидка у партнёров, сами партнёры, закрытые мероприятия, люди.</p>
++      <p class="copy reveal">City Code — закрытый круг вокруг Севастополя. Шесть ключей: правила, привилегии у партнёров, сами партнёры, закрытые мероприятия, люди.</p>
+ 
+       <div class="kc-panel reveal" id="kcPanel" aria-live="polite">
+         <div class="kc-panel-num" id="kcNum">01</div>
+@@ -900,12 +900,12 @@
+                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h11v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V9Z"/><path d="M15 10h2.5a2.5 2.5 0 0 1 0 5H15"/><path d="M7 5.5c0 1-1 1.2-1 2.2M11 5.5c0 1-1 1.2-1 2.2"/></svg>
+                   </span>
+                   <div class="bk-names">
+-                    <b>Доля дохода кофейни · City Code</b>
++                    <b>Доля дохода кофейни · пример</b>
+                     <span>ЦФА · денежное требование</span>
+                   </div>
+-                  <span class="bk-chip">в обращении</span>
++                  <span class="bk-chip">пример</span>
+                 </div>
+-                <div class="bk-yield"><span class="bk-y-pre">ориентир</span><span class="bk-y-num">17,5%</span><span class="bk-y-lbl">· учебный счёт</span></div>
++                <div class="bk-yield"><span class="bk-y-pre">пример</span><span class="bk-y-num">ЦФА</span><span class="bk-y-lbl">· учебный счёт, доход не обещаем</span></div>
+                 <div class="bk-rows">
+                   <div class="bk-row"><span>Минимум</span><b>5 000 ₽</b></div>
+                   <div class="bk-row"><span>Номинал единицы</span><b>5 000 ₽</b></div>
+@@ -1002,7 +1002,7 @@
+       <div class="step-cell">
+         <div class="s-num">03</div>
+         <h3>Сборка</h3>
+-        <p>2–4 недели. Что покупает инвестор, кто эмитент, даты выплат, тянет ли касса. Текст выпуска и черновик под форму площадки.</p>
++        <p>2–4 недели. Что покупает инвестор, кто эмитент, даты выплат, тянет ли касса. Текст выпуска и черновик под форму площадки. Посадка на площадку — отдельно: 200–350 000 ₽ плюс счёт оператора.</p>
+         <span class="price-tag" style="color:var(--ink-dim); border-color:var(--line);">250–400 000 ₽</span>
+       </div>
+     </div>
+@@ -1044,6 +1044,7 @@
+       <a href="https://x.com/PavelYuRichRWA" target="_blank" rel="noopener" class="magnetic">Twitter / X</a>
+       <a href="glossary.html" class="magnetic">Глоссарий</a>
+       <a href="https://t.me/Sevastopol_AI" target="_blank" rel="noopener" class="magnetic">Sevastopol AI</a>
++      <a href="privacy.html" class="magnetic">Персональные данные</a>
+     </div>
+   </div>
+ </footer>
+@@ -1286,7 +1287,7 @@
+ 
+   var kcData = {
+     code:       { n:'01', title:'Code',           desc:'Свод правил системы: что можно, что нельзя, как устроен доступ и на каких условиях можно потерять членство.' },
+-    privileges: { n:'02', title:'Privileges',      desc:'Привилегии участников у партнёров — фиксированная скидка или бонус на реальные покупки в сети.' },
++    privileges: { n:'02', title:'Privileges',      desc:'Привилегии участников у партнёров — фиксированная привилегия 3–7% на реальные покупки у партнёров.' },
+     partner:    { n:'03', title:'Partner Circle',  desc:'Сеть партнёров города: кофейни, рестораны, сервисы и специалисты, которые приняли систему.' },
+     events:     { n:'04', title:'Events',          desc:'Закрытые события и experience только для участников круга — без публичного анонса.' },
+     insights:   { n:'05', title:'Insights',        desc:'Баланс спроса и пропускной способности партнёров — данные, которые держат систему живой.' },
+diff --git a/privacy.html b/privacy.html
+new file mode 100644
+index 0000000..71b68a8
+--- /dev/null
++++ b/privacy.html
+@@ -0,0 +1,59 @@
++<!doctype html>
++<html lang="ru">
++<head>
++<meta charset="utf-8">
++<meta name="viewport" content="width=device-width,initial-scale=1">
++<title>Политика обработки персональных данных · Sevastopol AI · CITY CODE</title>
++<meta name="robots" content="index,follow">
++<style>
++  :root{--bg:#0A0A0A;--ink:#F2F2EE;--dim:#A3A39C;--acc:#D7FF3D;--line:#2A2A28}
++  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
++  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
++  main{max-width:760px;margin:0 auto;padding:48px 20px 80px}
++  h1{font-size:30px;line-height:1.2;margin:0 0 6px} h2{font-size:20px;margin:36px 0 8px;color:var(--acc)}
++  p,li{color:var(--ink)} .dim{color:var(--dim);font-size:15px} a{color:var(--acc)}
++  table{width:100%;border-collapse:collapse;margin:8px 0;font-size:15px} td,th{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
++  .back{display:inline-block;margin-bottom:28px;color:var(--dim);text-decoration:none}
++</style>
++</head>
++<body>
++<main>
++<a class="back" href="index.html">← YurichHub</a>
++<h1>Политика обработки персональных данных</h1>
++<p class="dim">Telegram-бот @SevastopolAIBot, клуб CITY CODE (СИТИКОД), канал Sevastopol AI. Редакция от <!--ДАТА-->25.10.2026<!--/ДАТА-->.</p>
++
++<h2>1. Кто обрабатывает данные</h2>
++<p>Оператор: <!--ОПЕРАТОР-->[ФИО], ИНН [ИНН]<!--/ОПЕРАТОР-->. Связь: Telegram <a href="https://t.me/YuRichRWA">@YuRichRWA</a><!--EMAIL-->, e-mail [e-mail]<!--/EMAIL-->.</p>
++
++<h2>2. Какие данные и зачем</h2>
++<table>
++<tr><th>Данные</th><th>Зачем</th><th>Основание</th></tr>
++<tr><td>Telegram ID, имя и @ник из профиля</td><td>Работа бота, паспорт участника (номер CC-…), очки XP</td><td>Согласие (при /start), исполнение договора</td></tr>
++<tr><td>Действия в боте (какие разделы открыты, даты активности), метка источника перехода</td><td>Начисление XP, защита от накруток, понять, какая реклама работает</td><td>Согласие</td></tr>
++<tr><td>Геопозиция — только если вы сами её отправили</td><td>Показать места рядом</td><td>Согласие; координаты не сохраняются в профиле</td></tr>
++<tr><td>Сведения об оплате членства (тариф, дата, сумма), кто пригласил</td><td>Активация членства, чек, бонус пригласившему, возврат</td><td>Исполнение договора (оферта), налоговое законодательство</td></tr>
++<tr><td>Предложенные вами места, маршруты, отзывы</td><td>Пополнение базы, XP за вклад</td><td>Согласие</td></tr>
++</table>
++<p>Мы не запрашиваем телефон, паспортные данные, платёжные реквизиты карты. Оплата идёт через ваш банк (СБП), данные карты нам недоступны.</p>
++
++<h2>3. Где и сколько храним</h2>
++<p>Данные хранятся на сервере в Российской Федерации. Срок — пока вы пользуетесь ботом, и 1 год после последнего действия; сведения об оплатах — 5 лет (налоговый учёт). Потом данные удаляются или обезличиваются.</p>
++
++<h2>4. Кому передаём</h2>
++<p>Никому не продаём. Партнёрам клуба передаётся только обезличенная статистика визитов. Telegram обрабатывает данные по своим правилам как платформа. По закону данные могут быть переданы госорганам по их запросу.</p>
++
++<h2>5. Ваши права</h2>
++<ul>
++<li>узнать, какие данные о вас есть, и получить копию;</li>
++<li>исправить неточные данные;</li>
++<li>отозвать согласие и удалить данные — напишите оператору; удалим в течение 10 рабочих дней (кроме сведений, которые обязаны хранить по закону);</li>
++<li>пожаловаться в Роскомнадзор.</li>
++</ul>
++
++<h2>6. Защита</h2>
++<p>Доступ к данным — только у оператора. Сервер защищён паролем и ключами, резервные копии — там же, в РФ.</p>
++
++<p class="dim">Политика действует согласно Федеральному закону № 152-ФЗ «О персональных данных». Мы можем обновлять её; актуальная редакция — на этой странице.</p>
++</main>
++</body>
++</html>

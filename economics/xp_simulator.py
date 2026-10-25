@@ -7,17 +7,19 @@ SevastopolAIbot, подменяет часы (datetime) и прогоняет т
 день за днём. Так видно, через сколько дней реально берутся пороги
 100 / 300 / 800 / 2000 / 4000 / 7000 XP и когда открывается грант City Code.
 
-Запуск:
+Запуск (из корня hubtest):
     git clone https://github.com/Yurich-citycode/SevastopolAIbot.git ../SevastopolAIbot
     pip install "aiogram>=3.7,<4" pandas openpyxl requests python-dotenv
-    python economics/xp_simulator.py --bot ../SevastopolAIbot          # таблица в консоль
-    python economics/xp_simulator.py --bot ../SevastopolAIbot --md out.md
+    python economics/xp_simulator.py --bot ../SevastopolAIbot                       # бот как есть
+    python economics/xp_simulator.py --bot ../SevastopolAIbot --bot-before /path/v1.0  # сравнение
+Результат: economics/out/xp_sim.json (его читают tools/build.py и ЗАПУСК.html).
 
 Профили описаны в PERSONAS ниже — меняй частоты и смотри, как сдвигаются сроки.
 """
 from __future__ import annotations
 
 import argparse
+import json
 import importlib.util
 import logging
 import os
@@ -80,39 +82,6 @@ PERSONAS = [
          visits_per_week=3, buttons=["BTN_MAIN_MENU", "BTN_FOOD", "BTN_EVENTS"],
          monthly={"__NODE__": 1}, referrals_per_month=0),
 ]
-
-
-# ── предложение по перекалибровке (см. docs/ECOSYSTEM.md, раздел XP) ─────────
-# Кнопки дают привычку, но не ранг: потолок 10 XP/день, сырой «предложить место» = 0.
-# Ранг City Code должен давать вклад в город, а не нажатия.
-PROPOSAL = {
-    "activity": {"BTN_MAIN_MENU": 1, "BTN_FOOD": 2, "BTN_LOCATIONS": 2, "BTN_ROUTES": 2,
-                 "BTN_EVENTS": 2, "NEARBY_FOOD": 1, "GEO_FIND": 1, "SUGGEST_PLACE": 0},
-    "daily_cap": 10,
-    "verified": {"PLACE_ACCEPTED": 60, "ROUTE_ACCEPTED": 100, "EVENT_CHECKIN": 80},
-}
-
-
-def apply_proposal(mod):
-    mod.XP_ACTIVITY_REWARDS.clear()
-    mod.XP_ACTIVITY_REWARDS.update(PROPOSAL["activity"])
-    mod.XP_VERIFIED_REWARDS.update(PROPOSAL["verified"])
-    original = mod.award_activity_xp
-    cap = PROPOSAL["daily_cap"]
-
-    def capped(user, action):
-        if mod.xp_today(user.id) >= cap:
-            return 0
-        got = original(user, action)
-        over = mod.xp_today(user.id) - cap
-        if over > 0:
-            mod.PASSPORTS[user.id]["xp"] -= over
-            today = mod.datetime.now().strftime("%Y-%m-%d")
-            mod.PASSPORTS[user.id]["daily_xp"][today][action] -= over
-            got -= over
-        return got
-
-    mod.award_activity_xp = capped
 
 
 def simulate(mod, persona: dict, seed: int = 7) -> dict:
@@ -181,32 +150,46 @@ def fmt_days(d):
     return f"{d} дн. (~{d / 30.4:.0f} мес.)" if d < 730 else f"{d} дн. (~{d / 365:.1f} г.)"
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--bot", default=os.path.join(os.path.dirname(__file__), "..", "..", "SevastopolAIbot"))
-    ap.add_argument("--md", help="сохранить таблицу в markdown-файл")
-    ap.add_argument("--proposal", action="store_true", help="прогнать с предложенной перекалибровкой")
-    args = ap.parse_args()
-    mod = load_bot(args.bot)
-    if args.proposal:
-        apply_proposal(mod)
-    ranks = {t: name for t, name in zip(mod.XP_LEVELS, [r for _, r in mod.XP_RANKS][1:] + ["City Code"])}
-    head = "| Профиль | " + " | ".join(f"{t} XP · {ranks[t]}" for t in mod.XP_LEVELS) + " |"
-    sep = "|---" * (len(mod.XP_LEVELS) + 1) + "|"
-    rows = [head, sep]
+def run(bot_path: str) -> dict:
+    mod = load_bot(bot_path)
+    names = [r for _, r in mod.XP_RANKS][1:] + ["City Code"]
+    res = {"thresholds": list(mod.XP_LEVELS), "ranks": dict(zip(map(str, mod.XP_LEVELS), names)),
+           "grant_days": getattr(mod, "CITYCODE_GRANT_DAYS", None),
+           "daily_cap": getattr(mod, "DAILY_ACTIVITY_CAP", sum(mod.XP_ACTIVITY_REWARDS.values())),
+           "activity": dict(mod.XP_ACTIVITY_REWARDS), "verified": dict(mod.XP_VERIFIED_REWARDS),
+           "referral": [mod.REFERRAL_XP, mod.REFERRAL_BONUS_XP], "personas": []}
     for p in PERSONAS:
         r = simulate(mod, p)
-        rows.append(f"| {p['name']} | " + " | ".join(fmt_days(r["reached"].get(t)) for t in mod.XP_LEVELS) + " |")
-    out = "\n".join(rows)
-    print(out)
-    max_daily = sum(mod.XP_ACTIVITY_REWARDS.values())
-    if args.proposal:
-        max_daily = min(max_daily, PROPOSAL["daily_cap"])
-    print(f"\nПотолок за кнопки: {max_daily} XP/день → 7000 XP минимум за {(7000 - 10 + max_daily - 1) // max_daily} дней")
-    if args.md:
-        with open(args.md, "w", encoding="utf-8") as f:
-            f.write(out + "\n")
+        res["personas"].append({"key": p["key"], "name": p["name"],
+                                "days": {str(t): r["reached"].get(t) for t in mod.XP_LEVELS}})
+    return res
+
+
+def table(res: dict) -> str:
+    th = res["thresholds"]
+    rows = ["| Профиль | " + " | ".join(f"{t} · {res['ranks'][str(t)]}" for t in th) + " |",
+            "|---" * (len(th) + 1) + "|"]
+    for p in res["personas"]:
+        rows.append(f"| {p['name']} | " + " | ".join(fmt_days(p["days"][str(t)]) for t in th) + " |")
+    return "\n".join(rows)
+
+
+def main():
+    here = os.path.dirname(os.path.abspath(__file__))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--bot", default=os.path.join(here, "..", "..", "SevastopolAIbot"), help="бот после патча (v1.1)")
+    ap.add_argument("--bot-before", help="бот до патча (v1.0) — для сравнения")
+    ap.add_argument("--json", default=os.path.join(here, "out", "xp_sim.json"))
+    args = ap.parse_args()
+    out = {"v11": run(args.bot)}
+    if args.bot_before:
+        out["v10"] = run(args.bot_before)
+    os.makedirs(os.path.dirname(args.json), exist_ok=True)
+    with open(args.json, "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=1)
+    for k, v in out.items():
+        print(f"\n## {k}\n" + table(v))
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

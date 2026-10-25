@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ЗАПУСК · SevastopolAI · СитиКод · CrimeaRWA — by YuRich</title>
+<!-- Файл собран скриптом tools/build.py из economics/params.json и docs/. Руками не правь — правь источники и пересобери. -->
+<style>
+/*__FONTS__*/
+:root{--bg:#0B0D12;--bg2:#12151D;--bg3:#1A1E29;--ink:#F3F1EA;--dim:#A2A6B3;--line:#2A2F3D;--lime:#D7FF3D;--cob:#2B4FD9;--org:#FF5B23;--pink:#FF1F8F;--gold:#E6C878;--ok:#4ADE80;--bad:#FF6B6B}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--lime)}
+header{position:sticky;top:0;z-index:5;background:rgba(11,13,18,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;gap:14px;padding:12px 20px 0;flex-wrap:wrap}
+.logo{font:700 15px/1 Unbounded,Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.logo b{color:var(--lime)}
+.ver{color:var(--dim);font-size:12px}
+nav{display:flex;gap:2px;padding:8px 14px 0;overflow-x:auto;scrollbar-width:none}
+nav button{background:none;border:0;color:var(--dim);font:600 14px Inter,sans-serif;padding:10px 14px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--ink);border-color:var(--lime)}
+main{max-width:1280px;margin:0 auto;padding:24px 20px 80px}
+section.tab{display:none}
+section.tab.on{display:block}
+h1,h2,h3{font-family:Unbounded,Inter,sans-serif;font-weight:700;line-height:1.25}
+h1{font-size:24px;margin:0 0 14px}
+h2{font-size:18px;margin:28px 0 10px}
+h3{font-size:15px;margin:22px 0 8px;color:var(--lime)}
+h4{font-size:14px;margin:16px 0 6px}
+.lead{color:var(--dim);max-width:820px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+.grid2{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:18px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+.btn{background:var(--bg3);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font:600 13px Inter,sans-serif;cursor:pointer}
+.btn:hover{border-color:var(--lime)}
+.btn.acc{background:var(--lime);color:#111;border-color:var(--lime)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+/* таблицы */
+.tw{overflow-x:auto;margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{color:var(--dim);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em;background:var(--bg2);position:sticky;top:0}
+td.r,th.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.h td{background:var(--bg3);font-weight:800;color:var(--lime);font-size:12.5px;letter-spacing:.05em}
+td.neg{color:var(--bad)} td.pos{color:var(--ok)}
+code{background:var(--bg3);border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:.92em}
+blockquote{margin:12px 0;padding:10px 14px;border-left:3px solid var(--lime);background:var(--bg2);color:var(--dim)}
+.code{position:relative;margin:12px 0}
+.code pre{white-space:pre-wrap;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0;font:14px/1.55 Inter,sans-serif}
+.code .copy{position:absolute;top:8px;right:8px}
+.copy{background:var(--lime);color:#111;border:0;border-radius:6px;padding:5px 10px;font:700 12px Inter,sans-serif;cursor:pointer}
+/* чек-лист */
+.prog{height:10px;background:var(--bg3);border-radius:6px;overflow:hidden;margin:8px 0 4px}
+.prog i{display:block;height:100%;background:var(--lime);width:0;transition:width .3s}
+.cl label{display:flex;gap:10px;padding:8px 6px;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start}
+.cl input{width:18px;height:18px;margin-top:2px;accent-color:#D7FF3D;flex:none}
+.cl label.done span{color:var(--dim);text-decoration:line-through}
+/* калькулятор */
+.pg{margin:0 0 14px}
+.pg h4{margin:10px 0 6px;color:var(--gold);font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+.pi{display:grid;grid-template-columns:1fr 120px;gap:8px;align-items:center;padding:4px 0;border-bottom:1px dashed var(--line)}
+.pi span{font-size:13.5px}
+.pi small{display:block;color:var(--dim);font-size:11.5px}
+.pi .in{display:flex;align-items:center;gap:4px}
+.pi input{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 8px;font:600 14px Inter,sans-serif;text-align:right}
+.pi input.chg{border-color:var(--org);color:var(--org)}
+.pi em{font-style:normal;color:var(--dim);font-size:12px;min-width:26px}
+.res .tw{margin:4px 0 18px}
+.res td.how{color:var(--dim);font-size:12.5px}
+.res td.v{font-weight:800}
+.res tr.chg td.v{color:var(--org)}
+.sticky{position:sticky;top:110px;max-height:calc(100vh - 130px);overflow:auto;padding-right:6px}
+@media (max-width:900px){.sticky{position:static;max-height:none}}
+/* партнёр */
+.big{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:12px 0}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpi b{display:block;font:700 26px/1.2 Unbounded,Inter,sans-serif;margin:6px 0}
+.kpi small{color:var(--dim)}
+.kpi.good b{color:var(--lime)} .kpi.warn b{color:var(--org)}
+.slider{display:grid;grid-template-columns:200px 1fr 120px;gap:12px;align-items:center;padding:8px 0}
+.slider input[type=range]{width:100%;accent-color:#D7FF3D}
+.slider b{text-align:right}
+@media (max-width:640px){.slider{grid-template-columns:1fr 90px}.slider input[type=range]{grid-column:1/3;grid-row:2}}
+/* документы */
+.docs{display:grid;grid-template-columns:270px 1fr;gap:20px;align-items:start}
+@media (max-width:900px){.docs{grid-template-columns:1fr}}
+.dl{position:sticky;top:110px;max-height:calc(100vh - 130px);overflow:auto}
+@media (max-width:900px){.dl{position:static;max-height:none}}
+.dl input{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 10px;margin-bottom:8px;font:14px Inter,sans-serif}
+.dl a{display:block;padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-size:14px}
+.dl a small{display:block;color:var(--dim);font-size:11.5px}
+.dl a.on{background:var(--bg3);outline:1px solid var(--lime)}
+.dl a.hidden{display:none}
+.doc{min-width:0}
+.doc h1{font-size:22px}
+.doc mark{background:var(--lime);color:#111}
+.toc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.toc a{font-size:12.5px;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:3px 10px;color:var(--dim);text-decoration:none}
+li.cb{list-style:none;margin-left:-18px}
+.txt textarea{width:100%;min-height:200px;background:var(--bg2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:14px;font:14px/1.55 Inter,sans-serif;resize:vertical}
+.note{font-size:12.5px;color:var(--dim)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--lime);color:#111;font-weight:700;padding:10px 16px;border-radius:10px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+.toast.on{opacity:1}
+@media print{header,nav,.btn,.copy{display:none!important}section.tab{display:block!important}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><div class="logo">ЗАПУСК · <b>СитиКод</b> · SevastopolAI · CrimeaRWA — by YuRich</div><div class="ver">__VERSION__ · всё считается из economics/params.json</div></div>
+  <nav id="nav"></nav>
+</header>
+<main>
+  <section class="tab" id="t-start">
+    <h1>Старт</h1>
+    <div class="card" id="key"></div>
+    <div class="row"><b id="progTxt"></b><span class="sp"></span><button class="btn" id="clReset">Сбросить галочки</button></div>
+    <div class="prog"><i id="prog"></i></div>
+    <p class="note">Галочки сохраняются в этом браузере. Подробности и «что где лежит» — во вкладке «Документы» → 00.</p>
+    <div id="cl" class="cl"></div>
+  </section>
+
+  <section class="tab" id="t-calc">
+    <h1>Калькулятор: всё до копейки</h1>
+    <p class="lead">Слева — допущения из <code>params.json</code>, справа — все расчёты по тем же формулам, что в Excel и Python. Изменённые значения подсвечены оранжевым. Это песочница: чтобы закрепить, нажми «Скачать params.json», положи файл в <code>economics/</code> и запусти <code>python tools/build.py</code>.</p>
+    <div class="row" style="margin:10px 0 16px"><button class="btn" id="calcReset">Сбросить к params.json</button><button class="btn acc" id="calcExport">Скачать params.json</button><span class="note" id="calcInfo"></span></div>
+    <div class="grid2">
+      <div class="sticky" id="params"></div>
+      <div class="res" id="results"></div>
+    </div>
+  </section>
+
+  <section class="tab" id="t-partner">
+    <h1>Партнёру: выгодно или нет</h1>
+    <p class="lead">Покажи на встрече. Двигай под цифры конкретного заведения. Формулы — те же, что в модели (группа «Честно для партнёра»).</p>
+    <div class="card" id="pSliders"></div>
+    <div class="big" id="pKpi"></div>
+    <p class="note">«Новые гости» — доля клубного оборота, которой без клуба у партнёра не было бы. Остальное — постоянные гости, которые теперь платят на привилегию меньше. Поэтому партнёр в плюсе, только если новых достаточно — это честно и проверяется отчётом раз в месяц.</p>
+  </section>
+
+  <section class="tab" id="t-scen">
+    <h1>Сценарии S1–S5</h1>
+    <p class="lead">Считаются вживую с параметрами из калькулятора. Деньги в месяц, округлены до рубля. Зарплата основателя не учтена.</p>
+    <div class="card" id="findings"></div>
+    <div id="scenTbl"></div>
+    <h2>Допущения сценариев</h2>
+    <div id="scenIn"></div>
+  </section>
+
+  <section class="tab" id="t-xp">
+    <h1>XP v1.1</h1>
+    <p class="lead">Значения — из кода бота после патча v1.1. Дни до ранга — симуляция реальных функций бота.</p>
+    <h2>Сколько XP за что</h2><div id="xpVals"></div>
+    <h2>Дней до ранга</h2><div id="xpSim"></div>
+    <h2>XP в рублях</h2><div id="xpMoney"></div>
+  </section>
+
+  <section class="tab" id="t-texts">
+    <h1>Тексты для запуска</h1>
+    <p class="lead">Можно править прямо здесь и копировать. Правки сохраняются в браузере. <button class="btn" id="txReset">Вернуть исходные</button></p>
+    <div id="texts"></div>
+  </section>
+
+  <section class="tab" id="t-docs">
+    <div class="docs">
+      <div class="dl" id="dl"><input id="dq" type="search" placeholder="Поиск по документам…"></div>
+      <div class="doc" id="doc"></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast">Скопировано</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+(function () {
+  'use strict';
+  const $ = (s, r = document) => r.querySelector(s);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const LS = { get(k, d) { try { return JSON.parse(localStorage.getItem('zapusk.' + k)) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('zapusk.' + k, JSON.stringify(v)); } catch (e) { /* нет памяти */ } } };
+  const toast = (t) => { const el = $('#toast'); el.textContent = t || 'Скопировано'; el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 1200); };
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); } catch (e) { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+    toast();
+  }
+
+  // ── вкладки ──
+  const TABS = [['start', 'Старт'], ['calc', 'Калькулятор'], ['partner', 'Партнёру'], ['scen', 'Сценарии'], ['xp', 'XP'], ['texts', 'Тексты'], ['docs', 'Документы']];
+  const nav = $('#nav');
+  TABS.forEach(([id, name]) => { const b = document.createElement('button'); b.textContent = name; b.dataset.t = id; b.onclick = () => show(id); nav.appendChild(b); });
+  function show(id) {
+    document.querySelectorAll('section.tab').forEach((s) => s.classList.toggle('on', s.id === 't-' + id));
+    nav.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.t === id));
+    if (location.hash.slice(1).split('/')[0] !== id) history.replaceState(null, '', '#' + id);
+    window.scrollTo(0, 0);
+  }
+
+  // ── вычислитель: те же строки формул, что в economics/model.py и Excel ──
+  const clean = (x) => parseFloat(Number(x).toPrecision(12));
+  const FN = {
+    ROUND: (x, n) => { const s = Math.sign(x), a = Math.abs(x); if (n >= 0) { const m = Math.pow(10, n); return s * Math.round(clean(a * m)) / m; } const m = Math.pow(10, -n); return s * Math.round(clean(a / m)) * m; },
+    FLOOR: (x, s) => clean(Math.floor(clean(x / s)) * s),
+    CEILING: (x, s) => clean(Math.ceil(clean(x / s)) * s),
+    MAX: (...a) => Math.max(...a), MIN: (...a) => Math.min(...a),
+  };
+  const cache = {};
+  function ev(f, V) {
+    if (!cache[f]) cache[f] = new Function('V', 'ROUND', 'FLOOR', 'CEILING', 'MAX', 'MIN', 'return (' + f.replace(/\{(\w+)\}/g, 'V["$1"]') + ');');
+    const v = cache[f](V, FN.ROUND, FN.FLOOR, FN.CEILING, FN.MAX, FN.MIN);
+    if (typeof v !== 'number' || !isFinite(v)) throw new Error('формула ' + f);
+    return clean(v);
+  }
+  const MD = DATA.model;
+  const UNIT_KEYS = Object.keys(MD.unit_meta); // порядок как в model.py
+  function flat(P) { const V = {}; P.groups.forEach((g) => g.items.forEach((it) => { V[it.key] = Number(it.value); })); return V; }
+  function compute(P) {
+    const V = flat(P), unit = {};
+    UNIT_KEYS.forEach((k) => { V[k] = ev(MD.unit_meta[k].formula, V); unit[k] = V[k]; });
+    const scen = P.scenarios.names.map((_, i) => {
+      const S = Object.assign({}, V);
+      P.scenarios.rows.forEach((r) => { S[r.key] = Number(r.values[i]); });
+      const out = {};
+      MD.scen_meta.forEach((m) => { if (m.formula) { S[m.key] = ev(m.formula, S); out[m.key] = S[m.key]; } });
+      return out;
+    });
+    return { V, unit, scen };
+  }
+  window.__compute = compute; // для автотеста
+
+  // ── формат как в model.py fmt() ──
+  function grp(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function fmt(v, unit) {
+    if (unit === '%') { let s = FN.ROUND(v * 100, 2).toFixed(2).replace(/0+$/, '').replace(/\.$/, ''); return s.replace('.', ',') + '%'; }
+    if (unit === '₽' || unit === '₽/мес' || unit === '₽/год') {
+      const q = FN.ROUND(v, 2), neg = q < 0, a = Math.abs(q).toFixed(2).split('.');
+      return (neg ? '−' : '') + grp(a[0]) + (a[1] !== '00' ? ',' + a[1] : '') + ' ₽';
+    }
+    if (Number.isInteger(clean(v))) return grp(clean(v)) + (unit && unit !== 'раз' ? ' ' + unit : '');
+    return FN.ROUND(v, 2).toFixed(2).replace('.', ',') + (unit ? ' ' + unit : '');
+  }
+  window.__fmt = fmt;
+
+  // ── состояние калькулятора ──
+  const BASE = JSON.parse(JSON.stringify(MD.params));
+  let P = LS.get('params', null);
+  if (!P || P.updated !== BASE.updated || P.version !== BASE.version) P = JSON.parse(JSON.stringify(BASE));
+  const baseVals = flat(BASE);
+  let RES = compute(P), BASE_RES = compute(BASE);
+
+  function renderParams() {
+    const box = $('#params'); box.innerHTML = '';
+    P.groups.forEach((g) => {
+      const d = document.createElement('div'); d.className = 'pg';
+      d.innerHTML = '<h4>' + esc(g.title) + '</h4>';
+      g.items.forEach((it) => {
+        const pct = it.unit === '%';
+        const row = document.createElement('div'); row.className = 'pi';
+        const mark = { fact: '✅', decision: '📌', assumption: '🧪' }[it.status] || '';
+        row.innerHTML = '<span>' + mark + ' ' + esc(it.label) + (it.src ? '<small>' + esc(it.src) + '</small>' : '') + '</span>' +
+          '<div class="in"><input type="number" step="any" inputmode="decimal"><em>' + esc(pct ? '%' : it.unit) + '</em></div>';
+        const inp = row.querySelector('input');
+        const show = () => { inp.value = pct ? clean(it.value * 100) : it.value; inp.classList.toggle('chg', clean(it.value) !== clean(baseVals[it.key])); };
+        show();
+        inp.oninput = () => { const n = parseFloat(String(inp.value).replace(',', '.')); if (!isFinite(n)) return; it.value = pct ? clean(n / 100) : n; inp.classList.toggle('chg', clean(it.value) !== clean(baseVals[it.key])); recalc(); };
+        d.appendChild(row);
+      });
+      box.appendChild(d);
+    });
+  }
+  function renderResults() {
+    const groups = {};
+    UNIT_KEYS.forEach((k) => { const m = MD.unit_meta[k]; (groups[m.group] = groups[m.group] || []).push(k); });
+    let h = '';
+    Object.keys(groups).forEach((g) => {
+      h += '<h3>' + esc(MD.unit_groups[g]) + '</h3><div class="tw"><table><thead><tr><th>Показатель</th><th class="r">Сумма</th><th>Как считается</th></tr></thead><tbody>';
+      groups[g].forEach((k) => {
+        const m = MD.unit_meta[k], v = RES.unit[k], chg = Math.abs(v - BASE_RES.unit[k]) > 1e-9;
+        h += '<tr class="' + (chg ? 'chg' : '') + '" title="' + esc(m.formula) + '"><td>' + esc(m.label) + '</td><td class="r v">' + fmt(v, m.unit) + '</td><td class="how">' + esc(m.how || '') + '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+    });
+    $('#results').innerHTML = h;
+    const n = UNIT_KEYS.filter((k) => Math.abs(RES.unit[k] - BASE_RES.unit[k]) > 1e-9).length;
+    $('#calcInfo').textContent = n ? 'Изменилось показателей: ' + n : 'Всё как в params.json';
+  }
+  function recalc() {
+    try { RES = compute(P); } catch (e) { $('#calcInfo').textContent = '⚠ ' + e.message; return; }
+    LS.set('params', P);
+    renderResults(); renderScen(); renderXpMoney(); renderPartner(false);
+  }
+  $('#calcReset').onclick = () => { P = JSON.parse(JSON.stringify(BASE)); LS.set('params', null); renderParams(); recalc(); toast('Сброшено'); };
+  $('#calcExport').onclick = () => {
+    const out = JSON.parse(JSON.stringify(P));
+    const blob = new Blob([JSON.stringify(out, null, 2) + '\n'], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'params.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  };
+
+  // ── сценарии ──
+  function renderScen() {
+    const names = P.scenarios.names;
+    let h = '<div class="tw"><table><thead><tr><th></th>' + names.map((n) => '<th class="r">' + esc(n) + '</th>').join('') + '</tr></thead><tbody>';
+    MD.scen_meta.forEach((m) => {
+      if (!m.formula) { h += '<tr class="h"><td colspan="' + (names.length + 1) + '">' + esc(m.label) + '</td></tr>'; return; }
+      h += '<tr><td>' + esc(m.label) + ' <span class="note">' + esc(m.unit) + '</span></td>' + RES.scen.map((s) => {
+        const v = s[m.key];
+        const txt = m.unit.indexOf('₽') === 0 ? fmt(FN.ROUND(v, 0), '₽') : (m.key === 'fte' ? fmt(FN.ROUND(v, 2), '') : fmt(FN.ROUND(v, 0), ''));
+        const cls = /^profit/.test(m.key) ? (v < 0 ? ' neg' : ' pos') : '';
+        return '<td class="r' + cls + '">' + txt + '</td>';
+      }).join('') + '</tr>';
+    });
+    $('#scenTbl').innerHTML = h + '</tbody></table></div>';
+    let t = '<div class="tw"><table><thead><tr><th>Допущение</th>' + names.map((n) => '<th class="r">' + esc(n) + '</th>').join('') + '</tr></thead><tbody>';
+    P.scenarios.rows.forEach((r) => { t += '<tr><td>' + esc(r.label) + (r.note ? ' <span class="note">' + esc(r.note) + '</span>' : '') + '</td>' + r.values.map((v) => '<td class="r">' + fmt(v, r.unit === '%' ? '%' : (r.unit.indexOf('₽') === 0 ? '₽' : '')) + '</td>').join('') + '</tr>'; });
+    $('#scenIn').innerHTML = t + '</tbody></table></div>';
+  }
+
+  // ── партнёр ──
+  const PK = [['partner_turnover', 'Допустимый доп. оборот', 30000, 300000, 5000, '₽'], ['priv_avg', 'Привилегия', 0.03, 0.07, 0.005, '%'], ['partner_margin', 'Маржинальность', 0.2, 0.8, 0.05, '%'], ['partner_new_share', 'Доля новых гостей', 0, 0.6, 0.01, '%'], ['spend', 'Расход участника в месяц', 3000, 15000, 500, '₽']];
+  let PV = null;
+  function renderPartner(reset) {
+    if (reset || !PV) { PV = {}; PK.forEach(([k]) => { PV[k] = RES.V[k]; }); }
+    const box = $('#pSliders');
+    if (!box.dataset.ready) {
+      box.innerHTML = PK.map(([k, l, mn, mx, st]) => '<div class="slider"><span>' + l + '</span><input type="range" data-k="' + k + '" min="' + mn + '" max="' + mx + '" step="' + st + '"><b id="pv-' + k + '"></b></div>').join('') + '<div class="row" style="margin-top:8px"><button class="btn" id="pReset">Как в калькуляторе</button></div>';
+      box.querySelectorAll('input').forEach((i) => { i.oninput = () => { PV[i.dataset.k] = parseFloat(i.value); drawPartner(); }; });
+      $('#pReset').onclick = () => renderPartner(true);
+      box.dataset.ready = 1;
+    }
+    PK.forEach(([k]) => { box.querySelector('[data-k="' + k + '"]').value = PV[k]; });
+    drawPartner();
+  }
+  function drawPartner() {
+    const V = Object.assign({}, RES.V, PV);
+    const u = {};
+    ['seats_per_partner', 'partner_priv_cost', 'partner_new_profit', 'partner_gain', 'partner_gain_year', 'partner_breakeven_share'].forEach((k) => { V[k] = ev(MD.unit_meta[k].formula, V); u[k] = V[k]; });
+    PK.forEach(([k, , , , , un]) => { $('#pv-' + k).textContent = fmt(PV[k], un); });
+    const g = u.partner_gain;
+    $('#pKpi').innerHTML = [
+      ['Мест в клубе от вас', fmt(u.seats_per_partner, ''), 'оборот ÷ расход участника', ''],
+      ['Вы отдаёте привилегией', fmt(u.partner_priv_cost, '₽') + '/мес', 'только участникам по паспорту', ''],
+      ['Вы получаете маржи с новых гостей', fmt(u.partner_new_profit, '₽') + '/мес', 'оборот × доля новых × маржа', ''],
+      ['Итог для вас', fmt(g, '₽') + '/мес', fmt(u.partner_gain_year, '₽') + ' в год', g >= 0 ? 'good' : 'warn'],
+      ['Вы в плюсе, если новых гостей не меньше', fmt(u.partner_breakeven_share, '%'), 'привилегия ÷ маржа', PV.partner_new_share >= u.partner_breakeven_share ? 'good' : 'warn'],
+      ['Плата за вход и комиссия', '0 ₽', 'выход — уведомить за 14 дней', 'good'],
+    ].map(([a, b, c, cls]) => '<div class="kpi ' + cls + '"><small>' + a + '</small><b>' + b + '</b><small>' + c + '</small></div>').join('');
+  }
+
+  // ── XP ──
+  function renderXpMoney() {
+    const ks = UNIT_KEYS.filter((k) => MD.unit_meta[k].group === 'xpmoney');
+    $('#xpMoney').innerHTML = '<div class="tw"><table><thead><tr><th>Показатель</th><th class="r">Сумма</th><th>Как считается</th></tr></thead><tbody>' + ks.map((k) => '<tr><td>' + esc(MD.unit_meta[k].label) + '</td><td class="r"><b>' + fmt(RES.unit[k], MD.unit_meta[k].unit) + '</b></td><td class="note">' + esc(MD.unit_meta[k].how) + '</td></tr>').join('') + '</tbody></table></div>';
+  }
+
+  // ── чек-лист ──
+  function renderChecklist() {
+    const st = LS.get('check', {});
+    const box = $('#cl'); box.innerHTML = '';
+    let all = 0, done = 0;
+    DATA.checklist.forEach((s) => {
+      const h = document.createElement('h3'); h.textContent = s.title; box.appendChild(h);
+      s.items.forEach((it) => {
+        all++; if (st[it.id]) done++;
+        const l = document.createElement('label'); l.className = st[it.id] ? 'done' : '';
+        l.innerHTML = '<input type="checkbox"' + (st[it.id] ? ' checked' : '') + '><span>' + it.html + '</span>';
+        l.querySelector('input').onchange = (e) => { const s2 = LS.get('check', {}); if (e.target.checked) s2[it.id] = new Date().toISOString().slice(0, 10); else delete s2[it.id]; LS.set('check', s2); renderChecklist(); };
+        box.appendChild(l);
+      });
+    });
+    $('#prog').style.width = (all ? done / all * 100 : 0) + '%';
+    $('#progTxt').textContent = 'Сделано ' + done + ' из ' + all;
+  }
+  $('#clReset').onclick = () => { if (confirm('Снять все галочки?')) { LS.set('check', {}); renderChecklist(); } };
+
+  // ── тексты ──
+  function renderTexts() {
+    const saved = LS.get('texts', {});
+    $('#texts').innerHTML = DATA.texts.map((t, i) => '<div class="card txt"><div class="row" style="justify-content:space-between"><h3 style="margin:0">' + esc(t.title) + '</h3><button class="copy" data-i="' + i + '">Копировать</button></div><textarea data-i="' + i + '" style="margin-top:10px">' + esc(saved[i] ?? t.text) + '</textarea></div>').join('');
+    $('#texts').querySelectorAll('textarea').forEach((ta) => { const fit = () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 4 + 'px'; }; setTimeout(fit); ta.oninput = () => { const s = LS.get('texts', {}); s[ta.dataset.i] = ta.value; LS.set('texts', s); fit(); }; });
+    $('#texts').querySelectorAll('.copy').forEach((b) => { b.onclick = () => copy($('#texts textarea[data-i="' + b.dataset.i + '"]').value); });
+  }
+  $('#txReset').onclick = () => { if (confirm('Вернуть исходные тексты?')) { LS.set('texts', {}); renderTexts(); } };
+
+  // ── документы ──
+  function renderDocList() {
+    const dl = $('#dl');
+    DATA.docs.forEach((d) => { const a = document.createElement('a'); a.href = '#docs/' + d.id; a.dataset.id = d.id; a.innerHTML = esc(d.title) + '<small>' + esc(d.file) + '</small>'; dl.appendChild(a); });
+    $('#dq').oninput = () => {
+      const q = $('#dq').value.trim().toLowerCase();
+      dl.querySelectorAll('a').forEach((a) => { const d = DATA.docs.find((x) => x.id === a.dataset.id); a.classList.toggle('hidden', !!q && (d.title + ' ' + d.html.replace(/<[^>]+>/g, ' ')).toLowerCase().indexOf(q) < 0); });
+      const vis = dl.querySelector('a:not(.hidden)'); const cur = location.hash.split('/')[1]; const keep = cur && !dl.querySelector('a[data-id="' + cur + '"]').classList.contains('hidden'); openDoc(keep ? cur : (vis ? vis.dataset.id : DATA.docs[0].id), false);
+    };
+  }
+  function openDoc(id, scroll = true) {
+    const d = DATA.docs.find((x) => x.id === id) || DATA.docs[0];
+    $('#dl').querySelectorAll('a').forEach((a) => a.classList.toggle('on', a.dataset.id === d.id));
+    const toc = d.heads.length > 2 ? '<div class="toc">' + d.heads.map(([s, h]) => '<a href="#docs/' + d.id + '/' + s + '">' + esc(h) + '</a>').join('') + '</div>' : '';
+    let body = d.html;
+    const q = $('#dq').value.trim();
+    if (q.length > 2) { const re = new RegExp('(>[^<]*?)(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'); body = body.replace(re, (m, a, b) => a + '<mark>' + b + '</mark>'); }
+    $('#doc').innerHTML = '<p class="note">' + esc(d.file) + '</p>' + body.replace(/(<h1[^>]*>.*?<\/h1>)/, '$1' + toc);
+    $('#doc').querySelectorAll('.copy').forEach((b) => { b.onclick = () => copy(b.parentNode.querySelector('pre').textContent); });
+    if (scroll) window.scrollTo(0, 0);
+  }
+
+  // ── маршрутизация ──
+  function route() {
+    const [tab, id, anchor] = location.hash.slice(1).split('/');
+    if (tab === 'docs') { show('docs'); openDoc(id || DATA.docs[0].id); if (anchor) { const el = document.getElementById(anchor); if (el) el.scrollIntoView(); } return; }
+    show(TABS.some((t) => t[0] === tab) ? tab : 'start');
+  }
+  window.addEventListener('hashchange', route);
+
+  // ── старт ──
+  $('#key').innerHTML = '<h2 style="margin-top:0">Главное за 30 секунд</h2>' + DATA.key_html;
+  $('#findings').innerHTML = '<h3 style="margin-top:0">Честный вывод (при параметрах из params.json)</h3>' + DATA.findings_html;
+  $('#xpVals').innerHTML = DATA.xp_values_html;
+  $('#xpSim').innerHTML = DATA.xp_sim_html;
+  renderChecklist(); renderParams(); renderResults(); renderScen(); renderXpMoney(); renderPartner(true); renderTexts(); renderDocList();
+  document.querySelectorAll('.card .copy').forEach((b) => { if (!b.onclick) b.onclick = () => copy(b.parentNode.querySelector('pre').textContent); });
+  route();
+})();
+</script>
+</body>
+</html>

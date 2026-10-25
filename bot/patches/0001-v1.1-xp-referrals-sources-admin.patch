@@ -1,0 +1,872 @@
+diff --git a/sevastopolaibot.py b/sevastopolaibot.py
+index 4f01a0f..2fa756f 100644
+--- a/sevastopolaibot.py
++++ b/sevastopolaibot.py
+@@ -236,6 +236,12 @@ def migrate_passport(p: dict) -> dict:
+     p.setdefault("verified_daily", {})  # {YYYY-MM-DD: {action: count}} — свои лимиты verified
+     p.setdefault("verified_last", {})  # {action: iso_ts} — кулдауны (месяц/год)
+     p.setdefault("xp_reserve", 0)  # резерв под косметическое сжигание, в v1 не тратим
++    p.setdefault("member_plan", None)  # None | basic | founder
++    p.setdefault("member_referral_paid_ts", [])  # даты оплативших рефералов (лимит 6/год)
++    p.setdefault("source", None)  # первая метка src_… из /start (QR, пост, партнёр)
++    p.setdefault("active_days", [])  # [YYYY-MM-DD] последние 60 дней с действиями — для антифарма рефералов
++    p.setdefault("real_action_days", [])  # дни, где было что-то кроме кнопки меню
++    p.setdefault("pd_notice_at", None)  # когда показали уведомление об обработке ПДн
+     p.setdefault("created_at", datetime.now().isoformat())
+     return p
+ 
+@@ -270,6 +276,9 @@ def load_state():
+                 continue
+         rows = data.get("analytics") or []
+         ANALYTICS_ROWS = [r for r in rows if isinstance(r, dict) and "action" in r]
++        dups = fix_duplicate_passport_ids()
++        if dups:
++            logger.info("Исправлено совпадающих номеров паспортов: %d", dups)
+         logger.info("Восстановлено: %d паспортов, %d действий", len(PASSPORTS), len(ANALYTICS_ROWS))
+     except Exception as e:
+         logger.warning("Не удалось загрузить состояние: %s", e)
+@@ -293,8 +302,31 @@ def warn_insecure_files():
+ 
+ # ────────────────────── аналитика ──────────────────────
+ 
++ACTIVE_DAYS_KEEP = 60
++# Кнопки меню бонусом за «живость» реферала не считаются
++REFERRAL_MENU_ACTIONS = {"BTN_MAIN_MENU", "MAIN_MENU"}
++
++
++def touch_activity(user_id, action: str):
++    """Пишет день активности в паспорт. Аналитика режется до 2000 строк, паспорт — нет."""
++    passport = PASSPORTS.get(user_id)
++    if not isinstance(passport, dict):
++        return
++    today = datetime.now().strftime("%Y-%m-%d")
++    days = passport.setdefault("active_days", [])
++    if today not in days:
++        days.append(today)
++        del days[:-ACTIVE_DAYS_KEEP]
++    if str(action) not in REFERRAL_MENU_ACTIONS and not str(action).startswith("START"):
++        real = passport.setdefault("real_action_days", [])
++        if today not in real:
++            real.append(today)
++            del real[:-ACTIVE_DAYS_KEEP]
++
++
+ def log_action(user_id, username, action):
+     try:
++        touch_activity(user_id, action)
+         ANALYTICS_ROWS.append(
+             {"date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "user_id": user_id, "username": username or "", "action": action}
+         )
+@@ -357,19 +389,26 @@ def xp_to_next(xp: int) -> int:
+ 
+ 
+ # ────────────────────── City Code: грант и членство ──────────────────────
+-# Членство ≠ ранг. Ранг считается из XP и не продаётся.
+-# Оплата клуба не требует 7000 XP. 7000 XP открывает грант: 180 дней без оплаты.
++# Членство ≠ ранг. Ранг считается из XP и не продаётся (за оплату XP не даём — v1.1).
++# Оплата клуба не требует 7000 XP. 7000 XP открывает грант: 365 дней без оплаты.
++# Квота грантов — 10% мест транша (30 из 300): грант занимает обычное место.
+ 
+ CITYCODE_GRANT_XP = 7000
+-CITYCODE_GRANT_DAYS = 180
++CITYCODE_GRANT_DAYS = env_int("CITYCODE_GRANT_DAYS", 365) or 365
++CITYCODE_GRANT_QUOTA = env_int("CITYCODE_GRANT_QUOTA", 30) or 30
++CITYCODE_GRANT_BUTTON = "🔑 Активировать 12 месяцев City Code"
+ 
+ CITYCODE_GRANT_TEXT = (
+-    "🔑 <b>Ранг City Code.</b> Ты год вёл город в боте.\n"
+-    "Можно войти в City Code без оплаты на 6 месяцев.\n"
++    "🔑 <b>Ранг City Code.</b> Ты больше года вёл город в боте.\n"
++    "Можно войти в City Code без оплаты на 12 месяцев.\n"
+     "Это не скидка и не токен. Это ключ за работу с городом."
+ )
+ 
+ 
++def grants_claimed_count() -> int:
++    return sum(1 for p in PASSPORTS.values() if isinstance(p, dict) and p.get("complimentary_claimed"))
++
++
+ def _parse_dt(value):
+     if not value:
+         return None
+@@ -419,7 +458,7 @@ def _notify_citycode_grant(user_id: int):
+     except RuntimeError:
+         return
+     kb = InlineKeyboardMarkup(
+-        inline_keyboard=[[InlineKeyboardButton(text="🔑 Активировать 6 месяцев City Code", callback_data="claim_citycode")]]
++        inline_keyboard=[[InlineKeyboardButton(text=CITYCODE_GRANT_BUTTON, callback_data="claim_citycode")]]
+     )
+ 
+     async def _send():
+@@ -442,10 +481,15 @@ def claim_citycode_grant(user) -> tuple[bool, str]:
+         return False, f"Грант ещё не открыт. Ранг City Code — это {CITYCODE_GRANT_XP} XP."
+     if passport["complimentary_claimed"]:
+         return False, "Грант уже активирован. Второй раз он не выдаётся."
++    if grants_claimed_count() >= CITYCODE_GRANT_QUOTA:
++        return False, (
++            f"Квота грантов этого транша ({CITYCODE_GRANT_QUOTA} мест) занята. "
++            "Ранг остаётся за тобой, грант сработает, когда откроется следующий транш."
++        )
+     now = datetime.now()
+     until = _parse_dt(passport.get("member_until"))
+     if until and until > now:
+-        # Уже оплаченный MEMBER: оплату не сбрасываем, добавляем 180 дней к текущему сроку
++        # Уже оплаченный MEMBER: оплату не сбрасываем, добавляем дни гранта к текущему сроку
+         new_until = until + timedelta(days=CITYCODE_GRANT_DAYS)
+         if passport.get("member_source") and passport["member_source"] != "xp_grant":
+             passport["member_source"] = "mixed"
+@@ -532,6 +576,30 @@ def revoke_xp(user_id: int, amount: int, reason: str) -> bool:
+     return True
+ 
+ 
++def make_passport_id(user_id: int) -> str:
++    """CC-последние 6 цифр ID; при совпадении с чужим паспортом — 8 цифр, затем полный ID."""
++    taken = {p.get("passport_id") for uid, p in PASSPORTS.items() if uid != user_id and isinstance(p, dict)}
++    digits = str(abs(int(user_id)))
++    for n in (6, 8, len(digits)):
++        candidate = f"CC-{digits[-n:].zfill(6)}"
++        if candidate not in taken:
++            return candidate
++    return f"CC-{digits}"
++
++
++def fix_duplicate_passport_ids() -> int:
++    """Старые паспорта могли получить одинаковый CC-xxxxxx. Первый по дате создания сохраняет номер."""
++    seen: dict[str, int] = {}
++    fixed = 0
++    for uid, p in sorted(PASSPORTS.items(), key=lambda kv: str(kv[1].get("created_at") or "")):
++        pid = p.get("passport_id")
++        if pid in seen or not pid or pid == "CC-000000":
++            p["passport_id"] = make_passport_id(uid)
++            fixed += 1
++        seen[p["passport_id"]] = uid
++    return fixed
++
++
+ def create_passport_if_not_exists(user):
+     if user.id in PASSPORTS:
+         migrate_passport(PASSPORTS[user.id])
+@@ -541,7 +609,7 @@ def create_passport_if_not_exists(user):
+             "name": user.full_name,
+             "username": user.username or "",
+             "xp": 10,
+-            "passport_id": f"CC-{str(user.id)[-6:]}",
++            "passport_id": make_passport_id(user.id),
+         }
+     )
+     _log_xp(passport, "PASSPORT_CREATED", 10)
+@@ -559,8 +627,11 @@ REFERRAL_BONUS_XP = 40
+ REFERRAL_BONUS_DAYS = 7
+ 
+ 
+-async def process_referral(new_user_id: int, referrer_id: int):
+-    if referrer_id == new_user_id or new_user_id in REFERRALS:
++async def process_referral(new_user_id: int, referrer_id: int, *, is_new_user: bool = True):
++    """+25 рефереру — только если по ссылке пришёл НОВЫЙ человек (паспорта ещё не было)."""
++    if not is_new_user or referrer_id == new_user_id or new_user_id in REFERRALS:
++        return
++    if referrer_id not in PASSPORTS:
+         return
+     REFERRALS[new_user_id] = {"referrer": referrer_id, "date": datetime.now().isoformat(), "bonus_given": False}
+     if referrer_id in PASSPORTS:
+@@ -571,8 +642,6 @@ async def process_referral(new_user_id: int, referrer_id: int):
+     save_state()
+ 
+ 
+-# Кнопки меню бонусом за «живость» реферала не считаются
+-REFERRAL_MENU_ACTIONS = {"BTN_MAIN_MENU", "MAIN_MENU"}
+ 
+ 
+ def referral_activity_ok(new_id: int, ref_date: datetime) -> bool:
+@@ -581,6 +650,11 @@ def referral_activity_ok(new_id: int, ref_date: datetime) -> bool:
+     window_end = ref_date + timedelta(days=REFERRAL_BONUS_DAYS)
+     days: set[str] = set()
+     has_real_action = False
++    lo, hi = ref_date.strftime("%Y-%m-%d"), window_end.strftime("%Y-%m-%d")
++    passport = PASSPORTS.get(new_id)
++    if isinstance(passport, dict):
++        days |= {d for d in passport.get("active_days", []) if lo <= d <= hi}
++        has_real_action = any(lo <= d <= hi for d in passport.get("real_action_days", []))
+     for row in ANALYTICS_ROWS:
+         if row.get("user_id") != new_id:
+             continue
+@@ -630,21 +704,24 @@ async def check_referral_bonuses():
+                 pass
+ 
+ 
++# v1.1: кнопки дают привычку, а не ранг. Каждая — раз в день, сумма за день ≤ DAILY_ACTIVITY_CAP.
++# Сырое предложение места = 0: XP приходит, когда место принято (PLACE_ACCEPTED).
+ XP_ACTIVITY_REWARDS = {
+     "BTN_MAIN_MENU": 1,
+-    "BTN_FOOD": 3,
+-    "BTN_LOCATIONS": 3,
+-    "BTN_ROUTES": 3,
+-    "BTN_EVENTS": 3,
+-    "NEARBY_FOOD": 2,
+-    "GEO_FIND": 2,
+-    "SUGGEST_PLACE": 5,
++    "BTN_FOOD": 2,
++    "BTN_LOCATIONS": 2,
++    "BTN_ROUTES": 2,
++    "BTN_EVENTS": 2,
++    "NEARBY_FOOD": 1,
++    "GEO_FIND": 1,
++    "SUGGEST_PLACE": 0,
+ }
++DAILY_ACTIVITY_CAP = 10
+ 
+ 
+ def award_activity_xp(user, action: str) -> int:
+     amount = XP_ACTIVITY_REWARDS.get(action)
+-    if amount is None:
++    if not amount:
+         return 0
+     create_passport_if_not_exists(user)
+     passport = PASSPORTS[user.id]
+@@ -655,6 +732,9 @@ def award_activity_xp(user, action: str) -> int:
+     day_actions = daily.get(today, {})
+     if action in day_actions:
+         return 0
++    amount = min(amount, DAILY_ACTIVITY_CAP - sum(day_actions.values()))
++    if amount <= 0:
++        return 0
+     day_actions[action] = amount
+     daily[today] = day_actions
+     passport["xp"] += amount
+@@ -679,30 +759,32 @@ def xp_today(user_id: int) -> int:
+ 
+ XP_VERIFIED_REWARDS = {
+     # Слой города / UGC (сырой саджест SUGGEST_PLACE=5 живёт в XP_ACTIVITY_REWARDS, 1/день)
+-    "PLACE_ACCEPTED": 40,  # за место, после модерации
++    "PLACE_ACCEPTED": 60,  # за место, после модерации (v1.1: было 40)
+     "PLACE_FIX_ACCEPTED": 15,  # правка фото/координат, max 3/день
+-    "ROUTE_ACCEPTED": 70,  # за принятый маршрут
++    "ROUTE_ACCEPTED": 100,  # за принятый маршрут (v1.1: было 70)
+     "REVIEW_ACCEPTED": 10,  # отзыв с фактом, max 2/день
+     # Слой City Code
+     "CLUB_APPLY": 20,  # 1 раз, заявка отправлена
+-    "CLUB_PAID_MONTH": 80,  # за оплаченный цикл
+-    "CLUB_PAID_YEAR": 500,  # 1/год
+-    "EVENT_CHECKIN": 60,  # 1/событие, только чекин хостом
+-    "MEMBER_REFERRAL_PAID": 120,  # привёл человека, который оплатил клуб
++    # v1.1: CLUB_PAID_MONTH удалён (членство только годовое), за оплату XP не даём — ранг не продаётся
++    "CLUB_PAID_YEAR": 0,
++    "EVENT_CHECKIN": 80,  # 1/событие, только чекин хостом (v1.1: было 60)
++    "MEMBER_REFERRAL_PAID": 120,  # привёл человека, который оплатил клуб; max 6 за 365 дней
+     "PARTNER_NODE_CONNECTED": 200,  # 1 раз на точку, админ подтвердил
+     "PARTNER_NODE_30D": 80,  # раз в 30 дней, если узел жив
+     # Слой курса
+-    "BOOK_PURCHASED": 60,  # 1 раз
++    "BOOK_PURCHASED": 0,  # v1.1: покупка — не вклад, XP не даём
+     # Слой ЦФА — только админ/ручной вызов, суммы в паспорте не светим
+     "CFA_CALL": 30,
+-    "CFA_REVIEW_PAID": 200,
+-    "CFA_ISSUED": 800,
+-    "CFA_COUPON_PAID": 100,
++    "CFA_REVIEW_PAID": 0,  # v1.1: оплата — не XP
++    "CFA_ISSUED": 0,
++    "CFA_COUPON_PAID": 0,
+ }
+ 
+ VERIFIED_DAILY_LIMITS = {"PLACE_FIX_ACCEPTED": 3, "REVIEW_ACCEPTED": 2}
+ VERIFIED_ONCE_ACTIONS = {"CLUB_APPLY", "BOOK_PURCHASED"}
+-VERIFIED_COOLDOWN_DAYS = {"CLUB_PAID_MONTH": 28, "CLUB_PAID_YEAR": 365}
++VERIFIED_COOLDOWN_DAYS = {"CLUB_PAID_YEAR": 365}
++MEMBER_REFERRAL_PAID_MAX_PER_YEAR = 6
++MEMBER_REFERRAL_PAID_DAYS = 30  # +30 дней членства рефереру за каждого оплатившего (если он сам участник)
+ CFA_ACTIONS = {"CFA_CALL", "CFA_REVIEW_PAID", "CFA_ISSUED", "CFA_COUPON_PAID"}
+ 
+ 
+@@ -725,6 +807,9 @@ def award_verified_xp(user, action: str, *, actor: str = "system", meta=None) ->
+     if amount is None:
+         logger.warning("Неизвестное verified-действие: %s", action)
+         return 0
++    if amount == 0:
++        logger.info("Действие %s в v1.1 не даёт XP", action)
++        return 0
+     meta = meta or {}
+     if action in CFA_ACTIONS and actor != "admin":
+         logger.warning("ЦФА-действие %s начисляет только админ", action)
+@@ -759,6 +844,14 @@ def award_verified_xp(user, action: str, *, actor: str = "system", meta=None) ->
+     if cooldown is not None and not _verified_cooldown_ok(passport, action, cooldown):
+         logger.info("Кулдаун по %s у %s ещё не прошёл", action, user_id)
+         return 0
++    # оплативший реферал: не больше 6 за 365 дней
++    if action == "MEMBER_REFERRAL_PAID":
++        year_ago = now - timedelta(days=365)
++        stamps = passport.setdefault("member_referral_paid_ts", [])
++        stamps[:] = [t for t in stamps if (_parse_dt(t) or now) > year_ago]
++        if len(stamps) >= MEMBER_REFERRAL_PAID_MAX_PER_YEAR:
++            logger.info("Лимит %d оплативших рефералов за год у %s", MEMBER_REFERRAL_PAID_MAX_PER_YEAR, user_id)
++            return 0
+     # чекин: одно событие — один раз, только чекин хостом
+     if action == "EVENT_CHECKIN":
+         event_id = str(meta.get("event_id") or "").strip()
+@@ -798,6 +891,7 @@ def award_verified_xp(user, action: str, *, actor: str = "system", meta=None) ->
+         passport["accepted_places"] = int(passport.get("accepted_places") or 0) + 1
+     if action == "MEMBER_REFERRAL_PAID":
+         passport["paid_member_referrals"] = int(passport.get("paid_member_referrals") or 0) + 1
++        passport.setdefault("member_referral_paid_ts", []).append(now.isoformat())
+ 
+     if action in VERIFIED_ONCE_ACTIONS:
+         passport["verified_once"].append(action)
+@@ -1762,8 +1856,9 @@ async def invite_friend(message: types.Message):
+     passport = PASSPORTS[message.from_user.id]
+     await message.answer(
+         f"🔗 <b>Твоя реферальная ссылка:</b>\n\n<code>{esc(link)}</code>\n\n"
+-        f"Друг регистрируется по ней — ты получаешь <b>+{REFERRAL_XP} XP</b>\n"
+-        f"Друг активен {REFERRAL_BONUS_DAYS} дней — ещё <b>+{REFERRAL_BONUS_XP} XP</b>\n\n"
++        f"Новый человек заходит по ней — ты получаешь <b>+{REFERRAL_XP} XP</b>\n"
++        f"Он пользуется ботом 3 дня из первых {REFERRAL_BONUS_DAYS} — ещё <b>+{REFERRAL_BONUS_XP} XP</b>\n"
++        f"Он оплатил City Code — <b>+{XP_VERIFIED_REWARDS['MEMBER_REFERRAL_PAID']} XP</b> и +{MEMBER_REFERRAL_PAID_DAYS} дней тебе, если ты участник (до {MEMBER_REFERRAL_PAID_MAX_PER_YEAR} в год)\n\n"
+         f"Сейчас у тебя: ⚡ {passport['xp']} XP",
+         parse_mode="HTML",
+     )
+@@ -1794,10 +1889,12 @@ def build_passport_view(user_id: int):
+     keyboard_rows = []
+     if passport.get("complimentary_granted") and not passport.get("complimentary_claimed"):
+         lines += ["", CITYCODE_GRANT_TEXT]
+-        keyboard_rows.append([InlineKeyboardButton(text="🔑 Активировать 6 месяцев City Code", callback_data="claim_citycode")])
+-    elif xp >= 800 or is_member_active(user_id):
+-        # Проводник и выше: ключ City Code — заявка в клуб без очереди (членство не автоматом)
+-        lines += ["", "🔑 Ключ City Code: твоя заявка в клуб идёт без очереди."]
++        keyboard_rows.append([InlineKeyboardButton(text=CITYCODE_GRANT_BUTTON, callback_data="claim_citycode")])
++    elif is_member_active(user_id):
++        lines += ["", "🔑 Ты в City Code. Привилегии партнёров — по паспорту."]
++    elif xp >= 800:
++        # v1.1: места транша ограничены партнёрами — Проводник получает приоритет в листе ожидания
++        lines += ["", "🔑 Проводник: приоритет в листе ожидания City Code, когда места транша заняты."]
+     if xp >= 100:
+         lines += ["", f"🔗 Реф-ссылка: <code>{esc(get_ref_link(user_id))}</code>"]
+     markup = InlineKeyboardMarkup(inline_keyboard=keyboard_rows) if keyboard_rows else None
+@@ -1850,9 +1947,9 @@ def _arg_int(args: list[str], index: int):
+         return None
+ 
+ 
+-@dp.message(Command("grant_place"))
++@dp.message(Command("grant_place", "xp_place"))
+ async def cmd_grant_place(message: types.Message):
+-    """/grant_place user_id — принятое место после модерации (+40 XP)."""
++    """/xp_place user_id (старое имя /grant_place) — принятое место после модерации (+60 XP)."""
+     if not is_admin(message.from_user.id):
+         return
+     args = _cmd_args(message)
+@@ -1869,7 +1966,7 @@ async def cmd_grant_place(message: types.Message):
+ 
+ @dp.message(Command("checkin"))
+ async def cmd_checkin(message: types.Message):
+-    """/checkin user_id event_id — чекин хостом на событии (+60 XP, 1/событие)."""
++    """/checkin user_id event_id — чекин хостом на событии (+80 XP, 1/событие)."""
+     if not is_admin(message.from_user.id):
+         return
+     args = _cmd_args(message)
+@@ -1885,6 +1982,151 @@ async def cmd_checkin(message: types.Message):
+         await message.answer("⚠️ Не начислено: чекин уже был или паспорта нет.")
+ 
+ 
++async def _simple_verified(message: types.Message, action: str, label: str):
++    if not is_admin(message.from_user.id):
++        return
++    uid = _arg_int(_cmd_args(message), 0)
++    if uid is None:
++        await message.answer(f"Формат: /{(message.text or '/').split()[0][1:]} user_id")
++        return
++    amount = award_verified_xp(uid, action, actor="admin")
++    if amount:
++        await message.answer(f"✅ {label}: +{amount} XP пользователю {uid}")
++    else:
++        await message.answer(f"⚠️ Не начислено: дневной лимит или нет паспорта {uid}.")
++
++
++@dp.message(Command("xp_route"))
++async def cmd_xp_route(message: types.Message):
++    """/xp_route user_id — принятый маршрут (+100 XP)."""
++    await _simple_verified(message, "ROUTE_ACCEPTED", "Маршрут принят")
++
++
++@dp.message(Command("xp_fix"))
++async def cmd_xp_fix(message: types.Message):
++    """/xp_fix user_id — принятая правка фото/координат (+15 XP, max 3/день)."""
++    await _simple_verified(message, "PLACE_FIX_ACCEPTED", "Правка принята")
++
++
++@dp.message(Command("xp_review"))
++async def cmd_xp_review(message: types.Message):
++    """/xp_review user_id — отзыв с фактом (+10 XP, max 2/день)."""
++    await _simple_verified(message, "REVIEW_ACCEPTED", "Отзыв принят")
++
++
++CLUB_SEATS_OPEN = env_int("CLUB_SEATS_OPEN", 0) or 0  # 15 × подписанных партнёров; 0 = не проверять
++MEMBER_PLANS = {"basic": 365, "founder": 365}
++
++
++def active_members_count() -> int:
++    return sum(1 for uid in PASSPORTS if is_member_active(uid))
++
++
++def reward_paid_referral(referrer_id: int) -> tuple[int, bool]:
++    """+120 XP рефереру (max 6/год) и +30 дней, если он сам действующий участник."""
++    amount = award_verified_xp(referrer_id, "MEMBER_REFERRAL_PAID", actor="admin")
++    extended = False
++    if amount and is_member_active(referrer_id):
++        extended = set_member(referrer_id, MEMBER_REFERRAL_PAID_DAYS, source="ref_bonus")
++    return amount, extended
++
++
++@dp.message(Command("paid"))
++async def cmd_paid(message: types.Message):
++    """/paid user_id basic|founder [referrer_id] — оплата годового членства (+365 дней)."""
++    if not is_admin(message.from_user.id):
++        return
++    args = _cmd_args(message)
++    uid = _arg_int(args, 0)
++    plan = (args[1] if len(args) > 1 else "").lower()
++    ref_id = _arg_int(args, 2)
++    if uid is None or plan not in MEMBER_PLANS:
++        await message.answer("Формат: /paid user_id basic|founder [referrer_id]")
++        return
++    if uid not in PASSPORTS:
++        await message.answer(f"⚠️ Паспорт {uid} не найден: человек должен нажать /start в боте.")
++        return
++    was_member = is_member_active(uid)
++    set_member(uid, MEMBER_PLANS[plan], source="paid")
++    if PASSPORTS[uid].get("member_plan") != "founder":  # Основатель остаётся Основателем
++        PASSPORTS[uid]["member_plan"] = plan
++    save_state()
++    p = PASSPORTS[uid]
++    lines = [f"✅ {uid}: {plan}, членство до {p['member_until'][:10]}"]
++    if ref_id is not None and ref_id != uid and not was_member:
++        amount, extended = reward_paid_referral(ref_id)
++        lines.append(
++            f"🔗 Реферер {ref_id}: +{amount} XP" + (", +30 дней членства" if extended else "")
++            if amount else f"🔗 Реферер {ref_id}: лимит 6/год или нет паспорта — без бонуса"
++        )
++    if CLUB_SEATS_OPEN and active_members_count() > CLUB_SEATS_OPEN:
++        lines.append(f"⚠️ Участников {active_members_count()} > открытых мест {CLUB_SEATS_OPEN}. Нужен новый партнёр (15 мест).")
++    await message.answer("\n".join(lines))
++
++
++@dp.message(Command("ref_paid"))
++async def cmd_ref_paid(message: types.Message):
++    """/ref_paid referrer_id — вручную: приглашённый оплатил (+120 XP, +30 дней участнику)."""
++    if not is_admin(message.from_user.id):
++        return
++    ref_id = _arg_int(_cmd_args(message), 0)
++    if ref_id is None:
++        await message.answer("Формат: /ref_paid referrer_id")
++        return
++    amount, extended = reward_paid_referral(ref_id)
++    if amount:
++        await message.answer(f"✅ {ref_id}: +{amount} XP" + (", +30 дней членства" if extended else ""))
++    else:
++        await message.answer("⚠️ Не начислено: лимит 6 за год или нет паспорта.")
++
++
++def sources_report() -> str:
++    stats: dict[str, list[int]] = {}
++    for uid, p in PASSPORTS.items():
++        src = p.get("source") or "—"
++        row = stats.setdefault(src, [0, 0, 0])
++        row[0] += 1
++        row[1] += 1 if int(p.get("xp") or 0) >= 100 else 0
++        row[2] += 1 if is_member_active(uid) else 0
++    if not stats:
++        return "Пока пусто."
++    lines = ["📍 Источники (паспорта · дошли до 100 XP · участники CC):", ""]
++    for src, (n, active, members) in sorted(stats.items(), key=lambda kv: kv[1][0], reverse=True):
++        lines.append(f"{src}: {n} · {active} · {members}")
++    lines += ["", "Ссылка с меткой: https://t.me/SevastopolAIBot?start=src_метка (латиница, цифры, - и _)"]
++    return "\n".join(lines)
++
++
++@dp.message(Command("sources"))
++async def cmd_sources(message: types.Message):
++    """/sources — откуда пришли люди: QR, посты, партнёры (метки src_)."""
++    if not is_admin(message.from_user.id):
++        return
++    await message.answer(sources_report(), disable_web_page_preview=True)
++
++
++ADMIN_HELP = """🛠 Команды владельца
++/admin — статистика
++/sources — источники src_
++/paid user_id basic|founder [referrer_id] — оплата года
++/ref_paid referrer_id — приглашённый оплатил
++/set_member user_id days source — членство вручную
++/xp_place user_id — место принято (+60)
++/xp_route user_id — маршрут принят (+100)
++/xp_fix user_id — правка (+15, 3/день)
++/xp_review user_id — отзыв (+10, 2/день)
++/checkin user_id event_id — чекин на событии (+80)
++/partner_node user_id node_id — узел партнёра (+200, потом +80 раз в 30 дней)
++/revoke_xp user_id amount причина — снять XP"""
++
++
++@dp.message(Command("help_admin"))
++async def cmd_help_admin(message: types.Message):
++    if not is_admin(message.from_user.id):
++        return
++    await message.answer(ADMIN_HELP)
++
++
+ @dp.message(Command("set_member"))
+ async def cmd_set_member(message: types.Message):
+     """/set_member user_id days source — членство руками (paid/partner/...)."""
+@@ -1922,7 +2164,7 @@ async def cmd_revoke_xp(message: types.Message):
+         await message.answer(f"⚠️ Паспорт {uid} не найден.")
+ 
+ 
+-@dp.message(Command("activate_node"))
++@dp.message(Command("activate_node", "partner_node"))
+ async def cmd_activate_node(message: types.Message):
+     """/activate_node user_id node_id — узел подключён (+200) или жив 30 дней (+80)."""
+     if not is_admin(message.from_user.id):
+@@ -1943,17 +2185,48 @@ async def cmd_activate_node(message: types.Message):
+         await message.answer("⚠️ Не начислено: рано (30 дней не прошло) или паспорта нет.")
+ 
+ 
+-@dp.message(CommandStart())
+-async def cmd_start(message: types.Message):
+-    args = message.text.split() if message.text else []
+-    if len(args) > 1 and args[1].startswith("ref_"):
++SOURCE_RE = re.compile(r"^[A-Za-z0-9_-]{1,48}$")
++PRIVACY_URL = env_str("PRIVACY_URL", "https://yurich-citycode.github.io/YuRichHUB/privacy.html")
++PD_NOTICE_TEXT = (
++    "🔒 Бот хранит твой Telegram ID, имя и действия в боте — для паспорта, XP и City Code. "
++    "Не передаём третьим лицам. Удалить данные — напиши в «💬 Связь». "
++    f"Политика: {PRIVACY_URL}"
++)
++
++
++def parse_start_payload(text: str | None) -> tuple[int | None, str | None]:
++    """/start ref_123 → (123, None); /start src_qr-kofe1 → (None, 'qr-kofe1')."""
++    args = (text or "").split()
++    if len(args) < 2:
++        return None, None
++    payload = args[1]
++    if payload.startswith("ref_"):
+         try:
+-            referrer_id = int(args[1].replace("ref_", ""))
+-            await process_referral(message.from_user.id, referrer_id)
++            return int(payload[4:]), None
+         except ValueError:
+-            pass
++            return None, None
++    if payload.startswith("src_") and SOURCE_RE.match(payload[4:]):
++        return None, payload[4:]
++    return None, None
++
++
++@dp.message(CommandStart())
++async def cmd_start(message: types.Message):
++    referrer_id, source = parse_start_payload(message.text)
++    is_new_user = message.from_user.id not in PASSPORTS
++    if referrer_id is not None:
++        await process_referral(message.from_user.id, referrer_id, is_new_user=is_new_user)
++        source = source or "ref"
+     create_passport_if_not_exists(message.from_user)
+-    log_action(message.from_user.id, message.from_user.username or "", "START")
++    passport = PASSPORTS[message.from_user.id]
++    if source and not passport.get("source"):
++        passport["source"] = source
++        save_state()
++    log_action(message.from_user.id, message.from_user.username or "", f"START_SRC:{source}" if source else "START")
++    if not passport.get("pd_notice_at"):
++        passport["pd_notice_at"] = datetime.now().isoformat(timespec="seconds")
++        save_state()
++        await message.answer(PD_NOTICE_TEXT, disable_web_page_preview=True)
+     try:
+         await check_referral_bonuses()
+     except Exception as e:
+@@ -2026,7 +2299,10 @@ async def fallback_message(message: types.Message, state: FSMContext):
+                 await message.copy_to(chat_id=ADMIN_ID)
+             except Exception as e:
+                 logger.warning("Не удалось переслать веб-предложение: %s", e)
+-        await message.answer("Спасибо! 🙌 Передала владельцу бота — проверим и добавим место в базу.")
++        await message.answer(
++            "Спасибо! 🙌 Передала владельцу бота — проверим и добавим место в базу. "
++            f"Если место примут — +{XP_VERIFIED_REWARDS['PLACE_ACCEPTED']} XP в паспорт."
++        )
+         return
+     await message.answer("Я понимаю только кнопки 🙂 Нажми «🏠 Главное меню» ниже — и покажу город.", reply_markup=get_main_inline_kb())
+ 
+diff --git a/tests/test_carousels.py b/tests/test_carousels.py
+index 76b12c9..35d574b 100644
+--- a/tests/test_carousels.py
++++ b/tests/test_carousels.py
+@@ -404,7 +404,8 @@ async def test_callbacks():
+     check("веб-предложение переслано владельцу (ADMIN_ID)",
+           len(copied) == 1 and copied[0]["chat_id"] == bot.ADMIN_ID)
+     check("пользователю подтверждение", "Передала владельцу" in msg.last_text())
+-    check("за предложение дали +5 XP", bot.PASSPORTS[777]["xp"] >= 15)  # 10 (создание) + 5
++    check("v1.1: сырое предложение = 0 XP (XP — после приёмки)", bot.PASSPORTS[777]["xp"] == 10)
++    check("пользователю обещаны XP за принятое место", "+60 XP" in msg.last_text())
+ 
+     # 7.8 suggest_cancel (остаток старой клавиатуры): колбэк не роняет бот
+     st6 = FakeState()
+@@ -424,17 +425,17 @@ user = FakeUser(id=12345, username="xpper", full_name="XP Per")
+ first = bot.award_activity_xp(user, "BTN_FOOD")
+ second = bot.award_activity_xp(user, "BTN_FOOD")
+ third = bot.award_activity_xp(user, "BTN_ROUTES")
+-check("первое действие дало +3", first == 3, f"было {first}")
++check("первое действие дало +2 (v1.1)", first == 2, f"было {first}")
+ check("повтор того же действия — 0 (раз в день)", second == 0, f"было {second}")
+-check("другое действие дало +3", third == 3, f"было {third}")
+-check("xp_today считает сумму за день", bot.xp_today(12345) == 6, f"было {bot.xp_today(12345)}")
++check("другое действие дало +2", third == 2, f"было {third}")
++check("xp_today считает сумму за день", bot.xp_today(12345) == 4, f"было {bot.xp_today(12345)}")
+ 
+ 
+ async def test_passport_msg():
+     msg = FakeMessage()
+     msg.from_user = FakeUser(id=12345, username="xpper", full_name="XP Per")
+     await bot.show_passport(msg)
+-    check("паспорт: строка «Сегодня за активность»", "Сегодня за активность: +6 XP" in msg.last_text())
++    check("паспорт: строка «Сегодня за активность»", "Сегодня за активность: +4 XP" in msg.last_text())
+ 
+ 
+ asyncio.run(test_passport_msg())
+@@ -649,20 +650,20 @@ gp = bot.PASSPORTS[700001]
+ gp["xp"] = 6999
+ gp["complimentary_granted"] = False
+ gp["complimentary_claimed"] = False
+-gained = bot.award_activity_xp(grant_user, "BTN_LOCATIONS")  # +3 → пересекли 7000
+-check("начисление пересекло 7000", gained == 3 and gp["xp"] >= 7000)
++gained = bot.award_activity_xp(grant_user, "BTN_LOCATIONS")  # +2 → пересекли 7000
++check("начисление пересекло 7000", gained == 2 and gp["xp"] >= 7000)
+ check("complimentary_granted = True", gp["complimentary_granted"] is True)
+ check("complimentary_claimed = False (не молча)", gp["complimentary_claimed"] is False)
+ check("статус ещё GUEST", gp["status"] == "GUEST")
+ check("granted_at проставлен", bool(gp["complimentary_granted_at"]))
+ 
+-# 13.3 claim включает MEMBER на 180 дней ±1
++# 13.3 claim включает MEMBER на 365 дней ±1 (v1.1)
+ ok, msg_text = bot.claim_citycode_grant(grant_user)
+ until = datetime.fromisoformat(gp["member_until"])
+-expected = datetime.now() + timedelta(days=180)
++expected = datetime.now() + timedelta(days=365)
+ check("claim прошёл", ok, msg_text)
+ check("статус MEMBER, source=xp_grant", gp["status"] == "MEMBER" and gp["member_source"] == "xp_grant")
+-check("member_until = +180 дней ±1", abs((until - expected).days) <= 1, f"было {gp['member_until']}")
++check("member_until = +365 дней ±1", abs((until - expected).days) <= 1, f"было {gp['member_until']}")
+ check("is_member_active = True", bot.is_member_active(700001))
+ 
+ # 13.4 повторный claim — отказ
+@@ -673,7 +674,7 @@ gp["xp"] = 8000
+ check("грант не выдаётся повторно после падения/роста XP",
+       not bot.maybe_unlock_citycode_grant(700001))
+ 
+-# 13.5 уже MEMBER по оплате: claim добавляет 180 дней, оплату не сбрасывает
++# 13.5 уже MEMBER по оплате: claim добавляет 365 дней, оплату не сбрасывает
+ paid_user = FakeUser(id=700002, username="payer", full_name="Оплативший")
+ bot.create_passport_if_not_exists(paid_user)
+ pp = bot.PASSPORTS[700002]
+@@ -683,7 +684,7 @@ pp.update(status="MEMBER", member_source="paid", member_until=paid_until.isoform
+ ok3, _ = bot.claim_citycode_grant(paid_user)
+ new_until = datetime.fromisoformat(pp["member_until"])
+ check("claim у оплаченного MEMBER прошёл", ok3)
+-check("срок удлинился ровно на 180 дней", abs((new_until - paid_until).days - 180) <= 1,
++check("срок удлинился ровно на 365 дней", abs((new_until - paid_until).days - 365) <= 1,
+       f"было {pp['member_until']}")
+ check("source стал mixed (оплата не потеряна)", pp["member_source"] == "mixed")
+ 
+@@ -754,9 +755,9 @@ vu = FakeUser(id=700020, username="ver", full_name="Верифицированн
+ bot.create_passport_if_not_exists(vu)
+ vp = bot.PASSPORTS[700020]
+ base_xp = vp["xp"]
+-check("PLACE_ACCEPTED = +40 и счётчик мест", bot.award_verified_xp(vu, "PLACE_ACCEPTED", actor="admin") == 40
++check("PLACE_ACCEPTED = +60 и счётчик мест", bot.award_verified_xp(vu, "PLACE_ACCEPTED", actor="admin") == 60
+       and vp["accepted_places"] == 1)
+-check("ROUTE_ACCEPTED = +70", bot.award_verified_xp(vu, "ROUTE_ACCEPTED", actor="admin") == 70)
++check("ROUTE_ACCEPTED = +100", bot.award_verified_xp(vu, "ROUTE_ACCEPTED", actor="admin") == 100)
+ r1 = bot.award_verified_xp(vu, "REVIEW_ACCEPTED", actor="admin")
+ r2 = bot.award_verified_xp(vu, "REVIEW_ACCEPTED", actor="admin")
+ r3 = bot.award_verified_xp(vu, "REVIEW_ACCEPTED", actor="admin")
+@@ -766,7 +767,7 @@ check("CLUB_APPLY: только 1 раз",
+       and bool(vp["club_applied_at"]))
+ c1 = bot.award_verified_xp(vu, "EVENT_CHECKIN", actor="admin", meta={"event_id": "EV1"})
+ c2 = bot.award_verified_xp(vu, "EVENT_CHECKIN", actor="admin", meta={"event_id": "EV1"})
+-check("EVENT_CHECKIN: 1/событие", (c1, c2) == (60, 0) and len(vp["checkins"]) == 1)
++check("EVENT_CHECKIN: 1/событие", (c1, c2) == (80, 0) and len(vp["checkins"]) == 1)
+ n1 = bot.award_verified_xp(vu, "PARTNER_NODE_CONNECTED", actor="admin", meta={"node_id": "N1"})
+ n2 = bot.award_verified_xp(vu, "PARTNER_NODE_CONNECTED", actor="admin", meta={"node_id": "N1"})
+ n3 = bot.award_verified_xp(vu, "PARTNER_NODE_30D", actor="admin", meta={"node_id": "N1"})
+@@ -775,7 +776,7 @@ check("ЦФА без actor=admin — 0", bot.award_verified_xp(vu, "CFA_ISSUED")
+ check("ЦФА от админа начисляется", bot.award_verified_xp(vu, "CFA_CALL", actor="admin") == 30)
+ check("verified XP не пишется в дневной лимит кнопок", bot.xp_today(700020) == 0)
+ check("xp_log ведётся и не пуст", len(vp["xp_log"]) > 0)
+-expected_xp = base_xp + 40 + 70 + 10 + 10 + 20 + 60 + 200 + 30
++expected_xp = base_xp + 60 + 100 + 10 + 10 + 20 + 80 + 200 + 30
+ check("итоговый XP сходится", vp["xp"] == expected_xp, f"было {vp['xp']}, ждали {expected_xp}")
+ 
+ # 13.11 revoke_xp: снятие с записью причины
+@@ -785,12 +786,11 @@ check("запись в xp_revoked", vp["xp_revoked"][-1]["reason"] == "фарм
+       and vp["xp_revoked"][-1]["amount"] == 100)
+ 
+ # 13.12 темп года: авто-кнопки не раздуты, потолок дня < 40
+-auto_max = sum(v for v in bot.XP_ACTIVITY_REWARDS.values())
+-check("авто-потолок дня с саджестом = 22 (< 40)", auto_max == 22, f"было {auto_max}")
+-no_suggest = auto_max - bot.XP_ACTIVITY_REWARDS["SUGGEST_PLACE"]
+-year_clicks = no_suggest * 365 + 10
+-check("чистые клики за год не добивают 7000 (≈8–12 мес с UGC)",
+-      6000 <= year_clicks < 7000, f"было {year_clicks}")
++auto_max = min(sum(v for v in bot.XP_ACTIVITY_REWARDS.values()), bot.DAILY_ACTIVITY_CAP)
++check("v1.1: потолок кнопок за день = 10", auto_max == 10, f"было {auto_max}")
++year_clicks = auto_max * 365 + 10
++check("чистые клики: 7000 не раньше чем через ~700 дней",
++      year_clicks < 7000 and (7000 - 10) / auto_max >= 699, f"было {year_clicks}")
+ 
+ # 13.13 UI паспорта: ранг из сетки, статус, кнопка гранта, реф-ссылка
+ ui_user = FakeUser(id=700030, username="uier", full_name="Интерфейс")
+@@ -804,7 +804,7 @@ btns = kb_texts(markup)[0] if markup else []
+ check("паспорт: ранг по сетке (Легенда города на 6999)", "Легенда города" in text)
+ check("паспорт: level выровнен с рангом (5)", "Level: 5" in text)
+ check("паспорт: статус показан", "Статус: GUEST" in text)
+-check("паспорт: кнопка активации 6 месяцев", any("Активировать 6 месяцев City Code" in b for b in btns))
++check("паспорт: кнопка активации 12 месяцев", any("Активировать 12 месяцев City Code" in b for b in btns))
+ check("паспорт: текст награды гранта", "Это ключ за работу с городом" in text)
+ check("паспорт: реф-ссылка с Жителя", bot.get_ref_link(700030) in text)
+ up["xp"] = 50
+@@ -812,6 +812,142 @@ text2, markup2 = bot.build_passport_view(700030)
+ check("до 100 XP реф-ссылки нет", bot.get_ref_link(700030) not in text2)
+ 
+ 
++# ── 14. v1.1: дыры, найденные при аудите ────────────────────────────────
++
++print("== 14. v1.1 ==")
++bot.PASSPORTS.clear()
++bot.REFERRALS.clear()
++bot.ANALYTICS_ROWS.clear()
++
++# 14.1 потолок 10 XP/день на кнопках
++cap_user = FakeUser(id=710001, username="cap", full_name="Кап")
++got = [bot.award_activity_xp(cap_user, a) for a in
++       ["BTN_MAIN_MENU", "BTN_FOOD", "BTN_LOCATIONS", "BTN_ROUTES", "BTN_EVENTS", "NEARBY_FOOD", "GEO_FIND", "SUGGEST_PLACE"]]
++check("все кнопки за день дают ровно 10", sum(got) == 10 and bot.xp_today(710001) == 10, f"было {got}")
++check("SUGGEST_PLACE = 0", got[-1] == 0)
++
++# 14.2 рефералы: только новый человек и только существующий реферер
++async def t_ref():
++    bot.create_passport_if_not_exists(FakeUser(id=710010, full_name="Реферер"))
++    bot.create_passport_if_not_exists(FakeUser(id=710011, full_name="Старый"))
++    before = bot.PASSPORTS[710010]["xp"]
++    m = FakeMessage(text="/start ref_710010")
++    m.from_user = FakeUser(id=710011, full_name="Старый")
++    await bot.cmd_start(m)
++    check("старый пользователь по реф-ссылке: реферер +0", bot.PASSPORTS[710010]["xp"] == before)
++    m2 = FakeMessage(text="/start ref_710010")
++    m2.from_user = FakeUser(id=710012, full_name="Новый")
++    await bot.cmd_start(m2)
++    check("новый пользователь по реф-ссылке: реферер +25", bot.PASSPORTS[710010]["xp"] == before + 25)
++    check("источник нового = ref", bot.PASSPORTS[710012]["source"] == "ref")
++    m3 = FakeMessage(text="/start ref_999999999")
++    m3.from_user = FakeUser(id=710013, full_name="Ни от кого")
++    await bot.cmd_start(m3)
++    check("несуществующий реферер: запись не создаётся", 710013 not in bot.REFERRALS)
++    # 14.3 src_ метки
++    m4 = FakeMessage(text="/start src_qr-kofe1")
++    m4.from_user = FakeUser(id=710014, full_name="С QR")
++    await bot.cmd_start(m4)
++    check("src_: метка записана в паспорт", bot.PASSPORTS[710014]["source"] == "qr-kofe1")
++    check("src_: в аналитике START_SRC", any(r["action"] == "START_SRC:qr-kofe1" for r in bot.ANALYTICS_ROWS))
++    check("первый /start: уведомление о ПДн", any("Политика" in (d.get("text") or "") for _, d in m4.sent))
++    m5 = FakeMessage(text="/start src_другая")
++    m5.from_user = FakeUser(id=710014, full_name="С QR")
++    await bot.cmd_start(m5)
++    check("повторный /start: метка не перезаписана, ПДн не повторяется",
++          bot.PASSPORTS[710014]["source"] == "qr-kofe1" and not any("Политика" in (d.get("text") or "") for _, d in m5.sent))
++    check("parse_start_payload: мусор отбрасывается", bot.parse_start_payload("/start src_<b>") == (None, None))
++    # /sources
++    adm = FakeMessage(text="/sources")
++    adm.from_user = FakeUser(id=int(TEST_ADMIN_ID))
++    await bot.cmd_sources(adm)
++    check("/sources показывает метку", "qr-kofe1: 1" in adm.last_text())
++    nadm = FakeMessage(text="/sources")
++    nadm.from_user = FakeUser(id=1)
++    await bot.cmd_sources(nadm)
++    check("/sources не для чужих", not nadm.sent)
++
++asyncio.run(t_ref())
++
++# 14.4 антифарм +40 работает по дням в паспорте, даже когда аналитика обрезана
++ref_date = datetime.now() - timedelta(days=8)
++bot.REFERRALS[710012]["date"] = ref_date.isoformat()
++bot.ANALYTICS_ROWS.clear()  # имитируем обрезку 2000 строк
++pp = bot.PASSPORTS[710012]
++pp["active_days"] = [(ref_date + timedelta(days=d)).strftime("%Y-%m-%d") for d in (0, 2, 4)]
++pp["real_action_days"] = [(ref_date + timedelta(days=2)).strftime("%Y-%m-%d")]
++before = bot.PASSPORTS[710010]["xp"]
++asyncio.run(bot.check_referral_bonuses())
++check("+40 выдан по active_days без аналитики", bot.PASSPORTS[710010]["xp"] == before + 40)
++check("log_action пишет день в паспорт", (bot.log_action(710014, "x", "BTN_FOOD") or True)
++      and datetime.now().strftime("%Y-%m-%d") in bot.PASSPORTS[710014]["real_action_days"])
++
++# 14.5 уникальный номер паспорта
++bot.PASSPORTS.clear()
++bot.create_passport_if_not_exists(FakeUser(id=111123456, full_name="А"))
++bot.create_passport_if_not_exists(FakeUser(id=222123456, full_name="Б"))
++ids = {bot.PASSPORTS[111123456]["passport_id"], bot.PASSPORTS[222123456]["passport_id"]}
++check("одинаковые последние 6 цифр → разные номера", len(ids) == 2, f"{ids}")
++check("первый сохранил короткий номер", bot.PASSPORTS[111123456]["passport_id"] == "CC-123456")
++bot.PASSPORTS[222123456]["passport_id"] = "CC-123456"
++bot.PASSPORTS[222123456]["created_at"] = "2099-01-01"
++check("fix_duplicate_passport_ids чинит старые дубли",
++      bot.fix_duplicate_passport_ids() == 1 and bot.PASSPORTS[222123456]["passport_id"] != "CC-123456")
++
++# 14.6 за оплату XP нет; CLUB_PAID_MONTH удалён
++check("CLUB_PAID_MONTH удалён", "CLUB_PAID_MONTH" not in bot.XP_VERIFIED_REWARDS)
++check("CLUB_PAID_YEAR / BOOK / CFA_ISSUED = 0 XP",
++      bot.award_verified_xp(111123456, "CLUB_PAID_YEAR", actor="admin") == 0
++      and bot.handle_book_purchased(111123456) == 0
++      and bot.award_verified_xp(111123456, "CFA_ISSUED", actor="admin") == 0)
++
++# 14.7 /paid + реферал: +120 XP и +30 дней участнику, лимит 6 в год
++async def t_paid():
++    bot.create_passport_if_not_exists(FakeUser(id=720001, full_name="Участник-реферер"))
++    bot.set_member(720001, 365, "paid")
++    until0 = datetime.fromisoformat(bot.PASSPORTS[720001]["member_until"])
++    xp0 = bot.PASSPORTS[720001]["xp"]
++    for i in range(7):
++        uid = 720100 + i
++        bot.create_passport_if_not_exists(FakeUser(id=uid, full_name=f"Новичок {i}"))
++        m = FakeMessage(text=f"/paid {uid} basic 720001")
++        m.from_user = FakeUser(id=int(TEST_ADMIN_ID))
++        await bot.cmd_paid(m)
++    until1 = datetime.fromisoformat(bot.PASSPORTS[720001]["member_until"])
++    check("6 оплативших: +720 XP (7-й без бонуса)", bot.PASSPORTS[720001]["xp"] == xp0 + 6 * 120,
++          f"было {bot.PASSPORTS[720001]['xp'] - xp0}")
++    check("6 оплативших: +180 дней участнику", abs((until1 - until0).days - 180) <= 1, f"{(until1 - until0).days}")
++    check("/paid: тариф и срок", bot.PASSPORTS[720100]["member_plan"] == "basic" and bot.is_member_active(720100))
++    m = FakeMessage(text="/paid 720100 founder")
++    m.from_user = FakeUser(id=int(TEST_ADMIN_ID))
++    await bot.cmd_paid(m)
++    check("/paid founder поверх basic → founder", bot.PASSPORTS[720100]["member_plan"] == "founder")
++    m = FakeMessage(text="/paid 999 basic")
++    m.from_user = FakeUser(id=int(TEST_ADMIN_ID))
++    await bot.cmd_paid(m)
++    check("/paid без паспорта — подсказка", "нажать /start" in m.last_text())
++
++asyncio.run(t_paid())
++
++# 14.8 квота грантов 7000 XP
++bot.CITYCODE_GRANT_QUOTA = 1
++for uid in (730001, 730002):
++    bot.create_passport_if_not_exists(FakeUser(id=uid, full_name=f"Легенда {uid}"))
++    bot.PASSPORTS[uid].update(xp=7000, complimentary_granted=True)
++ok1, _ = bot.claim_citycode_grant(730001)
++ok2, msg2 = bot.claim_citycode_grant(730002)
++check("квота грантов: первый получил, второй ждёт", ok1 and not ok2 and "Квота" in msg2)
++bot.CITYCODE_GRANT_QUOTA = 30
++
++# 14.9 паспорт: участник не видит «очередь», Проводник видит приоритет листа ожидания
++t_member, _ = bot.build_passport_view(730001)
++check("участник: «Ты в City Code»", "Ты в City Code" in t_member and "без очереди" not in t_member)
++bot.create_passport_if_not_exists(FakeUser(id=730003, full_name="Проводник"))
++bot.PASSPORTS[730003]["xp"] = 900
++t_guide, _ = bot.build_passport_view(730003)
++check("Проводник: приоритет в листе ожидания", "листе ожидания" in t_guide)
++
++
+ # ── Итог ─────────────────────────────────────────────────────────────────
+ print(f"\nИТОГ: {PASS} прошло, {FAIL} упало")
+ sys.exit(1 if FAIL else 0)

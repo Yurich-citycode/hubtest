@@ -1,0 +1,894 @@
+{
+  "version": "1.1",
+  "updated": "2026-10-25",
+  "about": "Единственный источник цифр. Меняешь число здесь → python tools/build.py → обновятся docs, Excel и ЗАПУСК.html. status: fact — проверено (источник в src), decision — решение владельца, assumption — допущение, проверить на пилоте.",
+  "groups": [
+    {
+      "id": "cc",
+      "title": "City Code · членство",
+      "items": [
+        {
+          "key": "price_basic",
+          "label": "Basic, в год",
+          "value": 5108,
+          "unit": "₽",
+          "status": "decision",
+          "src": "City Code v1.0, п.3"
+        },
+        {
+          "key": "price_founder",
+          "label": "«Основатели», в год",
+          "value": 15108,
+          "unit": "₽",
+          "status": "decision",
+          "src": "City Code v1.0, п.3"
+        },
+        {
+          "key": "seats_basic",
+          "label": "Мест Basic в первом транше",
+          "value": 250,
+          "unit": "шт",
+          "status": "decision",
+          "src": "v1.0, п.4"
+        },
+        {
+          "key": "seats_founder",
+          "label": "Мест «Основатели» в первом транше",
+          "value": 50,
+          "unit": "шт",
+          "status": "decision",
+          "src": "v1.0, п.4"
+        },
+        {
+          "key": "days_year",
+          "label": "Дней в году членства",
+          "value": 365,
+          "unit": "дн",
+          "status": "fact",
+          "src": "срок 12 месяцев, v1.0"
+        },
+        {
+          "key": "partners_signed",
+          "label": "Подписано партнёров сейчас",
+          "value": 0,
+          "unit": "шт",
+          "status": "assumption",
+          "src": "обновляй после каждого подписания"
+        },
+        {
+          "key": "refund_days_used",
+          "label": "Пример возврата: прошло дней",
+          "value": 90,
+          "unit": "дн",
+          "status": "assumption",
+          "src": "пример для оферты"
+        }
+      ]
+    },
+    {
+      "id": "spend",
+      "title": "Расход участника и привилегии",
+      "items": [
+        {
+          "key": "spend",
+          "label": "Средний расход участника у партнёров",
+          "value": 7000,
+          "unit": "₽/мес",
+          "status": "assumption",
+          "src": "v1.0, п.6 — проверить отчётами партнёров"
+        },
+        {
+          "key": "priv_min",
+          "label": "Привилегия минимум",
+          "value": 0.03,
+          "unit": "%",
+          "status": "decision",
+          "src": "v1.0, п.5"
+        },
+        {
+          "key": "priv_avg",
+          "label": "Привилегия в среднем",
+          "value": 0.05,
+          "unit": "%",
+          "status": "assumption",
+          "src": "середина 3–7%"
+        },
+        {
+          "key": "priv_max",
+          "label": "Привилегия максимум",
+          "value": 0.07,
+          "unit": "%",
+          "status": "decision",
+          "src": "v1.0, п.5"
+        }
+      ]
+    },
+    {
+      "id": "partner",
+      "title": "Партнёр",
+      "items": [
+        {
+          "key": "partner_fee",
+          "label": "Вход партнёра в первом транше",
+          "value": 0,
+          "unit": "₽",
+          "status": "decision",
+          "src": "v1.0, п.5: без платы за вход и без комиссии"
+        },
+        {
+          "key": "partner_turnover",
+          "label": "Допустимый доп. оборот партнёра от клуба",
+          "value": 105000,
+          "unit": "₽/мес",
+          "status": "assumption",
+          "src": "спросить у партнёра при подписании; 105 000 = 15 мест"
+        },
+        {
+          "key": "partner_margin",
+          "label": "Маржинальность партнёра (выручка минус себестоимость)",
+          "value": 0.6,
+          "unit": "%",
+          "status": "assumption",
+          "src": "кафе ~60–70%, розница ~30% — подставь своё"
+        },
+        {
+          "key": "partner_new_share",
+          "label": "Доля клубного оборота, которой без клуба не было бы",
+          "value": 0.3,
+          "unit": "%",
+          "status": "assumption",
+          "src": "проверить на пилоте"
+        },
+        {
+          "key": "partner_exit_days",
+          "label": "Уведомление о выходе партнёра",
+          "value": 14,
+          "unit": "дн",
+          "status": "decision",
+          "src": "v1.1"
+        }
+      ]
+    },
+    {
+      "id": "money",
+      "title": "Налоги и приём платежей",
+      "items": [
+        {
+          "key": "npd_ind",
+          "label": "НПД с физлиц",
+          "value": 0.04,
+          "unit": "%",
+          "status": "fact",
+          "src": "422-ФЗ; ставки 2026 не менялись (naloger.ru, kontur.ru)"
+        },
+        {
+          "key": "npd_biz",
+          "label": "НПД с ИП и юрлиц",
+          "value": 0.06,
+          "unit": "%",
+          "status": "fact",
+          "src": "422-ФЗ"
+        },
+        {
+          "key": "npd_limit",
+          "label": "Лимит дохода НПД",
+          "value": 2400000,
+          "unit": "₽/год",
+          "status": "fact",
+          "src": "422-ФЗ, п.8 ч.2 ст.4; режим до 31.12.2028"
+        },
+        {
+          "key": "usn",
+          "label": "УСН «доходы»",
+          "value": 0.06,
+          "unit": "%",
+          "status": "fact",
+          "src": "НК РФ ст.346.20"
+        },
+        {
+          "key": "ip_fixed",
+          "label": "Фикс. взносы ИП за себя, 2026",
+          "value": 57390,
+          "unit": "₽/год",
+          "status": "fact",
+          "src": "nalog.gov.ru, ст.430 НК"
+        },
+        {
+          "key": "ip_extra",
+          "label": "Доп. взнос ИП с дохода сверх 300 000",
+          "value": 0.01,
+          "unit": "%",
+          "status": "fact",
+          "src": "ст.430 НК"
+        },
+        {
+          "key": "ip_extra_from",
+          "label": "Порог доп. взноса",
+          "value": 300000,
+          "unit": "₽/год",
+          "status": "fact",
+          "src": "ст.430 НК"
+        },
+        {
+          "key": "acq_sbp",
+          "label": "СБП (потолок ЦБ для бизнеса)",
+          "value": 0.007,
+          "unit": "%",
+          "status": "fact",
+          "src": "ЦБ: не выше 0,7%; НДС на перевод не начисляется"
+        },
+        {
+          "key": "acq_card",
+          "label": "Карты через ЮKassa (базовый тариф)",
+          "value": 0.035,
+          "unit": "%",
+          "status": "fact",
+          "src": "yookassa.ru/docs/support/payments/fees"
+        },
+        {
+          "key": "acq_vat",
+          "label": "НДС на комиссию за карты с 2026",
+          "value": 0.22,
+          "unit": "%",
+          "status": "fact",
+          "src": "425-ФЗ; ЮKassa удерживает 22% от комиссии"
+        },
+        {
+          "key": "sbp_share",
+          "label": "Доля оплат по СБП",
+          "value": 0.5,
+          "unit": "%",
+          "status": "assumption",
+          "src": "проси платить по СБП — это дешевле в 6 раз"
+        },
+        {
+          "key": "ad_levy",
+          "label": "Отчисление с интернет-рекламы",
+          "value": 0.03,
+          "unit": "%",
+          "status": "fact",
+          "src": "ст.18.2 «О рекламе», с 01.04.2025"
+        }
+      ]
+    },
+    {
+      "id": "merch",
+      "title": "Мерч (себестоимость — оценка, уточнить у подрядчика)",
+      "items": [
+        {
+          "key": "passport_price",
+          "label": "Физический паспорт, цена",
+          "value": 1500,
+          "unit": "₽",
+          "status": "decision",
+          "src": "прайс v1.0-документа"
+        },
+        {
+          "key": "passport_cost",
+          "label": "Физический паспорт, себестоимость",
+          "value": 400,
+          "unit": "₽",
+          "status": "assumption",
+          "src": "оценка, запросить у типографии"
+        },
+        {
+          "key": "keychain_price",
+          "label": "Брелок «6 ключей», цена",
+          "value": 1200,
+          "unit": "₽",
+          "status": "decision",
+          "src": ""
+        },
+        {
+          "key": "keychain_cost",
+          "label": "Брелок, себестоимость",
+          "value": 425,
+          "unit": "₽",
+          "status": "assumption",
+          "src": "середина 350–500"
+        },
+        {
+          "key": "hoodie_price",
+          "label": "Худи, цена",
+          "value": 4900,
+          "unit": "₽",
+          "status": "decision",
+          "src": ""
+        },
+        {
+          "key": "hoodie_cost",
+          "label": "Худи, себестоимость",
+          "value": 2250,
+          "unit": "₽",
+          "status": "assumption",
+          "src": "середина 2 000–2 500"
+        }
+      ]
+    },
+    {
+      "id": "ads",
+      "title": "Реклама Sevastopol AI",
+      "items": [
+        {
+          "key": "ad_views_post",
+          "label": "Средний охват поста в канале",
+          "value": 800,
+          "unit": "просм.",
+          "status": "assumption",
+          "src": "подставь факт из статистики канала за 30 дней"
+        },
+        {
+          "key": "ad_views_card",
+          "label": "Показов карточки «Рекомендуем» за 7 дней",
+          "value": 300,
+          "unit": "показ",
+          "status": "assumption",
+          "src": "смотри /admin: открытия категории за неделю"
+        },
+        {
+          "key": "ad_cpm",
+          "label": "Цена 1 000 просмотров (городская аудитория)",
+          "value": 1500,
+          "unit": "₽",
+          "status": "assumption",
+          "src": "ориентир для локальных каналов; пересматривать раз в квартал"
+        },
+        {
+          "key": "ad_min_post",
+          "label": "Минимум за пост",
+          "value": 1000,
+          "unit": "₽",
+          "status": "decision",
+          "src": "v1.1: работа с текстом и маркировкой"
+        },
+        {
+          "key": "ad_min_card",
+          "label": "Минимум за «Рекомендуем» 7 дней",
+          "value": 1000,
+          "unit": "₽",
+          "status": "decision",
+          "src": "v1.1"
+        },
+        {
+          "key": "ad_guide_place",
+          "label": "Подборка: за одно место",
+          "value": 1000,
+          "unit": "₽",
+          "status": "decision",
+          "src": "v1.1"
+        },
+        {
+          "key": "ad_guide_min",
+          "label": "Подборка: минимум мест",
+          "value": 3,
+          "unit": "шт",
+          "status": "decision",
+          "src": "v1.1"
+        },
+        {
+          "key": "ad_route",
+          "label": "Включение в маршрут (если реально по пути)",
+          "value": 2000,
+          "unit": "₽",
+          "status": "decision",
+          "src": "v1.1"
+        },
+        {
+          "key": "ad_event",
+          "label": "Анонс события",
+          "value": 1000,
+          "unit": "₽",
+          "status": "decision",
+          "src": "партнёру 1 в месяц бесплатно"
+        },
+        {
+          "key": "ad_partner_disc",
+          "label": "Скидка партнёру City Code на рекламу",
+          "value": 0.5,
+          "unit": "%",
+          "status": "decision",
+          "src": "v1.1"
+        },
+        {
+          "key": "shoot_price",
+          "label": "Съёмка заведения",
+          "value": 12000,
+          "unit": "₽",
+          "status": "decision",
+          "src": "себестоимость 40% — поэтому партнёру не −50%"
+        },
+        {
+          "key": "shoot_partner",
+          "label": "Съёмка для партнёра",
+          "value": 8000,
+          "unit": "₽",
+          "status": "decision",
+          "src": ""
+        },
+        {
+          "key": "shoot_cost",
+          "label": "Себестоимость съёмки (доля оператора/оборудования)",
+          "value": 0.4,
+          "unit": "%",
+          "status": "decision",
+          "src": "договор с партнёром по оборудованию"
+        }
+      ]
+    },
+    {
+      "id": "xp",
+      "title": "XP и награды (значения живут в коде бота, здесь — для расчётов)",
+      "items": [
+        {
+          "key": "xp_grant",
+          "label": "XP для ранга City Code",
+          "value": 7000,
+          "unit": "XP",
+          "status": "decision",
+          "src": "бот: CITYCODE_GRANT_XP"
+        },
+        {
+          "key": "grant_days",
+          "label": "Грант за ранг City Code",
+          "value": 365,
+          "unit": "дн",
+          "status": "decision",
+          "src": "v1.1 (было 180) — бот: CITYCODE_GRANT_DAYS"
+        },
+        {
+          "key": "grant_quota",
+          "label": "Квота грантов от мест транша",
+          "value": 0.1,
+          "unit": "%",
+          "status": "decision",
+          "src": "бот: CITYCODE_GRANT_QUOTA = 30"
+        },
+        {
+          "key": "ref_days",
+          "label": "Участнику за оплатившего приглашённого",
+          "value": 30,
+          "unit": "дн",
+          "status": "decision",
+          "src": "бот: MEMBER_REFERRAL_PAID_DAYS"
+        },
+        {
+          "key": "ref_max",
+          "label": "Оплативших приглашённых в год с бонусом",
+          "value": 6,
+          "unit": "шт",
+          "status": "decision",
+          "src": "бот: MEMBER_REFERRAL_PAID_MAX_PER_YEAR"
+        },
+        {
+          "key": "xp_daily_cap",
+          "label": "Потолок XP за кнопки в день",
+          "value": 10,
+          "unit": "XP",
+          "status": "decision",
+          "src": "бот: DAILY_ACTIVITY_CAP"
+        }
+      ]
+    }
+  ],
+  "scenarios": {
+    "names": [
+      "S1 · Пилот",
+      "S2 · Сеть",
+      "S3 · Город",
+      "S4 · Зрелый город",
+      "S5 · 3 города"
+    ],
+    "subs": [
+      "5 партнёров · 100 MAU",
+      "10 партнёров · 500 MAU",
+      "30 партнёров · 5 000 MAU",
+      "60 партнёров · 15 000 MAU",
+      "150 партнёров · 50 000 MAU"
+    ],
+    "rows": [
+      {
+        "key": "partners",
+        "label": "Партнёров (точек)",
+        "unit": "шт",
+        "values": [
+          5,
+          10,
+          30,
+          60,
+          150
+        ],
+        "note": ""
+      },
+      {
+        "key": "mau",
+        "label": "Пользователей бота в месяц (MAU)",
+        "unit": "чел",
+        "values": [
+          100,
+          500,
+          5000,
+          15000,
+          50000
+        ],
+        "note": ""
+      },
+      {
+        "key": "founder_cap",
+        "label": "Мест «Основатели» всего",
+        "unit": "шт",
+        "values": [
+          50,
+          50,
+          50,
+          50,
+          150
+        ],
+        "note": "50 на город"
+      },
+      {
+        "key": "conv",
+        "label": "Конверсия MAU → участник",
+        "unit": "%",
+        "values": [
+          0.05,
+          0.04,
+          0.035,
+          0.03,
+          0.03
+        ],
+        "note": "проверить на пилоте"
+      },
+      {
+        "key": "direct",
+        "label": "Участники из личных продаж",
+        "unit": "чел",
+        "values": [
+          10,
+          30,
+          60,
+          80,
+          150
+        ],
+        "note": "Основатели продаются руками"
+      },
+      {
+        "key": "partner_fee_m",
+        "label": "Взнос партнёра v2.0 (не принято — решение владельца)",
+        "unit": "₽/мес",
+        "values": [
+          0,
+          0,
+          3000,
+          3000,
+          3000
+        ],
+        "note": "v1.0 разрешает «в последующих версиях»; вводить только после отчёта, что партнёр в плюсе"
+      },
+      {
+        "key": "ads_n",
+        "label": "Платных размещений SAI в месяц",
+        "unit": "шт",
+        "values": [
+          2,
+          5,
+          12,
+          20,
+          40
+        ],
+        "note": "не чаще 1 рекламы на 6–8 своих постов"
+      },
+      {
+        "key": "ads_views",
+        "label": "Охват поста",
+        "unit": "просм.",
+        "values": [
+          800,
+          1500,
+          4000,
+          8000,
+          15000
+        ],
+        "note": "≈25–30% подписчиков канала; цена = охват × CPM, не ниже минимума"
+      },
+      {
+        "key": "ads_partner_share",
+        "label": "Доля размещений от партнёров (−50%)",
+        "unit": "%",
+        "values": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "note": ""
+      },
+      {
+        "key": "shoots_n",
+        "label": "Съёмок в месяц",
+        "unit": "шт",
+        "values": [
+          0,
+          2,
+          4,
+          8,
+          20
+        ],
+        "note": ""
+      },
+      {
+        "key": "ev_n",
+        "label": "Платных событий в месяц",
+        "unit": "шт",
+        "values": [
+          0,
+          1,
+          2,
+          4,
+          10
+        ],
+        "note": ""
+      },
+      {
+        "key": "ev_people",
+        "label": "Гостей на событии",
+        "unit": "чел",
+        "values": [
+          0,
+          20,
+          35,
+          50,
+          50
+        ],
+        "note": ""
+      },
+      {
+        "key": "ev_ticket",
+        "label": "Билет",
+        "unit": "₽",
+        "values": [
+          1500,
+          1500,
+          2000,
+          2000,
+          2000
+        ],
+        "note": ""
+      },
+      {
+        "key": "ev_cost",
+        "label": "Себестоимость событий (вкл. 50% площадке)",
+        "unit": "%",
+        "values": [
+          0.65,
+          0.65,
+          0.65,
+          0.65,
+          0.65
+        ],
+        "note": ""
+      },
+      {
+        "key": "mr_members",
+        "label": "Доля участников, купивших мерч в месяц",
+        "unit": "%",
+        "values": [
+          0.03,
+          0.03,
+          0.03,
+          0.03,
+          0.03
+        ],
+        "note": ""
+      },
+      {
+        "key": "mr_mau",
+        "label": "Доля MAU, купивших мерч в месяц",
+        "unit": "%",
+        "values": [
+          0.001,
+          0.001,
+          0.001,
+          0.001,
+          0.001
+        ],
+        "note": ""
+      },
+      {
+        "key": "m_check",
+        "label": "Средний чек мерча",
+        "unit": "₽",
+        "values": [
+          2500,
+          2500,
+          2500,
+          2500,
+          2500
+        ],
+        "note": ""
+      },
+      {
+        "key": "merch_cogs",
+        "label": "Себестоимость мерча",
+        "unit": "%",
+        "values": [
+          0.45,
+          0.45,
+          0.45,
+          0.45,
+          0.45
+        ],
+        "note": ""
+      },
+      {
+        "key": "cfa_rev_n",
+        "label": "Разборов ЦФА в год (80 000 ₽)",
+        "unit": "шт",
+        "values": [
+          1,
+          2,
+          4,
+          6,
+          10
+        ],
+        "note": "личная экспертиза, отдельный контур"
+      },
+      {
+        "key": "cfa_build_n",
+        "label": "Сборок выпуска в год (325 000 ₽)",
+        "unit": "шт",
+        "values": [
+          0,
+          1,
+          2,
+          3,
+          5
+        ],
+        "note": "середина 250–400 тыс."
+      },
+      {
+        "key": "rwa_subs",
+        "label": "Подписчиков YuRichRWA",
+        "unit": "чел",
+        "values": [
+          1000,
+          2000,
+          5000,
+          10000,
+          20000
+        ],
+        "note": ""
+      },
+      {
+        "key": "rwa_view",
+        "label": "Охват поста YuRichRWA",
+        "unit": "%",
+        "values": [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ],
+        "note": ""
+      },
+      {
+        "key": "rwa_cpm",
+        "label": "CPM ниши RWA",
+        "unit": "₽",
+        "values": [
+          1500,
+          1500,
+          1500,
+          1500,
+          1500
+        ],
+        "note": ""
+      },
+      {
+        "key": "rwa_posts",
+        "label": "Рекламных постов YuRichRWA в месяц",
+        "unit": "шт",
+        "values": [
+          0,
+          1,
+          3,
+          5,
+          8
+        ],
+        "note": ""
+      },
+      {
+        "key": "c_infra",
+        "label": "Сервер, домены, сервисы",
+        "unit": "₽/мес",
+        "values": [
+          1500,
+          2500,
+          6000,
+          15000,
+          40000
+        ],
+        "note": ""
+      },
+      {
+        "key": "ai_mau",
+        "label": "AI (Кира) на 1 MAU",
+        "unit": "₽",
+        "values": [
+          0,
+          0,
+          3,
+          3,
+          3
+        ],
+        "note": "с S3"
+      },
+      {
+        "key": "c_team",
+        "label": "Команда",
+        "unit": "₽/мес",
+        "values": [
+          0,
+          30000,
+          140000,
+          400000,
+          1200000
+        ],
+        "note": "S1 — всё сам"
+      },
+      {
+        "key": "c_mkt",
+        "label": "Маркетинг: посевы, QR, печать",
+        "unit": "₽/мес",
+        "values": [
+          10000,
+          30000,
+          100000,
+          200000,
+          600000
+        ],
+        "note": ""
+      },
+      {
+        "key": "c_legal",
+        "label": "Бухгалтерия и юрист",
+        "unit": "₽/мес",
+        "values": [
+          5000,
+          10000,
+          20000,
+          40000,
+          100000
+        ],
+        "note": ""
+      },
+      {
+        "key": "c_ipr",
+        "label": "Товарный знак, ПО, БД (разово / 12)",
+        "unit": "₽/мес",
+        "values": [
+          12500,
+          12500,
+          0,
+          0,
+          25000
+        ],
+        "note": ""
+      },
+      {
+        "key": "l_content",
+        "label": "Часы на контент",
+        "unit": "ч",
+        "values": [
+          20,
+          30,
+          60,
+          100,
+          250
+        ],
+        "note": ""
+      }
+    ]
+  }
+}
