@@ -1,39 +1,37 @@
-# YurichHub
+# YurichHub · SevastopolAI · СитиКод · CrimeaRWA — by YuRich
 
-Сайт-хаб: Севастополь AI, City Code, Crimea RWA — плюс курс по RWA, глоссарий терминов и офер ЦФА.
+Рабочий репозиторий экосистемы: сайт-хаб, документы, студия шаблонов, экономика и CRM.
 
-Открывается здесь: [yurich-citycode.github.io/YuRichHUB](https://yurich-citycode.github.io/YuRichHUB/)
+**Начни отсюда → [`docs/ECOSYSTEM.md`](docs/ECOSYSTEM.md)** (версия для Word — `docs/ECOSYSTEM.docx`). Это один документ обо всей экосистеме: продукты, связки, расхождения и решения по ним, XP, экономика, партнёры, реклама, юридическое, план на 90 дней.
 
-## Страницы
+Сайт: https://yurich-citycode.github.io/hubtest/ · Студия шаблонов: https://yurich-citycode.github.io/hubtest/studio/
+
+## Что где лежит
+
+| Папка или файл | Что это |
+|---|---|
+| `docs/ECOSYSTEM.md` | **Главный документ** экосистемы |
+| `docs/sources/` | Первоисточники: City Code v1.0 (зафиксированная модель), GPT-аудит v0.1 |
+| `docs/research/` | RWA в недвижимости (карта, кратко, опросник, условия), статьи «Цифровые города» |
+| `studio/` | **Студия шаблонов**: обложки, карточки, афиши, QR-стойки для YuRichRWA, City Code и Sevastopol AI → PNG. Инструкция — `studio/README.md` |
+| `brand/BRAND.md` | Бренд-канон трёх брендов. Старый стиль YurichHub — в `brand/legacy/` |
+| `economics/` | `Экономика_экосистемы.xlsx` (сценарии S1–S5, доли, прайс, XP), симулятор XP поверх кода бота |
+| `crm/leads_partners.csv` | 146 заведений — кандидаты в партнёры City Code |
+| `book/` | Книга «RWA — мы объясняем»: главы в markdown, сборка PDF — `book/build_pdf.py` |
+| `_other/` | Не относится к экосистеме: ChainZap, политическое исследование |
+
+## Страницы сайта (в корне, чтобы не ломать ссылки)
 
 | Страница | Что на ней |
-| --- | --- |
+|---|---|
 | `index.html` | Главная: направления, проекты, ссылки |
 | `course.html` | Курс «RWA с нуля» — шесть модулей |
 | `glossary.html` | Глоссарий: 57 терминов |
 | `cfa.html` | Офер ЦФА: калькулятор выплат и стресс-тесты |
-| `digital-cities.html` | Отчёт «Цифровые города 2026» — 45+ кейсов, разбор OAZIS, серия постов. PDF для печати: `digital-cities.pdf` |
-| `early-projects.html` | Лента ранних криптопроектов, рубрика RWA Early |
+| `digital-cities.html` | Отчёт «Цифровые города 2026» (PDF для печати — `digital-cities.pdf`), серия постов — `rwa-series-posts.md` |
+| `early-projects.html` | Лента ранних проектов, рубрика RWA Early |
+| `legal-roadmap.html` | Правовая дорожная карта и шаблоны документов Д01–Д20 |
 
-## Картинки и обложки
+`.nojekyll` — служебный файл GitHub Pages, чтобы файлы отдавались как есть.
 
-- `brand/YURICHHUB-STYLE.md` — канон стиля: цвета, шрифты, что можно и что нельзя
-- `brand/covers/` — сборка обложек 1600×900 из JSON (`npm install && node render.js post.json`)
-- `brand/samples/`, `brand/post-cards/`, `brand/reference/` — готовые обложки и карточки
-- `brand/emoji/` — премиум-эмодзи для статуса из фото
-- `comics1–6.jpg`, `*-preview.jpg` — картинки для ленты и превью страниц
-
-## Книга
-
-`book/` — «RWA мы объясняем»: главы в markdown, сборка PDF — `book/build_pdf.py`.
-
-## Видео
-
-`video/` — студия видео в каноне бренда: HyperFrames (HTML → MP4) и Remotion (React → MP4),
-62 скилла из пяти открытых репозиториев и готовые ролики в `video/renders/`. Всё рендерится
-локально, без облаков. Установка — `cd video && bash setup.sh`, разбор репозиториев — `video/STUDY.md`.
-
-## Разное
-
-- `rwa-series-posts.md` — серия постов про RWA с текстами и обложками
-- `.nojekyll` — служебный файл GitHub Pages, чтобы отдавать файлы как есть
+> ⚠️ Репозиторий публичный. Механику и бизнес-модель до подачи заявки на товарный знак лучше держать в приватном репозитории (см. `docs/ECOSYSTEM.md`, раздел 14).

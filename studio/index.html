@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Студия шаблонов · YuRichRWA · City Code · Sevastopol AI</title>
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <header>
+      <h1>СТУДИЯ <b>by YuRich</b></h1>
+      <p>Выбери шаблон → поменяй текст, лого, фото → скачай PNG. Всё сохраняется в этом браузере.</p>
+    </header>
+    <div class="brands" id="brands"></div>
+    <div class="tpls" id="tpls"></div>
+    <div class="form" id="form"></div>
+  </aside>
+  <main class="main">
+    <div class="bar">
+      <select id="fmt" title="Формат"></select>
+      <select id="scale" title="Качество"><option value="1">PNG ×1</option><option value="2">PNG ×2 (печать)</option></select>
+      <button class="btn acc" id="export">Скачать PNG</button>
+      <button class="btn" id="exportAll">Все форматы</button>
+      <span class="sp"></span>
+      <span class="msg" id="msg"></span>
+      <button class="btn ghost" id="savePreset" title="Скачать текущие данные шаблона в файл">Сохранить пресет</button>
+      <button class="btn ghost" id="loadPreset">Загрузить пресет</button>
+      <button class="btn ghost" id="reset">Сброс</button>
+    </div>
+    <div class="stage-wrap" id="stageWrap"><div id="stage"></div></div>
+  </main>
+</div>
+<script src="vendor/qrcode.js"></script>
+<script src="vendor/html-to-image.js"></script>
+<script src="templates.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
