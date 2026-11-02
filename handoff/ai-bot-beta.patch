@@ -1,0 +1,13 @@
+diff --git a/sevastopolaibot.py b/sevastopolaibot.py
+index 4ba06ef..66baeef 100644
+--- a/sevastopolaibot.py
++++ b/sevastopolaibot.py
+@@ -2593,6 +2593,8 @@ async def cmd_start(message: types.Message):
+         logger.warning("expire_memberships: %s", e)
+ 
+     welcome_text = (
++        "🟡 Это бета-версия: база мест постоянно пополняется, и ты сам можешь "
++        "добавить место — кнопка «✍️ Предложить место» внизу. \n\n"
+         "Привет! Я — твой гид по Севастополю. \n"
+         "Помогу найти лучшее место для еды, покажу интересные локации "
+         "и расскажу, что происходит в городе. \n\n"
