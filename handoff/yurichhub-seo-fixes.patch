@@ -67059,15 +67059,14 @@ index 346394a..6a8347e 100644
        </section>
  
 diff --git a/index.html b/index.html
-index 125ff9f..464b21d 100644
+index 125ff9f..7ed9e7b 100644
 --- a/index.html
 +++ b/index.html
-@@ -648,7 +648,14 @@
+@@ -648,7 +648,13 @@
      .partner img, .btn, .rwa-tab, .cc-chip{ transition:none; }
    }
  </style>
 -</head>
-+<link rel="canonical" href="https://yurich-citycode.github.io/YuRichHUB/">
 +<script type="application/ld+json">
 +{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://yurich-citycode.github.io/YuRichHUB/#org", "name": "YuRichHub", "alternateName": ["City Code", "Sevastopol AI"], "url": "https://yurich-citycode.github.io/YuRichHUB/", "logo": "https://yurich-citycode.github.io/YuRichHUB/yurichhub.jpg", "areaServed": {"@type": "City", "name": "Севастополь"}, "sameAs": ["https://t.me/YuRichRWA", "https://x.com/PavelYuRichRWA", "https://t.me/Sevastopol_AI"]}, {"@type": "WebSite", "url": "https://yurich-citycode.github.io/YuRichHUB/", "name": "YurichHub — Sevastopol AI × City Code × Crimea RWA", "inLanguage": "ru", "publisher": {"@id": "https://yurich-citycode.github.io/YuRichHUB/#org"}}]}
 +</script>
@@ -67078,7 +67077,7 @@ index 125ff9f..464b21d 100644
  <body>
  <div class="cur-dot" id="curDot" aria-hidden="true"></div>
  <div class="cur-ring" id="curRing" aria-hidden="true"></div>
-@@ -1043,6 +1050,7 @@
+@@ -1043,6 +1049,7 @@
        <a href="glossary.html" class="magnetic">Глоссарий</a>
        <a href="https://t.me/Sevastopol_AI" target="_blank" rel="noopener" class="magnetic">Sevastopol AI</a>
        <a href="privacy.html" class="magnetic">Персональные данные</a>
