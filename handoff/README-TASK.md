@@ -1,20 +1,25 @@
-# ЗАДАЧА (открой эту инструкцию в сессии YuRichHUB)
+# ЗАДАЧА (выполняй в сессии YuRichHUB)
 
-Сделай всё по порядку. Это одна связная задача: SEO-слой + визуальная финализация.
+Это одна связная задача: SEO-слой + визуальная финализация через скилл unslop.
+
+**Подготовка (один раз, в начале):**
+```bash
+git clone -q --depth 1 -b arena/4247d834-hubtest https://github.com/Yurich-citycode/hubtest.git /tmp/kit
+```
+Все файлы лежат в `/tmp/kit/handoff/`.
 
 ## Шаг 1. SEO-патч (быстро, безопасно)
 
-1. Распакованный архив лежит рядом. Найди файл `yurichhub-seo-fixes.patch`.
-2. `git apply yurichhub-seo-fixes.patch` (в корне репозитория YuRichHUB).
-3. Проверь: `robots.txt`, `sitemap.xml`, `llms.txt`, `404.html` появились; на 6 страницах `<link rel="canonical">` и JSON-LD; комиксы стали `comics1-6.webp`.
-4. Commit: «SEO: robots+sitemap+llms+404, canonical, JSON-LD, webp-комиксы, ссылки».
-5. PR в main → merge. **Ничего, кроме патча, не трогай.**
+1. `git apply /tmp/kit/handoff/yurichhub-seo-fixes.patch` (в корне репозитория YuRichHUB).
+2. Проверь: `robots.txt`, `sitemap.xml`, `llms.txt`, `404.html` появились; на 6 страницах ровно по одному `<link rel="canonical">` и JSON-LD; комиксы стали `comics1-6.webp` (старые .jpg удалены патчем); в футере index есть ссылка «Предложить место».
+3. Commit: «SEO: robots+sitemap+llms+404, canonical, JSON-LD, webp-комиксы, ссылки».
+4. PR в main → merge. **Ничего, кроме патча, не трогай.**
 
 ## Шаг 2. Установить скилл unslop
 
 1. `git clone https://github.com/heydamir/unslop /tmp/unslop`
-2. Скопируй `skills/unslop` в папку скиллов агента (`.claude/skills/` или `.agents/skills/` в корне проекта).
-3. Лицензия CC BY 4.0: в отчёте в конце упомяни автора — Damir Sokolovsky, https://github.com/heydamir/unslop.
+2. Скопируй `/tmp/unslop/skills/unslop` в папку скиллов агента (`.claude/skills/` или `.agents/skills/` в корне проекта).
+3. Лицензия CC BY 4.0: в финальном отчёте упомяни автора — Damir Sokolovsky, https://github.com/heydamir/unslop.
 
 ## Шаг 3. Прогнать unslop ПО СТРАНИЦАМ (главное)
 
@@ -39,6 +44,6 @@
 1. Сначала — index.html. Аудит по signs.md → показать мне список «что не то» + что соберешься менять. **Ждать моего «ок».**
 2. После «ок» — 9 пассов (spacing → color → icons → copy-разметка → type → layout → details → visuals → motion), PR, merge.
 3. Потом так же по одной: course → glossary → cfa → suggest. (privacy — только если в аудите критичное.)
-4. В конце — общий отчёт: что изменилось на каждой странице, что оставил как есть, и список идей, которые я могу заказать потом.
+4. В конце — общий отчёт: что изменилось на каждой странице, что оставил как есть, список идей для потом.
 
-**Если аудит скажет «slop нет»** — хорошо, просто напиши 2–3 точечных доводки со значениями и спроси, делать ли.
+**Если аудит скажет «slop нет»** — хорошо, напиши 2–3 точечных доводки со значениями и спроси, делать ли.
